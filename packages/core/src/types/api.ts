@@ -8,3 +8,8 @@ export enum ConnectionStatus {
   OPEN,
   CLOSED,
 }
+
+export enum Test {
+  HELLO,
+  BYE
+}
