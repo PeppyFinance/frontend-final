@@ -7,8 +7,10 @@ export enum FrontEndsName {
   CORE = "Core",
   MORPHEX = "Morphex",
   BASED = "Based",
-  CLOVERFIELD = "Cloverfield",
-  NEW_CLOVERFIELD = "New Cloverfield",
+  // CLOVERFIELD = "Cloverfield",
+  // NEW_CLOVERFIELD = "New Cloverfield",
+  CYBAR = "Cybar",
+  NEW_CYBAR = "New Cybar",
   BEFI = "Befi",
   VIBE = "Vibe",
   PEAR = "Pear",
@@ -84,7 +86,7 @@ export const BSCChainVibeFE: ChainType = {
     "https://api.studio.thegraph.com/query/62454/fundingrate_bnb_8_2/version/latest",
 };
 
-export const BSCChainCloverfieldFE: ChainType = {
+export const BSCChainCybarFE: ChainType = {
   // COLLATERAL
   COLLATERAL_SYMBOL: "USDT",
   COLLATERAL_DECIMALS: 18,
@@ -196,7 +198,7 @@ export const MantleChainVibeFE: ChainType = {
     "https://subgraph-api.mantle.xyz/subgraphs/name/parties_mantle_8_2/graphql",
 };
 
-export const MantleChainCloverfieldFE: ChainType = {
+export const MantleChainCybarFE: ChainType = {
   COLLATERAL_SYMBOL: "USDe",
   COLLATERAL_DECIMALS: 18,
   COLLATERAL_ADDRESS: "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
@@ -372,7 +374,7 @@ export const BaseChainBefiFE: ChainType = {
     "https://api.studio.thegraph.com/query/62454/fundingrate_base_8_2/version/latest",
 };
 
-export const BaseChainCloverfieldFE: ChainType = {
+export const BaseChainCybarFE: ChainType = {
   COLLATERAL_SYMBOL: "USDC",
   COLLATERAL_DECIMALS: 6,
   COLLATERAL_ADDRESS: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
@@ -438,7 +440,7 @@ export const ArbitrumChainVibeFE: ChainType = {
     "https://api.studio.thegraph.com/query/62454/fundingrate_arbitrum_8_2/version/latest",
 };
 
-export const ArbitrumChainCloverfieldFE: ChainType = {
+export const ArbitrumChainCybarFE: ChainType = {
   COLLATERAL_SYMBOL: "USDC",
   COLLATERAL_DECIMALS: 6,
   COLLATERAL_ADDRESS: "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
@@ -463,20 +465,20 @@ export const ArbitrumChainCloverfieldFE: ChainType = {
 export const contractInfo: {
   [chainId: number]: { [name: string]: ChainType };
 } = {
-  [SupportedChainId.FANTOM]: { [FrontEndsName.CLOVERFIELD]: FantomChain },
+  [SupportedChainId.FANTOM]: { [FrontEndsName.CYBAR]: FantomChain },
   [SupportedChainId.BSC]: {
     [FrontEndsName.ALPHA]: BSCChainAlphaFE,
     [FrontEndsName.VIBE]: BSCChainVibeFE,
-    [FrontEndsName.CLOVERFIELD]: BSCChainCloverfieldFE,
+    [FrontEndsName.CYBAR]: BSCChainCybarFE,
   },
   [SupportedChainId.POLYGON]: {
-    [FrontEndsName.CLOVERFIELD]: PolygonChain,
-    [FrontEndsName.NEW_CLOVERFIELD]: NewPolygonChain,
+    [FrontEndsName.CYBAR]: PolygonChain,
+    [FrontEndsName.NEW_CYBAR]: NewPolygonChain,
   },
   [SupportedChainId.MANTLE]: {
     [FrontEndsName.INTENT_X]: MantleChainIntentXFE,
     [FrontEndsName.VIBE]: MantleChainVibeFE,
-    [FrontEndsName.CLOVERFIELD]: MantleChainCloverfieldFE,
+    [FrontEndsName.CYBAR]: MantleChainCybarFE,
   },
   [SupportedChainId.BASE]: {
     [FrontEndsName.BASED]: BaseChainBasedFE,
@@ -484,13 +486,13 @@ export const contractInfo: {
     [FrontEndsName.MORPHEX]: BaseChainMorphexFE,
     [FrontEndsName.BEFI]: BaseChainBefiFE,
     [FrontEndsName.VIBE]: BaseChainVibeFE,
-    [FrontEndsName.CLOVERFIELD]: BaseChainCloverfieldFE,
+    [FrontEndsName.CYBAR]: BaseChainCybarFE,
   },
 
   [SupportedChainId.ARBITRUM]: {
     [FrontEndsName.PEAR]: ArbitrumChainPearFE,
     [FrontEndsName.VIBE]: ArbitrumChainVibeFE,
-    [FrontEndsName.CLOVERFIELD]: ArbitrumChainCloverfieldFE,
+    [FrontEndsName.CYBAR]: ArbitrumChainCybarFE,
   },
 
   [SupportedChainId.BLAST]: {

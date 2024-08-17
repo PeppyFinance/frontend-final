@@ -13,6 +13,7 @@ export const DEFAULT_HEDGER = {
   defaultMarketId: 1,
   markets: [],
   openInterest: { total: 0, used: 0 },
+  // TODO: do we use this ID?
   id: "Cloverfield",
   fetchData: false,
 } as Hedger;
@@ -67,7 +68,7 @@ export const HedgerInfo = {
       openInterest: { total: 0, used: 0 } as OpenInterest,
       id: "alpha-hedger2",
       fetchData: true,
-      clientName: "CLOVERFIELD_TEST",
+      clientName: "CYBAR_TEST",
     },
   ],
   [SupportedChainId.MANTLE]: [

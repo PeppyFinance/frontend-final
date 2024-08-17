@@ -66,7 +66,7 @@ export default function TermsModal({
         <ImageWrapper>
           <Image
             src={GRADIENT_CLOVERFIELD_LOGO}
-            alt="cloverfield_logo"
+            alt="cybar_logo"
             width={110}
             height={121}
           />

@@ -62,9 +62,10 @@ class MyDocument extends Document {
               href="/images/512x512_App_Icon.png"
             />
 
-            <title>Cloverfield</title>
+            <title>Cybar</title>
             <meta
               name="description"
+              // TODO: decide description
               content="Decentralized OTC perpetual exchange. Trade BTC, ETH, ARB and +124 other markets oracle-less and with up to 40x leverage"
             />
 
