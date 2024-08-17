@@ -259,7 +259,7 @@ function NotValidState({ text }: { text: string }) {
     <Wrapper>
       <ColumnCenter style={{ marginTop: "78px" }}>
         <Image
-          src={"/static/images/etc/SimpleCloverfield.svg"}
+          src={"/static/images/etc/CYBAR_WB_MARKE_LOGO_RZ-WHITE-short.svg"}
           alt="Asset"
           width={110}
           height={120}
