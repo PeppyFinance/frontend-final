@@ -64,6 +64,8 @@ export function TPSL() {
   const market = useActiveMarket();
   const pricePrecision = market ? market.pricePrecision : DEFAULT_PRECISION;
 
+  //TODO rerender component when chain changes
+
   return (
     <>
       {/* 

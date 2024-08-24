@@ -16,17 +16,15 @@ import {
 import { TpSlProcessState } from "@symmio/frontend-sdk/state/trade/types";
 import { Quote } from "@symmio/frontend-sdk/types/quote";
 import { getCurrentTimeInSecond } from "@symmio/frontend-sdk/utils/time";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   handleSignManageAndTpSlRequest,
   priceSlippageCalculation,
 } from "./manage";
 import { useAppName } from "@symmio/frontend-sdk/state/chains";
 import { useHedgerInfo } from "@symmio/frontend-sdk/state/hedger/hooks";
-import Switch from "components/Switch";
 
 export function TpSlChecker() {
-  const [active, setActive] = useState(false);
   const { quotes: pendings } = usePendingsQuotes();
   const setTradePanelState = useSetTpSlState();
 
