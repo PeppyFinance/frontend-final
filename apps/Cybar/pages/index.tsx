@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
 import { updateAccount } from "@symmio/frontend-sdk/state/user/actions";
+import { useEffect } from "react";
 // import { useActiveAccount } from "@symmio/frontend-sdk/src/state/user/hooks";
-import { useAppDispatch } from "@symmio/frontend-sdk/state";
 import { useUserAccounts } from "@symmio/frontend-sdk/hooks/useAccounts";
-import { useConnectModal } from "@rainbow-me/rainbowkit";
-import styled from "styled-components";
+import { useAppDispatch } from "@symmio/frontend-sdk/state";
+import { DefaultContainer } from "components/App/AccountData/MyAccount/styles";
 import { Box } from "rebass/styled-components";
+import styled from "styled-components";
 
 export const Row = styled(Box)<{
   width?: string;
@@ -60,9 +60,18 @@ export const BaseButton = styled(RowCenter)<{
   }
 `;
 
+const Container = styled(DefaultContainer)`
+  position: relative;
+  bottom: auto;
+  background-image: url("/images/backgrounds/backalley.wepb");
+  background-size: cover;
+  min-height: calc(100vh - 60px);
+  background-position: center bottom;
+  border: none;
+`;
+
 export default function MyFunction() {
   // const activeAccount = useActiveAccount();
-  const { openConnectModal } = useConnectModal();
   const dispatch = useAppDispatch();
   const { accounts } = useUserAccounts();
   useEffect(() => {
@@ -71,9 +80,5 @@ export default function MyFunction() {
       dispatch(updateAccount(lastSubAccount));
     }
   }, [accounts, dispatch]);
-  return (
-    <div>
-      <BaseButton onClick={openConnectModal}>click me</BaseButton>
-    </div>
-  );
+  return <Container />;
 }

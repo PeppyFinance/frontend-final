@@ -27,6 +27,8 @@ const Content = styled.div`
   position: relative;
   height: 100%;
   min-height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
   background: ${({ theme }) => theme.bg};
 
   ${({ theme }) => theme.mediaWidth.upToMedium`

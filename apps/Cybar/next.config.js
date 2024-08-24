@@ -39,15 +39,15 @@ module.exports = {
   images: {
     domains: ["raw.githubusercontent.com"],
   },
-  async redirects() {
-    return [
-      {
-        source: "/",
-        destination: "/trade/1",
-        permanent: false,
-      },
-    ];
-  },
+  // async redirects() {
+  //   return [
+  //     {
+  //       source: "/",
+  //       destination: "/trade/1",
+  //       permanent: false,
+  //     },
+  //   ];
+  // },
   webpack: (config) => {
     if (isNext12(config)) return updateNextGreaterThan12Config(config);
     return updateNextLessThan12Config(config);

@@ -1,15 +1,14 @@
-import { DefaultContainer } from "components/App/AccountData/MyAccount/styles";
-import styled from "styled-components";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
-const Container = styled(DefaultContainer)`
-  display: block;
-  bottom: auto;
-  background-image: url("/images/backgrounds/backalley.wepb");
-  background-size: cover;
-  height: 500px;
-  background-position: center bottom;
-`;
+import { DEFAULT_HEDGER } from "constants/chains/hedgers";
 
 export default function Trade() {
-  return <Container />;
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push(`/trade/${DEFAULT_HEDGER?.defaultMarketId}`);
+  }, [router]);
+
+  return null;
 }
