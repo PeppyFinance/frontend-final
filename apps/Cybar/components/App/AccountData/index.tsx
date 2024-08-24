@@ -16,7 +16,7 @@ const Wrapper = styled(Card)`
   min-height: 379px;
   display: flex;
   flex-flow: column nowrap;
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borderRadius0};
   background: ${({ theme }) => theme.bg0};
   & > * {
     &:first-child {

@@ -31,7 +31,7 @@ const Wrapper = styled.div<{ modal?: boolean }>`
   border: none;
   width: 100%;
   min-height: 379px;
-  border-radius: ${({ modal }) => (modal ? "10px" : "4px")};
+  border-radius: ${({ theme }) => theme.borderRadius0};
   background: ${({ theme }) => theme.bg0};
   ${({ theme }) => theme.mediaWidth.upToLarge`
     width: 100%;
