@@ -5,6 +5,9 @@ results
 .DS_Store
 .idea
 
+# NextJs build
+**/.next
+
 # Logs
 yarn-debug.log*
 yarn-error.log*

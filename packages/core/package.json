@@ -69,10 +69,6 @@
   },
   "license": "MIT",
   "exports": {
-    "./.DS_Store": {
-      "types": "./dist/.DS_Store.d.ts",
-      "default": "./dist/.DS_Store.js"
-    },
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"

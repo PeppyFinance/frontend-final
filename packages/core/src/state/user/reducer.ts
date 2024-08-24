@@ -63,7 +63,7 @@ export const initialState: UserState = {
   depositWithdrawalsData: null,
   depositWithdrawalsState: ApiState.LOADING,
   isTermsAccepted: TermsStatus.NOT_ACCEPTED,
-  frontEndName: "Cloverfield",
+  frontEndName: "Cybar",
 
   addedHedgers: {},
   isDefaultHedgerSelected: true,

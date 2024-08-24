@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { Row, RowCenter, RowEnd } from "components/Row";
+// TODO: replace icon
 import { CloverfieldLogo } from "components/Icons";
 
 const AutoSlippageContainer = styled.div`

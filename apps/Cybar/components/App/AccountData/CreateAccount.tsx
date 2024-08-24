@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import styled from "styled-components";
 import Image from "next/legacy/image";
 
-import GRADIENT_CLOVERFIELD_LOGO from "/public/static/images/etc/GradientCloverfield.svg";
+import CYBAR_LOGO from "/public/static/images/etc/CYBAR_WB_MARKE_LOGO_RZ-WHITE-short.svg";
 
 import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
 import { truncateAddress } from "@symmio/frontend-sdk/utils/address";
@@ -203,12 +203,7 @@ export default function CreateAccount({ onClose }: { onClose?: () => void }) {
       </Row>
       <ContentWrapper>
         <ImageWrapper>
-          <Image
-            src={GRADIENT_CLOVERFIELD_LOGO}
-            alt="cloverfield_logo"
-            width={110}
-            height={121}
-          />
+          <Image src={CYBAR_LOGO} alt="cybar_logo" width={110} height={121} />
         </ImageWrapper>
         <AccountWrapper>
           {account && truncateAddress(account)}
