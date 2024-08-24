@@ -7,16 +7,18 @@ export const TabWrapper = styled(RowCenter)`
   font-size: 16px;
   font-weight: 400;
   color: ${({ theme }) => theme.text0};
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borderRadius0};
   overflow: hidden;
   gap: 1px;
 
   & > * {
     &:first-child {
-      border-radius: 4px 0px 0px 4px;
+      border-radius: ${({ theme: { borderRadius0 } }) =>
+        borderRadius0 + " 0px 0px " + borderRadius0};
     }
     &:last-child {
-      border-radius: 0px 4px 4px 0px;
+      border-radius: ${({ theme: { borderRadius0 } }) =>
+        "0px " + borderRadius0 + " " + borderRadius0 + " 0px"};
     }
   }
 `;
@@ -47,7 +49,7 @@ export const TabButton = styled(RowCenter)<{
 export const Option = styled.div<{ active?: boolean }>`
   width: fit-content;
   color: ${({ theme }) => theme.text1};
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borderRadius0};
   font-size: 16px;
   font-weight: 500;
   line-height: 19px;

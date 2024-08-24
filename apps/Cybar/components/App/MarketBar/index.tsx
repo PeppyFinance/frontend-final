@@ -20,7 +20,8 @@ import MarketFundingRate from "./MarketFundingRate";
 const Wrapper = styled(Row)`
   min-height: 56px;
   padding: 8px 12px;
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borderRadius0};
+  border: 1px solid ${({ theme }) => theme.border1};
   background: ${({ theme }) => theme.bg0};
 
   ${({ theme }) => theme.mediaWidth.upToMedium`
@@ -32,7 +33,7 @@ const Wrapper = styled(Row)`
 
 const DataWrap = styled(Row)`
   gap: 20px;
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borderRadius0};
   flex: 2;
   background: ${({ theme }) => theme.bg0};
 
@@ -63,7 +64,7 @@ const HedgerInfos = styled(RowBetween)`
 const Separator = styled.div`
   width: 2px;
   height: 40px;
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borderRadius0};
   margin-right: 2px;
   background: ${({ theme }) => theme.bg5};
 `;

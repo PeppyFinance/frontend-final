@@ -23,7 +23,8 @@ const Wrapper = styled.div<{ showTpSl?: boolean }>`
 
   width: 100%;
   max-width: 480px;
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borderRadius0};
+  border: 1px solid ${({ theme }) => theme.border1};
   height: ${({ showTpSl }) => (showTpSl ? "735px" : "635px")};
   overflow: scroll;
   background: ${({ theme }) => theme.bg0};
@@ -48,7 +49,7 @@ const Wrapper = styled.div<{ showTpSl?: boolean }>`
 const Container = styled(Column)`
   padding: 12px;
   gap: 20px;
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borderRadius0};
   /* overflow-x: hidden; // for some reason this panel can overflow horizontally */
   & > * {
     &:first-child {
