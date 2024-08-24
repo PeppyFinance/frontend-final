@@ -66,7 +66,6 @@ export interface Colors {
   yellow2: Color;
   blue1: Color;
   blue2: Color;
-  primaryBlue: Color;
 
   gradLight: Color;
   gradError: Color;

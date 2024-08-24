@@ -176,6 +176,7 @@ export default function NavBar() {
         <BackgroundWrapper newNotification={isNewNotification} />
         <MobileWrapper>
           <NavLogo />
+          <Menu />
           <StatusWrapper>
             <Web3Status />
             <CooldownWrapper onClick={() => toggleWithdrawBarModal()}>
@@ -186,7 +187,6 @@ export default function NavBar() {
           <Web3Network />
 
           {chainId && <HedgerSelector />}
-          <Menu />
         </MobileWrapper>
         {showWithdrawBarModal && <WithdrawBarModal />}
         {showTopBanner && (
@@ -206,6 +206,7 @@ export default function NavBar() {
         <BackgroundWrapper newNotification={isNewNotification} />
         <Wrapper>
           <NavLogo />
+          <Menu />
           <Items>
             <CooldownWrapper
               width={"240px"}
@@ -217,7 +218,6 @@ export default function NavBar() {
             <Web3Status />
             <Notifications />
             <Web3Network />
-            <Menu />
           </Items>
         </Wrapper>
         {(showTopBanner || hasInjected) && (

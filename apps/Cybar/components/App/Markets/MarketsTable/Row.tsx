@@ -104,13 +104,13 @@ const ActionBtn = styled.button`
   width: 80px;
   height: 30px;
   padding: 8px 24px;
-  color: ${({ theme }) => theme.primaryBlue};
-  border: 1px solid ${({ theme }) => theme.primaryBlue};
+  color: ${({ theme }) => theme.primary0};
+  border: 1px solid ${({ theme }) => theme.primary0};
   border-radius: 6px;
   font-weight: 600;
 
   &:hover {
-    background: ${({ theme }) => theme.primaryBlue};
+    background: ${({ theme }) => theme.primary0};
     color: ${({ theme }) => theme.bg};
     transition: all 0.3s;
   }

@@ -119,7 +119,6 @@ function colors(): Colors {
       primaryBlackNew: "#121419",
       primaryDisable: "#496C7B",
       primaryDarkBg: "#35474F",
-      primaryBlue: "#AEE3FA",
       primaryDark: "#5E95AC",
       primaryDarkOld: "#141517",
 

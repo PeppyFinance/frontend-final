@@ -161,7 +161,7 @@ export const BlueButton = styled(TableButton)`
 
 export const MaxButton = styled.div`
   font-size: 12px;
-  background: ${({ theme }) => theme.primaryBlue};
+  background: ${({ theme }) => theme.primary0};
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 500;
