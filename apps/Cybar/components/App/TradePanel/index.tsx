@@ -93,6 +93,7 @@ export default function TradePanel() {
         <Container>
           <PositionTypeTab />
           <AmountsPanel />
+          <TpSlChecker />
           <MinPositionInfo />
 
           <TradeActionButtons />
@@ -100,7 +101,6 @@ export default function TradePanel() {
         </Container>
         {showTradeInfoModal && <OpenPositionModal />}
       </React.Fragment>
-      <TpSlChecker />
     </Wrapper>
   );
 }

@@ -2,6 +2,7 @@ import {
   DEFAULT_PRECISION,
   DEFAULT_SLIPPAGE,
 } from "@symmio/frontend-sdk/constants";
+import { useTpSlAvailable } from "@symmio/frontend-sdk/state/chains";
 import {
   useActiveMarket,
   useActiveMarketPrice,
@@ -51,7 +52,10 @@ const InputWrapperSimple = styled(RowBetween)<{ FocusEnabled?: boolean }>`
 
 export function TPSL() {
   const [showTpSl, setShowTpSl] = useState(false);
+
   const typedValue = useTypedValue();
+  const tpSlAvailable = useTpSlAvailable();
+
   const price = useActiveMarketPrice();
   const limitPrice = useLimitPrice();
   const orderType = useOrderType();
@@ -60,8 +64,19 @@ export function TPSL() {
   const { tp, sl, state: tpSlState, tpSlippage, slSlippage } = useTradeTpSl();
   const market = useActiveMarket();
   const pricePrecision = market ? market.pricePrecision : DEFAULT_PRECISION;
+
   return (
     <>
+      {/* 
+      //TODO replace checkbox with radio button
+      <Switch
+        width={"56px"}
+        height={"24px"}
+        on={active}
+        onClick={() => setActive(!active)}
+        backActiveColor={"white"}
+        handlerActiveColor={"green"}
+      /> */}
       <RowBetween>
         <a data-tip data-for={"tpSlTooltip"}>
           <Checkbox
@@ -80,22 +95,28 @@ export function TPSL() {
               }
               setShowTpSl(!showTpSl);
             }}
-            label="TP/SL"
-            disabled={typedValue === "" || openedPrice === ""}
+            label="Take Profit/Stop Loss"
+            disabled={typedValue === "" || openedPrice === "" || !tpSlAvailable}
           />
-          {(typedValue === "" || openedPrice === "") && (
+          {tpSlAvailable ? (
+            (typedValue === "" || openedPrice === "") && (
+              <ToolTip id="tpSlTooltip" aria-haspopup="true">
+                {typedValue === "" && (
+                  <div>Please enter an Amount, then set TP/SL</div>
+                )}
+                {openedPrice === "" && (
+                  <div>Please enter a Price, then set TP/SL</div>
+                )}
+              </ToolTip>
+            )
+          ) : (
             <ToolTip id="tpSlTooltip" aria-haspopup="true">
-              {typedValue === "" && (
-                <div>Please enter an Amount, then set TP/SL</div>
-              )}
-              {openedPrice === "" && (
-                <div>Please enter a Price, then set TP/SL</div>
-              )}
+              {<div>TP/SL is not supported on this chain</div>}
             </ToolTip>
           )}
         </a>
       </RowBetween>
-      {showTpSl && (
+      {showTpSl && tpSlAvailable && (
         <Column style={{ gap: "5px" }}>
           <Row gap="10px">
             <InputWrapperSimple>

@@ -1,4 +1,4 @@
-# Testing environment
+# Staging environment
 
 # @symmio/frontend-sdk
 
