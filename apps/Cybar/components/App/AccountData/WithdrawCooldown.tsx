@@ -30,7 +30,7 @@ const RemainingWrap = styled(RowCenter)<{ cursor?: string }>`
   position: relative;
   overflow: hidden;
   border-radius: 4px;
-  border: 1px solid ${({ theme }) => theme.primaryBlue};
+  border: 1px solid ${({ theme }) => theme.primary0};
   background: ${({ theme }) => theme.bg7};
   color: ${({ theme }) => theme.white};
   height: 40px;
@@ -52,7 +52,7 @@ const RemainingBlock = styled.div<{ width?: string }>`
 
 const Text = styled(RowBetween)<{ filling?: boolean }>`
   justify-content: ${({ filling }) => (filling ? "space-between" : "center")};
-  color: ${({ theme }) => theme.primaryBlue};
+  color: ${({ theme }) => theme.primary0};
   padding: 0 12px;
   font-weight: 500;
   font-size: 12px;

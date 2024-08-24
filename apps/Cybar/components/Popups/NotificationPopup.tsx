@@ -26,8 +26,7 @@ const Wrapper = styled(Row)<{ border?: string; bg?: string }>`
   border-radius: 4px;
   color: ${({ theme }) => theme.text0};
   background: ${({ theme, bg }) => (bg ? bg : theme.bg4)};
-  border: 1px solid
-    ${({ theme, border }) => (border ? border : theme.primaryBlue)};
+  border: 1px solid ${({ theme, border }) => (border ? border : theme.primary0)};
 `;
 
 export default function NotificationPopup({

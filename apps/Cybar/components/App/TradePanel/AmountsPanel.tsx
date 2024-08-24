@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import styled from "styled-components";
+import styled, { useTheme } from "styled-components";
 import { mix } from "polished";
 
 import { WEB_SETTING } from "@symmio/frontend-sdk/config";
@@ -62,7 +62,7 @@ const CollateralWrap = styled.div`
 const LeverageWrap = styled.div`
   font-weight: 400;
   font-size: 12px;
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borderRadius0};
   padding: 8px 10px;
   height: 70px;
   background: ${({ theme }) => theme.bg4};
@@ -75,7 +75,7 @@ const LeverageValue = styled(RowStart)`
   font-size: 12px;
   padding: 8px;
   padding-left: 12px;
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borderRadius0};
   background: ${({ theme }) => theme.bg5};
   border: 2px solid ${({ theme }) => theme.bg};
 `;
@@ -97,6 +97,8 @@ export default function AmountsPanel() {
   const tpSlAvailable = useTpSlAvailable();
   const market = useActiveMarket();
   const userExpertMode = useExpertMode();
+
+  const theme = useTheme();
 
   const orderType = useOrderType();
 
@@ -234,7 +236,7 @@ export default function AmountsPanel() {
               if (!customLeverage) setCustomLeverage(MIN_LEVERAGE_VALUE);
             }}
           />
-          <LeverageIcon width={10} height={10} color={mixedColor} />
+          <LeverageIcon width={10} height={10} color={theme.text2} />
         </LeverageValue>
 
         <LeverageWrap>

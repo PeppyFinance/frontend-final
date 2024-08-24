@@ -44,7 +44,7 @@ const AccountWrapper = styled(Row)`
   font-weight: 500;
   font-size: 12px;
 
-  color: ${({ theme }) => theme.primaryBlue};
+  color: ${({ theme }) => theme.primary0};
 `;
 
 const InputWrapper = styled(AccountWrapper)`

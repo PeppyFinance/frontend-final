@@ -7,7 +7,7 @@ import { Market } from "@symmio/frontend-sdk/types/market";
 import { useFavoriteMarkets } from "@symmio/frontend-sdk/hooks/useMarkets";
 
 import { Row, RowCenter } from "components/Row";
-import { GradientStar } from "components/Icons";
+import { Star } from "components/Icons";
 import BlinkingPrice from "components/App/FavoriteBar/BlinkingPrice";
 
 const Wrapper = styled(Row)`
@@ -123,7 +123,8 @@ export default function FavoriteBar() {
 
   return (
     <Wrapper>
-      <GradientStar
+      <Star
+        isFavorite={true}
         style={{
           zIndex: 99,
           marginLeft: "16px",

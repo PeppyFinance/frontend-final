@@ -23,7 +23,7 @@ const NotificationText = styled(RowStart)`
 
   & > * {
     &:first-child {
-      /* color: ${({ theme }) => theme.primaryBlue}; */
+      /* color: ${({ theme }) => theme.primary0}; */
       margin-right: 4px;
     }
   }

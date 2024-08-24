@@ -66,7 +66,7 @@ export default function Notifications() {
   return (
     <div ref={ref}>
       <NavButton onClick={closeOnClick}>
-        <Bell color={newNotifications ? theme.primaryBlue : undefined} />
+        <Bell color={newNotifications ? theme.primary0 : undefined} />
         {newNotifications && (
           <NotificationsCount>{unreadNotifications.length}</NotificationsCount>
         )}
