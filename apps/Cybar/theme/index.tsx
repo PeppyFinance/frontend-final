@@ -86,8 +86,8 @@ function colors(): Colors {
 
       // primary colors
       primary0: "#565CF3",
-      primary1: "rgba(217, 217, 217, 0.1)",
-      primary2: "#14103D",
+      primary1: "#666cf4",
+      primary2: "#777cf5",
 
       // secondary colors
       secondary0: "#565CF3",

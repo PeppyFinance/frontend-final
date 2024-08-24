@@ -53,28 +53,25 @@ export const PrimaryButton = styled(BaseButton)<{ height?: string | number }>`
   width: 100%;
   font-size: 14px;
   font-weight: 600;
-  border-radius: 8px;
+  border-radius: ${({ theme }) => theme.borderRadius0};
   height: ${({ height }) => (height ? height : "45px")};
-  background: ${({ theme }) => theme.gradLight};
+  background: ${({ theme }) => theme.primary0};
   color: ${({ theme }) => theme.bg};
 
   &:focus,
   &:hover {
-    background: ${({ theme }) => theme.hoverGrad};
+    background: ${({ theme }) => theme.primary1};
   }
   ${({ disabled }) =>
     disabled &&
     `
-
       cursor: default;
       opacity:0.5;
-
   `}
 `;
 
 export const MainButton = styled(PrimaryButton)`
   height: 48px;
-  border-radius: 8px;
 `;
 
 export const SecondaryButton = styled(PrimaryButton)`

@@ -3,18 +3,20 @@ import { PositionType } from "@symmio/frontend-sdk/types/trade";
 
 import { LongArrow, ShortArrow } from "components/Icons";
 import { RowCenter } from "components/Row";
-import { TabModalJSX } from "components/Tab";
+import { TabModalJSX, TabOption } from "components/Tab";
 import {
   usePositionType,
   useSetPositionType,
 } from "@symmio/frontend-sdk/state/trade/hooks";
+import { lighten, opacify, rgba } from "polished";
 
 export default function PositionTypeTab() {
   const theme = useTheme();
   const positionType = usePositionType();
   const setPositionType = useSetPositionType();
   const onChange = (option: string) => setPositionType(option as PositionType);
-  const options = [
+
+  const options: TabOption[] = [
     {
       label: PositionType.LONG,
       content: (
@@ -24,12 +26,22 @@ export default function PositionTypeTab() {
             width={16}
             height={12}
             color={
-              positionType === PositionType.LONG ? theme.text0 : theme.text4
+              positionType === PositionType.LONG ? theme.positive : theme.text4
             }
             style={{ marginLeft: "8px" }}
           />
         </RowCenter>
       ),
+      buttonProps: {
+        activeProps: {
+          color: theme.positive,
+          borderColor: theme.positive,
+          backgroundColor: rgba(theme.positive, 0.2),
+        },
+        hoverProps: {
+          backgroundColor: rgba(lighten(0.1, theme.positive), 0.2),
+        },
+      },
     },
     {
       label: PositionType.SHORT,
@@ -40,12 +52,22 @@ export default function PositionTypeTab() {
             width={16}
             height={12}
             color={
-              positionType === PositionType.SHORT ? theme.text0 : theme.text4
+              positionType === PositionType.SHORT ? theme.negative : theme.text4
             }
             style={{ marginLeft: "8px" }}
           />
         </RowCenter>
       ),
+      buttonProps: {
+        activeProps: {
+          color: theme.negative,
+          borderColor: theme.negative,
+          backgroundColor: rgba(theme.negative, 0.2),
+        },
+        hoverProps: {
+          backgroundColor: rgba(lighten(0.1, theme.negative), 0.2),
+        },
+      },
     },
   ];
 

@@ -9,7 +9,7 @@ export const TabWrapper = styled(RowCenter)`
   color: ${({ theme }) => theme.text0};
   border-radius: ${({ theme }) => theme.borderRadius0};
   overflow: hidden;
-  gap: 1px;
+  gap: 0px;
 
   & > * {
     &:first-child {
@@ -23,26 +23,51 @@ export const TabWrapper = styled(RowCenter)`
   }
 `;
 
-export const TabButton = styled(RowCenter)<{
-  active: boolean;
-  hideOuterBorder: boolean;
-}>`
+export interface TabButtonProps {
+  active?: boolean;
+  hideOuterBorder?: boolean;
+  color?: string;
+  borderColor?: string;
+  backgroundColor?: string;
+  hoverProps?: {
+    color?: string;
+    borderColor?: string;
+    backgroundColor?: string;
+  };
+  activeProps?: {
+    color?: string;
+    borderColor?: string;
+    backgroundColor?: string;
+  };
+}
+
+export const TabButton = styled(RowCenter)<TabButtonProps>`
   width: 100%;
   height: 40px;
   position: relative;
   text-align: center;
   overflow: hidden;
   font-weight: ${({ active }) => (active ? 500 : 400)};
-  color: ${({ active, theme }) => (active ? theme.text0 : theme.text4)};
-  background: ${({ active, theme }) => (active ? theme.bg3 : theme.bg1)};
+  color: ${({ active, color, theme, activeProps }) =>
+    active ? activeProps?.color || theme.text0 : color || theme.text4};
+  background: ${({ backgroundColor, active, theme, activeProps }) =>
+    active
+      ? activeProps?.backgroundColor || theme.bg3
+      : backgroundColor || theme.bg1};
   border: 1px solid
-    ${({ theme, active, hideOuterBorder }) =>
-      hideOuterBorder ? "transparent" : active ? theme.text0 : theme.text4};
+    ${({ borderColor, theme, active, activeProps, hideOuterBorder }) =>
+      hideOuterBorder
+        ? "transparent"
+        : active
+        ? activeProps?.borderColor || theme.text0
+        : borderColor || theme.text4};
 
   &:hover {
     cursor: ${({ active }) => (active ? "default" : "pointer")};
-    background: ${({ active, theme }) =>
-      active ? theme.bg3 : lighten(0.02, theme.bg1)};
+    background: ${({ hoverProps, backgroundColor, active, theme }) =>
+      active
+        ? hoverProps?.backgroundColor || theme.bg3
+        : lighten(0.02, backgroundColor || theme.bg1)};
   }
 `;
 
@@ -148,6 +173,12 @@ export function GradientTabs({
   );
 }
 
+export interface TabOption {
+  label: string;
+  content: string | JSX.Element;
+  buttonProps?: TabButtonProps;
+}
+
 export function TabModalJSX({
   tabOptions,
   activeOption,
@@ -155,7 +186,7 @@ export function TabModalJSX({
   hideOuterBorder,
   ...rest
 }: {
-  tabOptions: { label: string; content: string | JSX.Element }[];
+  tabOptions: TabOption[];
   activeOption: string;
   onChange: (tab: string) => void;
   hideOuterBorder?: boolean;
@@ -169,6 +200,7 @@ export function TabModalJSX({
           active={tab.label === activeOption}
           onClick={() => onChange(tab.label)}
           hideOuterBorder={!!hideOuterBorder}
+          {...tab.buttonProps}
         >
           <div>{tab.content}</div>
         </TabButton>
