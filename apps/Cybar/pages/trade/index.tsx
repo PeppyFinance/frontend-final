@@ -1,10 +1,7 @@
+import { DefaultContainer } from "components/App/AccountData/MyAccount/styles";
 import styled from "styled-components";
 
-export default function Trade() {
-  return <LandingPage />;
-}
-
-const LandingPage = styled.div`
+const Container = styled(DefaultContainer)`
   display: block;
   bottom: auto;
   background-image: url("/images/backgrounds/backalley.wepb");
@@ -12,3 +9,7 @@ const LandingPage = styled.div`
   height: 500px;
   background-position: center bottom;
 `;
+
+export default function Trade() {
+  return <Container />;
+}
