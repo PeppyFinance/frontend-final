@@ -8,7 +8,7 @@ import {
   usePositionType,
   useSetPositionType,
 } from "@symmio/frontend-sdk/state/trade/hooks";
-import { lighten, opacify, rgba } from "polished";
+import { lighten, rgba } from "polished";
 
 export default function PositionTypeTab() {
   const theme = useTheme();

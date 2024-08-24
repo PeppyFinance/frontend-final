@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Z_INDEX } from "theme";
-import Image from "next/legacy/image";
 
 import { useIsMobile } from "lib/hooks/useWindowSize";
 import { useNewNotification } from "@symmio/frontend-sdk/state/notifications/hooks";

@@ -23,7 +23,6 @@ export function LeverageSlider({
   value,
   maxLeverage,
   onChange,
-  mixedColor,
 }: {
   value: number;
   maxLeverage: number;
