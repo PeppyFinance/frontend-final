@@ -53,7 +53,6 @@ const BackgroundWrapper = styled(Wrapper)<{ newNotification?: boolean }>`
     }
   }
   padding: 0px;
-  height: 72px;
   overflow: hidden;
   position: absolute;
   background: ${({ theme, newNotification }) =>
@@ -108,23 +107,6 @@ export const NavbarContentWrap = styled.div`
     & > ul {
       display: block;
     }
-  }
-`;
-
-export const SubNavbarContentWrap = styled.ul`
-  display: none;
-  padding: 12px 0 12px 0px;
-  background: ${({ theme }) => theme.bg2};
-  list-style: none;
-  position: absolute;
-  top: 50px;
-  margin-top: -14px;
-  left: 50%;
-  transform: translateX(-50%);
-
-  & > li > div {
-    padding: 0.45rem 1rem;
-    min-width: 150px;
   }
 `;
 
@@ -221,14 +203,7 @@ export default function NavBar() {
   function getDefaultContent() {
     return (
       <>
-        <BackgroundWrapper newNotification={isNewNotification}>
-          <Image
-            src={"/static/images/header/Pattern.svg"}
-            alt={"Pattern"}
-            height={72}
-            width={1800}
-          />
-        </BackgroundWrapper>
+        <BackgroundWrapper newNotification={isNewNotification} />
         <Wrapper>
           <NavLogo />
           <Items>
@@ -245,20 +220,22 @@ export default function NavBar() {
             <Menu />
           </Items>
         </Wrapper>
-        <BannerWrapper>
-          {showTopBanner && (
-            <InfoHeader
-              onClose={setShowBanner}
-              hasInfoIcon={true}
-              text={bannerText}
-            />
-          )}
-          {hasInjected && (
-            <Warning
-              message={`❌ You are in "READ-ONLY" mode. Please do not confirm any transactions! ❌ `}
-            />
-          )}
-        </BannerWrapper>
+        {(showTopBanner || hasInjected) && (
+          <BannerWrapper>
+            {showTopBanner && (
+              <InfoHeader
+                onClose={setShowBanner}
+                hasInfoIcon={true}
+                text={bannerText}
+              />
+            )}
+            {hasInjected && (
+              <Warning
+                message={`❌ You are in "READ-ONLY" mode. Please do not confirm any transactions! ❌ `}
+              />
+            )}
+          </BannerWrapper>
+        )}
         {showWithdrawBarModal && <WithdrawBarModal />}
       </>
     );
