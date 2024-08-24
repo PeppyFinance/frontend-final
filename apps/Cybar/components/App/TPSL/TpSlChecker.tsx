@@ -126,17 +126,5 @@ export function TpSlChecker() {
     tradePanelTpState,
   ]);
 
-  return (
-    <>
-      {/* //TODO replace hard-coded values */}
-      <Switch
-        width={"56px"}
-        height={"24px"}
-        on={active}
-        onClick={() => setActive(!active)}
-        backActiveColor={"white"}
-        handlerActiveColor={"green"}
-      />
-    </>
-  );
+  return <></>;
 }

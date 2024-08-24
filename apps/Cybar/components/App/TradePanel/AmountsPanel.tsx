@@ -197,7 +197,6 @@ export default function AmountsPanel() {
   return (
     <>
       {orderType == OrderType.LIMIT ? <LimitPriceBox /> : <MarketPriceBox />}
-
       <CollateralWrap>
         <CollateralInput
           value={formattedAmounts[0]}
@@ -247,7 +246,7 @@ export default function AmountsPanel() {
           />
         </LeverageWrap>
       </CollateralWrap>
-      {tpSlAvailable && <TPSL />}
+      <TPSL />
       <ReceiveLabel
         label="Receive"
         value={formattedAmounts[1]}
