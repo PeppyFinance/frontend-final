@@ -1,11 +1,14 @@
-import WrapperBanner from "components/Banner";
-import { Container } from "./[id]";
+import styled from "styled-components";
 
 export default function Trade() {
-  return (
-    <Container>
-      <WrapperBanner />
-      <div>Hello</div>
-    </Container>
-  );
+  return <LandingPage />;
 }
+
+const LandingPage = styled.div`
+  display: block;
+  bottom: auto;
+  background-image: url("/images/backgrounds/backalley.wepb");
+  background-size: cover;
+  height: 500px;
+  background-position: center bottom;
+`;
