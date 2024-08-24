@@ -8,6 +8,7 @@ import LOADING_CHART from "/public/static/images/etc/LoadChart.svg";
 import { useActiveMarket } from "@symmio/frontend-sdk/state/trade/hooks";
 
 import { Card } from "components/Card";
+// TODO: replace icon
 import { LottieCloverfield } from "components/Icons";
 import TVChart from "components/App/Chart/TVChart";
 import { RowCenter } from "components/Row";

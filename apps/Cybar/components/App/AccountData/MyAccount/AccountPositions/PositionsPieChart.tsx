@@ -7,6 +7,7 @@ import { ConnectionStatus } from "@symmio/frontend-sdk/types/api";
 import { PositionType } from "@symmio/frontend-sdk/types/trade";
 import { AccountPositionsContext } from "./context";
 
+// TODO: replace svg with cybar
 import Clover from "/public/static/images/Clover.svg";
 import { RowCenter } from "components/Row";
 
@@ -146,7 +147,7 @@ export default function PositionsPieChart() {
           src={Clover}
           width={shapeDim.width}
           height={shapeDim.height}
-          alt={"cloverfield"}
+          alt={"cybar"}
         />
       </CenterWrapper>
       <ResponsiveContainer>
@@ -171,7 +172,7 @@ export default function PositionsPieChart() {
           src={Clover}
           width={shapeDim.width}
           height={shapeDim.height}
-          alt={"cloverfield"}
+          alt={"cybar"}
         />
       </CenterWrapper>
       <ResponsiveContainer>
