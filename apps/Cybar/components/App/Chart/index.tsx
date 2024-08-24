@@ -33,7 +33,7 @@ const AdBlockText = styled(RowCenter)`
 const WarningText = styled.span`
   font-size: 16px;
   margin: 0px 4px;
-  color: ${({ theme }) => theme.warning};
+  color: ${({ theme }) => theme.warning0};
 `;
 
 const LoadChartImage = styled.div`

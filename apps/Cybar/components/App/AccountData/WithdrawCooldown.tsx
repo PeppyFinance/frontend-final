@@ -60,7 +60,7 @@ const Text = styled(RowBetween)<{ filling?: boolean }>`
 `;
 
 const TimerText = styled.span`
-  color: ${({ theme }) => theme.warning};
+  color: ${({ theme }) => theme.warning0};
 `;
 
 function Timer() {

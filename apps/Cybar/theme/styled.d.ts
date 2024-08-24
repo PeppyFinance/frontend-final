@@ -28,14 +28,45 @@ export interface Colors {
   bg6: Color;
   bg7: Color;
 
-  bgLoose: Color;
-  bgWin: Color;
-  bgWarning: Color;
-
   // borders
   border1: Color;
   border2: Color;
   border3: Color;
+
+  // primary
+  primary0: Color;
+  primary1: Color;
+  primary2: Color;
+
+  // secondary
+  secondary0: Color;
+  secondary1: Color;
+  secondary2: Color;
+
+  // notifications
+  error0: Color;
+  error1: Color;
+  success0: Color;
+  success1: Color;
+  warning0: Color;
+  warning1: Color;
+  info0: Color;
+  info1: Color;
+
+  // trading
+  negative: Color;
+  positive: Color;
+
+  // other
+  black2: Color;
+  red2: Color;
+  red5: Color;
+  red6: Color;
+  yellow1: Color;
+  yellow2: Color;
+  blue1: Color;
+  blue2: Color;
+  primaryBlue: Color;
 
   gradLight: Color;
   gradError: Color;
@@ -48,28 +79,10 @@ export interface Colors {
   primaryDark: Color;
   primaryDarkOld: Color;
 
-  //blues
-  primary0: Color;
-  primary1: Color;
-  primary2: Color;
+  bgLoose: Color;
+  bgWin: Color;
+  bgWarning: Color;
 
-  // other
-  black2: Color;
-  red1: Color;
-  red2: Color;
-  red5: Color;
-  red6: Color;
-  green1: Color;
-  yellow1: Color;
-  yellow2: Color;
-  blue1: Color;
-  blue2: Color;
-  primaryBlue: Color;
-
-  error: Color;
-  error1: Color;
-  success: Color;
-  warning: Color;
   twitter: Color;
 }
 
@@ -92,5 +105,8 @@ declare module "styled-components" {
       upToLarge: ThemedCssFunction<DefaultTheme>;
       upToExtraLarge: ThemedCssFunction<DefaultTheme>;
     };
+
+    borderRadius0: string;
+    borderRadius1: string;
   }
 }

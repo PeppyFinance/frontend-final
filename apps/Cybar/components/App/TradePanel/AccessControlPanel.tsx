@@ -57,7 +57,7 @@ export function Suspend() {
       <ErrorIconWrapper>
         <BigExclamationMark />
       </ErrorIconWrapper>
-      <ErrorTitle color={theme.error}>You are Suspended!</ErrorTitle>
+      <ErrorTitle color={theme.error0}>You are Suspended!</ErrorTitle>
       <ErrorText color={theme.error1}>
         You are not allowed to open a position or withdraw your allocations. in
         order to change that, contact us in Discord.
@@ -75,9 +75,9 @@ export function BlackList() {
   return (
     <ErrorWrapper blacklisted>
       <ErrorIconWrapper blacklisted>
-        <BigExclamationMark bgColor={theme.bgWarning} color={theme.warning} />
+        <BigExclamationMark bgColor={theme.bgWarning} color={theme.warning0} />
       </ErrorIconWrapper>
-      <ErrorTitle color={theme.warning}>
+      <ErrorTitle color={theme.warning0}>
         {marketName} is Blacklisted by Hedger
       </ErrorTitle>
       <ErrorText color={theme.yellow2} blacklisted>

@@ -125,12 +125,12 @@ export default function OpenedQuoteDetails({
       .toFixed(2);
     if (!marketData?.markPrice) return ["-", "-", theme.text0];
     if (valueBN.isGreaterThan(0))
-      return [`+ $${formatAmount(valueBN)}`, valuePercent, theme.green1];
+      return [`+ $${formatAmount(valueBN)}`, valuePercent, theme.positive];
     else if (valueBN.isLessThan(0))
       return [
         `- $${formatAmount(Math.abs(valueBN.toNumber()))}`,
         valuePercent,
-        theme.red1,
+        theme.negative,
       ];
     return [`$${formatAmount(valueBN)}`, valuePercent, theme.text1];
   }
@@ -162,9 +162,9 @@ export default function OpenedQuoteDetails({
               <QuoteData>
                 {positionType}
                 {positionType === PositionType.LONG ? (
-                  <LongArrow width={16} height={12} color={theme.green1} />
+                  <LongArrow width={16} height={12} color={theme.positive} />
                 ) : (
-                  <ShortArrow width={16} height={12} color={theme.red1} />
+                  <ShortArrow width={16} height={12} color={theme.negative} />
                 )}
               </QuoteData>
             </RowComponent>
@@ -400,8 +400,8 @@ function FundingRate({
     next_funding_rate_long,
     next_funding_rate_short
   )
-    ? theme.red1
-    : theme.green1;
+    ? theme.negative
+    : theme.positive;
 
   const paidAmountBN = toBN(paidAmount).div(1e18);
 
@@ -412,10 +412,10 @@ function FundingRate({
         <PositionPnl
           color={
             paidAmountBN.lt(0)
-              ? theme.green1
+              ? theme.positive
               : paidAmountBN.isEqualTo(0)
               ? theme.text0
-              : theme.red1
+              : theme.negative
           }
         >
           {status === ApiState.LOADING ? (
