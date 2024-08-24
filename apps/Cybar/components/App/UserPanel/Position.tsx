@@ -124,7 +124,7 @@ const QuoteWrap = styled(TableStructure)<{
   height: 40px;
   opacity: ${({ canceled }) => (canceled ? 0.5 : 1)};
   color: ${({ theme, liquidatePending }) =>
-    liquidatePending ? theme.red1 : theme.text0};
+    liquidatePending ? theme.negative : theme.text0};
   background: ${({ theme, custom, liquidatePending }) =>
     liquidatePending ? theme.red5 : custom ? custom : theme.bg2};
   font-weight: 500;
@@ -176,11 +176,11 @@ export const SlIconWrapper = styled.div`
 `;
 
 const ExpiredStatusValue = styled.div`
-  color: ${({ theme }) => theme.warning};
+  color: ${({ theme }) => theme.warning0};
 `;
 
 const LiquidatedStatusValue = styled.div`
-  color: ${({ theme }) => theme.red1};
+  color: ${({ theme }) => theme.negative};
   font-size: 10px;
 `;
 
@@ -602,15 +602,18 @@ function QuoteRow({
     if (!quoteMarketPrice || quoteMarketPrice === "0")
       return ["-", theme.text0];
     if (upnlBN.isGreaterThan(0))
-      return [`+ $${formatAmount(upnlBN)}`, theme.green1];
+      return [`+ $${formatAmount(upnlBN)}`, theme.positive];
     else if (upnlBN.isLessThan(0))
-      return [`- $${formatAmount(Math.abs(upnlBN.toNumber()))}`, theme.red1];
+      return [
+        `- $${formatAmount(Math.abs(upnlBN.toNumber()))}`,
+        theme.negative,
+      ];
     return [`$${formatAmount(upnlBN)}`, theme.text1];
   }, [
     quoteMarketPrice,
     theme.text0,
-    theme.green1,
-    theme.red1,
+    theme.positive,
+    theme.negative,
     theme.text1,
     upnl,
   ]);
@@ -641,13 +644,13 @@ function QuoteRow({
                 <LongArrow
                   width={15}
                   height={12}
-                  color={liquidatePending ? theme.text0 : theme.green1}
+                  color={liquidatePending ? theme.text0 : theme.positive}
                 />
               ) : (
                 <ShortArrow
                   width={15}
                   height={12}
-                  color={liquidatePending ? theme.text0 : theme.red1}
+                  color={liquidatePending ? theme.text0 : theme.negative}
                 />
               )}
             </PositionTypeWrap>
@@ -710,7 +713,7 @@ function QuoteRow({
               <ExpiredStatusValue>Expired</ExpiredStatusValue>
             ) : quoteStatus === QuoteStatus.CLOSE_PENDING ||
               quoteStatus === QuoteStatus.CANCEL_CLOSE_PENDING ? (
-              <TwoColumnPnl color={expired ? theme.warning : color}>
+              <TwoColumnPnl color={expired ? theme.warning0 : color}>
                 <Row>
                   uPNL:
                   <PnlValue color={color}>{` ${value}`}</PnlValue>
@@ -813,9 +816,9 @@ function QuoteRow({
       liquidatePending,
       positionType,
       theme.text0,
-      theme.green1,
-      theme.red1,
-      theme.warning,
+      theme.positive,
+      theme.negative,
+      theme.warning0,
       theme.white,
       theme.text4,
       name,

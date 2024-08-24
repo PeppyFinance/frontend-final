@@ -119,7 +119,7 @@ export const MarketName = styled(RowStart)<{ expired?: boolean }>`
   font-weight: 500;
   font-size: 16px;
   width: unset;
-  color: ${({ theme, expired }) => (expired ? theme.warning : theme.text0)};
+  color: ${({ theme, expired }) => (expired ? theme.warning0 : theme.text0)};
   & > * {
     &:last-child {
       color: ${({ theme }) => theme.text1};

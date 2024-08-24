@@ -111,7 +111,7 @@ const SymbolText = styled(Row)`
 
 const LeverageText = styled(Row)<{ long?: boolean }>`
   width: unset;
-  color: ${({ theme, long }) => (long ? theme.text1 : theme.red1)};
+  color: ${({ theme, long }) => (long ? theme.text1 : theme.negative)};
 `;
 
 const CustomModal = styled(Modal)`
@@ -688,7 +688,7 @@ export default function ManageTpSlModal({
               {positionType === PositionType.LONG ? (
                 <LongArrow width={15} height={12} color={theme.blue1} />
               ) : (
-                <ShortArrow width={15} height={12} color={theme.red1} />
+                <ShortArrow width={15} height={12} color={theme.negative} />
               )}
             </LeverageText>
           </RowEnd>

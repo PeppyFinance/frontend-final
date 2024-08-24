@@ -51,7 +51,7 @@ const ExpiredStatus = styled.div`
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
-  color: ${({ theme }) => theme.warning};
+  color: ${({ theme }) => theme.warning0};
 
   ${({ theme }) => theme.mediaWidth.upToMedium`
     font-size: 12px;
@@ -133,9 +133,9 @@ export default function PendingQuoteDetails({
                 {positionType}
 
                 {positionType === PositionType.LONG ? (
-                  <LongArrow width={16} height={12} color={theme.green1} />
+                  <LongArrow width={16} height={12} color={theme.positive} />
                 ) : (
-                  <ShortArrow width={16} height={12} color={theme.red1} />
+                  <ShortArrow width={16} height={12} color={theme.negative} />
                 )}
               </QuoteData>
             </RowComponent>
