@@ -41,7 +41,6 @@ import { LeverageSlider } from "components/App/TradePanel/LeverageSlider";
 import { CustomInputBox2 as CollateralInput } from "components/InputBox";
 import { RowStart } from "components/Row";
 import { TPSL } from "../TPSL";
-import { useTpSlAvailable } from "@symmio/frontend-sdk/state/chains";
 
 const CollateralWrap = styled.div`
   & > * {
@@ -94,7 +93,6 @@ export default function AmountsPanel() {
     COLLATERAL_TOKEN,
     chainId
   );
-  const tpSlAvailable = useTpSlAvailable();
   const market = useActiveMarket();
   const userExpertMode = useExpertMode();
 

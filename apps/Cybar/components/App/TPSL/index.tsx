@@ -52,6 +52,7 @@ const InputWrapperSimple = styled(RowBetween)<{ FocusEnabled?: boolean }>`
 
 export function TPSL() {
   const [showTpSl, setShowTpSl] = useState(false);
+
   const typedValue = useTypedValue();
   const tpSlAvailable = useTpSlAvailable();
 
@@ -63,8 +64,6 @@ export function TPSL() {
   const { tp, sl, state: tpSlState, tpSlippage, slSlippage } = useTradeTpSl();
   const market = useActiveMarket();
   const pricePrecision = market ? market.pricePrecision : DEFAULT_PRECISION;
-
-  //TODO rerender component when chain changes
 
   return (
     <>
@@ -97,7 +96,7 @@ export function TPSL() {
               setShowTpSl(!showTpSl);
             }}
             label="Take Profit/Stop Loss"
-            disabled={typedValue === "" || openedPrice === ""}
+            disabled={typedValue === "" || openedPrice === "" || !tpSlAvailable}
           />
           {tpSlAvailable ? (
             (typedValue === "" || openedPrice === "") && (
@@ -117,7 +116,7 @@ export function TPSL() {
           )}
         </a>
       </RowBetween>
-      {showTpSl && (
+      {showTpSl && tpSlAvailable && (
         <Column style={{ gap: "5px" }}>
           <Row gap="10px">
             <InputWrapperSimple>
