@@ -21,6 +21,7 @@ const Wrapper = styled(Card)`
   position: relative;
   justify-content: center;
   background: ${({ theme }) => theme.bg0};
+  border: none;
 `;
 
 const AdBlockText = styled(RowCenter)`

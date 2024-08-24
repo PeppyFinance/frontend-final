@@ -13,7 +13,8 @@ import BlinkingPrice from "components/App/FavoriteBar/BlinkingPrice";
 const Wrapper = styled(Row)`
   position: relative;
   min-height: 50px;
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borderRadius0};
+  border: 1px solid ${({ theme }) => theme.border1};
   background: ${({ theme }) => theme.bg0};
 `;
 
@@ -26,7 +27,7 @@ const FavoritesWrap = styled(Row)`
   overflow-x: auto;
   overflow-y: hidden;
   flex: 1 1 0%;
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borderRadius0};
   margin-left: 12px;
   background: ${({ theme }) => theme.bg0};
 `;
@@ -67,7 +68,7 @@ const Item = styled(RowCenter)`
   height: 30px;
   padding: 8px 12px;
   margin: 0px 7.5px;
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borderRadius0};
 
   &:hover {
     cursor: pointer;

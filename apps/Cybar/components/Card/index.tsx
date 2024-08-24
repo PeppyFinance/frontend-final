@@ -3,9 +3,8 @@ import Column from "components/Column";
 
 export const Card = styled(Column)`
   background: ${({ theme }) => theme.bg0};
-  border-radius: 4px;
-  padding: 24px;
-  padding-top: 20px;
+  border-radius: ${({ theme }) => theme.borderRadius0};
+  border: 1px solid ${({ theme }) => theme.border1};
   overflow: hidden;
 
   ${({ theme }) => theme.mediaWidth.upToMedium`
@@ -15,7 +14,7 @@ export const Card = styled(Column)`
 
 export const InnerCard = styled(Column)`
   background: ${({ theme }) => theme.bg4};
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borderRadius0};
   padding: 12px;
   padding-bottom: 8px;
   overflow: hidden;

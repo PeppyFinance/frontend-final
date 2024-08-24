@@ -8,8 +8,9 @@ import { useIsMobile } from "lib/hooks/useWindowSize";
 import { Tab } from "components/Tab";
 import AccountOverview from "components/App/AccountData/AccountOverview";
 import PositionDetails from "components/App/AccountData/PositionDetails";
+import { Card } from "components/Card";
 
-const Wrapper = styled.div`
+const Wrapper = styled(Card)`
   width: 100%;
   max-width: 480px;
   min-height: 379px;

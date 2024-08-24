@@ -181,6 +181,10 @@ function theme(themeName: SupportedThemes): DefaultTheme {
     borderRadius0: "2px",
     borderRadius1: "8px",
 
+    // font
+    fontPrimary: '"IBM Plex Mono", monospace',
+    fontSecondary: '"IBM Plex Sans", monospace',
+
     // media queries
     mediaWidth: mediaWidthTemplates,
   };
@@ -237,7 +241,7 @@ export const ThemedGlobalStyle = createGlobalStyle`
   }
 
   body {
-    font-family: 'Spline Sans', monospace;
+    font-family: ${({ theme }) => theme.fontPrimary};
     font-size: 16px;
     font-weight:500;
   }
@@ -246,6 +250,10 @@ export const ThemedGlobalStyle = createGlobalStyle`
     all: unset;
     cursor: pointer;
     padding: 0px;
+  }
+
+  input {
+    font-family: ${({ theme }) => theme.fontPrimary} !important;
   }
 
   *, *:before, *:after {

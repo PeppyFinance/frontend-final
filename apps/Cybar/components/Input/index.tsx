@@ -5,7 +5,7 @@ import Box from "components/Box";
 
 export const InputWrapper = styled(Box)`
   padding: 0 20px;
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borderRadius0};
 `;
 
 export const InputField = styled.input<{
@@ -23,6 +23,7 @@ export const InputField = styled.input<{
   -webkit-background-clip: text;
   -webkit-text-fill-color: ${({ calculationMode }) =>
     calculationMode ? "transparent" : "unset"};
+  font-family: ${({ theme }) => theme.fontPrimary};
   font-size: 16px;
   font-weight: 600;
   color: ${({ theme }) => theme.text0};

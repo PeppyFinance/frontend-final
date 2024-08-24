@@ -108,5 +108,8 @@ declare module "styled-components" {
 
     borderRadius0: string;
     borderRadius1: string;
+
+    fontPrimary: string;
+    fontSecondary: string;
   }
 }
