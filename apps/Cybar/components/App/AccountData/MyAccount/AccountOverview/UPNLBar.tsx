@@ -94,14 +94,14 @@ function usePnlValues(currency: Token) {
   if (pnlBN.isGreaterThan(0))
     return {
       value: `+ ${formatAmount(pnlBN)}`,
-      color: theme.green1,
+      color: theme.positive,
       bgColor: theme.bgWin,
       isLoading: false,
     };
   else if (pnlBN.isLessThan(0))
     return {
       value: `- ${formatAmount(Math.abs(pnlBN.toNumber()))}`,
-      color: theme.red1,
+      color: theme.negative,
       bgColor: theme.bgLoose,
       isLoading: false,
     };

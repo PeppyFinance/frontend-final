@@ -94,7 +94,7 @@ export const SecondaryButton = styled(PrimaryButton)`
 
 export const ButtonEmpty = styled(BaseButton)`
   background-color: transparent;
-  color: ${({ theme }) => theme.red1};
+  color: ${({ theme }) => theme.negative};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -240,9 +240,9 @@ export const PositionActionButton = styled(SecondaryButton)<{
   ${({ expired, theme }) =>
     expired &&
     `
-    color: ${theme.warning};
+    color: ${theme.warning0};
     background: ${theme.bgWarning};
-    border-color: ${theme.warning};
+    border-color: ${theme.warning0};
 
     &:hover {
     background: ${lighten(0.05, theme.bgWarning)};
@@ -251,9 +251,9 @@ export const PositionActionButton = styled(SecondaryButton)<{
   ${({ liquidatePending, theme }) =>
     liquidatePending &&
     `
-    color: ${theme.red1};
+    color: ${theme.negative};
     background: ${theme.red5};
-    border-color: ${theme.red1};
+    border-color: ${theme.negative};
 
     &:hover {
     background: ${lighten(0.05, theme.red5)};

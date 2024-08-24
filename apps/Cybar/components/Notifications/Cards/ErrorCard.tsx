@@ -72,7 +72,7 @@ export default function ErrorCard({
       loading={loading}
       accountName={account.name}
       bg={theme.bgWarning}
-      border={theme.warning}
+      border={theme.warning0}
     />
   );
 }

@@ -79,14 +79,34 @@ function colors(): Colors {
       bg6: "#323847",
       bg7: "#383C4B",
 
-      bgWin: "#20302F",
-      bgLoose: "#35232B",
-      bgWarning: "#473F2A",
-
       // borders
       border1: "#3F434C",
       border2: "#303540",
       border3: "#2A2E39",
+
+      // primary colors
+      primary0: "#565CF3",
+      primary1: "rgba(217, 217, 217, 0.1)",
+      primary2: "#14103D",
+
+      // secondary colors
+      secondary0: "#565CF3",
+      secondary1: "rgba(217, 217, 217, 0.1)",
+      secondary2: "#14103D",
+
+      // notifications
+      error0: "#BC2D36",
+      error1: "#9B4C4C",
+      success0: "#27AE60",
+      success1: "#27AE60",
+      warning0: "#DCAB2E",
+      warning1: "#DCAB2E",
+      info0: "#BC2D36",
+      info1: "#9B4C4C",
+
+      // trading
+      negative: "#EA5E5E",
+      positive: "#7DD485",
 
       //gradient colors
       gradLight:
@@ -103,19 +123,10 @@ function colors(): Colors {
       primaryDark: "#5E95AC",
       primaryDarkOld: "#141517",
 
-      // primary colors
-      primary0: "#565CF3",
-      primary1: "rgba(217, 217, 217, 0.1)",
-      primary2: "#14103D",
+      bgWin: "#20302F",
+      bgLoose: "#35232B",
+      bgWarning: "#473F2A",
 
-      // other
-      red1: "#EA5E5E",
-      green1: "#7DD485",
-
-      error: "#BC2D36",
-      error1: "#9B4C4C",
-      success: "#27AE60",
-      warning: "#DCAB2E",
       twitter: "#69a1f5",
 
       //these colors aren't for monolith
@@ -165,6 +176,10 @@ function theme(themeName: SupportedThemes): DefaultTheme {
 
     //shadows
     ...shadows(themeName),
+
+    // border-radius
+    borderRadius0: "2px",
+    borderRadius1: "8px",
 
     // media queries
     mediaWidth: mediaWidthTemplates,
