@@ -14,11 +14,10 @@ export const Wrapper = styled.div`
   width: 100%;
   font-size: 12px;
   font-weight: 400;
-  border-radius: 12px;
   white-space: nowrap;
   background: ${({ theme }) => theme.bg4};
   position: relative;
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borderRadius0};
   padding: 8px 12px;
   padding-bottom: 0px;
 `;

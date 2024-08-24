@@ -16,7 +16,7 @@ export const Wrapper = styled(RowBetween)`
   white-space: nowrap;
   background: ${({ theme }) => theme.bg3};
   position: relative;
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borderRadius0};
   padding: 2px;
   padding-left: 12px;
 `;
@@ -34,7 +34,7 @@ const NumericalWrapper = styled(RowBetween)`
   margin-left: 12px;
   color: ${({ theme }) => theme.text0};
   background: ${({ theme }) => theme.bg2};
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borderRadius0};
   padding: 0 12px;
   ${({ theme }) => theme.mediaWidth.upToSmall`
     font-size: 12px;
@@ -80,7 +80,7 @@ const DataWrap = styled(RowEnd)`
   font-weight: 500;
   white-space: normal;
   padding-right: 10px;
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borderRadius0};
   color: ${({ theme }) => theme.text0};
   background: ${({ theme }) => theme.bg2};
   & > * {

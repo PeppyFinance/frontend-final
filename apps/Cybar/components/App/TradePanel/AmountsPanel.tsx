@@ -62,7 +62,7 @@ const CollateralWrap = styled.div`
 const LeverageWrap = styled.div`
   font-weight: 400;
   font-size: 12px;
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borderRadius0};
   padding: 8px 10px;
   height: 70px;
   background: ${({ theme }) => theme.bg4};
@@ -75,7 +75,7 @@ const LeverageValue = styled(RowStart)`
   font-size: 12px;
   padding: 8px;
   padding-left: 12px;
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borderRadius0};
   background: ${({ theme }) => theme.bg5};
   border: 2px solid ${({ theme }) => theme.bg};
 `;
