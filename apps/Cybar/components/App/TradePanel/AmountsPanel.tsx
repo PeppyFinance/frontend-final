@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import styled from "styled-components";
+import styled, { useTheme } from "styled-components";
 import { mix } from "polished";
 
 import { WEB_SETTING } from "@symmio/frontend-sdk/config";
@@ -97,6 +97,8 @@ export default function AmountsPanel() {
   const tpSlAvailable = useTpSlAvailable();
   const market = useActiveMarket();
   const userExpertMode = useExpertMode();
+
+  const theme = useTheme();
 
   const orderType = useOrderType();
 
@@ -234,7 +236,7 @@ export default function AmountsPanel() {
               if (!customLeverage) setCustomLeverage(MIN_LEVERAGE_VALUE);
             }}
           />
-          <LeverageIcon width={10} height={10} color={mixedColor} />
+          <LeverageIcon width={10} height={10} color={theme.text2} />
         </LeverageValue>
 
         <LeverageWrap>
