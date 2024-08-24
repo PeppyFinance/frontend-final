@@ -76,7 +76,7 @@ const LeverageValue = styled(RowStart)`
   padding-left: 12px;
   border-radius: ${({ theme }) => theme.borderRadius0};
   background: ${({ theme }) => theme.bg5};
-  border: 2px solid ${({ theme }) => theme.bg};
+  border: 2px solid ${({ theme }) => theme.bg0};
 `;
 
 const LeverageInput = styled(InputAmount)`
