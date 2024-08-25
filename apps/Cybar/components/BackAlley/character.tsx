@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { CharacterName } from "./characterNames.type";
 
 export interface CharacterProps {
@@ -26,6 +26,18 @@ export const Character = ({
     />
   );
 };
+
+const glow = (theme) => keyframes`
+    0% {
+        filter: drop-shadow(0px, 0px, 0px, ${theme.characterAction})
+    }
+    50% {
+        filter: drop-shadow(0px, 0px, 16px, ${theme.characterAction})
+    }
+    100% {
+        filter: drop-shadow(0px, 0px, 0px, ${theme.characterAction})
+    }
+`;
 
 const CharacterImg = styled.img<
   Omit<CharacterProps, "characterName" | "onClick">
