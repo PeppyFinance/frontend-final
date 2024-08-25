@@ -11,7 +11,7 @@ import {
 
 import { Loader } from "components/Icons";
 import MarketInfo from "components/App/MarketBar/MarketInfo";
-import Column, { ColumnCenter } from "components/Column";
+import { ColumnCenter } from "components/Column";
 import BlinkingPrice from "components/App/FavoriteBar/BlinkingPrice";
 import { Row, RowBetween } from "components/Row";
 import MarketDepths from "./MarketDepths";
