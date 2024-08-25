@@ -11,7 +11,7 @@ import {
 
 import { Loader } from "components/Icons";
 import MarketInfo from "components/App/MarketBar/MarketInfo";
-import Column from "components/Column";
+import { ColumnCenter } from "components/Column";
 import BlinkingPrice from "components/App/FavoriteBar/BlinkingPrice";
 import { Row, RowBetween } from "components/Row";
 import MarketDepths from "./MarketDepths";
@@ -61,7 +61,7 @@ const HedgerInfos = styled(RowBetween)`
   `};
 `;
 
-const Separator = styled.div`
+export const Separator = styled.div`
   width: 2px;
   height: 40px;
   border-radius: ${({ theme }) => theme.borderRadius0};
@@ -69,18 +69,12 @@ const Separator = styled.div`
   background: ${({ theme }) => theme.bg5};
 `;
 
-export const Name = styled.div<{
-  textAlign?: string;
-  textAlignMedium?: string;
-}>`
+export const Name = styled.div`
   font-weight: 400;
   font-size: 12px;
-  margin-bottom: 12px;
-  text-align: ${({ textAlign }) => textAlign ?? "left"};
+  margin-bottom: 8px;
+  text-align: center;
   color: ${({ theme }) => theme.text2};
-  ${({ theme, textAlignMedium }) => theme.mediaWidth.upToMedium`
-    text-align: ${textAlignMedium ?? "left"};
-  `};
 `;
 
 export const Value = styled.div<{
@@ -116,19 +110,19 @@ export default function MarketBar() {
     <Wrapper>
       <DataWrap>
         <MarketInfo />
-        <Separator />
         <HedgerInfos>
-          <Column>
+          <ColumnCenter>
             <Name>Last Price</Name>
             {activeMarket ? (
               <BlinkingPrice market={activeMarket} priceWidth={"66"} />
             ) : (
               <Loader size={"12px"} stroke="#EBEBEC" />
             )}
-          </Column>
-          <Column>
-            <Name textAlignMedium={"right"}>Open Interest</Name>
-            <Value textAlignMedium={"right"}>
+          </ColumnCenter>
+          <Separator />
+          <ColumnCenter>
+            <Name>Open Interest</Name>
+            <Value>
               {used === -1 ? (
                 <Loader size={"12px"} stroke="#EBEBEC" />
               ) : (
@@ -141,8 +135,9 @@ export default function MarketBar() {
                 formatDollarAmount(total)
               )}
             </Value>
-          </Column>
-          <Column>
+          </ColumnCenter>
+          <Separator />
+          <ColumnCenter>
             <Name>{activeMarket?.symbol} Notional Cap</Name>
             <Value>
               {notionalCapUsed === -1 ? (
@@ -157,11 +152,13 @@ export default function MarketBar() {
                 formatDollarAmount(totalCap)
               )}
             </Value>
-          </Column>
+          </ColumnCenter>
+          <Separator />
           <MarketFundingRate />
+          <Separator />
+          <MarketDepths />
         </HedgerInfos>
       </DataWrap>
-      <MarketDepths />
     </Wrapper>
   );
 }
