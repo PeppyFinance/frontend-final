@@ -48,7 +48,7 @@ export default function OpenPositionModal() {
     if (txHash !== "" && !isPendingTxs) {
       toggleModal();
     }
-  }, [isPendingTxs, txHash]);
+  }, [isPendingTxs, toggleModal, txHash]);
 
   const content =
     state === ModalState.START ? (

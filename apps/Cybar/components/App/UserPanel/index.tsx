@@ -106,7 +106,7 @@ export default function UserPanel(): JSX.Element | null {
     if (currentOrders.length === (page - 1) * ItemsPerPage && page > 1) {
       setPage((page) => page - 1);
     }
-  }, [currentOrders.length]);
+  }, [currentOrders.length, page]);
 
   useEffect(() => {
     setPage(1);
