@@ -58,7 +58,13 @@ export const BackAlley = () => {
       : setActiveCharacter(name);
 
   return (
-    <BackAlleyContainer>
+    <BackAlleyContainer
+      onClick={() => {
+        if (activeCharacter) {
+          setActiveCharacter(undefined);
+        }
+      }}
+    >
       {BackAlleyCharacters({
         onClick: onClickCharacter,
         activeCharacter,
