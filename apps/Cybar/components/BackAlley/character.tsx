@@ -1,4 +1,4 @@
-import styled, { DefaultTheme, keyframes } from "styled-components";
+import styled, { css, DefaultTheme, keyframes } from "styled-components";
 import { CharacterName } from "./characterNames.type";
 
 export interface CharacterProps {
@@ -6,7 +6,7 @@ export interface CharacterProps {
   bottom: string;
   height: string;
   characterName: CharacterName;
-  onClick: (name: CharacterName) => void;
+  onClick?: (name: CharacterName) => void;
   isActive: boolean;
   focusedBottom?: string;
   focusedLeft?: string;
@@ -41,19 +41,19 @@ const glow = (theme: DefaultTheme) => keyframes`
     }
 `;
 
-const CharacterImg = styled.img<
-  Omit<CharacterProps, "characterName" | "onClick">
->`
+const CharacterImg = styled.img<Omit<CharacterProps, "characterName">>`
   position: absolute;
+  cursor: pointer;
   bottom: ${({ bottom }) => bottom};
   height: ${({ height }) => height};
   left: ${({ left }) => left};
   overflow: hidden;
   transition: ease-in-out 0.3s;
-  animation: ${(props) => glow(props.theme)} 4s ${pulseAnimation};
+  animation: ${({ onClick, theme }) =>
+    onClick && css`${glow(theme)} 4s ${pulseAnimation}}`};
   ${({ isActive, focusedBottom, focusedLeft, focusedHeight }) =>
     isActive &&
-    `
+    css`
       z-index: 10;
       bottom: ${focusedBottom ?? "120px"};
       left: ${focusedLeft ?? "calc(45vw - 172px)"};
