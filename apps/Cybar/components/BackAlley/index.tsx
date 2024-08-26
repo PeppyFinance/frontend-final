@@ -2,6 +2,7 @@ import { DefaultContainer } from "components/App/AccountData/MyAccount/styles";
 import styled from "styled-components";
 import { Character, CharacterProps } from "./character";
 import { CharacterName } from "./characterNames.type";
+import { useState } from "react";
 
 const BackAlleyContainer = styled(DefaultContainer)`
   position: relative;
@@ -47,11 +48,20 @@ const BackAlleyCharacters = ({
 ];
 
 export const BackAlley = () => {
+  const [activeCharacter, setActiveCharacter] = useState<
+    CharacterName | undefined
+  >(undefined);
+
+  const onClickCharacter = (name: CharacterName) =>
+    name === activeCharacter
+      ? setActiveCharacter(undefined)
+      : setActiveCharacter(name);
+
   return (
     <BackAlleyContainer>
       {BackAlleyCharacters({
-        onClick: (name) => console.log(name),
-        activeCharacter: undefined,
+        onClick: onClickCharacter,
+        activeCharacter,
       }).map((props) => (
         <Character key={props.characterName} {...props} />
       ))}

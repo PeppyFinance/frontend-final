@@ -20,7 +20,7 @@ export const Character = ({
 }: CharacterProps) => {
   return (
     <CharacterImg
-      onClick={() => onClick}
+      onClick={() => (onClick ? onClick(characterName) : null)}
       src={`/images/characters/${characterName}.webp`}
       {...props}
     />
