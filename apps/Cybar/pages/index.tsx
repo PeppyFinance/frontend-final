@@ -3,7 +3,7 @@ import { useEffect } from "react";
 // import { useActiveAccount } from "@symmio/frontend-sdk/src/state/user/hooks";
 import { useUserAccounts } from "@symmio/frontend-sdk/hooks/useAccounts";
 import { useAppDispatch } from "@symmio/frontend-sdk/state";
-import { DefaultContainer } from "components/App/AccountData/MyAccount/styles";
+import { BackAlley } from "components/BackAlley";
 import { Box } from "rebass/styled-components";
 import styled from "styled-components";
 
@@ -60,16 +60,6 @@ export const BaseButton = styled(RowCenter)<{
   }
 `;
 
-const Container = styled(DefaultContainer)`
-  position: relative;
-  bottom: auto;
-  background-image: url("/images/backgrounds/backalley.wepb");
-  background-size: cover;
-  min-height: calc(100vh - 60px);
-  background-position: center bottom;
-  border: none;
-`;
-
 export default function MyFunction() {
   // const activeAccount = useActiveAccount();
   const dispatch = useAppDispatch();
@@ -80,5 +70,5 @@ export default function MyFunction() {
       dispatch(updateAccount(lastSubAccount));
     }
   }, [accounts, dispatch]);
-  return <Container />;
+  return <BackAlley />;
 }
