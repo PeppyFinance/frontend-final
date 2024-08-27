@@ -83,6 +83,9 @@ export interface Colors {
   bgWarning: Color;
 
   twitter: Color;
+
+  // Character
+  characterAction: Color;
 }
 
 export type Shadow = string;

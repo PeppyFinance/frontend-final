@@ -128,6 +128,9 @@ function colors(): Colors {
 
       twitter: "#69a1f5",
 
+      // Characters
+      characterAction: "#6bdbd6",
+
       //these colors aren't for monolith
       black2: "#151A1F",
       red2: "#F82D3A",

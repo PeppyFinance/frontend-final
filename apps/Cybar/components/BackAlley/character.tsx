@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css, DefaultTheme, keyframes } from "styled-components";
 import { CharacterName } from "./characterNames.type";
 
 export interface CharacterProps {
@@ -6,7 +6,7 @@ export interface CharacterProps {
   bottom: string;
   height: string;
   characterName: CharacterName;
-  onClick: (name: CharacterName) => void;
+  onClick?: (name: CharacterName) => void;
   isActive: boolean;
   focusedBottom?: string;
   focusedLeft?: string;
@@ -20,25 +20,43 @@ export const Character = ({
 }: CharacterProps) => {
   return (
     <CharacterImg
-      onClick={() => onClick}
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick ? onClick(characterName) : null;
+      }}
       src={`/images/characters/${characterName}.webp`}
       {...props}
     />
   );
 };
 
-const CharacterImg = styled.img<
-  Omit<CharacterProps, "characterName" | "onClick">
->`
+const pulseAnimation = "ease-in-out infinite";
+
+const glow = (theme: DefaultTheme) => keyframes`
+    0% {
+        filter: drop-shadow(0px 0px 0px ${theme.characterAction})
+    }
+    50% {
+        filter: drop-shadow(0px 0px 16px ${theme.characterAction})
+    }
+    100% {
+        filter: drop-shadow(0px 0px 0px ${theme.characterAction})
+    }
+`;
+
+const CharacterImg = styled.img<Omit<CharacterProps, "characterName">>`
   position: absolute;
+  cursor: pointer;
   bottom: ${({ bottom }) => bottom};
   height: ${({ height }) => height};
   left: ${({ left }) => left};
   overflow: hidden;
   transition: ease-in-out 0.3s;
+  animation: ${({ onClick, theme }) =>
+    onClick && css`${glow(theme)} 4s ${pulseAnimation}}`};
   ${({ isActive, focusedBottom, focusedLeft, focusedHeight }) =>
     isActive &&
-    `
+    css`
       z-index: 10;
       bottom: ${focusedBottom ?? "120px"};
       left: ${focusedLeft ?? "calc(45vw - 172px)"};
