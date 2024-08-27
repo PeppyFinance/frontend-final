@@ -14,6 +14,7 @@ import {
 } from "./actions";
 
 export enum ApplicationModal {
+  CHARCTER = "CHARACTER",
   WALLET = "WALLET",
   NETWORK = "NETWORK",
   DASHBOARD = "DASHBOARD",
