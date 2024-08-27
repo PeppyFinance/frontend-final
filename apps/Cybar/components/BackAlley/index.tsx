@@ -1,8 +1,9 @@
 import { DefaultContainer } from "components/App/AccountData/MyAccount/styles";
 import styled from "styled-components";
 import { Character, CharacterProps } from "./character";
-import { CharacterName } from "./characterNames.type";
 import { useState } from "react";
+import { CharacterModal } from "./CharacterModal";
+import { CharacterId } from "./characterIds.type";
 
 const BackAlleyContainer = styled(DefaultContainer)`
   position: relative;
@@ -19,10 +20,10 @@ const BackAlleyCharacters = ({
   activeCharacter,
 }: {
   onClick: CharacterProps["onClick"];
-  activeCharacter: CharacterName | undefined;
+  activeCharacter: CharacterId | undefined;
 }): CharacterProps[] => [
   {
-    characterName: "charBackAlley1",
+    characterId: "charBackAlley1",
     left: "calc(45vw - 370px)",
     bottom: "120px",
     height: "240px",
@@ -30,7 +31,7 @@ const BackAlleyCharacters = ({
     isActive: activeCharacter === "charBackAlley1",
   },
   {
-    characterName: "charBackAlley2",
+    characterId: "charBackAlley2",
     left: "calc(45vw + 80px)",
     bottom: "120px",
     height: "333px",
@@ -38,7 +39,7 @@ const BackAlleyCharacters = ({
     isActive: activeCharacter === "charBackAlley2",
   },
   {
-    characterName: "charBackAlley3",
+    characterId: "charBackAlley3",
     left: "calc(45vw + 400px)",
     bottom: "80px",
     height: "210px",
@@ -49,13 +50,13 @@ const BackAlleyCharacters = ({
 
 export const BackAlley = () => {
   const [activeCharacter, setActiveCharacter] = useState<
-    CharacterName | undefined
+    CharacterId | undefined
   >(undefined);
 
-  const onClickCharacter = (name: CharacterName) =>
-    name === activeCharacter
+  const onClickCharacter = (id: CharacterId) =>
+    id === activeCharacter
       ? setActiveCharacter(undefined)
-      : setActiveCharacter(name);
+      : setActiveCharacter(id);
 
   return (
     <BackAlleyContainer
@@ -65,11 +66,12 @@ export const BackAlley = () => {
         }
       }}
     >
+      <CharacterModal character={activeCharacter} />
       {BackAlleyCharacters({
         onClick: onClickCharacter,
         activeCharacter,
       }).map((props) => (
-        <Character key={props.characterName} {...props} />
+        <Character key={props.characterId} {...props} />
       ))}
     </BackAlleyContainer>
   );

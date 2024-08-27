@@ -1,12 +1,12 @@
 import styled, { css, DefaultTheme, keyframes } from "styled-components";
-import { CharacterName } from "./characterNames.type";
+import { CharacterId } from "./characterIds.type";
 
 export interface CharacterProps {
   left: string;
   bottom: string;
   height: string;
-  characterName: CharacterName;
-  onClick?: (name: CharacterName) => void;
+  characterId: CharacterId;
+  onClick?: (name: CharacterId) => void;
   isActive: boolean;
   focusedBottom?: string;
   focusedLeft?: string;
@@ -14,7 +14,7 @@ export interface CharacterProps {
 }
 
 export const Character = ({
-  characterName,
+  characterId,
   onClick,
   ...props
 }: CharacterProps) => {
@@ -22,9 +22,9 @@ export const Character = ({
     <CharacterImg
       onClick={(e) => {
         e.stopPropagation();
-        onClick ? onClick(characterName) : null;
+        onClick ? onClick(characterId) : null;
       }}
-      src={`/images/characters/${characterName}.webp`}
+      src={`/images/characters/${characterId}.webp`}
       {...props}
     />
   );
@@ -44,7 +44,7 @@ const glow = (theme: DefaultTheme) => keyframes`
     }
 `;
 
-const CharacterImg = styled.img<Omit<CharacterProps, "characterName">>`
+const CharacterImg = styled.img<Omit<CharacterProps, "characterId">>`
   position: absolute;
   cursor: pointer;
   bottom: ${({ bottom }) => bottom};
