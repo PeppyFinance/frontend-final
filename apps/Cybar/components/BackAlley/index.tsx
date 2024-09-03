@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Character, CharacterProps } from "components/Characters/character";
 import { CharacterId } from "components/Characters/characterIds.type";
 import { CharacterModal } from "components/Characters/Modal";
+import { DialogContextProvider } from "./dialogContext";
 
 const BackAlleyContainer = styled(DefaultContainer)`
   position: relative;
@@ -62,20 +63,22 @@ export const BackAlley = () => {
       : setActiveCharacter(id);
 
   return (
-    <BackAlleyContainer
-      onClick={() => {
-        if (activeCharacter) {
-          setActiveCharacter(undefined);
-        }
-      }}
-    >
-      <CharacterModal character={activeCharacter} />
-      {BackAlleyCharacters({
-        onClick: onClickCharacter,
-        activeCharacter,
-      }).map((props) => (
-        <Character key={props.id} {...props} />
-      ))}
-    </BackAlleyContainer>
+    <DialogContextProvider>
+      <BackAlleyContainer
+        onClick={() => {
+          if (activeCharacter) {
+            setActiveCharacter(undefined);
+          }
+        }}
+      >
+        <CharacterModal character={activeCharacter} />
+        {BackAlleyCharacters({
+          onClick: onClickCharacter,
+          activeCharacter,
+        }).map((props) => (
+          <Character key={props.id} {...props} />
+        ))}
+      </BackAlleyContainer>
+    </DialogContextProvider>
   );
 };
