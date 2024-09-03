@@ -2,6 +2,7 @@ import styled, { css, DefaultTheme, keyframes } from "styled-components";
 import { CharacterId } from "./characterIds.type";
 
 export interface CharacterProps {
+  name: string;
   left: string;
   bottom: string;
   height: string;

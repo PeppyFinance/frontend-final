@@ -23,6 +23,7 @@ const BackAlleyCharacters = ({
   activeCharacter: CharacterId | undefined;
 }): CharacterProps[] => [
   {
+    name: "dansel2099",
     characterId: "charBackAlley1",
     left: "calc(45vw - 370px)",
     bottom: "120px",
@@ -31,6 +32,7 @@ const BackAlleyCharacters = ({
     isActive: activeCharacter === "charBackAlley1",
   },
   {
+    name: "Coomer",
     characterId: "charBackAlley2",
     left: "calc(45vw + 80px)",
     bottom: "120px",
@@ -39,6 +41,7 @@ const BackAlleyCharacters = ({
     isActive: activeCharacter === "charBackAlley2",
   },
   {
+    name: "discloomer",
     characterId: "charBackAlley3",
     left: "calc(45vw + 400px)",
     bottom: "80px",
