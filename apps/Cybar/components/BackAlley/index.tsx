@@ -1,9 +1,9 @@
 import { DefaultContainer } from "components/App/AccountData/MyAccount/styles";
 import styled from "styled-components";
-import { Character, CharacterProps } from "./character";
 import { useState } from "react";
 import { CharacterModal } from "./CharacterModal";
-import { CharacterId } from "./characterIds.type";
+import { Character, CharacterProps } from "components/Characters/character";
+import { CharacterId } from "components/Characters/characterIds.type";
 
 const BackAlleyContainer = styled(DefaultContainer)`
   position: relative;
