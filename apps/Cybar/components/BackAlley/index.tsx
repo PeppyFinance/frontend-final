@@ -24,7 +24,7 @@ const BackAlleyCharacters = ({
 }): CharacterProps[] => [
   {
     name: "dansel2099",
-    characterId: "charBackAlley1",
+    id: "charBackAlley1",
     left: "calc(45vw - 370px)",
     bottom: "120px",
     height: "240px",
@@ -33,7 +33,7 @@ const BackAlleyCharacters = ({
   },
   {
     name: "Coomer",
-    characterId: "charBackAlley2",
+    id: "charBackAlley2",
     left: "calc(45vw + 80px)",
     bottom: "120px",
     height: "333px",
@@ -42,7 +42,7 @@ const BackAlleyCharacters = ({
   },
   {
     name: "discloomer",
-    characterId: "charBackAlley3",
+    id: "charBackAlley3",
     left: "calc(45vw + 400px)",
     bottom: "80px",
     height: "210px",
@@ -74,7 +74,7 @@ export const BackAlley = () => {
         onClick: onClickCharacter,
         activeCharacter,
       }).map((props) => (
-        <Character key={props.characterId} {...props} />
+        <Character key={props.id} {...props} />
       ))}
     </BackAlleyContainer>
   );

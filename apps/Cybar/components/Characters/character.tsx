@@ -6,7 +6,7 @@ export interface CharacterProps {
   left: string;
   bottom: string;
   height: string;
-  characterId: CharacterId;
+  id: CharacterId;
   onClick?: (name: CharacterId) => void;
   isActive: boolean;
   focusedBottom?: string;
@@ -15,7 +15,7 @@ export interface CharacterProps {
 }
 
 export const Character = ({
-  characterId,
+  id: characterId,
   onClick,
   ...props
 }: CharacterProps) => {
@@ -45,7 +45,7 @@ const glow = (theme: DefaultTheme) => keyframes`
     }
 `;
 
-const CharacterImg = styled.img<Omit<CharacterProps, "characterId">>`
+const CharacterImg = styled.img<Omit<CharacterProps, "id">>`
   position: absolute;
   cursor: pointer;
   bottom: ${({ bottom }) => bottom};
