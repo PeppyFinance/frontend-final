@@ -125,7 +125,9 @@ export default function PositionsPieChart() {
   const data = marketQuotesInfo.map((quoteInfo) => ({
     name: quoteInfo.marketName,
     color:
-      quoteInfo.positionType === PositionType.LONG ? theme.green1 : theme.red1,
+      quoteInfo.positionType === PositionType.LONG
+        ? theme.positive
+        : theme.negative,
     value: quoteInfo.value,
   }));
 

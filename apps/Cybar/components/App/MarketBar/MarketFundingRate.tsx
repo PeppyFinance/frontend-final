@@ -10,9 +10,9 @@ import {
   toBN,
 } from "@symmio/frontend-sdk/utils/numbers";
 
-import { Name } from ".";
+import { Name, Separator } from ".";
 import { Row } from "components/Row";
-import Column from "components/Column";
+import { ColumnCenter } from "components/Column";
 import { Info as InfoIcon } from "components/Icons";
 import { ToolTip } from "components/ToolTip";
 
@@ -64,7 +64,7 @@ export default function MarketFundingRate() {
 
   return (
     <>
-      <Column>
+      <ColumnCenter>
         <Name>
           Funding
           <a data-tip data-for={"funding"}>
@@ -76,7 +76,7 @@ export default function MarketFundingRate() {
             </ToolTip>
           </a>
         </Name>
-        <Column>
+        <ColumnCenter>
           <DataRow>
             <Value size={"12px"} color={longColor}>
               {fundingRate
@@ -85,9 +85,7 @@ export default function MarketFundingRate() {
                   )}%`
                 : "-"}
             </Value>
-            (LONG)
-          </DataRow>
-          <DataRow>
+            /
             <Value size={"12px"} color={shortColor}>
               {fundingRate
                 ? `${formatAmount(
@@ -95,11 +93,12 @@ export default function MarketFundingRate() {
                   )}%`
                 : "-"}
             </Value>
-            (SHORT)
           </DataRow>
-        </Column>
-      </Column>
-      <Column>
+          <DataRow></DataRow>
+        </ColumnCenter>
+      </ColumnCenter>
+      <Separator />
+      <ColumnCenter>
         <Name>Next funding</Name>
         <Value size={"12px"}>
           {fundingRate && !nextFundingRateLongBN.isNaN()
@@ -111,7 +110,7 @@ export default function MarketFundingRate() {
               }`
             : "-"}
         </Value>
-      </Column>
+      </ColumnCenter>
     </>
   );
 }
@@ -121,6 +120,6 @@ function useColor(value: string) {
   const valueBN = toBN(value);
 
   if (valueBN.isEqualTo(0)) return theme.text0;
-  else if (valueBN.isGreaterThan(0)) return theme.green1;
-  else return theme.red1;
+  else if (valueBN.isGreaterThan(0)) return theme.positive;
+  else return theme.negative;
 }

@@ -50,7 +50,7 @@ const ConfirmButton = styled(PrimaryButton)`
 
 const WarningText = styled.span`
   font-weight: 500;
-  color: ${({ theme }) => theme.warning};
+  color: ${({ theme }) => theme.warning0};
 `;
 
 export default function WarningModal({

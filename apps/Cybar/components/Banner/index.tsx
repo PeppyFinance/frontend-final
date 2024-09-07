@@ -17,7 +17,7 @@ const Wrapper = styled.div<{ bg?: string }>`
   display: flex;
   justify-content: center;
   background: ${({ theme, bg }) =>
-    bg ? (bg === "gray" ? theme.text3 : bg) : theme.warning};
+    bg ? (bg === "gray" ? theme.text3 : bg) : theme.warning0};
 `;
 
 const Text = styled.div`

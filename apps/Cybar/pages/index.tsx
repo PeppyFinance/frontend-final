@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
 import { updateAccount } from "@symmio/frontend-sdk/state/user/actions";
+import { useEffect } from "react";
 // import { useActiveAccount } from "@symmio/frontend-sdk/src/state/user/hooks";
-import { useAppDispatch } from "@symmio/frontend-sdk/state";
 import { useUserAccounts } from "@symmio/frontend-sdk/hooks/useAccounts";
-import { useConnectModal } from "@rainbow-me/rainbowkit";
-import styled from "styled-components";
+import { useAppDispatch } from "@symmio/frontend-sdk/state";
+import { BackAlley } from "components/BackAlley";
 import { Box } from "rebass/styled-components";
+import styled from "styled-components";
 
 export const Row = styled(Box)<{
   width?: string;
@@ -62,7 +62,6 @@ export const BaseButton = styled(RowCenter)<{
 
 export default function MyFunction() {
   // const activeAccount = useActiveAccount();
-  const { openConnectModal } = useConnectModal();
   const dispatch = useAppDispatch();
   const { accounts } = useUserAccounts();
   useEffect(() => {
@@ -71,9 +70,5 @@ export default function MyFunction() {
       dispatch(updateAccount(lastSubAccount));
     }
   }, [accounts, dispatch]);
-  return (
-    <div>
-      <BaseButton onClick={openConnectModal}>click me</BaseButton>
-    </div>
-  );
+  return <BackAlley />;
 }

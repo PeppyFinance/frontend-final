@@ -47,7 +47,6 @@ export { default as NextIcon } from "./Next";
 export { default as Rectangle } from "./Rectangle";
 export { default as CloverfieldLogo } from "./Logo";
 export { default as LeverageIcon } from "./Leverage";
-export { default as GradientStar } from "./GradientStar";
 export { default as EmptyPosition } from "./EmptyPosition";
 export { default as LottieCloverfield } from "./LottieCloverfield";
 export { default as WarningCloverfield } from "./WarningCloverfield";

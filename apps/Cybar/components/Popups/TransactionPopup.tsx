@@ -59,7 +59,7 @@ export default function TransactionPopup({
 
   return (
     <Wrapper
-      color={success ? theme.primaryBlue : theme.warning}
+      color={success ? theme.primary0 : theme.warning0}
       success={success}
     >
       <Text>
@@ -69,7 +69,7 @@ export default function TransactionPopup({
           value={hash}
           style={{
             height: "100%",
-            color: success ? theme.primaryBlue : theme.warning,
+            color: success ? theme.primary0 : theme.warning0,
             fontSize: "12px",
             fontWeight: "500",
           }}
@@ -86,7 +86,7 @@ export default function TransactionPopup({
           size={"10px"}
           style={{
             marginLeft: "6px",
-            color: success ? theme.primaryBlue : theme.warning,
+            color: success ? theme.primary0 : theme.warning0,
           }}
         />
       </Text>
@@ -103,9 +103,9 @@ export default function TransactionPopup({
             alt={`transfer-type`}
           />
         ) : success ? (
-          <CheckMark color={theme.primaryBlue} />
+          <CheckMark color={theme.primary0} />
         ) : (
-          <Close color={theme.warning} />
+          <Close color={theme.warning0} />
         )}
       </RowEnd>
     </Wrapper>

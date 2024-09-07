@@ -31,7 +31,7 @@ const Wrapper = styled.div<{ modal?: boolean }>`
   border: none;
   width: 100%;
   min-height: 379px;
-  border-radius: ${({ modal }) => (modal ? "10px" : "4px")};
+  border-radius: ${({ theme }) => theme.borderRadius0};
   background: ${({ theme }) => theme.bg0};
   ${({ theme }) => theme.mediaWidth.upToLarge`
     width: 100%;
@@ -65,7 +65,7 @@ const AccountWrapper = styled(Row)`
   font-weight: 500;
   font-size: 12px;
 
-  color: ${({ theme }) => theme.primaryBlue};
+  color: ${({ theme }) => theme.primary0};
 `;
 
 const AccountNameWrapper = styled(AccountWrapper)`

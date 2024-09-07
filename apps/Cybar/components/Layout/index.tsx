@@ -13,14 +13,11 @@ const Wrapper = styled.div`
   height: 100%;
   display: flex;
   position: relative;
-  padding-bottom: 36px;
   flex-flow: column nowrap;
   background: ${({ theme }) => theme.bg};
 `;
 const HeaderWrap = styled.div`
   width: 100%;
-  margin-bottom: 16px;
-  position: sticky;
   top: 0;
   z-index: 300;
   background: ${({ theme }) => theme.bg};
@@ -30,6 +27,8 @@ const Content = styled.div`
   position: relative;
   height: 100%;
   min-height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
   background: ${({ theme }) => theme.bg};
 
   ${({ theme }) => theme.mediaWidth.upToMedium`

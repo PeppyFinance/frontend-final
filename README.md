@@ -1,3 +1,5 @@
+# Staging environment
+
 # @symmio/frontend-sdk
 
 ## An SDK to interact with SYMMIO contracts, hedgers and peripherals.

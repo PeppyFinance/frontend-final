@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-import { Row, RowCenter, RowEnd } from "components/Row";
-// TODO: replace icon
-import { CloverfieldLogo } from "components/Icons";
+import { Row, RowCenter } from "components/Row";
+import CYBAR_LOGO_SHORT from "/public/static/images/cybar-short.svg";
+import Image from "next/legacy/image";
 
 const AutoSlippageContainer = styled.div`
   padding: 1px;
@@ -27,9 +27,14 @@ export default function SlippageTolerance() {
     <AutoSlippageContainer>
       <AutoSlippageWrapper>
         <RowCenter>Auto slippage</RowCenter>
-        <RowEnd width={"20%"}>
-          <CloverfieldLogo width={12} height={13} />
-        </RowEnd>
+        <RowCenter width={"20%"}>
+          <Image
+            width={12}
+            height={13}
+            src={CYBAR_LOGO_SHORT}
+            alt="cybar logo"
+          />
+        </RowCenter>
       </AutoSlippageWrapper>
     </AutoSlippageContainer>
   );

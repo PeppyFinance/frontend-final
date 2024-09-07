@@ -23,7 +23,6 @@ export function LeverageSlider({
   value,
   maxLeverage,
   onChange,
-  mixedColor,
 }: {
   value: number;
   maxLeverage: number;
@@ -33,7 +32,6 @@ export function LeverageSlider({
   const marks = useMemo(() => {
     if (maxLeverage === MAX_LEVERAGE_VALUE) {
       return {
-        "1": "1",
         5: "5",
         10: "10",
         15: "15",
@@ -67,14 +65,14 @@ export function LeverageSlider({
         marks={marks}
         value={value}
         trackStyle={{
-          backgroundImage: `linear-gradient(to right, #6AFF78, ${mixedColor})`,
+          backgroundColor: theme.primary0,
           height: 4,
         }}
         dotStyle={{
           borderRadius: "4px",
           height: "8px",
           width: "1px",
-          borderColor: theme.text4,
+          borderColor: theme.bg0,
         }}
         handleStyle={{
           borderColor: theme.bg,
@@ -83,16 +81,16 @@ export function LeverageSlider({
           height: 12,
           width: 12,
           marginTop: -4,
-          borderRadius: 2,
+          borderRadius: 99,
           boxShadow: "none",
-          backgroundColor: mixedColor,
+          backgroundColor: theme.primary0,
         }}
         railStyle={{
           width: "calc(100% + 8px)",
           marginLeft: "-4px",
-          background: theme.bg6,
+          background: theme.bg0,
         }}
-        activeDotStyle={{ borderColor: theme.text4 }}
+        activeDotStyle={{ borderColor: theme.primary0 }}
         onChange={onChange}
       />
     </Wrapper>

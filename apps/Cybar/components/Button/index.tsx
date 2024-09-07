@@ -53,28 +53,25 @@ export const PrimaryButton = styled(BaseButton)<{ height?: string | number }>`
   width: 100%;
   font-size: 14px;
   font-weight: 600;
-  border-radius: 8px;
+  border-radius: ${({ theme }) => theme.borderRadius0};
   height: ${({ height }) => (height ? height : "45px")};
-  background: ${({ theme }) => theme.gradLight};
+  background: ${({ theme }) => theme.primary0};
   color: ${({ theme }) => theme.bg};
 
   &:focus,
   &:hover {
-    background: ${({ theme }) => theme.hoverGrad};
+    background: ${({ theme }) => theme.primary1};
   }
   ${({ disabled }) =>
     disabled &&
     `
-
       cursor: default;
       opacity:0.5;
-
   `}
 `;
 
 export const MainButton = styled(PrimaryButton)`
   height: 48px;
-  border-radius: 8px;
 `;
 
 export const SecondaryButton = styled(PrimaryButton)`
@@ -94,7 +91,7 @@ export const SecondaryButton = styled(PrimaryButton)`
 
 export const ButtonEmpty = styled(BaseButton)`
   background-color: transparent;
-  color: ${({ theme }) => theme.red1};
+  color: ${({ theme }) => theme.negative};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -161,7 +158,7 @@ export const BlueButton = styled(TableButton)`
 
 export const MaxButton = styled.div`
   font-size: 12px;
-  background: ${({ theme }) => theme.primaryBlue};
+  background: ${({ theme }) => theme.primary0};
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 500;
@@ -240,9 +237,9 @@ export const PositionActionButton = styled(SecondaryButton)<{
   ${({ expired, theme }) =>
     expired &&
     `
-    color: ${theme.warning};
+    color: ${theme.warning0};
     background: ${theme.bgWarning};
-    border-color: ${theme.warning};
+    border-color: ${theme.warning0};
 
     &:hover {
     background: ${lighten(0.05, theme.bgWarning)};
@@ -251,9 +248,9 @@ export const PositionActionButton = styled(SecondaryButton)<{
   ${({ liquidatePending, theme }) =>
     liquidatePending &&
     `
-    color: ${theme.red1};
+    color: ${theme.negative};
     background: ${theme.red5};
-    border-color: ${theme.red1};
+    border-color: ${theme.negative};
 
     &:hover {
     background: ${lighten(0.05, theme.red5)};

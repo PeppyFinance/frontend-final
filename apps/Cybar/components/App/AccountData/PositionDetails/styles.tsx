@@ -31,7 +31,7 @@ export const Wrapper = styled(Column)`
 
   /* Handle */
   &::-webkit-scrollbar-thumb {
-    background: ${({ theme }) => theme.primaryBlue};
+    background: ${({ theme }) => theme.primary0};
   }
 
   /* Handle on hover */
@@ -119,7 +119,7 @@ export const MarketName = styled(RowStart)<{ expired?: boolean }>`
   font-weight: 500;
   font-size: 16px;
   width: unset;
-  color: ${({ theme, expired }) => (expired ? theme.warning : theme.text0)};
+  color: ${({ theme, expired }) => (expired ? theme.warning0 : theme.text0)};
   & > * {
     &:last-child {
       color: ${({ theme }) => theme.text1};
@@ -137,7 +137,7 @@ export const Leverage = styled(RowCenter)`
   font-size: 10px;
   border-radius: 2px;
   margin-left: 10px;
-  color: ${({ theme }) => theme.primaryBlue};
+  color: ${({ theme }) => theme.primary0};
   background: ${({ theme }) => theme.bg4};
 `;
 

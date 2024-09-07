@@ -11,7 +11,7 @@ export const LiquidationText = styled(RowStart)`
       color: ${({ theme }) => theme.text0};
     }
     &:last-child {
-      color: ${({ theme }) => theme.red1};
+      color: ${({ theme }) => theme.negative};
     }
   }
 `;
@@ -39,7 +39,7 @@ export const PartiallyFillText = styled(RowStart)`
 
   & > * {
     &:first-child {
-      color: ${({ theme }) => theme.primaryBlue};
+      color: ${({ theme }) => theme.primary0};
     }
     &:last-child {
       color: ${({ theme }) => theme.text1};

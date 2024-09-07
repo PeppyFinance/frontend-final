@@ -232,7 +232,7 @@ export default function DepositModal() {
           )}
           amount={formatAmount(allowedDepositAmount.toString(), 4, true)}
           ticker={`${collateralCurrency?.symbol}`}
-          valueColor={theme.primaryBlue}
+          valueColor={theme.primary0}
           onClick={onChange}
         />
       </LabelsRow>

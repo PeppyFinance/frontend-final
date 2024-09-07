@@ -34,6 +34,12 @@ const Title = styled.div`
   font-weight: 400;
 `;
 
+const Price = styled.div`
+  color: ${({ theme }) => theme.text0};
+  font-size: 12px;
+  font-weight: 400;
+`;
+
 export const InputAmount = styled.input.attrs({ type: "number" })<{
   active?: boolean;
 }>`
@@ -82,9 +88,9 @@ export default function MarketPanel() {
       <PriceWrap>
         <RowBetween>
           <Title>Market Price</Title>
-          <div>
+          <Price>
             {toBN(lastMarketPrice).toFormat()} {collateralCurrency?.symbol}
-          </div>
+          </Price>
         </RowBetween>
         <RowBetween>
           <Title>Slippage</Title>

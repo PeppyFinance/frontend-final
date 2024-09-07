@@ -26,8 +26,7 @@ const Wrapper = styled(Row)<{ border?: string; bg?: string }>`
   border-radius: 4px;
   color: ${({ theme }) => theme.text0};
   background: ${({ theme, bg }) => (bg ? bg : theme.bg4)};
-  border: 1px solid
-    ${({ theme, border }) => (border ? border : theme.primaryBlue)};
+  border: 1px solid ${({ theme, border }) => (border ? border : theme.primary0)};
 `;
 
 export default function NotificationPopup({
@@ -50,10 +49,10 @@ export default function NotificationPopup({
 
   const [bg, border] =
     notificationType === NotificationType.LIQUIDATION_ALERT
-      ? [theme.bgLoose, theme.red1]
+      ? [theme.bgLoose, theme.negative]
       : notificationType === NotificationType.EXPIRED_ORDER ||
         notificationType === NotificationType.HEDGER_ERROR
-      ? [theme.bgWarning, theme.warning]
+      ? [theme.bgWarning, theme.warning0]
       : [];
 
   return (

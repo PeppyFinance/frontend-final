@@ -3,13 +3,12 @@ import styled from "styled-components";
 import { useActiveMarket } from "@symmio/frontend-sdk/state/trade/hooks";
 import useBidAskPrice from "@symmio/frontend-sdk/hooks/useBidAskPrice";
 
-import { Name, Value } from ".";
-import Column from "components/Column";
+import { Name, Separator, Value } from ".";
+import { ColumnCenter } from "components/Column";
 import { RowEnd } from "components/Row";
 import BlinkingPrice from "components/App/FavoriteBar/BlinkingPrice";
 
-const MarginColumn = styled(Column)`
-  margin-left: 20px;
+const MarginColumn = styled(ColumnCenter)`
   ${({ theme }) => theme.mediaWidth.upToMedium` 
       margin-right: 5px;
       margin-left: unset;
@@ -45,22 +44,20 @@ export default function MarketDepths() {
   return (
     <MarketInfos>
       <MarginColumn>
-        <Name textAlign={"right"} textAlignMedium={"right"}>
-          Spread(bps)
-        </Name>
-        <Value textAlign={"right"} textAlignMedium={"right"}>
-          {spread}
-        </Value>
+        <Name>Spread(bps)</Name>
+        <Value>{spread}</Value>
       </MarginColumn>
+      <Separator />
       <MarketDepth>
-        <Column>
-          <Name textAlign={"right"}>Bid</Name>
+        <ColumnCenter>
+          <Name>Bid</Name>
           <BlinkingPrice data={bid} textSize={"12px"} textAlign={"right"} />
-        </Column>
-        <Column>
-          <Name textAlign={"right"}>Ask</Name>
+        </ColumnCenter>
+        <Separator />
+        <ColumnCenter>
+          <Name>Ask</Name>
           <BlinkingPrice data={ask} textSize={"12px"} textAlign={"right"} />
-        </Column>
+        </ColumnCenter>
       </MarketDepth>
     </MarketInfos>
   );

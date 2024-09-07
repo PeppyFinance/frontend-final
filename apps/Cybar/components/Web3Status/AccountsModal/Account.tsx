@@ -70,9 +70,12 @@ export default function Account({
   const [value, color] = useMemo(() => {
     const upnlBN = toBN(customAccount?.upnl || 0);
     if (upnlBN.isGreaterThan(0))
-      return [`+ $${formatAmount(upnlBN)}`, theme.green1];
+      return [`+ $${formatAmount(upnlBN)}`, theme.positive];
     else if (upnlBN.isLessThan(0))
-      return [`- $${formatAmount(Math.abs(upnlBN.toNumber()))}`, theme.red1];
+      return [
+        `- $${formatAmount(Math.abs(upnlBN.toNumber()))}`,
+        theme.negative,
+      ];
     return [`-`, undefined];
   }, [customAccount?.upnl, theme]);
 

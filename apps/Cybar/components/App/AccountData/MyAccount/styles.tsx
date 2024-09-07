@@ -8,7 +8,7 @@ export const GeneralContainer = styled.div<{ height?: string; width?: string }>`
 
 export const DefaultContainer = styled(GeneralContainer)`
   background-color: ${({ theme }) => theme.bg0};
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borderRadius0};
 `;
 
 export const DefaultHeader = styled.h2`
