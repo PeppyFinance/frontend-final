@@ -171,11 +171,11 @@ const ConnectWalletWrapper = styled.div`
   display: flex;
   flex: 1;
   justify-content: space-between;
-  gap: 12px;
+  gap: 40px;
 `;
 
 const AccountAddress = styled.div<{ width?: string; color?: string }>`
-  width: ${({ width }) => width ?? "95px"};
+  width: ${({ width }) => width ?? "120px"};
   color: ${({ theme, color }) => color ?? theme.text0};
   padding: 13px 0px;
 `;
@@ -402,9 +402,9 @@ export default function MultiAccount() {
       return (
         <MainButton>
           <ConnectWalletWrapper onClick={openConnectModal}>
-            <AccountAddress width={"105px"} color={theme.text1}>
+            <AccountAddress color={theme.text1}>
               <StatusIcon style={{ marginRight: "12px", marginLeft: "6px" }} />
-              {`not connected`}
+              {`Not connected`}
             </AccountAddress>
 
             <Button>Connect Wallet</Button>
