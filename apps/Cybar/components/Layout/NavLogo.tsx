@@ -7,6 +7,7 @@ import { APP_URL } from "constants/chains/misc";
 import { RowStart } from "components/Row";
 import CYBAR_HEADER_LOGO from "/public/static/images/cybar-long.svg";
 import Image from "next/legacy/image";
+import { useRouter } from "next/router";
 
 const Wrapper = styled(RowCenter)`
   width: fit-content;
@@ -30,6 +31,12 @@ const TextWrapper = styled(RowStart)`
 `;
 
 export default function NavLogo() {
+  const router = useRouter();
+
+  const handleLogoClick = () => {
+    router.push("/");
+  };
+
   return (
     <div>
       <Wrapper>
@@ -39,6 +46,7 @@ export default function NavLogo() {
             width={120}
             src={CYBAR_HEADER_LOGO}
             alt="cybar header logo"
+            onClick={handleLogoClick}
           />
           <ExternalLink href={APP_URL} target="_self" passHref></ExternalLink>
         </TextWrapper>
