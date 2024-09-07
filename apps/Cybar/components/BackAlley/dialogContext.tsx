@@ -1,21 +1,46 @@
-import { CharacterId } from "components/Characters/characterIds.type";
-import { createContext, ReactNode, useContext } from "react";
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  useContext,
+  useReducer,
+} from "react";
+import {
+  CharacterState,
+  DispatchAction,
+  characterReducer,
+} from "./characterReducer";
 
-const DialogContext = createContext<CharacterId | undefined>(undefined);
+interface CharacterContextValue {
+  characterState: CharacterState;
+  characterDispatch: Dispatch<DispatchAction>;
+}
 
+// TODO: refactor to remove undefined
+const CharacterContext = createContext<CharacterContextValue | undefined>(
+  undefined
+);
 interface Props {
   children: ReactNode;
 }
 export const DialogContextProvider = ({ children }: Props) => {
+  const [characterState, characterDispatch] = useReducer(characterReducer, {
+    characterId: undefined,
+  });
+
+  const contextValue: CharacterContextValue = {
+    characterState,
+    characterDispatch,
+  };
   return (
-    <DialogContext.Provider value="charBackAlley1">
+    <CharacterContext.Provider value={contextValue}>
       {children}
-    </DialogContext.Provider>
+    </CharacterContext.Provider>
   );
 };
 
 export const useDialogContext = () => {
-  const context = useContext(DialogContext);
+  const context = useContext(CharacterContext);
   if (!context) {
     throw new Error(
       "DialogContext must be used within a DialogContextProvider"
