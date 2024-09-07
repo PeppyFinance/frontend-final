@@ -1,24 +1,17 @@
 import styled, { css, DefaultTheme, keyframes } from "styled-components";
 import { CharacterId } from "./characterIds.type";
+import { CharacterProps } from "./characterConfig";
 
-export interface CharacterProps {
-  name: string;
-  left: string;
-  bottom: string;
-  height: string;
-  id: CharacterId;
+export interface CharacterInteractiveProps extends CharacterProps {
   onClick?: (name: CharacterId) => void;
   isActive: boolean;
-  focusedBottom?: string;
-  focusedLeft?: string;
-  focusedHeight?: string;
 }
 
 export const Character = ({
   id: characterId,
   onClick,
   ...props
-}: CharacterProps) => {
+}: CharacterInteractiveProps) => {
   return (
     <CharacterImg
       onClick={(e) => {
@@ -45,7 +38,7 @@ const glow = (theme: DefaultTheme) => keyframes`
     }
 `;
 
-const CharacterImg = styled.img<Omit<CharacterProps, "id">>`
+const CharacterImg = styled.img<Omit<CharacterInteractiveProps, "id">>`
   position: absolute;
   cursor: pointer;
   bottom: ${({ bottom }) => bottom};
