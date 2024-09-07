@@ -32,7 +32,7 @@ import {
   useUserAccounts,
 } from "@symmio/frontend-sdk/hooks/useAccounts";
 
-import { NavButton } from "components/Button";
+import { BaseButton, MainButton, NavButton } from "components/Button";
 import { ChevronDown, Switch, Status as StatusIcon } from "components/Icons";
 import { Row, RowCenter, RowEnd, RowStart } from "components/Row";
 import AccountsModal from "./AccountsModal";
@@ -117,36 +117,20 @@ const ErrorButton = styled(GradientColorButton)`
   }
 `;
 
-const MainButton = styled(NavButton)`
+const AccountWrapper = styled(BaseButton)`
   font-size: 12px;
-  width: unset;
-  padding: 2px;
-  height: 40px;
   display: flex;
-  overflow: unset;
-  z-index: 0;
-
-  &:hover,
-  &:focus {
-    cursor: pointer;
-    /* background: none; */
-    background: ${({ theme }) => theme.bg4};
-  }
+  align-items: center;
+  justify-content: center;
+  background-color: ${({ theme }) => theme.bg1};
+  border-radius: ${({ theme }) => theme.borderRadius0};
+  padding: 4px 8px;
 `;
 
-const Button = styled.div`
-  width: 204px;
+const Button = styled(MainButton)`
   height: 36px;
-  margin: 2px 0px;
-  margin-right: 2px;
-
   font-weight: 500;
   font-size: 12px;
-  text-align: center;
-  color: ${({ theme }) => theme.bg};
-  background: ${({ theme }) => theme.gradLight};
-  border-radius: 3px;
-  padding: 10px 0px;
 `;
 
 const ChooseAccountButton = styled(Button)`
@@ -161,23 +145,11 @@ const UpnlText = styled(RowCenter)`
   margin-right: 12px;
 `;
 
-const CreateAccountWrapper = styled.div`
-  display: flex;
-  flex: 1;
-  justify-content: space-between;
-  gap: 20px;
-`;
-const ConnectWalletWrapper = styled.div`
-  display: flex;
-  flex: 1;
-  justify-content: space-between;
-  gap: 12px;
-`;
-
 const AccountAddress = styled.div<{ width?: string; color?: string }>`
-  width: ${({ width }) => width ?? "95px"};
   color: ${({ theme, color }) => color ?? theme.text0};
-  padding: 13px 0px;
+  white-space: nowrap;
+  margin-left: 8px;
+  margin-right: 16px;
 `;
 
 const NetworkButton = styled(NavButton)`
@@ -329,65 +301,59 @@ export default function MultiAccount() {
     if (account) {
       if (accountsLoading || statsLoading) {
         return (
-          <MainButton>
-            <CreateAccountWrapper>
-              <AccountAddress onClick={openConnectModal}>
-                <StatusIcon
-                  connected
-                  style={{ marginRight: "12px", marginLeft: "6px" }}
-                />
-                {ENSName || truncateAddress(account)}
-              </AccountAddress>
-
-              <Button>Loading...</Button>
-            </CreateAccountWrapper>
-          </MainButton>
-        );
-      }
-      if (accounts.length === 0) {
-        return (
-          <MainButton>
-            <CreateAccountWrapper>
-              <AccountAddress onClick={openConnectModal}>
-                <StatusIcon
-                  connected
-                  style={{ marginRight: "12px", marginLeft: "6px" }}
-                />
-                {ENSName || truncateAddress(account)}
-              </AccountAddress>
-
-              <Button onClick={toggleCreateAccountModal}>Create Account</Button>
-              <CreateAccountModal />
-            </CreateAccountWrapper>
-          </MainButton>
-        );
-      }
-      return (
-        <MainButton ref={ref}>
-          <CreateAccountWrapper>
-            <AccountAddress onClick={openAccountModal}>
+          <AccountWrapper>
+            <AccountAddress onClick={openConnectModal}>
               <StatusIcon
                 connected
                 style={{ marginRight: "12px", marginLeft: "6px" }}
               />
               {ENSName || truncateAddress(account)}
             </AccountAddress>
-            <Container>
-              {clickAccounts && (
-                <div>
-                  <AccountsModal
-                    onDismiss={() =>
-                      setClickAccounts((previousValue) => !previousValue)
-                    }
-                    data={accounts}
-                  />
-                  <AllAccountsUpdater />
-                </div>
-              )}
-              {getInnerContent()}
-            </Container>
-          </CreateAccountWrapper>
-        </MainButton>
+
+            <Button>Loading...</Button>
+          </AccountWrapper>
+        );
+      }
+      if (accounts.length === 0) {
+        return (
+          <AccountWrapper>
+            <AccountAddress onClick={openConnectModal}>
+              <StatusIcon
+                connected
+                style={{ marginRight: "12px", marginLeft: "6px" }}
+              />
+              {ENSName || truncateAddress(account)}
+            </AccountAddress>
+
+            <Button onClick={toggleCreateAccountModal}>Create Account</Button>
+            <CreateAccountModal />
+          </AccountWrapper>
+        );
+      }
+      return (
+        <AccountWrapper onClick={openAccountModal} ref={ref}>
+          <AccountAddress>
+            <StatusIcon
+              connected
+              style={{ marginRight: "12px", marginLeft: "6px" }}
+            />
+            {ENSName || truncateAddress(account)}
+          </AccountAddress>
+          <Container onClick={(e) => e.stopPropagation()}>
+            {clickAccounts && (
+              <div>
+                <AccountsModal
+                  onDismiss={() =>
+                    setClickAccounts((previousValue) => !previousValue)
+                  }
+                  data={accounts}
+                />
+                <AllAccountsUpdater />
+              </div>
+            )}
+            {getInnerContent()}
+          </Container>
+        </AccountWrapper>
       );
     } else if (error) {
       return (
@@ -400,16 +366,14 @@ export default function MultiAccount() {
       );
     } else {
       return (
-        <MainButton>
-          <ConnectWalletWrapper onClick={openConnectModal}>
-            <AccountAddress width={"105px"} color={theme.text1}>
-              <StatusIcon style={{ marginRight: "12px", marginLeft: "6px" }} />
-              {`not connected`}
-            </AccountAddress>
+        <AccountWrapper onClick={openConnectModal}>
+          <AccountAddress color={theme.text1}>
+            <StatusIcon style={{ marginRight: "8px" }} />
+            {`not connected`}
+          </AccountAddress>
 
-            <Button>Connect Wallet</Button>
-          </ConnectWalletWrapper>
-        </MainButton>
+          <Button>Connect Wallet</Button>
+        </AccountWrapper>
       );
     }
   }
