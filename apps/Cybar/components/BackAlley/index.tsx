@@ -1,10 +1,9 @@
 import { DefaultContainer } from "components/App/AccountData/MyAccount/styles";
-import styled from "styled-components";
-import { useState } from "react";
 import { Character, CharacterProps } from "components/Characters/character";
 import { CharacterId } from "components/Characters/characterIds.type";
 import { CharacterModal } from "components/Characters/Modal";
-import { DialogContextProvider } from "./dialogContext";
+import styled from "styled-components";
+import { useCharacterContext } from "./characterContext";
 
 const BackAlleyContainer = styled(DefaultContainer)`
   position: relative;
@@ -53,32 +52,23 @@ const BackAlleyCharacters = ({
 ];
 
 export const BackAlley = () => {
-  const [activeCharacter, setActiveCharacter] = useState<
-    CharacterId | undefined
-  >(undefined);
-
-  const onClickCharacter = (id: CharacterId) =>
-    id === activeCharacter
-      ? setActiveCharacter(undefined)
-      : setActiveCharacter(id);
+  const { characterState, characterDispatch } = useCharacterContext();
+  const onClickCharacter = (characterId: CharacterId) => {
+    characterDispatch({
+      type: "SET_ACTIVE",
+      characterId,
+    });
+  };
 
   return (
-    <DialogContextProvider>
-      <BackAlleyContainer
-        onClick={() => {
-          if (activeCharacter) {
-            setActiveCharacter(undefined);
-          }
-        }}
-      >
-        <CharacterModal character={activeCharacter} />
-        {BackAlleyCharacters({
-          onClick: onClickCharacter,
-          activeCharacter,
-        }).map((props) => (
-          <Character key={props.id} {...props} />
-        ))}
-      </BackAlleyContainer>
-    </DialogContextProvider>
+    <BackAlleyContainer>
+      <CharacterModal />
+      {BackAlleyCharacters({
+        onClick: onClickCharacter,
+        activeCharacter: characterState.characterId,
+      }).map((props) => (
+        <Character key={props.id} {...props} />
+      ))}
+    </BackAlleyContainer>
   );
 };

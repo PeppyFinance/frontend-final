@@ -1,8 +1,8 @@
-import { CharacterId } from "components/Characters/characterIds.type";
+import { useCharacterContext } from "components/BackAlley/characterContext";
 import { Modal as BaseModal } from "components/Modal";
 import styled, { keyframes } from "styled-components";
-import { Header } from "./Header";
 import { DialogButton, DialogButtonText } from "./DialogButton";
+import { Header } from "./Header";
 
 const growAnimation = keyframes`
   from {
@@ -92,22 +92,22 @@ const ButtonWrapper = styled.div`
   animation-name: ${growAnimation};
 `;
 
-interface CharacterModal {
-  character?: CharacterId;
-}
-
-export const CharacterModal = ({ character }: CharacterModal) => {
+export const CharacterModal = () => {
+  const { characterState, characterDispatch } = useCharacterContext();
+  const onClose = () => {
+    characterDispatch({ type: "SET_INACTIVE" });
+  };
   return (
-    <Modal isOpen={!!character}>
-      <Header characterName="Cybar Peep" onClose={() => console.log("TODO")} />
+    <Modal isOpen={!!characterState.characterId}>
+      <Header characterName="Cybar Peep" onClose={onClose} />
       <ModalBody>
         <ModalBodyText>Hllo Cybar Degens</ModalBodyText>
         <ButtonWrapper>
           <DialogButton>
-            <DialogButtonText>{character}</DialogButtonText>
+            <DialogButtonText>{characterState.characterId}</DialogButtonText>
           </DialogButton>
           <DialogButton>
-            <DialogButtonText>{character}</DialogButtonText>
+            <DialogButtonText>{characterState.characterId}</DialogButtonText>
           </DialogButton>
         </ButtonWrapper>
       </ModalBody>

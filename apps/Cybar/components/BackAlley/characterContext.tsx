@@ -23,7 +23,7 @@ const CharacterContext = createContext<CharacterContextValue | undefined>(
 interface Props {
   children: ReactNode;
 }
-export const DialogContextProvider = ({ children }: Props) => {
+export const CharacterContextProvider = ({ children }: Props) => {
   const [characterState, characterDispatch] = useReducer(characterReducer, {
     characterId: undefined,
   });
@@ -39,7 +39,7 @@ export const DialogContextProvider = ({ children }: Props) => {
   );
 };
 
-export const useDialogContext = () => {
+export const useCharacterContext = () => {
   const context = useContext(CharacterContext);
   if (!context) {
     throw new Error(
