@@ -11,13 +11,18 @@ type SetInactive = {
   type: typeof CharacterActions.SET_INACTIVE;
 };
 
+type SetDialog = {
+  type: typeof CharacterActions.SET_DIALOG;
+  dialogId: number;
+};
+
 export interface CharacterState {
   characterId?: CharacterId;
   name?: string;
   dialog?: Dialog;
 }
 
-export type DispatchAction = SetActive | SetInactive;
+export type DispatchAction = SetActive | SetInactive | SetDialog;
 
 export const characterReducer = (
   state: CharacterState,
@@ -25,15 +30,14 @@ export const characterReducer = (
 ) => {
   switch (action.type) {
     case "SET_ACTIVE": {
+      const character = BackAlleyChars.find(
+        (character) => character.id === action.characterId
+      );
       return {
         ...state,
         characterId: action.characterId,
-        name: BackAlleyChars.find(
-          (character) => character.id === action.characterId
-        )?.name,
-        dialog: BackAlleyChars.find(
-          (character) => character.id === action.characterId
-        )?.dialogs.find((dialog) => dialog.id === 0),
+        name: character?.name,
+        dialog: character?.dialogs.find((dialog) => dialog.id === 0),
       };
     }
     case "SET_INACTIVE": {
@@ -41,6 +45,14 @@ export const characterReducer = (
         ...state,
         characterId: undefined,
         dialog: undefined,
+      };
+    }
+    case "SET_DIALOG": {
+      return {
+        ...state,
+        dialog: BackAlleyChars.find(
+          (character) => character.id === state.characterId
+        )?.dialogs.find((dialog) => dialog.id === action.dialogId),
       };
     }
     default:

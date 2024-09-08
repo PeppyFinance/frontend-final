@@ -97,6 +97,15 @@ export const CharacterModal = () => {
   const onClose = () => {
     characterDispatch({ type: "SET_INACTIVE" });
   };
+
+  const onAnswer = (dialogId: number | undefined) => {
+    if (dialogId) {
+      characterDispatch({
+        type: "SET_DIALOG",
+        dialogId,
+      });
+    }
+  };
   if (!characterState.name) return null;
 
   return (
@@ -108,7 +117,10 @@ export const CharacterModal = () => {
           <ButtonWrapper>
             <>
               {characterState.dialog.answers?.map((answer) => (
-                <DialogButton key={answer.text}>
+                <DialogButton
+                  key={answer.text}
+                  onClick={() => onAnswer(answer.nextDialog)}
+                >
                   <DialogButtonText>{answer.text}</DialogButtonText>
                 </DialogButton>
               ))}
