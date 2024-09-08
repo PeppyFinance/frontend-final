@@ -1,8 +1,8 @@
 import { DefaultContainer } from "components/App/AccountData/MyAccount/styles";
-import { Character } from "components/Characters/character";
-import { BackAlleyChars } from "components/Characters/characterConfig";
-import { CharacterId } from "components/Characters/characterIds.type";
-import { CharacterModal } from "components/Characters/Modal";
+import { Character } from "components/BackAlley/Characters/character";
+import { BackAlleyChars } from "components/BackAlley/Characters/characterConfig";
+import { CharacterId } from "components/BackAlley/Characters/characterIds.type";
+import { CharacterModal } from "components/BackAlley/Characters/Modal";
 import styled from "styled-components";
 import { useCharacterContext } from "./characterContext";
 
@@ -32,7 +32,7 @@ export const BackAlley = () => {
         <Character
           key={props.id}
           onClick={onClickCharacter}
-          isActive={props.id === characterState.characterId}
+          isActive={props.id === characterState.character?.id}
           {...props}
         />
       ))}

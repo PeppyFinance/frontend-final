@@ -1,6 +1,10 @@
-import { CharacterId } from "components/Characters/characterIds.type";
 import { CharacterActions } from "./characterActions";
-import { BackAlleyChars, Dialog } from "components/Characters/characterConfig";
+import {
+  BackAlleyChars,
+  CharacterProps,
+  Dialog,
+} from "./Characters/characterConfig";
+import { CharacterId } from "./Characters/characterIds.type";
 
 type SetActive = {
   type: typeof CharacterActions.SET_ACTIVE;
@@ -17,8 +21,7 @@ type SetDialog = {
 };
 
 export interface CharacterState {
-  characterId?: CharacterId;
-  name?: string;
+  character?: CharacterProps;
   dialog?: Dialog;
 }
 
@@ -35,24 +38,23 @@ export const characterReducer = (
       );
       return {
         ...state,
-        characterId: action.characterId,
-        name: character?.name,
+        character,
         dialog: character?.dialogs.find((dialog) => dialog.id === 0),
       };
     }
     case "SET_INACTIVE": {
       return {
         ...state,
-        characterId: undefined,
+        character: undefined,
         dialog: undefined,
       };
     }
     case "SET_DIALOG": {
       return {
         ...state,
-        dialog: BackAlleyChars.find(
-          (character) => character.id === state.characterId
-        )?.dialogs.find((dialog) => dialog.id === action.dialogId),
+        dialog: state.character?.dialogs.find(
+          (dialog) => dialog.id === action.dialogId
+        ),
       };
     }
     default:

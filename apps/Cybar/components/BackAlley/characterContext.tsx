@@ -11,7 +11,7 @@ import {
   characterReducer,
 } from "./characterReducer";
 
-interface CharacterContextValue {
+export interface CharacterContextValue {
   characterState: CharacterState;
   characterDispatch: Dispatch<DispatchAction>;
 }
@@ -25,9 +25,8 @@ interface Props {
 }
 export const CharacterContextProvider = ({ children }: Props) => {
   const [characterState, characterDispatch] = useReducer(characterReducer, {
-    characterId: undefined,
     dialog: undefined,
-    name: undefined,
+    character: undefined,
   });
 
   const contextValue: CharacterContextValue = {
