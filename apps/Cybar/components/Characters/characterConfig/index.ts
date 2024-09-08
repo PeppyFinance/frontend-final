@@ -11,7 +11,7 @@ interface DialogContent {
   action?: DispatchAction;
 }
 
-interface Dialog extends DialogContent {
+export interface Dialog extends DialogContent {
   id: number;
   answers?: DialogContent[];
 }

@@ -26,6 +26,7 @@ interface Props {
 export const CharacterContextProvider = ({ children }: Props) => {
   const [characterState, characterDispatch] = useReducer(characterReducer, {
     characterId: undefined,
+    dialog: undefined,
   });
 
   const contextValue: CharacterContextValue = {
