@@ -13,6 +13,7 @@ type SetInactive = {
 
 export interface CharacterState {
   characterId?: CharacterId;
+  name?: string;
   dialog?: Dialog;
 }
 
@@ -27,6 +28,9 @@ export const characterReducer = (
       return {
         ...state,
         characterId: action.characterId,
+        name: BackAlleyChars.find(
+          (character) => character.id === action.characterId
+        )?.name,
         dialog: BackAlleyChars.find(
           (character) => character.id === action.characterId
         )?.dialogs.find((dialog) => dialog.id === 0),

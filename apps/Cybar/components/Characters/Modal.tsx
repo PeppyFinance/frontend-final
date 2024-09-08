@@ -97,20 +97,25 @@ export const CharacterModal = () => {
   const onClose = () => {
     characterDispatch({ type: "SET_INACTIVE" });
   };
+  if (!characterState.name) return null;
+
   return (
     <Modal isOpen={!!characterState.characterId}>
-      <Header characterName="Cybar Peep" onClose={onClose} />
-      <ModalBody>
-        <ModalBodyText>Hllo Cybar Degens</ModalBodyText>
-        <ButtonWrapper>
-          <DialogButton>
-            <DialogButtonText>{characterState.characterId}</DialogButtonText>
-          </DialogButton>
-          <DialogButton>
-            <DialogButtonText>{characterState.characterId}</DialogButtonText>
-          </DialogButton>
-        </ButtonWrapper>
-      </ModalBody>
+      <Header characterName={characterState.name} onClose={onClose} />
+      {characterState.dialog && (
+        <ModalBody>
+          <ModalBodyText>{characterState.dialog.text}</ModalBodyText>
+          <ButtonWrapper>
+            <>
+              {characterState.dialog.answers?.map((answer) => (
+                <DialogButton key={answer.text}>
+                  <DialogButtonText>{answer.text}</DialogButtonText>
+                </DialogButton>
+              ))}
+            </>
+          </ButtonWrapper>
+        </ModalBody>
+      )}
     </Modal>
   );
 };
