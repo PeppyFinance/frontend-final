@@ -1,6 +1,7 @@
 import styled, { css, DefaultTheme, keyframes } from "styled-components";
 import { CharacterId } from "./characterIds.type";
 import { CharacterProps } from "./characterConfig";
+import { Z_INDEX } from "theme";
 
 export interface CharacterInteractiveProps extends CharacterProps {
   onClick?: (name: CharacterId) => void;
@@ -51,7 +52,7 @@ const CharacterImg = styled.img<Omit<CharacterInteractiveProps, "id">>`
   ${({ isActive, focusedBottom, focusedLeft, focusedHeight }) =>
     isActive &&
     css`
-      z-index: 10;
+      z-index: ${Z_INDEX.modalBackdrop - 1};
       bottom: ${focusedBottom ?? "120px"};
       left: ${focusedLeft ?? "calc(45vw - 172px)"};
       height: ${focusedHeight ?? "500px"};

@@ -3,6 +3,7 @@ import { Modal as BaseModal } from "components/Modal";
 import styled, { keyframes } from "styled-components";
 import { DialogButton, DialogButtonText } from "./DialogButton";
 import { Header } from "./Header";
+import { Z_INDEX } from "theme";
 
 const growAnimation = keyframes`
   from {
@@ -13,15 +14,26 @@ const growAnimation = keyframes`
   }
 `;
 
-const Modal = styled(BaseModal)`
+const DialogWindow = styled.div`
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: ${Z_INDEX.modalBackdrop};
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+`;
+
+const Modal = styled.div`
+  position: relative;
+  z-index: ${Z_INDEX.modal};
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: auto;
   width: 80%;
-  position: fixed;
-  top: 80%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   box-shadow: 0px 1px 8px 1px rgba(145, 237, 233, 0.9);
@@ -30,11 +42,11 @@ const Modal = styled(BaseModal)`
   @media screen and (min-width: 600px) {
     height: 241px;
     width: 700px;
-    top: 70%;
+    top: 60%;
   }
 
   @media screen and (min-width: 990px) {
-    top: 80%;
+    top: 70%;
   }
 `;
 
