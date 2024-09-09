@@ -23,6 +23,7 @@ const DialogWindow = styled.div`
   height: 100%;
 `;
 
+// TODO: use theme breakpoints in media queries
 const Modal = styled.div`
   position: relative;
   z-index: ${Z_INDEX.modal};
@@ -38,13 +39,13 @@ const Modal = styled.div`
   box-shadow: 0px 1px 8px 1px rgba(145, 237, 233, 0.9);
   border-radius: 4px 18px 18px 18px;
 
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 720px) {
     height: 241px;
     width: 700px;
     top: 60%;
   }
 
-  @media screen and (min-width: 990px) {
+  @media screen and (min-width: 960px) {
     top: 70%;
   }
 `;
@@ -67,7 +68,7 @@ const ModalBody = styled.div<{ isClickable: boolean }>`
   padding: 24px 16px 16px 16px;
   cursor: ${(props) => (props.isClickable ? "pointer" : "default")};
 
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 720px) {
     padding: 48px 48px 24px 48px;
   }
 `;
@@ -88,7 +89,7 @@ const ModalBodyText = styled.div`
   animation-duration: 0.75s;
   animation-name: ${growAnimation};
 
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 720px) {
     width: auto;
     color: #ffffff;
     font-size: 20px;
