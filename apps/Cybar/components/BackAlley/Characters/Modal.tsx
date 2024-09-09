@@ -38,7 +38,7 @@ const Modal = styled(BaseModal)`
   }
 `;
 
-const ModalBody = styled.div`
+const ModalBody = styled.div<{ isClickable: boolean }>`
   height: auto;
   flex-grow: 1;
   width: 100%;
@@ -54,7 +54,7 @@ const ModalBody = styled.div`
   overflow: visible;
   border-radius: 0px 0px 18px 18px;
   padding: 24px 16px 16px 16px;
-  cursor: pointer;
+  cursor: ${(props) => (props.isClickable ? "pointer" : "default")};
 
   @media screen and (min-width: 600px) {
     padding: 48px 48px 24px 48px;
@@ -132,7 +132,15 @@ export const CharacterModal = () => {
     <Modal isOpen={!!characterState.character}>
       <Header characterName={characterState.character.name} onClose={onClose} />
       {characterState.dialog && (
-        <ModalBody onClick={() => onNextDialog()}>
+        <ModalBody
+          onClick={() => onNextDialog()}
+          isClickable={
+            !(
+              characterState.dialog?.answers &&
+              characterState.dialog.answers.length > 0
+            )
+          }
+        >
           <ModalBodyText>{characterState.dialog.text}</ModalBodyText>
           <ButtonWrapper>
             <>
