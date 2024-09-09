@@ -1,5 +1,4 @@
 import { useCharacterContext } from "components/BackAlley/characterContext";
-import { Modal as BaseModal } from "components/Modal";
 import styled, { keyframes } from "styled-components";
 import { DialogButton, DialogButtonText } from "./DialogButton";
 import { Header } from "./Header";
@@ -141,33 +140,38 @@ export const CharacterModal = () => {
   if (!characterState.character) return null;
 
   return (
-    <Modal isOpen={!!characterState.character}>
-      <Header characterName={characterState.character.name} onClose={onClose} />
-      {characterState.dialog && (
-        <ModalBody
-          onClick={() => onNextDialog()}
-          isClickable={
-            !(
-              characterState.dialog?.answers &&
-              characterState.dialog.answers.length > 0
-            )
-          }
-        >
-          <ModalBodyText>{characterState.dialog.text}</ModalBodyText>
-          <ButtonWrapper>
-            <>
-              {characterState.dialog.answers?.map((answer) => (
-                <DialogButton
-                  key={answer.text}
-                  onClick={() => onAnswer(answer.nextDialog)}
-                >
-                  <DialogButtonText>{answer.text}</DialogButtonText>
-                </DialogButton>
-              ))}
-            </>
-          </ButtonWrapper>
-        </ModalBody>
-      )}
-    </Modal>
+    <DialogWindow>
+      <Modal>
+        <Header
+          characterName={characterState.character.name}
+          onClose={onClose}
+        />
+        {characterState.dialog && (
+          <ModalBody
+            onClick={() => onNextDialog()}
+            isClickable={
+              !(
+                characterState.dialog?.answers &&
+                characterState.dialog.answers.length > 0
+              )
+            }
+          >
+            <ModalBodyText>{characterState.dialog.text}</ModalBodyText>
+            <ButtonWrapper>
+              <>
+                {characterState.dialog.answers?.map((answer) => (
+                  <DialogButton
+                    key={answer.text}
+                    onClick={() => onAnswer(answer.nextDialog)}
+                  >
+                    <DialogButtonText>{answer.text}</DialogButtonText>
+                  </DialogButton>
+                ))}
+              </>
+            </ButtonWrapper>
+          </ModalBody>
+        )}
+      </Modal>
+    </DialogWindow>
   );
 };
