@@ -54,6 +54,7 @@ const ModalBody = styled.div`
   overflow: visible;
   border-radius: 0px 0px 18px 18px;
   padding: 24px 16px 16px 16px;
+  cursor: pointer;
 
   @media screen and (min-width: 600px) {
     padding: 48px 48px 24px 48px;
