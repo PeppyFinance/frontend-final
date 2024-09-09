@@ -19,7 +19,7 @@ export const charBackAlley1: CharacterProps = {
     },
     {
       id: 2,
-      text: "If all other things fail, there's an Amazon suicide cell behind the next corner!But if you consider that, you can reach over your cybars to me first haha jk",
+      text: "If all other things fail, there's an Amazon suicide cell behind the next corner! But if you consider that, you can reach over your cybars to me first haha jk",
       endsDialog: true,
     },
   ],

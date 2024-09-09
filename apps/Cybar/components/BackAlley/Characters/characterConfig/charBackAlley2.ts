@@ -28,12 +28,12 @@ export const charBackAlley2: CharacterProps = {
     },
     {
       id: 3,
-      text: "I've had surgery to make orgasmsmore powerful but everything I canthink about is SONICs Weiner haha.He likes Chili Dogs you remember lol",
+      text: "I've had surgery to make orgasmsmore powerful but everything I can think about is SONICs Weiner haha.He likes Chili Dogs you remember lol",
       nextDialog: 4,
     },
     {
       id: 4,
-      text: "*He appears to zone out*You back off to not get splurted on through his throbbing ejaculate enhancers.",
+      text: "*He appears to zone out* You back off to not get splurted on through his throbbing ejaculate enhancers.",
       answers: [
         {
           text: "tap him with a stick",
