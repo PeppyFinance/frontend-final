@@ -106,13 +106,32 @@ export const CharacterModal = () => {
       });
     }
   };
+
+  const onNextDialog = () => {
+    if (characterState.dialog?.nextDialog) {
+      characterDispatch({
+        type: "SET_DIALOG",
+        dialogId: characterState.dialog.nextDialog,
+      });
+    } else {
+      if (
+        characterState.dialog?.answers &&
+        characterState.dialog.answers.length > 0
+      ) {
+        console.log("handle by answers");
+        return null;
+      }
+      console.log("No next dialog, closing...");
+      onClose();
+    }
+  };
   if (!characterState.character) return null;
 
   return (
     <Modal isOpen={!!characterState.character}>
       <Header characterName={characterState.character.name} onClose={onClose} />
       {characterState.dialog && (
-        <ModalBody>
+        <ModalBody onClick={() => onNextDialog()}>
           <ModalBodyText>{characterState.dialog.text}</ModalBodyText>
           <ButtonWrapper>
             <>
@@ -131,4 +150,3 @@ export const CharacterModal = () => {
     </Modal>
   );
 };
-export { ButtonWrapper, Modal, ModalBody, ModalBodyText };
