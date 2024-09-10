@@ -1,14 +1,12 @@
 import styled, { css, DefaultTheme, keyframes } from "styled-components";
-import { CharacterId } from "./characterIds.type";
-import { Z_INDEX } from "theme";
+import { CharacterName } from "./characterNames.type";
 
 export interface CharacterProps {
-  name: string;
   left: string;
   bottom: string;
   height: string;
-  characterId: CharacterId;
-  onClick?: (name: CharacterId) => void;
+  characterName: CharacterName;
+  onClick?: (name: CharacterName) => void;
   isActive: boolean;
   focusedBottom?: string;
   focusedLeft?: string;
@@ -16,7 +14,7 @@ export interface CharacterProps {
 }
 
 export const Character = ({
-  characterId,
+  characterName,
   onClick,
   ...props
 }: CharacterProps) => {
@@ -24,9 +22,9 @@ export const Character = ({
     <CharacterImg
       onClick={(e) => {
         e.stopPropagation();
-        onClick ? onClick(characterId) : null;
+        onClick ? onClick(characterName) : null;
       }}
-      src={`/images/characters/${characterId}.webp`}
+      src={`/images/characters/${characterName}.webp`}
       {...props}
     />
   );
@@ -46,7 +44,7 @@ const glow = (theme: DefaultTheme) => keyframes`
     }
 `;
 
-const CharacterImg = styled.img<Omit<CharacterProps, "characterId">>`
+const CharacterImg = styled.img<Omit<CharacterProps, "characterName">>`
   position: absolute;
   cursor: pointer;
   bottom: ${({ bottom }) => bottom};
@@ -59,7 +57,7 @@ const CharacterImg = styled.img<Omit<CharacterProps, "characterId">>`
   ${({ isActive, focusedBottom, focusedLeft, focusedHeight }) =>
     isActive &&
     css`
-      z-index: ${Z_INDEX.modalBackdrop - 1};
+      z-index: 10;
       bottom: ${focusedBottom ?? "120px"};
       left: ${focusedLeft ?? "calc(45vw - 172px)"};
       height: ${focusedHeight ?? "500px"};
