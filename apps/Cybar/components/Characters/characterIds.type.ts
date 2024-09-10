@@ -1,4 +1,4 @@
-export const CharacterName = {
+export const CharacterId = {
   charBackAlley1: "charBackAlley1",
   charBackAlley2: "charBackAlley2",
   charBackAlley3: "charBackAlley3",
@@ -15,4 +15,4 @@ export const CharacterName = {
 
 type ObjectValues<T> = T[keyof T];
 
-export type CharacterName = ObjectValues<typeof CharacterName>;
+export type CharacterId = ObjectValues<typeof CharacterId>;
