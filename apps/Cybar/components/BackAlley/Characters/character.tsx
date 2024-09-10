@@ -1,6 +1,6 @@
-import { CharacterProps } from "components/BackAlley/Characters/characterConfig";
-import { CharacterId } from "components/BackAlley/Characters/characterIds.type";
 import styled, { css, DefaultTheme, keyframes } from "styled-components";
+import { CharacterId } from "./characterIds.type";
+import { CharacterProps } from "./characterConfig";
 import { Z_INDEX } from "theme";
 
 export interface CharacterInteractiveProps extends CharacterProps {
