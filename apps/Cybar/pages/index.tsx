@@ -6,7 +6,6 @@ import { useAppDispatch } from "@symmio/frontend-sdk/state";
 import { BackAlley } from "components/BackAlley";
 import { Box } from "rebass/styled-components";
 import styled from "styled-components";
-import { CharacterContextProvider } from "components/BackAlley/characterContext";
 
 export const Row = styled(Box)<{
   width?: string;
@@ -71,9 +70,5 @@ export default function MyFunction() {
       dispatch(updateAccount(lastSubAccount));
     }
   }, [accounts, dispatch]);
-  return (
-    <CharacterContextProvider>
-      <BackAlley />
-    </CharacterContextProvider>
-  );
+  return <BackAlley />;
 }

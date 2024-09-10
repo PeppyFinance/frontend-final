@@ -1,10 +1,9 @@
 import { DefaultContainer } from "components/App/AccountData/MyAccount/styles";
-import { Character } from "components/BackAlley/Characters/character";
-import { BackAlleyChars } from "components/BackAlley/Characters/characterConfig";
-import { CharacterId } from "components/BackAlley/Characters/characterIds.type";
-import { CharacterModal } from "components/BackAlley/Characters/Modal";
 import styled from "styled-components";
-import { useCharacterContext } from "./characterContext";
+import { useState } from "react";
+import { Character, CharacterProps } from "components/Characters/character";
+import { CharacterId } from "components/Characters/characterIds.type";
+import { CharacterModal } from "components/Characters/Modal";
 
 const BackAlleyContainer = styled(DefaultContainer)`
   position: relative;
@@ -16,25 +15,66 @@ const BackAlleyContainer = styled(DefaultContainer)`
   border: none;
 `;
 
+const BackAlleyCharacters = ({
+  onClick,
+  activeCharacter,
+}: {
+  onClick: CharacterProps["onClick"];
+  activeCharacter: CharacterId | undefined;
+}): CharacterProps[] => [
+  {
+    name: "dansel2099",
+    characterId: "charBackAlley1",
+    left: "calc(45vw - 370px)",
+    bottom: "120px",
+    height: "240px",
+    onClick,
+    isActive: activeCharacter === "charBackAlley1",
+  },
+  {
+    name: "Coomer",
+    characterId: "charBackAlley2",
+    left: "calc(45vw + 80px)",
+    bottom: "120px",
+    height: "333px",
+    onClick,
+    isActive: activeCharacter === "charBackAlley2",
+  },
+  {
+    name: "discloomer",
+    characterId: "charBackAlley3",
+    left: "calc(45vw + 400px)",
+    bottom: "80px",
+    height: "210px",
+    onClick,
+    isActive: activeCharacter === "charBackAlley3",
+  },
+];
+
 export const BackAlley = () => {
-  const { characterState, characterDispatch } = useCharacterContext();
-  const onClickCharacter = (characterId: CharacterId) => {
-    characterDispatch({
-      type: "SET_ACTIVE",
-      characterId,
-    });
-  };
+  const [activeCharacter, setActiveCharacter] = useState<
+    CharacterId | undefined
+  >(undefined);
+
+  const onClickCharacter = (id: CharacterId) =>
+    id === activeCharacter
+      ? setActiveCharacter(undefined)
+      : setActiveCharacter(id);
 
   return (
-    <BackAlleyContainer>
-      <CharacterModal />
-      {BackAlleyChars.map((props) => (
-        <Character
-          key={props.id}
-          onClick={onClickCharacter}
-          isActive={props.id === characterState.character?.id}
-          {...props}
-        />
+    <BackAlleyContainer
+      onClick={() => {
+        if (activeCharacter) {
+          setActiveCharacter(undefined);
+        }
+      }}
+    >
+      <CharacterModal character={activeCharacter} />
+      {BackAlleyCharacters({
+        onClick: onClickCharacter,
+        activeCharacter,
+      }).map((props) => (
+        <Character key={props.characterId} {...props} />
       ))}
     </BackAlleyContainer>
   );

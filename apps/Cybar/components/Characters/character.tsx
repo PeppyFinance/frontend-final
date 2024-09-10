@@ -1,18 +1,25 @@
-import { CharacterProps } from "components/BackAlley/Characters/characterConfig";
-import { CharacterId } from "components/BackAlley/Characters/characterIds.type";
 import styled, { css, DefaultTheme, keyframes } from "styled-components";
+import { CharacterId } from "./characterIds.type";
 import { Z_INDEX } from "theme";
 
-export interface CharacterInteractiveProps extends CharacterProps {
+export interface CharacterProps {
+  name: string;
+  left: string;
+  bottom: string;
+  height: string;
+  characterId: CharacterId;
   onClick?: (name: CharacterId) => void;
   isActive: boolean;
+  focusedBottom?: string;
+  focusedLeft?: string;
+  focusedHeight?: string;
 }
 
 export const Character = ({
-  id: characterId,
+  characterId,
   onClick,
   ...props
-}: CharacterInteractiveProps) => {
+}: CharacterProps) => {
   return (
     <CharacterImg
       onClick={(e) => {
@@ -39,7 +46,7 @@ const glow = (theme: DefaultTheme) => keyframes`
     }
 `;
 
-const CharacterImg = styled.img<Omit<CharacterInteractiveProps, "id">>`
+const CharacterImg = styled.img<Omit<CharacterProps, "characterId">>`
   position: absolute;
   cursor: pointer;
   bottom: ${({ bottom }) => bottom};
