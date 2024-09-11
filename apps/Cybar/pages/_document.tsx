@@ -50,7 +50,12 @@ class MyDocument extends Document {
             />
             <meta name="theme-color" content="#00000" />
 
-            <link rel="shortcut icon" type="image/png" href="/favicon.ico" />
+            <link
+              rel="icon"
+              type="image/svg+xml"
+              href="/favicon.svg"
+              sizes="any"
+            />
             <link
               rel="apple-touch-icon"
               sizes="192x192"
