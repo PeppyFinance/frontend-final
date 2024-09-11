@@ -9,7 +9,7 @@ import { useCharacterContext } from "./characterContext";
 const BackAlleyContainer = styled(DefaultContainer)`
   position: relative;
   bottom: auto;
-  background-image: url("/images/backgrounds/backalley.wepb");
+  background-image: url("/images/backgrounds/backalley.webp");
   background-size: cover;
   min-height: calc(100vh - 60px);
   background-position: center bottom;
