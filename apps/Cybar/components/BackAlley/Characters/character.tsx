@@ -45,6 +45,7 @@ const CharacterImg = styled.img<Omit<CharacterInteractiveProps, "id">>`
   bottom: ${({ bottom }) => bottom};
   height: ${({ height }) => height};
   left: ${({ left }) => left};
+  z-index: ${({ zIndex }) => (zIndex ? zIndex : "0")};
   overflow: hidden;
   transition: ease-in-out 0.3s;
   animation: ${({ onClick, theme }) =>
