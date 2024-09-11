@@ -41,7 +41,7 @@ const glow = (theme: DefaultTheme) => keyframes`
 
 const CharacterImg = styled.img<Omit<CharacterInteractiveProps, "id">>`
   position: absolute;
-  cursor: pointer;
+  cursor: ${({ onClick }) => (onClick ? "pointer" : "default")};
   bottom: ${({ bottom }) => bottom};
   height: ${({ height }) => height};
   left: ${({ left }) => left};
