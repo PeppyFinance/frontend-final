@@ -6,4 +6,5 @@ export const bouncer1: CharacterProps = {
   left: "3vw",
   height: "380px",
   bottom: "40px",
+  zIndex: "1",
 };

@@ -1,5 +1,7 @@
 import { DefaultContainer } from "components/App/AccountData/MyAccount/styles";
 import styled from "styled-components";
+import { ClubEntranceChars } from "./Characters";
+import { Character } from "components/BackAlley/Characters/character";
 
 const ClubEntranceContainer = styled(DefaultContainer)`
   position: relative;
@@ -12,5 +14,11 @@ const ClubEntranceContainer = styled(DefaultContainer)`
 `;
 
 export const ClubEntrance = () => {
-  return <ClubEntranceContainer>TODO</ClubEntranceContainer>;
+  return (
+    <ClubEntranceContainer>
+      {ClubEntranceChars.map((props) => (
+        <Character key={props.id} {...props} isActive={false} />
+      ))}
+    </ClubEntranceContainer>
+  );
 };
