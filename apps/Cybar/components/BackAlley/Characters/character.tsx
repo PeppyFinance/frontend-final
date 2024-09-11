@@ -2,6 +2,7 @@ import styled, { css, DefaultTheme, keyframes } from "styled-components";
 import { CharacterId } from "./characterIds.type";
 import { CharacterProps } from "./characterConfig";
 import { Z_INDEX } from "theme";
+import { useCallback } from "react";
 
 export interface CharacterInteractiveProps extends CharacterProps {
   onClick?: (name: CharacterId) => void;
@@ -13,12 +14,14 @@ export const Character = ({
   onClick,
   ...props
 }: CharacterInteractiveProps) => {
+  const handleClick = useCallback(() => {
+    if (onClick) {
+      onClick(characterId);
+    }
+  }, [onClick, characterId]);
   return (
     <CharacterImg
-      onClick={(e) => {
-        e.stopPropagation();
-        onClick ? onClick(characterId) : null;
-      }}
+      onClick={onClick ? handleClick : undefined}
       src={`/images/characters/${characterId}.webp`}
       {...props}
     />
