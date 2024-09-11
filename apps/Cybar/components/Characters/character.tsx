@@ -54,7 +54,7 @@ const CharacterImg = styled.img<Omit<CharacterInteractiveProps, "id">>`
     css`
       z-index: ${Z_INDEX.modalBackdrop - 1};
       bottom: ${focusedBottom ?? "120px"};
-      left: ${focusedLeft ?? "calc(45vw - 172px)"};
       height: ${focusedHeight ?? "500px"};
+      left: ${focusedLeft ?? "calc(45vw - 172px)"};
     `}
 `;
