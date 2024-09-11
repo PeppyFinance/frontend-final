@@ -28,9 +28,9 @@ export const Character = ({
   );
 };
 
-const pulseAnimation = "ease-in-out infinite";
+export const pulseAnimation = "ease-in-out infinite";
 
-const glow = (theme: DefaultTheme) => keyframes`
+export const glow = (theme: DefaultTheme) => keyframes`
     0% {
         filter: drop-shadow(0px 0px 0px ${theme.characterAction})
     }
