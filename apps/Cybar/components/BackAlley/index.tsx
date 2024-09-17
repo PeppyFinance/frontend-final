@@ -4,6 +4,7 @@ import { BackAlleyChars } from "components/BackAlley/Characters/characterConfig"
 import { CharacterId } from "components/BackAlley/Characters/characterIds.type";
 import { CharacterModal } from "components/BackAlley/Characters/Modal";
 import styled from "styled-components";
+import { NavigationArrow } from "./Arrow/Arrow";
 import { useCharacterContext } from "./characterContext";
 
 const BackAlleyContainer = styled(DefaultContainer)`
@@ -36,6 +37,7 @@ export const BackAlley = () => {
           {...props}
         />
       ))}
+      <NavigationArrow href="/clubentrance" right="-10px" />
     </BackAlleyContainer>
   );
 };
