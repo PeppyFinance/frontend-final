@@ -2,6 +2,7 @@ import { DefaultContainer } from "components/App/AccountData/MyAccount/styles";
 import styled from "styled-components";
 import { ClubEntranceChars } from "./Characters";
 import { Character } from "components/BackAlley/Characters/character";
+import { NavigationArrow } from "./Arrow/Arrow";
 
 const ClubEntranceContainer = styled(DefaultContainer)`
   position: relative;
@@ -19,6 +20,7 @@ export const ClubEntrance = () => {
       {ClubEntranceChars.map((props) => (
         <Character key={props.id} {...props} isActive={false} />
       ))}
+      <NavigationArrow href="/" />
     </ClubEntranceContainer>
   );
 };
