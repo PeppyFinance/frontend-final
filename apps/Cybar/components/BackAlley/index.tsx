@@ -1,4 +1,3 @@
-import { DefaultContainer } from "components/App/AccountData/MyAccount/styles";
 import { Character } from "components/BackAlley/Characters/character";
 import { BackAlleyChars } from "components/BackAlley/Characters/characterConfig";
 import { CharacterId } from "components/BackAlley/Characters/characterIds.type";
@@ -7,8 +6,9 @@ import styled from "styled-components";
 import { NavigationArrow } from "./Arrow/Arrow";
 import { useCharacterContext } from "./characterContext";
 
-const BackAlleyContainer = styled(DefaultContainer)`
+const BackAlleyContainer = styled.div`
   position: relative;
+  display: flex;
   bottom: auto;
   background-image: url("/images/backgrounds/backalley.webp");
   background-size: cover;
@@ -37,7 +37,7 @@ export const BackAlley = () => {
           {...props}
         />
       ))}
-      <NavigationArrow href="/clubentrance" right="-10px" />
+      <NavigationArrow href="/clubentrance" />
     </BackAlleyContainer>
   );
 };

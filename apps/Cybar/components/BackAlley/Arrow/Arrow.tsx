@@ -1,41 +1,43 @@
-import styled, { DefaultTheme, keyframes, useTheme } from "styled-components";
-import { glow, pulseAnimation } from "../Characters/character";
-import css from "styled-jsx/css";
-import { CSSProperties } from "react";
 import Link from "next/link";
+import styled, { keyframes, useTheme } from "styled-components";
+import { pulseAnimation } from "../Characters/character";
 
 const slideDesktopArrowBackalley = keyframes`
   50% {
-    left: 130px;
+    right: 130px;
   }
   100% {
-    left: 100px;
+    right: 100px;
   }
 `;
 
-const glowAnimation = (theme: DefaultTheme) =>
-  css`
-    ${glow(theme)} 4s ${pulseAnimation}
-  `;
+const glow = keyframes`
+    0% {
+        filter: drop-shadow(0px 0px 0px #6bdbd6)
+    }
+    50% {
+        filter: drop-shadow(0px 0px 16px #6bdbd6)
+    }
+    100% {
+        filter: drop-shadow(0px 0px 0px #6bdbd6)
+    }
+`;
 
-const NavigationArrowBackalley = styled(Link)<Omit<Props, "direction">>`
+const NavigationArrowRight = styled(Link)`
   position: absolute;
-  // left: ${(props) => `${"left" in props ? props.left : ""}`};
-  right: ${(props) => `${"right" in props ? props.right : ""}`};
+  right: -100px;
   width: 75px;
   height: 75px;
-  animation: ${slideDesktopArrowBackalley} 1s forwards;
+  animation: ${slideDesktopArrowBackalley} 1s forwards, ${glow} 4s ${pulseAnimation}; 
   animation-delay: 2s;
   top: 50%;
   translateY(-50%);
 `;
 
-const ArrowIcon = styled.div<Pick<Props, "direction">>`
+const ArrowIcon = styled.div`
   svg {
     width: 100%;
     height: 100%;
-    ${({ direction }) =>
-      `transform: scaleX(${direction === "Left" ? "-" : ""}1);`}
   }
 `;
 
@@ -68,16 +70,15 @@ const DoubleArrowIcon = () => {
 };
 
 type Props = {
-  direction?: "Right" | "Left";
   href: string;
-} & ({ left: CSSProperties["left"] } | { right: CSSProperties["right"] });
+};
 
-export const NavigationArrow = ({ direction, href, ...props }: Props) => {
+export const NavigationArrow = ({ href }: Props) => {
   return (
-    <NavigationArrowBackalley href={href} {...props}>
-      <ArrowIcon direction={direction ?? ("left" in props ? "Left" : "Right")}>
+    <NavigationArrowRight href={href}>
+      <ArrowIcon>
         <DoubleArrowIcon />
       </ArrowIcon>
-    </NavigationArrowBackalley>
+    </NavigationArrowRight>
   );
 };
