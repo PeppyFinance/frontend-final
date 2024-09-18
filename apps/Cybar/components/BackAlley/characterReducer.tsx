@@ -39,7 +39,7 @@ export const characterReducer = (
       return {
         ...state,
         character,
-        dialog: character?.dialogs.find((dialog) => dialog.id === 0),
+        dialog: character?.dialogs?.find((dialog) => dialog.id === 0),
       };
     }
     case "SET_INACTIVE": {
@@ -52,7 +52,7 @@ export const characterReducer = (
     case "SET_DIALOG": {
       return {
         ...state,
-        dialog: state.character?.dialogs.find(
+        dialog: state.character?.dialogs?.find(
           (dialog) => dialog.id === action.dialogId
         ),
       };
