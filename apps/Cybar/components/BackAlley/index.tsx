@@ -3,7 +3,7 @@ import { BackAlleyChars } from "components/BackAlley/Characters/characterConfig"
 import { CharacterId } from "components/BackAlley/Characters/characterIds.type";
 import { CharacterModal } from "components/BackAlley/Characters/Modal";
 import styled from "styled-components";
-import { NavigationArrow } from "./Arrow/Arrow";
+import { NavigationArrow } from "./Arrow";
 import { useCharacterContext } from "./characterContext";
 
 const BackAlleyContainer = styled.div`
@@ -37,7 +37,10 @@ export const BackAlley = () => {
           {...props}
         />
       ))}
-      <NavigationArrow href="/clubentrance" />
+      <NavigationArrow
+        href="/clubentrance"
+        display={!characterState.character}
+      />
     </BackAlleyContainer>
   );
 };

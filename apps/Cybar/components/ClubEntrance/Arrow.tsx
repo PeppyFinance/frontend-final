@@ -73,9 +73,11 @@ const DoubleArrowIcon = () => {
 
 type Props = {
   href: string;
+  display: boolean;
 };
 
-export const NavigationArrow = ({ href }: Props) => {
+export const NavigationArrow = ({ href, display = true }: Props) => {
+  if (!display) return null;
   return (
     <NavigationArrowLeft href={href}>
       <ArrowIcon>
