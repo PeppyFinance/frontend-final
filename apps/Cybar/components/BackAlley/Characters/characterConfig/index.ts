@@ -21,10 +21,11 @@ export interface CharacterProps {
   left: string;
   bottom: string;
   height: string;
+  zIndex?: string;
   focusedBottom?: string;
   focusedLeft?: string;
   focusedHeight?: string;
-  dialogs: Dialog[];
+  dialogs?: Dialog[];
 }
 
 export const BackAlleyChars = [charBackAlley1, charBackAlley2, charBackAlley3];
