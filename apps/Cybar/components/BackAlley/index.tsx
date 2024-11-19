@@ -5,6 +5,21 @@ import { CharacterModal } from "components/BackAlley/Characters/Modal";
 import styled from "styled-components";
 import { NavigationArrow } from "./Arrow/Arrow";
 import { useCharacterContext } from "./characterContext";
+import { useMediaQuery } from "hooks/useMediaQuery";
+
+// import Swiper core and required modules
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore from "swiper";
+import { Pagination, Parallax } from "swiper/modules";
+
+// Import Swiper styles
+import "swiper/scss";
+import "swiper/scss/pagination";
+import { charBackAlley1 } from "./Characters/characterConfig/charBackAlley1";
+import { charBackAlley2 } from "./Characters/characterConfig/charBackAlley2";
+import { charBackAlley3 } from "./Characters/characterConfig/charBackAlley3";
+
+SwiperCore.use([Parallax, Pagination]);
 
 const BackAlleyContainer = styled.div`
   position: relative;
@@ -17,8 +32,25 @@ const BackAlleyContainer = styled.div`
   border: none;
 `;
 
+const SliderBackground = styled.div<{ backgroundImage: string }>`
+  position: absolute;
+  background-image: url(${(props) => props.backgroundImage});
+  background-size: 2560px;
+  background-position: center bottom;
+  left: -300px;
+  width: 1800px;
+  height: 100%;
+  overflow: hidden;
+`;
+
+const SwiperContainer = styled(Swiper)`
+  height: 100%;
+  overflow: hidden;
+`;
+
 export const BackAlley = () => {
   const { characterState, characterDispatch } = useCharacterContext();
+  const isDesktop = useMediaQuery("(min-width: 600px)");
   const onClickCharacter = (characterId: CharacterId) => {
     characterDispatch({
       type: "SET_ACTIVE",
@@ -26,18 +58,54 @@ export const BackAlley = () => {
     });
   };
 
+  if (isDesktop) {
+    return (
+      <BackAlleyContainer>
+        <CharacterModal />
+        {BackAlleyChars.map((props) => (
+          <Character
+            key={props.id}
+            onClick={onClickCharacter}
+            isActive={props.id === characterState.character?.id}
+            {...props}
+          />
+        ))}
+        <NavigationArrow href="/clubentrance" />
+      </BackAlleyContainer>
+    );
+  }
   return (
-    <BackAlleyContainer>
-      <CharacterModal />
-      {BackAlleyChars.map((props) => (
-        <Character
-          key={props.id}
-          onClick={onClickCharacter}
-          isActive={props.id === characterState.character?.id}
-          {...props}
-        />
-      ))}
-      <NavigationArrow href="/clubentrance" />
-    </BackAlleyContainer>
+    <>
+      <SwiperContainer slidesPerView={1} onSlideChange={() => null} parallax>
+        <SliderBackground
+          backgroundImage="/images/backgrounds/backalley.webp"
+          slot="container-start"
+          data-swiper-parallax="-45%"
+        >
+          <CharacterModal />
+          <SwiperSlide>
+            <Character
+              onClick={onClickCharacter}
+              isActive={characterState.character?.id === "charBackAlley1"}
+              {...charBackAlley1}
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <Character
+              onClick={onClickCharacter}
+              isActive={characterState.character?.id === "charBackAlley2"}
+              {...charBackAlley2}
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <Character
+              onClick={onClickCharacter}
+              isActive={characterState.character?.id === "charBackAlley3"}
+              {...charBackAlley3}
+            />
+          </SwiperSlide>
+        </SliderBackground>
+      </SwiperContainer>
+    </>
   );
 };
