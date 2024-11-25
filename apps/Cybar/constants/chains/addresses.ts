@@ -7,7 +7,6 @@ export enum FrontEndsName {
   CORE = "Core",
   MORPHEX = "Morphex",
   BASED = "Based",
-  // CLOVERFIELD = "Cloverfield",
   // NEW_CLOVERFIELD = "New Cloverfield",
   CYBAR = "Cybar",
   NEW_CYBAR = "New Cybar",
@@ -380,7 +379,7 @@ export const BaseChainCybarFE: ChainType = {
   COLLATERAL_ADDRESS: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
 
   DIAMOND_ADDRESS: "0x91Cf2D8Ed503EC52768999aA6D8DBeA6e52dbe43",
-  MULTI_ACCOUNT_ADDRESS: "0xF7F56d7E02D5c7bF33525AE2eecB049a17Ef4580",
+  MULTI_ACCOUNT_ADDRESS: "0xdfC2a55a44aD3d3aAbFe8D1C498Ea923c6D39526",
   PARTY_B_WHITELIST: "0x9206D9d8F7F1B212A4183827D20De32AF3A23c59",
   SIGNATURE_STORE_ADDRESS: "0xC19e66D08350Eb88A41377b16C8Ab93EE0FB4996",
   TP_SL_WALLET_ADDRESS: "0x1De09355907249e18eeD89557a2c7fBd58bdCC63",
@@ -465,21 +464,21 @@ export const ArbitrumChainCybarFE: ChainType = {
 export const contractInfo: {
   [chainId: number]: { [name: string]: ChainType };
 } = {
-  [SupportedChainId.FANTOM]: { [FrontEndsName.CYBAR]: FantomChain },
-  [SupportedChainId.BSC]: {
-    [FrontEndsName.ALPHA]: BSCChainAlphaFE,
-    [FrontEndsName.VIBE]: BSCChainVibeFE,
-    [FrontEndsName.CYBAR]: BSCChainCybarFE,
-  },
-  [SupportedChainId.POLYGON]: {
-    [FrontEndsName.CYBAR]: PolygonChain,
-    [FrontEndsName.NEW_CYBAR]: NewPolygonChain,
-  },
-  [SupportedChainId.MANTLE]: {
-    [FrontEndsName.INTENT_X]: MantleChainIntentXFE,
-    [FrontEndsName.VIBE]: MantleChainVibeFE,
-    [FrontEndsName.CYBAR]: MantleChainCybarFE,
-  },
+  // [SupportedChainId.FANTOM]: { [FrontEndsName.CYBAR]: FantomChain },
+  // [SupportedChainId.BSC]: {
+  //   [FrontEndsName.ALPHA]: BSCChainAlphaFE,
+  //   [FrontEndsName.VIBE]: BSCChainVibeFE,
+  //   [FrontEndsName.CYBAR]: BSCChainCybarFE,
+  // },
+  // [SupportedChainId.POLYGON]: {
+  //   [FrontEndsName.CYBAR]: PolygonChain,
+  //   [FrontEndsName.NEW_CYBAR]: NewPolygonChain,
+  // },
+  // [SupportedChainId.MANTLE]: {
+  //   [FrontEndsName.INTENT_X]: MantleChainIntentXFE,
+  //   [FrontEndsName.VIBE]: MantleChainVibeFE,
+  //   [FrontEndsName.CYBAR]: MantleChainCybarFE,
+  // },
   [SupportedChainId.BASE]: {
     [FrontEndsName.BASED]: BaseChainBasedFE,
     [FrontEndsName.INTENT_X]: BaseChainIntentXFE,
@@ -489,14 +488,14 @@ export const contractInfo: {
     [FrontEndsName.CYBAR]: BaseChainCybarFE,
   },
 
-  [SupportedChainId.ARBITRUM]: {
-    [FrontEndsName.PEAR]: ArbitrumChainPearFE,
-    [FrontEndsName.VIBE]: ArbitrumChainVibeFE,
-    [FrontEndsName.CYBAR]: ArbitrumChainCybarFE,
-  },
+  // [SupportedChainId.ARBITRUM]: {
+  //   [FrontEndsName.PEAR]: ArbitrumChainPearFE,
+  //   [FrontEndsName.VIBE]: ArbitrumChainVibeFE,
+  //   [FrontEndsName.CYBAR]: ArbitrumChainCybarFE,
+  // },
 
-  [SupportedChainId.BLAST]: {
-    [FrontEndsName.CORE]: BlastChainCoreFE,
-    [FrontEndsName.INTENT_X]: BlastChainIntentXFE,
-  },
+  // [SupportedChainId.BLAST]: {
+  //   [FrontEndsName.CORE]: BlastChainCoreFE,
+  //   [FrontEndsName.INTENT_X]: BlastChainIntentXFE,
+  // },
 };
