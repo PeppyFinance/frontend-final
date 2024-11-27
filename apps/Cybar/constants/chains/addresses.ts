@@ -7,9 +7,7 @@ export enum FrontEndsName {
   CORE = "Core",
   MORPHEX = "Morphex",
   BASED = "Based",
-  // NEW_CLOVERFIELD = "New Cloverfield",
   CYBAR = "Cybar",
-  NEW_CYBAR = "New Cybar",
   BEFI = "Befi",
   VIBE = "Vibe",
   PEAR = "Pear",
@@ -219,160 +217,6 @@ export const MantleChainCybarFE: ChainType = {
     "https://subgraph-api.mantle.xyz/subgraphs/name/parties_mantle_8_2/graphql",
 };
 
-export const BaseChainBasedFE: ChainType = {
-  COLLATERAL_SYMBOL: "USDC",
-  COLLATERAL_DECIMALS: 6,
-  COLLATERAL_ADDRESS: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-
-  DIAMOND_ADDRESS: "0x91Cf2D8Ed503EC52768999aA6D8DBeA6e52dbe43",
-  MULTI_ACCOUNT_ADDRESS: "0x1c03B6480a4efC2d4123ba90d7857f0e1878B780",
-  PARTY_B_WHITELIST: "0x9206D9d8F7F1B212A4183827D20De32AF3A23c59",
-  SIGNATURE_STORE_ADDRESS: "0xC19e66D08350Eb88A41377b16C8Ab93EE0FB4996",
-  TP_SL_WALLET_ADDRESS: "0x1De09355907249e18eeD89557a2c7fBd58bdCC63",
-
-  MULTICALL3_ADDRESS: "0x66EC85c6d1971Ea15472754F733fA3F956a0Ec30",
-  USDC_ADDRESS: "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
-  WRAPPED_NATIVE_ADDRESS: "0x4200000000000000000000000000000000000006",
-  ANALYTICS_SUBGRAPH_ADDRESS:
-    "https://api.studio.thegraph.com/query/62454/analytics_base_8_2/version/latest",
-  ORDER_HISTORY_SUBGRAPH_ADDRESS:
-    "https://api.studio.thegraph.com/query/62454/main_base_8_2/version/latest",
-  FUNDING_RATE_SUBGRAPH_ADDRESS:
-    "https://api.studio.thegraph.com/query/62454/fundingrate_base_8_2/version/latest",
-};
-
-export const BaseChainIntentXFE: ChainType = {
-  COLLATERAL_SYMBOL: "USDC",
-  COLLATERAL_DECIMALS: 6,
-  COLLATERAL_ADDRESS: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-
-  DIAMOND_ADDRESS: "0x91Cf2D8Ed503EC52768999aA6D8DBeA6e52dbe43",
-  MULTI_ACCOUNT_ADDRESS: "0x8Ab178C07184ffD44F0ADfF4eA2ce6cFc33F3b86",
-  PARTY_B_WHITELIST: "0x9206D9d8F7F1B212A4183827D20De32AF3A23c59",
-  SIGNATURE_STORE_ADDRESS: "0xC19e66D08350Eb88A41377b16C8Ab93EE0FB4996",
-  TP_SL_WALLET_ADDRESS: "0x1De09355907249e18eeD89557a2c7fBd58bdCC63",
-
-  MULTICALL3_ADDRESS: "0x66EC85c6d1971Ea15472754F733fA3F956a0Ec30",
-  USDC_ADDRESS: "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
-  WRAPPED_NATIVE_ADDRESS: "0x4200000000000000000000000000000000000006",
-  ANALYTICS_SUBGRAPH_ADDRESS:
-    "https://api.studio.thegraph.com/query/62454/analytics_base_8_2/version/latest",
-  ORDER_HISTORY_SUBGRAPH_ADDRESS:
-    "https://api.studio.thegraph.com/query/62454/main_base_8_2/version/latest",
-  FUNDING_RATE_SUBGRAPH_ADDRESS:
-    "https://api.studio.thegraph.com/query/62454/fundingrate_base_8_2/version/latest",
-};
-
-export const BaseChainMorphexFE: ChainType = {
-  COLLATERAL_SYMBOL: "USDC",
-  COLLATERAL_DECIMALS: 6,
-  COLLATERAL_ADDRESS: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-
-  DIAMOND_ADDRESS: "0x91Cf2D8Ed503EC52768999aA6D8DBeA6e52dbe43",
-  MULTI_ACCOUNT_ADDRESS: "0x6D63921D8203044f6AbaD8F346d3AEa9A2719dDD",
-  PARTY_B_WHITELIST: "0x9206D9d8F7F1B212A4183827D20De32AF3A23c59",
-  SIGNATURE_STORE_ADDRESS: "0xC19e66D08350Eb88A41377b16C8Ab93EE0FB4996",
-  TP_SL_WALLET_ADDRESS: "0x1De09355907249e18eeD89557a2c7fBd58bdCC63",
-
-  MULTICALL3_ADDRESS: "0x66EC85c6d1971Ea15472754F733fA3F956a0Ec30",
-  USDC_ADDRESS: "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
-  WRAPPED_NATIVE_ADDRESS: "0x4200000000000000000000000000000000000006",
-  ANALYTICS_SUBGRAPH_ADDRESS:
-    "https://api.studio.thegraph.com/query/62454/analytics_base_8_2/version/latest",
-  ORDER_HISTORY_SUBGRAPH_ADDRESS:
-    "https://api.studio.thegraph.com/query/62454/main_base_8_2/version/latest",
-  FUNDING_RATE_SUBGRAPH_ADDRESS:
-    "https://api.studio.thegraph.com/query/62454/fundingrate_base_8_2/version/latest",
-};
-
-export const BlastChainCoreFE: ChainType = {
-  COLLATERAL_SYMBOL: "USDB",
-  COLLATERAL_DECIMALS: 18,
-  COLLATERAL_ADDRESS: "0x4300000000000000000000000000000000000003",
-
-  DIAMOND_ADDRESS: "0x3d17f073cCb9c3764F105550B0BCF9550477D266",
-  MULTI_ACCOUNT_ADDRESS: "0xd6ee1fd75d11989e57B57AA6Fd75f558fBf02a5e",
-  PARTY_B_WHITELIST: "0xECbd0788bB5a72f9dFDAc1FFeAAF9B7c2B26E456",
-  SIGNATURE_STORE_ADDRESS: "0x4300000000000000000000000000000000000003",
-  TP_SL_WALLET_ADDRESS: "",
-
-  MULTICALL3_ADDRESS: "0x836Bca496c8E064dAc4401Db1CeE04ca53470C23",
-  USDC_ADDRESS: "0x4300000000000000000000000000000000000003",
-  WRAPPED_NATIVE_ADDRESS: "0x4300000000000000000000000000000000000004",
-  ANALYTICS_SUBGRAPH_ADDRESS:
-    "https://api.studio.thegraph.com/query/62454/analytics_blast_8_2/version/latest",
-  ORDER_HISTORY_SUBGRAPH_ADDRESS:
-    "https://api.studio.thegraph.com/query/62454/main_blast_8_2/version/latest",
-  FUNDING_RATE_SUBGRAPH_ADDRESS:
-    "https://subgraph-api.mantle.xyz/subgraphs/name/parties_mantle_8_2/graphql",
-};
-
-export const BlastChainIntentXFE: ChainType = {
-  COLLATERAL_SYMBOL: "USDB",
-  COLLATERAL_DECIMALS: 18,
-  COLLATERAL_ADDRESS: "0x4300000000000000000000000000000000000003",
-
-  DIAMOND_ADDRESS: "0x3d17f073cCb9c3764F105550B0BCF9550477D266",
-  MULTI_ACCOUNT_ADDRESS: "0x083267D20Dbe6C2b0A83Bd0E601dC2299eD99015",
-  PARTY_B_WHITELIST: "0xECbd0788bB5a72f9dFDAc1FFeAAF9B7c2B26E456",
-  SIGNATURE_STORE_ADDRESS: "0x4300000000000000000000000000000000000003",
-  TP_SL_WALLET_ADDRESS: "",
-
-  MULTICALL3_ADDRESS: "0x836Bca496c8E064dAc4401Db1CeE04ca53470C23",
-  USDC_ADDRESS: "0x4300000000000000000000000000000000000003",
-  WRAPPED_NATIVE_ADDRESS: "0x4300000000000000000000000000000000000004",
-  ANALYTICS_SUBGRAPH_ADDRESS:
-    "https://api.studio.thegraph.com/query/62454/analytics_blast_8_2/version/latest",
-  ORDER_HISTORY_SUBGRAPH_ADDRESS:
-    "https://api.studio.thegraph.com/query/62454/main_blast_8_2/version/latest",
-  FUNDING_RATE_SUBGRAPH_ADDRESS:
-    "https://subgraph-api.mantle.xyz/subgraphs/name/parties_mantle_8_2/graphql",
-};
-
-export const BaseChainVibeFE: ChainType = {
-  COLLATERAL_SYMBOL: "USDC",
-  COLLATERAL_DECIMALS: 6,
-  COLLATERAL_ADDRESS: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-
-  DIAMOND_ADDRESS: "0x91Cf2D8Ed503EC52768999aA6D8DBeA6e52dbe43",
-  MULTI_ACCOUNT_ADDRESS: "0x8B0119e6D18f1FBA3497Bc7CD6fABa470bce29e7",
-  PARTY_B_WHITELIST: "0x9206D9d8F7F1B212A4183827D20De32AF3A23c59",
-  SIGNATURE_STORE_ADDRESS: "0xC19e66D08350Eb88A41377b16C8Ab93EE0FB4996",
-  TP_SL_WALLET_ADDRESS: "0x1De09355907249e18eeD89557a2c7fBd58bdCC63",
-
-  MULTICALL3_ADDRESS: "0x66EC85c6d1971Ea15472754F733fA3F956a0Ec30",
-  USDC_ADDRESS: "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
-  WRAPPED_NATIVE_ADDRESS: "0x4200000000000000000000000000000000000006",
-  ANALYTICS_SUBGRAPH_ADDRESS:
-    "https://api.studio.thegraph.com/query/62454/analytics_base_8_2/version/latest",
-  ORDER_HISTORY_SUBGRAPH_ADDRESS:
-    "https://api.studio.thegraph.com/query/62454/main_base_8_2/version/latest",
-  FUNDING_RATE_SUBGRAPH_ADDRESS:
-    "https://api.studio.thegraph.com/query/62454/fundingrate_base_8_2/version/latest",
-};
-
-export const BaseChainBefiFE: ChainType = {
-  COLLATERAL_SYMBOL: "USDC",
-  COLLATERAL_DECIMALS: 6,
-  COLLATERAL_ADDRESS: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-
-  DIAMOND_ADDRESS: "0x91Cf2D8Ed503EC52768999aA6D8DBeA6e52dbe43",
-  MULTI_ACCOUNT_ADDRESS: "0xc6Ecf3AB3D09ba6f1565Ad6E139B5D3ba30bB774",
-  PARTY_B_WHITELIST: "0x9206D9d8F7F1B212A4183827D20De32AF3A23c59",
-  SIGNATURE_STORE_ADDRESS: "0xC19e66D08350Eb88A41377b16C8Ab93EE0FB4996",
-  TP_SL_WALLET_ADDRESS: "0x1De09355907249e18eeD89557a2c7fBd58bdCC63",
-
-  MULTICALL3_ADDRESS: "0x66EC85c6d1971Ea15472754F733fA3F956a0Ec30",
-  USDC_ADDRESS: "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
-  WRAPPED_NATIVE_ADDRESS: "0x4200000000000000000000000000000000000006",
-  ANALYTICS_SUBGRAPH_ADDRESS:
-    "https://api.studio.thegraph.com/query/62454/analytics_base_8_2/version/latest",
-  ORDER_HISTORY_SUBGRAPH_ADDRESS:
-    "https://api.studio.thegraph.com/query/62454/main_base_8_2/version/latest",
-  FUNDING_RATE_SUBGRAPH_ADDRESS:
-    "https://api.studio.thegraph.com/query/62454/fundingrate_base_8_2/version/latest",
-};
-
 export const BaseChainCybarFE: ChainType = {
   COLLATERAL_SYMBOL: "USDC",
   COLLATERAL_DECIMALS: 6,
@@ -417,28 +261,6 @@ export const ArbitrumChainPearFE: ChainType = {
     "https://api.studio.thegraph.com/query/62454/fundingrate_arbitrum_8_2/version/latest",
 };
 
-export const ArbitrumChainVibeFE: ChainType = {
-  COLLATERAL_SYMBOL: "USDC",
-  COLLATERAL_DECIMALS: 6,
-  COLLATERAL_ADDRESS: "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
-
-  DIAMOND_ADDRESS: "0x8F06459f184553e5d04F07F868720BDaCAB39395",
-  MULTI_ACCOUNT_ADDRESS: "0x152A8e045a30f350F8784a20B6D8f0F39353E6d6",
-  PARTY_B_WHITELIST: "0x0EB92F476A9a74B15A9fdcc6C252b2013AFc2deC",
-  SIGNATURE_STORE_ADDRESS: "0x94eEa58De1C8945c342dB4bE9670301638E403e2",
-  TP_SL_WALLET_ADDRESS: "",
-
-  MULTICALL3_ADDRESS: "0xadF885960B47eA2CD9B55E6DAc6B42b7Cb2806dB",
-  USDC_ADDRESS: "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
-  WRAPPED_NATIVE_ADDRESS: "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
-  ANALYTICS_SUBGRAPH_ADDRESS:
-    "https://api.studio.thegraph.com/query/62454/analytics_arbitrum_8_2/version/latest",
-  ORDER_HISTORY_SUBGRAPH_ADDRESS:
-    "https://api.studio.thegraph.com/query/62454/main_arbitrum_8_2/version/latest",
-  FUNDING_RATE_SUBGRAPH_ADDRESS:
-    "https://api.studio.thegraph.com/query/62454/fundingrate_arbitrum_8_2/version/latest",
-};
-
 export const ArbitrumChainCybarFE: ChainType = {
   COLLATERAL_SYMBOL: "USDC",
   COLLATERAL_DECIMALS: 6,
@@ -464,38 +286,24 @@ export const ArbitrumChainCybarFE: ChainType = {
 export const contractInfo: {
   [chainId: number]: { [name: string]: ChainType };
 } = {
-  // [SupportedChainId.FANTOM]: { [FrontEndsName.CYBAR]: FantomChain },
-  // [SupportedChainId.BSC]: {
-  //   [FrontEndsName.ALPHA]: BSCChainAlphaFE,
-  //   [FrontEndsName.VIBE]: BSCChainVibeFE,
-  //   [FrontEndsName.CYBAR]: BSCChainCybarFE,
-  // },
-  // [SupportedChainId.POLYGON]: {
-  //   [FrontEndsName.CYBAR]: PolygonChain,
-  //   [FrontEndsName.NEW_CYBAR]: NewPolygonChain,
-  // },
-  // [SupportedChainId.MANTLE]: {
-  //   [FrontEndsName.INTENT_X]: MantleChainIntentXFE,
-  //   [FrontEndsName.VIBE]: MantleChainVibeFE,
-  //   [FrontEndsName.CYBAR]: MantleChainCybarFE,
-  // },
+  [SupportedChainId.FANTOM]: { [FrontEndsName.CYBAR]: FantomChain },
+  [SupportedChainId.BSC]: {
+    [FrontEndsName.CYBAR]: BSCChainCybarFE,
+  },
+  [SupportedChainId.POLYGON]: {
+    [FrontEndsName.CYBAR]: PolygonChain,
+  },
+  [SupportedChainId.MANTLE]: {
+    [FrontEndsName.INTENT_X]: MantleChainIntentXFE,
+    [FrontEndsName.VIBE]: MantleChainVibeFE,
+    [FrontEndsName.CYBAR]: MantleChainCybarFE,
+  },
   [SupportedChainId.BASE]: {
-    [FrontEndsName.BASED]: BaseChainBasedFE,
-    [FrontEndsName.INTENT_X]: BaseChainIntentXFE,
-    [FrontEndsName.MORPHEX]: BaseChainMorphexFE,
-    [FrontEndsName.BEFI]: BaseChainBefiFE,
-    [FrontEndsName.VIBE]: BaseChainVibeFE,
     [FrontEndsName.CYBAR]: BaseChainCybarFE,
   },
 
-  // [SupportedChainId.ARBITRUM]: {
-  //   [FrontEndsName.PEAR]: ArbitrumChainPearFE,
-  //   [FrontEndsName.VIBE]: ArbitrumChainVibeFE,
-  //   [FrontEndsName.CYBAR]: ArbitrumChainCybarFE,
-  // },
-
-  // [SupportedChainId.BLAST]: {
-  //   [FrontEndsName.CORE]: BlastChainCoreFE,
-  //   [FrontEndsName.INTENT_X]: BlastChainIntentXFE,
-  // },
+  [SupportedChainId.ARBITRUM]: {
+    [FrontEndsName.PEAR]: ArbitrumChainPearFE,
+    [FrontEndsName.CYBAR]: ArbitrumChainCybarFE,
+  },
 };
