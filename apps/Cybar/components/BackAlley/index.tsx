@@ -13,8 +13,8 @@ import { Pagination, Parallax } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
-import "swiper/scss";
-import "swiper/scss/pagination";
+import "swiper/css";
+import "swiper/css/pagination";
 import { charBackAlley1 } from "./Characters/characterConfig/charBackAlley1";
 import { charBackAlley2 } from "./Characters/characterConfig/charBackAlley2";
 import { charBackAlley3 } from "./Characters/characterConfig/charBackAlley3";
