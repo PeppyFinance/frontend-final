@@ -15,9 +15,8 @@ export interface Dialog extends DialogContent {
   id: number;
   answers?: DialogContent[];
 }
-export interface CharacterProps {
-  id: CharacterId;
-  name: string;
+
+interface CharacterPositions {
   left: string;
   bottom: string;
   height: string;
@@ -25,6 +24,12 @@ export interface CharacterProps {
   focusedBottom?: string;
   focusedLeft?: string;
   focusedHeight?: string;
+
+}
+export interface CharacterProps extends CharacterPositions {
+  id: CharacterId;
+  name: string;
+  mobilePositions?: CharacterPositions;
   dialogs?: Dialog[];
 }
 

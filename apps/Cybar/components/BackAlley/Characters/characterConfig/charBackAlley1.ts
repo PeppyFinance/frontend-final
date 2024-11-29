@@ -6,6 +6,14 @@ export const charBackAlley1: CharacterProps = {
   left: "calc(45vw - 370px)",
   bottom: "120px",
   height: "240px",
+  mobilePositions: {
+    bottom: "60px",
+    height: "280px",
+    left: "calc(45vw- 120px)",
+    focusedBottom: "80px",
+    focusedLeft: "calc(45vw- 120px)",
+    focusedHeight: "417px",
+  },
   dialogs: [
     {
       id: 0,
