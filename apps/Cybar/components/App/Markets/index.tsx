@@ -12,19 +12,6 @@ const Container = styled.div`
   border-radius: 4px;
 `;
 
-const BigMarketsLabel = styled(RowCenter)`
-  color: ${({ theme }) => theme.bg1};
-  font-size: 136px;
-  font-weight: 700;
-
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    font-size: 100px;
-  `}
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-    font-size: 64px;
-  `}
-`;
-
 const TableWrapper = styled.div`
   position: relative;
   margin-top: -85px;
@@ -42,7 +29,6 @@ export default function Markets() {
   return (
     <Container>
       <WrapperBanner />
-      <BigMarketsLabel>MARKETS</BigMarketsLabel>
       <TableWrapper>
         <MarketsTable />
       </TableWrapper>
