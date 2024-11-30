@@ -6,7 +6,7 @@ export default function crossBrowserListener(
   store: Store<RootState>,
   persistConfig: PersistConfig<RootState>
 ) {
-  return async function() {
+  return async function () {
     const state = await getStoredState(persistConfig);
 
     store.dispatch({

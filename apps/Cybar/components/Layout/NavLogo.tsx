@@ -1,13 +1,13 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
 
-import { ExternalLink } from 'components/Link'
-import { RowCenter } from 'components/Row'
-import { APP_URL } from 'constants/chains/misc'
-import { RowStart } from 'components/Row'
-import CYBAR_HEADER_LOGO from '/public/static/images/cybar-long.svg'
-import Image from 'next/legacy/image'
-import { useRouter } from 'next/router'
+import { ExternalLink } from "components/Link";
+import { RowCenter } from "components/Row";
+import { APP_URL } from "constants/chains/misc";
+import { RowStart } from "components/Row";
+import CYBAR_HEADER_LOGO from "/public/static/images/cybar-long.svg";
+import Image from "next/legacy/image";
+import { useRouter } from "next/router";
 
 const Wrapper = styled(RowCenter)`
   width: fit-content;
@@ -21,21 +21,21 @@ const Wrapper = styled(RowCenter)`
       margin-right: 10px;
     }
   }
-`
+`;
 
 const TextWrapper = styled(RowStart)`
   ${({ theme }) => theme.mediaWidth.upToMedium`
   flex-direction: column;
   align-items: flex-start;
 `};
-`
+`;
 
 export default function NavLogo() {
-  const router = useRouter()
+  const router = useRouter();
 
   const handleLogoClick = () => {
-    router.push('/')
-  }
+    router.push("/");
+  };
 
   return (
     <div>
@@ -52,5 +52,5 @@ export default function NavLogo() {
         </TextWrapper>
       </Wrapper>
     </div>
-  )
+  );
 }
