@@ -38,11 +38,19 @@ const TableWrapper = styled.div`
   `}
 `;
 
+const HiddenText = styled.span`
+  visibitlity: hidden;
+  width: 0;
+  height: 1;
+`;
+
 export default function Markets() {
   return (
     <Container>
       <WrapperBanner />
-      <BigMarketsLabel>MARKETS</BigMarketsLabel>
+      <BigMarketsLabel>
+        <HiddenText>.</HiddenText>
+      </BigMarketsLabel>
       <TableWrapper>
         <MarketsTable />
       </TableWrapper>
