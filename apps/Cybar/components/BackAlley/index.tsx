@@ -10,7 +10,11 @@ import { useCharacterContext } from "./characterContext";
 // import Swiper core and required modules
 import SwiperCore from "swiper";
 import { Pagination, Parallax } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
+import {
+  Swiper,
+  SwiperSlide,
+  SwiperSlide as SwiperSlideImport,
+} from "swiper/react";
 
 // Import Swiper styles
 import "swiper/css";
@@ -33,7 +37,7 @@ const BackAlleyContainer = styled.div`
 `;
 
 const SliderBackground = styled.div<{ backgroundImage: string }>`
-  position: absolute;
+  position: relative;
   background-image: url(${(props) => props.backgroundImage});
   background-size: 2560px;
   background-position: center bottom;
@@ -45,7 +49,17 @@ const SliderBackground = styled.div<{ backgroundImage: string }>`
 
 const SwiperContainer = styled(Swiper)`
   height: 100%;
+  width: 100%;
   overflow: hidden;
+  position: absolute;
+  bottom: auto;
+`;
+
+const SwiperSlide = styled(SwiperSlideImport)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
 `;
 
 export const BackAlley = () => {
