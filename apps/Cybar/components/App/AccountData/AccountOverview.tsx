@@ -60,7 +60,7 @@ const Title = styled(Row)`
   `};
 `;
 
-const AccountHealth = styled(RowEnd) <{ color?: string }>`
+const AccountHealth = styled(RowEnd)<{ color?: string }>`
   font-weight: 500;
   font-size: 16px;
   padding: 12px 12px 12px 0px;
@@ -292,7 +292,8 @@ export const DeveloperModeTitle = ({
       toggleExpertMode();
     } else if (tries > 2) {
       toast.error(
-        `Developer mode is ${isExpertMode ? "deactivating" : "activating"
+        `Developer mode is ${
+          isExpertMode ? "deactivating" : "activating"
         } #${tries}`
       );
     }

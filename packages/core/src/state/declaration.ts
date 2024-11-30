@@ -22,7 +22,6 @@ import {
 } from "react-redux";
 import "symbol-observable";
 import reducer from "./reducer";
-import crossBrowserListener from "../utils/reduxPersistListener";
 
 // const PERSISTED_KEYS: string[] = ["user", "transactions"];
 
@@ -36,7 +35,7 @@ import crossBrowserListener from "../utils/reduxPersistListener";
 export type RootState = ReturnType<typeof reducer>;
 function makeStore() {
   return configureStore({
-    reducer: reducer,
+    reducer,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         thunk: true,
@@ -50,7 +49,7 @@ function makeStore() {
 let store: Store<RootState, AnyAction>;
 
 export const getOrCreateStore = () => {
-  let _store = store ?? makeStore();
+  const _store = store ?? makeStore();
 
   // After navigating to a page with an initial Redux state, merge that state
   // with the current state in the store, and create a new store
