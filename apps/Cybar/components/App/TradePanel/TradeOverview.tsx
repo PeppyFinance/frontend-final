@@ -95,6 +95,23 @@ export default function TradeOverview() {
     <>
       <Wrapper>
         <PositionWrap>
+          <div>Liquidation Price:</div>
+          <PositionValue>
+            <div>{`${
+              toBN(formattedAmounts[0]).isNaN()
+                ? "0"
+                : toBN(formattedAmounts[0]).toFormat()
+            } x ${userLeverage} =`}</div>
+            <div>
+              {`${
+                toBN(formattedAmounts[0]).isNaN() || toBN(userLeverage).isNaN()
+                  ? 0
+                  : toBN(formattedAmounts[0]).times(userLeverage).toFormat()
+              } ${collateralCurrency?.symbol}`}
+            </div>
+          </PositionValue>
+        </PositionWrap>
+        <PositionWrap>
           <div>Position Value:</div>
           <PositionValue>
             <div>{`${
