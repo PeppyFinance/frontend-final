@@ -105,20 +105,24 @@ export default function TradeOverview() {
                 toBN(formattedAmounts[0]).isNaN() || toBN(userLeverage).isNaN()
                   ? 0
                   : positionType === PositionType.LONG
-                  ? toBN(price)
-                      .times(
+                  ? formatAmount(
+                      toBN(price).times(
                         1 -
-                          (Number(cva) - Number(lf)) /
-                            Number(formattedAmounts[0])
+                          1 / userLeverage +
+                          ((Number(cva) + Number(lf)) /
+                            Number(formattedAmounts[0])) *
+                            userLeverage
                       )
-                      .toFormat()
-                  : toBN(price)
-                      .times(
+                    )
+                  : formatAmount(
+                      toBN(price).times(
                         1 +
-                          (Number(cva) - Number(lf)) /
-                            Number(formattedAmounts[0])
+                          1 / userLeverage -
+                          ((Number(cva) + Number(lf)) /
+                            Number(formattedAmounts[0])) *
+                            userLeverage
                       )
-                      .toFormat()
+                    )
               } ${collateralCurrency?.symbol}`}
             </div>
           </PositionValue>
