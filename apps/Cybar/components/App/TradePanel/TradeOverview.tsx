@@ -6,7 +6,7 @@ import {
   formatAmount,
   toBN,
 } from "@symmio/frontend-sdk/utils/numbers";
-import { OrderType } from "@symmio/frontend-sdk/types/trade";
+import { OrderType, PositionType } from "@symmio/frontend-sdk/types/trade";
 import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
 import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
 
@@ -15,6 +15,7 @@ import {
   useActiveMarket,
   useLimitPrice,
   useOrderType,
+  usePositionType,
 } from "@symmio/frontend-sdk/state/trade/hooks";
 import useTradePage, {
   useLockedValues,
@@ -67,6 +68,7 @@ export default function TradeOverview() {
   );
   const limitPrice = useLimitPrice();
   const orderType = useOrderType();
+  const positionType = usePositionType();
 
   const { price: markPrice, formattedAmounts } = useTradePage();
 
@@ -82,6 +84,7 @@ export default function TradeOverview() {
   );
   const notionalValue = useNotionalValue(quantityAsset.toString(), price);
   const { cva, lf } = useLockedValues(notionalValue);
+
   const tradingFee = useMemo(
     () =>
       market?.tradingFee
@@ -90,10 +93,33 @@ export default function TradeOverview() {
     [notionalValue, market]
   );
   const userLeverage = useLeverage();
+  const mmr = Number(formattedAmounts[0]) * userLeverage;
 
   return (
     <>
       <Wrapper>
+        <PositionWrap>
+          <div>Est. Liquidation Price:</div>
+          <PositionValue>
+            <div>
+              {`${
+                toBN(formattedAmounts[0]).isNaN() || toBN(userLeverage).isNaN()
+                  ? 0
+                  : positionType === PositionType.LONG
+                  ? formatAmount(
+                      toBN(price).times(
+                        1 - 1 / userLeverage + (Number(cva) + Number(lf)) / mmr
+                      )
+                    )
+                  : formatAmount(
+                      toBN(price).times(
+                        1 + 1 / userLeverage - (Number(cva) + Number(lf)) / mmr
+                      )
+                    )
+              } ${collateralCurrency?.symbol}`}
+            </div>
+          </PositionValue>
+        </PositionWrap>
         <PositionWrap>
           <div>Position Value:</div>
           <PositionValue>
@@ -119,7 +145,6 @@ export default function TradeOverview() {
               ? formatAmount(toBN(cva).plus(lf))
               : "0"
           } ${collateralCurrency?.symbol}`}
-          // tooltip="Maintenance Margin"
         />
 
         <InfoItem
