@@ -93,7 +93,7 @@ export default function TradeOverview() {
     [notionalValue, market]
   );
   const userLeverage = useLeverage();
-  const mmr = Number(formattedAmounts[0]) * userLeverage;
+  const mmr = (Number(cva) + Number(lf)) / userLeverage;
 
   return (
     <>
@@ -108,13 +108,17 @@ export default function TradeOverview() {
                   : positionType === PositionType.LONG
                   ? formatAmount(
                       toBN(price).times(
-                        1 - 1 / userLeverage + (Number(cva) + Number(lf)) / mmr
-                      )
+                        1 - 1 / userLeverage + mmr / userLeverage
+                      ),
+                      6,
+                      true
                     )
                   : formatAmount(
                       toBN(price).times(
-                        1 + 1 / userLeverage - (Number(cva) + Number(lf)) / mmr
-                      )
+                        1 + 1 / userLeverage - mmr / userLeverage
+                      ),
+                      6,
+                      true
                     )
               } ${collateralCurrency?.symbol}`}
             </div>
