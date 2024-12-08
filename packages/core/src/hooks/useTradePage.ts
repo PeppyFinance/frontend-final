@@ -304,22 +304,25 @@ export function useMaxFundingRate(): string {
 }
 
 export function useLockedValues(notionalValue: string): {
-  cva: string;
-  lf: string;
+  adjustedCollateralValue: string;
+  liquidationFeeAmount: string;
   partyAmm: string;
   total: string;
 } {
-  const lf = useLockedLF(notionalValue);
+  const liquidationFeeAmount = useLockedLF(notionalValue);
+  const adjustedCollateralValue = useLockedCVA(notionalValue);
   const partyAmm = usePartyALockedMM(notionalValue);
-  const cva = useLockedCVA(notionalValue);
 
   return useMemo(
     () => ({
-      cva,
-      lf,
+      adjustedCollateralValue,
+      liquidationFeeAmount,
       partyAmm,
-      total: toBN(cva).plus(partyAmm).plus(lf).toString(),
+      total: toBN(adjustedCollateralValue)
+        .plus(partyAmm)
+        .plus(liquidationFeeAmount)
+        .toString(),
     }),
-    [lf, partyAmm, cva]
+    [liquidationFeeAmount, partyAmm, adjustedCollateralValue]
   );
 }
