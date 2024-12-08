@@ -8,12 +8,6 @@ import {
 import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
 const { configureStore } = ((toolkitRaw as any).default ??
   toolkitRaw) as typeof toolkitRaw;
-// import { persistReducer, persistStore } from "redux-persist";
-// import storage from "redux-persist/lib/storage";
-// import { AsyncNodeStorage } from "redux-persist-node-storage";
-// import * as reduxPersisRaw from "redux-persist/lib/integration/react";
-// const { PersistGate } = ((reduxPersisRaw as any).default ??
-//   reduxPersisRaw) as typeof reduxPersisRaw;
 import {
   Provider,
   TypedUseSelectorHook,
@@ -22,17 +16,7 @@ import {
 } from "react-redux";
 import "symbol-observable";
 import reducer from "./reducer";
-// import crossBrowserListener from "../utils/reduxPersistListener";
 
-// const PERSISTED_KEYS: string[] = ["user", "transactions"];
-
-// const persistConfig = {
-//   key: "root",
-//   whitelist: PERSISTED_KEYS,
-//   storage,
-// };
-
-// const persistedReducer = persistReducer(persistConfig, reducer);
 export type RootState = ReturnType<typeof reducer>;
 function makeStore() {
   return configureStore({
@@ -82,13 +66,4 @@ export const useAppSelector: TypedUseSelectorHook<AppState> = useSelector;
 
 export default store;
 
-// export const persistor = persistStore(store);
-
-// if (typeof window === "object") {
-//   window.addEventListener(
-//     "storage",
-//     crossBrowserListener(store, persistConfig)
-//   );
-// }
-// export const SymmioPersistGate = PersistGate;
 export const ReduxProvider = Provider;

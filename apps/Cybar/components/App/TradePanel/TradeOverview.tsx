@@ -14,11 +14,11 @@ import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 import {
   useActiveMarket,
   useLimitPrice,
+  useLockedPercentages,
   useOrderType,
   usePositionType,
 } from "@symmio/frontend-sdk/state/trade/hooks";
 import useTradePage, {
-  useLockedValues,
   useNotionalValue,
 } from "@symmio/frontend-sdk/hooks/useTradePage";
 
@@ -83,7 +83,7 @@ export default function TradeOverview() {
     [formattedAmounts]
   );
   const notionalValue = useNotionalValue(quantityAsset.toString(), price);
-  const { cva, lf } = useLockedValues(notionalValue);
+  const { cva, lf } = useLockedPercentages();
 
   const tradingFee = useMemo(
     () =>
@@ -93,7 +93,7 @@ export default function TradeOverview() {
     [notionalValue, market]
   );
   const userLeverage = useLeverage();
-  const mmr = (Number(cva) + Number(lf)) / userLeverage;
+  const mmr = Number(cva) / 100 + Number(lf) / 100;
 
   return (
     <>
