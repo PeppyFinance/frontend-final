@@ -541,11 +541,9 @@ export function useLockedMargin(quote: Quote): string {
 
 export function useLiquidationPrice(quote: Quote): string {
   const leverage = useQuoteLeverage(quote);
-  // TODO
-  // ? are CVA & LF effective value or percentage?
-  const { openedPrice, CVA, LF, positionType } = quote;
+  const { openedPrice, CVA, LF, positionType, initialPartyAMM } = quote;
 
-  const mmr = Number(CVA) + Number(LF);
+  const mmr = (Number(CVA) + Number(LF)) / Number(initialPartyAMM);
   return positionType === PositionType.LONG
     ? toBN(openedPrice)
         .times(1 - 1 / Number(leverage) + mmr / Number(leverage))
