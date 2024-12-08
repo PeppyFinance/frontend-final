@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef } from "react";
 import { useSingleContractMultipleMethods } from "../lib/hooks/multicall";
 import { OrderType, PositionType } from "../types/trade";
 import { Quote, QuoteStatus } from "../types/quote";
-import { BN_ZERO, fromWei, toBN } from "../utils/numbers";
+import { BN_ZERO, formatAmount, fromWei, toBN } from "../utils/numbers";
 
 import {
   useAccountPartyAStat,
@@ -545,10 +545,16 @@ export function useLiquidationPrice(quote: Quote): string {
 
   const mmr = (Number(CVA) + Number(LF)) / Number(initialPartyAMM);
   return positionType === PositionType.LONG
-    ? toBN(openedPrice)
-        .times(1 - 1 / Number(leverage) + mmr / Number(leverage))
-        .toString()
-    : toBN(openedPrice)
-        .times(1 + 1 / Number(leverage) - mmr / Number(leverage))
-        .toString();
+    ? formatAmount(
+        toBN(openedPrice)
+          .times(1 - 1 / Number(leverage) + mmr / Number(leverage))
+          .toString(),
+        6
+      )
+    : formatAmount(
+        toBN(openedPrice)
+          .times(1 + 1 / Number(leverage) - mmr / Number(leverage))
+          .toString(),
+        6
+      );
 }
