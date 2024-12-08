@@ -710,6 +710,8 @@ function QuoteRow({
           {instantCloseStatusInfo.isInstantClose && (
             <InstantCloseText>{instantCloseStatusInfo.text}</InstantCloseText>
           )}
+          {/* // TODO Align columns  */}
+          {/* Estimated Liquidation Price */}
           {quoteLiquidationPrice}
           {/* Status */}
           {fillAmountPercent === null ? (

@@ -102,6 +102,7 @@ export default function TradeOverview() {
     <>
       <Wrapper>
         <PositionWrap>
+          {/* // TODO handle NaN */}
           <div>Est. Liquidation Price:</div>
           <PositionValue>
             <div>
