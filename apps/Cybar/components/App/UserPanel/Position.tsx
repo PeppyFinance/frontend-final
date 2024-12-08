@@ -34,11 +34,9 @@ import {
   useClosingLastMarketPrice,
   useOpeningLastMarketPrice,
   useInstantCloseNotifications,
+  useLiquidationPrice,
 } from "@symmio/frontend-sdk/hooks/useQuotes";
-import {
-  useLockedValues,
-  useNotionalValue,
-} from "@symmio/frontend-sdk/hooks/useTradePage";
+import { useNotionalValue } from "@symmio/frontend-sdk/hooks/useTradePage";
 import {
   useAccountPartyAStat,
   useActiveAccountAddress,
@@ -206,7 +204,7 @@ const HEADERS1 = [
   "Position Value",
   "Market price",
   "Open Price",
-  "Est. Liquidation",
+  "Est Liq Price",
   "Status/uPNL",
   "Actions",
 ];
@@ -216,7 +214,7 @@ const HEADERS2 = [
   "Position Value",
   "Market price",
   "Open Price",
-  "Est. Liquidation",
+  "Est Liq Price",
   "Status/uPNL",
   "tp/sl",
   "Actions",
@@ -517,11 +515,7 @@ function QuoteRow({
   const quoteDetail = useQuoteDetail();
   const setQuoteDetail = useSetQuoteDetailCallback();
 
-  const { cva, lf } = useLockedValues(notionalValue);
-  // TODO cva, lf changes. Replace them in the formula
-  const liquidationPrice =
-    Number(openedPrice) *
-    (1 - 1 / Number(leverage) + (Number(cva) + Number(lf)) / Number(leverage));
+  const liquidationPrice = useLiquidationPrice(quote);
   const activeDetail = id === quoteDetail?.id;
 
   // usage: we should know change of quote for position details
@@ -688,6 +682,7 @@ function QuoteRow({
             <div>{quoteSize}</div>
           )}
 
+          {/* Position Value */}
           <div>
             {toBN(notionalValue).isEqualTo(0)
               ? "-"

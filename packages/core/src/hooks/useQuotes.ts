@@ -538,3 +538,19 @@ function toQuote(quote: any) {
 export function useLockedMargin(quote: Quote): string {
   return toBN(quote.CVA).plus(quote.partyAMM).plus(quote.LF).toString();
 }
+
+export function useLiquidationPrice(quote: Quote): string {
+  const leverage = useQuoteLeverage(quote);
+  // TODO
+  // ? are CVA & LF effective value or percentage?
+  const { openedPrice, CVA, LF, positionType } = quote;
+
+  const mmr = Number(CVA) + Number(LF);
+  return positionType === PositionType.LONG
+    ? toBN(openedPrice)
+        .times(1 - 1 / Number(leverage) + mmr / Number(leverage))
+        .toString()
+    : toBN(openedPrice)
+        .times(1 + 1 / Number(leverage) - mmr / Number(leverage))
+        .toString();
+}

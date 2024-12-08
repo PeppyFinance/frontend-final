@@ -19,6 +19,7 @@ import {
   usePositionType,
 } from "@symmio/frontend-sdk/state/trade/hooks";
 import useTradePage, {
+  useLockedValues,
   useNotionalValue,
 } from "@symmio/frontend-sdk/hooks/useTradePage";
 
@@ -83,6 +84,8 @@ export default function TradeOverview() {
     [formattedAmounts]
   );
   const notionalValue = useNotionalValue(quantityAsset.toString(), price);
+  const { adjustedCollateralValue, liquidationFeeAmount } =
+    useLockedValues(notionalValue);
   const { cva, lf } = useLockedPercentages();
 
   const tradingFee = useMemo(
@@ -93,7 +96,7 @@ export default function TradeOverview() {
     [notionalValue, market]
   );
   const userLeverage = useLeverage();
-  const mmr = Number(cva) / 100 + Number(lf) / 100;
+  const mmr = (Number(cva) + Number(lf)) / 100;
 
   return (
     <>
@@ -145,8 +148,11 @@ export default function TradeOverview() {
         <InfoItem
           label="Maintenance Margin (CVA):"
           amount={`${
-            !toBN(cva).isNaN() && !toBN(lf).isNaN()
-              ? formatAmount(toBN(cva).plus(lf))
+            !toBN(adjustedCollateralValue).isNaN() &&
+            !toBN(liquidationFeeAmount).isNaN()
+              ? formatAmount(
+                  toBN(adjustedCollateralValue).plus(liquidationFeeAmount)
+                )
               : "0"
           } ${collateralCurrency?.symbol}`}
         />
