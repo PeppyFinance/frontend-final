@@ -68,12 +68,20 @@ const HeaderWrap = styled(TableStructure)`
 
 interface Props extends OrderMarktesProps {
   HEADERS: string[];
+interface Props {
+  HEADERS: {
+    name: string;
+    sortBy?: Exclude<OrderMarktesProps["sortBy"], undefined>;
+  }[];
+  sortedBy: Exclude<OrderMarktesProps["sortBy"], undefined>;
 }
 export default function TableHeader({ HEADERS, sortBy }: Props) {
   return (
     <HeaderWrap>
       {HEADERS.map((header, key) => {
         return <NoStyleButton key={key}>{header}</NoStyleButton>;
+      {HEADERS.map((header) => {
+        return <NoStyleButton key={header.name}>{header.name}</NoStyleButton>;
       })}
     </HeaderWrap>
   );

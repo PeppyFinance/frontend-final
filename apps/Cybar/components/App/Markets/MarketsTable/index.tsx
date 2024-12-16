@@ -48,14 +48,15 @@ export default function Table() {
       </Title>
       <TableHeader
         HEADERS={[
-          "",
-          "Name",
-          "Price",
-          "24h Change",
-          "24h Volume",
-          "Notional Cap",
-          "Action",
+          { name: "" },
+          { name: "Name" },
+          { name: "Price", sortBy: "price" },
+          { name: "24h Change", sortBy: "priceChangePercent" },
+          { name: "24h Volume", sortBy: "tradeVolume" },
+          { name: "Notional Cap", sortBy: "notionalCap" },
+          { name: "Action" },
         ]}
+        sortedBy="priceChangePercent"
       />
       <TableBody markets={markets} searchValue={searchMarketsValue} />
     </TableWrapper>
