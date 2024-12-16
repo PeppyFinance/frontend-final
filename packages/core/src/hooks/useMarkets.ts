@@ -82,8 +82,8 @@ function fuzzySearch(
   return fuse.search(query);
 }
 
-export function useMarketsSearch({ sortBy }: OrderMarktesProps = {}) {
-  const markets = useMarkets({ sortBy });
+export function useMarketsSearch(orderProps: OrderMarktesProps = {}) {
+  const markets = useMarkets(orderProps);
 
   const options: SelectSearchOption[] = useMemo(() => {
     return markets.map((market: Market) => ({ ...market, value: market.name }));

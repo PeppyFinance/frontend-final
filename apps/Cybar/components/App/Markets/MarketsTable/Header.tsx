@@ -1,9 +1,13 @@
 import styled from "styled-components";
 
-import { OrderMarktes } from "@symmio/frontend-sdk/state/hedger/hooks";
+import {
+  Direction,
+  OrderMarktes,
+} from "@symmio/frontend-sdk/state/hedger/hooks";
 import { DownArrow } from "assets/icons/DownArrow";
 import { NoStyleButton } from "components/Button";
 import { RowBetween } from "components/Row";
+import { useRouter } from "next/router";
 
 const TableStructure = styled(RowBetween)`
   font-size: 12px;
@@ -67,7 +71,6 @@ const HeaderWrap = styled(TableStructure)`
   }
 `;
 
-export type Direction = "asc" | "desc";
 // TODO: rename to ordered
 interface Props {
   HEADERS: {
@@ -78,6 +81,18 @@ interface Props {
   direction: Direction;
 }
 export default function TableHeader({ HEADERS, sortedBy, direction }: Props) {
+  const router = useRouter();
+
+  const onClick = (sortBy: OrderMarktes) => {
+    if (sortBy === sortedBy) {
+      router.query.direction = direction === "asc" ? "desc" : "asc";
+    } else {
+      router.query.direction = "desc";
+    }
+    router.query.orderby = sortBy;
+    router.push(router);
+  };
+
   return (
     <HeaderWrap>
       {HEADERS.map((header) => {
@@ -86,6 +101,7 @@ export default function TableHeader({ HEADERS, sortedBy, direction }: Props) {
             disabled={!header.sortBy}
             key={header.name}
             isActive={header.sortBy === sortedBy}
+            onClick={() => onClick(header.sortBy ?? "tradeVolume")}
           >
             {header.name}
             <DownArrow

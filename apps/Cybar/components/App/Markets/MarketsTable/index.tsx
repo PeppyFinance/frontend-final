@@ -1,11 +1,14 @@
 import styled from "styled-components";
 
 import { useMarketsSearch } from "@symmio/frontend-sdk/hooks/useMarkets";
-import { OrderMarktes } from "@symmio/frontend-sdk/state/hedger/hooks";
+import {
+  OrderMarktes,
+  Direction,
+} from "@symmio/frontend-sdk/state/hedger/hooks";
 import { InputField } from "components/App/MarketBar/InputField";
 import { RowBetween } from "components/Row";
 import TableBody from "./Body";
-import TableHeader, { Direction } from "./Header";
+import TableHeader from "./Header";
 
 const TableWrapper = styled.div`
   border-radius: 4px;
@@ -40,7 +43,10 @@ export interface MarketsTableProps {
   orderBy: OrderMarktes;
 }
 export default function Table({ direction, orderBy }: MarketsTableProps) {
-  const { markets, searchProps } = useMarketsSearch({ sortBy: orderBy });
+  const { markets, searchProps } = useMarketsSearch({
+    sortBy: orderBy,
+    direction,
+  });
   const searchMarketsValue = searchProps?.ref?.current?.value || "";
 
   return (

@@ -81,28 +81,32 @@ export function useWebSocketStatus() {
 }
 
 export type OrderMarktes = keyof MarketsInfo[string];
+export type Direction = "asc" | "desc";
 export interface OrderMarktesProps {
   sortBy?: OrderMarktes;
+  direction?: Direction;
 }
-export function useMarkets({ sortBy }: OrderMarktesProps = {}) {
+export function useMarkets({ sortBy, direction }: OrderMarktesProps = {}) {
   const markets: Market[] = useAppSelector((state) => state.hedger.markets);
   const { marketsInfo, infoStatus } = useAllMarketsData();
   // TODO: consider sorting library like fast-sort if too slow
   return useMemo(() => {
     if (infoStatus === ApiState.OK && sortBy) {
       // TODO: fix tsConfig
-      return markets.toSorted((m1, m2) => {
+      return [...markets].sort((m1, m2) => {
         const mInfo1 = marketsInfo[m1.name];
         const mInfo2 = marketsInfo[m2.name];
         if (mInfo1 === undefined || mInfo2 === undefined) {
           return 0;
         }
-        return Number(mInfo2[sortBy]) - Number(mInfo1[sortBy]);
+        return direction === "asc"
+          ? Number(mInfo1[sortBy]) - Number(mInfo2[sortBy])
+          : Number(mInfo2[sortBy]) - Number(mInfo1[sortBy]);
       });
     } else {
       return markets;
     }
-  }, [infoStatus, markets, marketsInfo, sortBy]);
+  }, [direction, infoStatus, markets, marketsInfo, sortBy]);
   // return markets;
 }
 
