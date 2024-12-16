@@ -1,27 +1,30 @@
 import { useCallback, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "../declaration";
 
+import { SupportedChainId } from "../../constants/chains";
+import { useAllMarketsData } from "../../hooks/useAllMarketsData";
+import useActiveWagmi from "../../lib/hooks/useActiveWagmi";
+import useDebounce from "../../lib/hooks/useDebounce";
+import { useSupportedChainId } from "../../lib/hooks/useSupportedChainId";
+import { ApiState, ConnectionStatus } from "../../types/api";
+import { Market } from "../../types/market";
+import { useHedgerAddress } from "../chains/hooks";
 import {
-  MarketDataMap,
+  updateDepth,
+  updateFundingRates,
+  updateNotionalCap,
+  updatePrices,
+  updateWebSocketStatus,
+} from "./actions";
+import {
+  FundingRateData,
+  FundingRateMap,
   MarketData,
+  MarketDataMap,
   MarketDepthData,
   MarketNotionalCap,
-  FundingRateMap,
-  FundingRateData,
+  MarketsInfo,
 } from "./types";
-import {
-  updateWebSocketStatus,
-  updatePrices,
-  updateDepth,
-  updateNotionalCap,
-  updateFundingRates,
-} from "./actions";
-import useActiveWagmi from "../../lib/hooks/useActiveWagmi";
-import { useSupportedChainId } from "../../lib/hooks/useSupportedChainId";
-import useDebounce from "../../lib/hooks/useDebounce";
-import { ApiState, ConnectionStatus } from "../../types/api";
-import { useHedgerAddress } from "../chains/hooks";
-import { SupportedChainId } from "../../constants/chains";
 
 export function useMarketsStatus(): ApiState {
   const marketsStatus: ApiState = useAppSelector(
@@ -77,9 +80,29 @@ export function useWebSocketStatus() {
   return webSocketStatus;
 }
 
-export function useMarkets() {
-  const markets = useAppSelector((state) => state.hedger.markets);
-  return markets;
+interface Props {
+  sortBy?: keyof MarketsInfo[string];
+}
+export function useMarkets({ sortBy }: Props = {}) {
+  const markets: Market[] = useAppSelector((state) => state.hedger.markets);
+  const { marketsInfo, infoStatus } = useAllMarketsData();
+  // TODO: consider sorting library like fast-sort if too slow
+  return useMemo(() => {
+    if (infoStatus === ApiState.OK && sortBy) {
+      // TODO: fix tsConfig
+      return markets.toSorted((m1, m2) => {
+        const mInfo1 = marketsInfo[m1.name];
+        const mInfo2 = marketsInfo[m2.name];
+        if (mInfo1 === undefined || mInfo2 === undefined) {
+          return 0;
+        }
+        return Number(mInfo2[sortBy]) - Number(mInfo1[sortBy]);
+      });
+    } else {
+      return markets;
+    }
+  }, [infoStatus, markets, marketsInfo, sortBy]);
+  // return markets;
 }
 
 export function useErrorMessages() {
