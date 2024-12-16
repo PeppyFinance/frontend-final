@@ -4,19 +4,12 @@ import { useMarketsSearch } from "@symmio/frontend-sdk/hooks/useMarkets";
 import { OrderMarktes } from "@symmio/frontend-sdk/state/hedger/hooks";
 import { InputField } from "components/App/MarketBar/InputField";
 import { RowBetween } from "components/Row";
-import { useRouter } from "next/router";
 import TableBody from "./Body";
 import TableHeader, { Direction } from "./Header";
 
 const TableWrapper = styled.div`
   border-radius: 4px;
 `;
-
-const cleanOrderParam = (param: string): OrderMarktes => {
-  return (["price", "priceChangePercent", "tradeVolume", "notionalCap"].find(
-    (order) => order.toLowerCase() === param.toLowerCase()
-  ) ?? "tradeVolume") as OrderMarktes;
-};
 
 const Title = styled(RowBetween)`
   padding: 8px 12px 0 16px;
@@ -42,25 +35,12 @@ const InputWrapper = styled.div`
   }
 `;
 
-export default function Table() {
-  const { markets, searchProps } = useMarketsSearch();
-  const { query } = useRouter();
-  const directionParam = query.direction;
-  let direction: Direction = "desc";
-  if (
-    directionParam &&
-    !Array.isArray(directionParam) &&
-    directionParam.toLowerCase() === "asc"
-  ) {
-    direction = "asc";
-  }
-
-  const orderByParam = query.orderBy;
-  let orderBy: OrderMarktes = "tradeVolume";
-  if (orderByParam && !Array.isArray(orderByParam)) {
-    orderBy = cleanOrderParam(orderByParam);
-  }
-
+export interface MarketsTableProps {
+  direction: Direction;
+  orderBy: OrderMarktes;
+}
+export default function Table({ direction, orderBy }: MarketsTableProps) {
+  const { markets, searchProps } = useMarketsSearch({ sortBy: orderBy });
   const searchMarketsValue = searchProps?.ref?.current?.value || "";
 
   return (

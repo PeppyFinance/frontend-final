@@ -1,9 +1,8 @@
-import React from "react";
 import styled from "styled-components";
 
-import MarketsTable from "./MarketsTable";
 import WrapperBanner from "components/Banner";
 import { RowCenter } from "components/Row";
+import MarketsTable, { MarketsTableProps } from "./MarketsTable";
 
 const Container = styled.div`
   width: 100%;
@@ -38,13 +37,13 @@ const TableWrapper = styled.div`
   `}
 `;
 
-export default function Markets() {
+export default function Markets({ direction, orderBy }: MarketsTableProps) {
   return (
     <Container>
       <WrapperBanner />
       <BigMarketsLabel>MARKETS</BigMarketsLabel>
       <TableWrapper>
-        <MarketsTable />
+        <MarketsTable direction={direction} orderBy={orderBy} />
       </TableWrapper>
     </Container>
   );
