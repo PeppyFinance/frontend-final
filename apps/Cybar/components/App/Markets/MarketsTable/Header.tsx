@@ -1,7 +1,10 @@
 import styled from "styled-components";
 
 import { RowBetween } from "components/Row";
-import { OrderMarktesProps } from "@symmio/frontend-sdk/state/hedger/hooks";
+import {
+  OrderMarktes,
+  OrderMarktesProps,
+} from "@symmio/frontend-sdk/state/hedger/hooks";
 import { NoStyleButton } from "components/Button";
 
 const TableStructure = styled(RowBetween)`
@@ -71,9 +74,9 @@ export type Direction = "asc" | "desc";
 interface Props {
   HEADERS: {
     name: string;
-    sortBy?: Exclude<OrderMarktesProps["sortBy"], undefined>;
+    sortBy?: OrderMarktes;
   }[];
-  sortedBy: Exclude<OrderMarktesProps["sortBy"], undefined>;
+  sortedBy: OrderMarktes;
   direction: Direction;
 }
 export default function TableHeader({ HEADERS, sortedBy }: Props) {

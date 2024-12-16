@@ -1,15 +1,22 @@
 import styled from "styled-components";
 
+import { useMarketsSearch } from "@symmio/frontend-sdk/hooks/useMarkets";
+import { OrderMarktes } from "@symmio/frontend-sdk/state/hedger/hooks";
+import { InputField } from "components/App/MarketBar/InputField";
+import { RowBetween } from "components/Row";
+import { useRouter } from "next/router";
 import TableBody from "./Body";
 import TableHeader, { Direction } from "./Header";
-import { RowBetween } from "components/Row";
-import { InputField } from "components/App/MarketBar/InputField";
-import { useMarketsSearch } from "@symmio/frontend-sdk/hooks/useMarkets";
-import { useRouter } from "next/router";
 
 const TableWrapper = styled.div`
   border-radius: 4px;
 `;
+
+const cleanOrderParam = (param: string): OrderMarktes => {
+  return (["price", "priceChangePercent", "tradeVolume", "notionalCap"].find(
+    (order) => order.toLowerCase() === param.toLowerCase()
+  ) ?? "tradeVolume") as OrderMarktes;
+};
 
 const Title = styled(RowBetween)`
   padding: 8px 12px 0 16px;
@@ -48,6 +55,12 @@ export default function Table() {
     direction = "asc";
   }
 
+  const orderByParam = query.orderBy;
+  let orderBy: OrderMarktes = "tradeVolume";
+  if (orderByParam && !Array.isArray(orderByParam)) {
+    orderBy = cleanOrderParam(orderByParam);
+  }
+
   const searchMarketsValue = searchProps?.ref?.current?.value || "";
 
   return (
@@ -68,7 +81,7 @@ export default function Table() {
           { name: "Notional Cap", sortBy: "notionalCap" },
           { name: "Action" },
         ]}
-        sortedBy="priceChangePercent"
+        sortedBy={orderBy}
         direction={direction}
       />
       <TableBody markets={markets} searchValue={searchMarketsValue} />

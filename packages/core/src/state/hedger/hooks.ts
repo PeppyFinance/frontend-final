@@ -80,8 +80,9 @@ export function useWebSocketStatus() {
   return webSocketStatus;
 }
 
+export type OrderMarktes = keyof MarketsInfo[string];
 export interface OrderMarktesProps {
-  sortBy?: keyof MarketsInfo[string];
+  sortBy?: OrderMarktes;
 }
 export function useMarkets({ sortBy }: OrderMarktesProps = {}) {
   const markets: Market[] = useAppSelector((state) => state.hedger.markets);
