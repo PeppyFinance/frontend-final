@@ -38,6 +38,7 @@ const TableWrapper = styled.div`
   `}
 `;
 
+// TODO: add categories
 export default function Markets() {
   return (
     <Container>
