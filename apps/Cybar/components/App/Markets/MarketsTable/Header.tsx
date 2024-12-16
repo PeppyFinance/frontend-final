@@ -88,12 +88,11 @@ export default function TableHeader({
   const router = useRouter();
 
   const onClick = (orderBy: OrderMarktes) => {
-    if (orderBy === orderedBy) {
-      router.query.direction = direction === "asc" ? "desc" : "asc";
-    } else {
-      router.query.direction = "desc";
-    }
     router.query.orderby = orderBy;
+    router.query.direction = "desc";
+    if (orderBy === orderedBy && direction === "desc") {
+      router.query.direction = "asc";
+    }
     router.push(router);
   };
 
