@@ -263,7 +263,9 @@ export const PositionActionButton = styled(SecondaryButton)<{
 
 export const NoStyleButton = styled.button<{ isActive: boolean }>`
   all: unset;
-  display: inline-block;
+  display: inline-flex;
+  alignitems: baseline;
+  gap: 10px;
   cursor: ${({ disabled }) => (disabled ? "cursor" : "pointer")};
   box-shadow: ${({ isActive, theme }) =>
     isActive ? `${theme.primary0} 0px 3px 2px 0px` : "none"};

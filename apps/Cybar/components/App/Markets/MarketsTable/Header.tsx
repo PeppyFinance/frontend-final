@@ -1,11 +1,9 @@
 import styled from "styled-components";
 
-import { RowBetween } from "components/Row";
-import {
-  OrderMarktes,
-  OrderMarktesProps,
-} from "@symmio/frontend-sdk/state/hedger/hooks";
+import { OrderMarktes } from "@symmio/frontend-sdk/state/hedger/hooks";
+import { DownArrow } from "assets/icons/DownArrow";
 import { NoStyleButton } from "components/Button";
+import { RowBetween } from "components/Row";
 
 const TableStructure = styled(RowBetween)`
   font-size: 12px;
@@ -90,6 +88,10 @@ export default function TableHeader({ HEADERS, sortedBy, direction }: Props) {
             isActive={header.sortBy === sortedBy}
           >
             {header.name}
+            <DownArrow
+              direction={direction === "asc" ? "up" : "down"}
+              isActive={header.sortBy === sortedBy}
+            />
           </NoStyleButton>
         );
       })}
