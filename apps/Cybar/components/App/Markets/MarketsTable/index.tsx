@@ -1,10 +1,11 @@
 import styled from "styled-components";
 
 import TableBody from "./Body";
-import TableHeader from "./Header";
+import TableHeader, { Direction } from "./Header";
 import { RowBetween } from "components/Row";
 import { InputField } from "components/App/MarketBar/InputField";
 import { useMarketsSearch } from "@symmio/frontend-sdk/hooks/useMarkets";
+import { useRouter } from "next/router";
 
 const TableWrapper = styled.div`
   border-radius: 4px;
@@ -36,6 +37,17 @@ const InputWrapper = styled.div`
 
 export default function Table() {
   const { markets, searchProps } = useMarketsSearch();
+  const { query } = useRouter();
+  const directionParam = query.direction;
+  let direction: Direction = "desc";
+  if (
+    directionParam &&
+    !Array.isArray(directionParam) &&
+    directionParam.toLowerCase() === "asc"
+  ) {
+    direction = "asc";
+  }
+
   const searchMarketsValue = searchProps?.ref?.current?.value || "";
 
   return (
@@ -57,6 +69,7 @@ export default function Table() {
           { name: "Action" },
         ]}
         sortedBy="priceChangePercent"
+        direction={direction}
       />
       <TableBody markets={markets} searchValue={searchMarketsValue} />
     </TableWrapper>
