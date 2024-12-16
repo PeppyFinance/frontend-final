@@ -4,7 +4,7 @@ import {
   Direction,
   OrderMarktes,
 } from "@symmio/frontend-sdk/state/hedger/hooks";
-import { DownArrow } from "assets/icons/DownArrow";
+import { Chevron } from "components/App/MarketBar/MarketInfo";
 import { MarketsHeaderButton } from "components/Button";
 import { RowBetween } from "components/Row";
 import { useRouter } from "next/router";
@@ -99,6 +99,7 @@ export default function TableHeader({
   return (
     <HeaderWrap>
       {HEADERS.map((header) => {
+        const isActive = header.orderBy === orderedBy;
         return (
           <MarketsHeaderButton
             disabled={!header.orderBy}
@@ -107,10 +108,7 @@ export default function TableHeader({
             onClick={() => onClick(header.orderBy ?? "tradeVolume")}
           >
             {header.name}
-            <DownArrow
-              direction={direction === "asc" ? "up" : "down"}
-              isActive={header.orderBy === orderedBy}
-            />
+            {isActive && <Chevron open={direction === "asc"} />}
           </MarketsHeaderButton>
         );
       })}

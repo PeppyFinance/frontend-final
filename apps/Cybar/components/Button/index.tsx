@@ -267,6 +267,8 @@ export const MarketsHeaderButton = styled.button<{ isActive: boolean }>`
   align-items: center;
   gap: 10px;
   cursor: ${({ disabled }) => (disabled ? "cursor" : "pointer")};
-  box-shadow: ${({ isActive, theme }) =>
-    isActive ? `${theme.primary0} 0px 3px 2px 0px` : "none"};
+  background-color: ${({ isActive, theme }) =>
+    isActive ? `${theme.bg3}` : "none"};
+  border-radius: 4px;
+  padding: 0.2rem 0.4rem;
 `;
