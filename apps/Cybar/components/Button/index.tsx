@@ -260,3 +260,9 @@ export const PositionActionButton = styled(SecondaryButton)<{
     margin-top: 5px;
   `};
 `;
+
+export const NoStyleButton = styled.button`
+  all: unset;
+  display: inline-block;
+  cursor: pointer;
+`;

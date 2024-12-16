@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 import { RowBetween } from "components/Row";
+import { OrderMarktesProps } from "@symmio/frontend-sdk/state/hedger/hooks";
+import { NoStyleButton } from "components/Button";
 
 const TableStructure = styled(RowBetween)`
   font-size: 12px;
@@ -64,15 +66,14 @@ const HeaderWrap = styled(TableStructure)`
   }
 `;
 
-export default function TableHeader({
-  HEADERS,
-}: {
+interface Props extends OrderMarktesProps {
   HEADERS: string[];
-}): JSX.Element | null {
+}
+export default function TableHeader({ HEADERS, sortBy }: Props) {
   return (
     <HeaderWrap>
-      {HEADERS.map((item, key) => {
-        return <div key={key}>{item}</div>;
+      {HEADERS.map((header, key) => {
+        return <NoStyleButton key={key}>{header}</NoStyleButton>;
       })}
     </HeaderWrap>
   );
