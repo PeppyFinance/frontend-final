@@ -84,7 +84,11 @@ export default function TableHeader({ HEADERS, sortedBy, direction }: Props) {
     <HeaderWrap>
       {HEADERS.map((header) => {
         return (
-          <NoStyleButton disabled={!header.sortBy} key={header.name}>
+          <NoStyleButton
+            disabled={!header.sortBy}
+            key={header.name}
+            isActive={header.sortBy === sortedBy}
+          >
             {header.name}
           </NoStyleButton>
         );
