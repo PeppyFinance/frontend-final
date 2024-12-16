@@ -37,13 +37,13 @@ const TableWrapper = styled.div`
   `}
 `;
 
-export default function Markets({ direction, orderBy }: MarketsTableProps) {
+export default function Markets(props: MarketsTableProps) {
   return (
     <Container>
       <WrapperBanner />
       <BigMarketsLabel>MARKETS</BigMarketsLabel>
       <TableWrapper>
-        <MarketsTable direction={direction} orderBy={orderBy} />
+        <MarketsTable {...props} />
       </TableWrapper>
     </Container>
   );

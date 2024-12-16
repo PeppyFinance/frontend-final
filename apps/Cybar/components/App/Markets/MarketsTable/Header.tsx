@@ -75,21 +75,25 @@ const HeaderWrap = styled(TableStructure)`
 interface Props {
   HEADERS: {
     name: string;
-    sortBy?: OrderMarktes;
+    orderBy?: OrderMarktes;
   }[];
-  sortedBy: OrderMarktes;
+  orderedBy: OrderMarktes;
   direction: Direction;
 }
-export default function TableHeader({ HEADERS, sortedBy, direction }: Props) {
+export default function TableHeader({
+  HEADERS,
+  orderedBy: orderedBy,
+  direction,
+}: Props) {
   const router = useRouter();
 
-  const onClick = (sortBy: OrderMarktes) => {
-    if (sortBy === sortedBy) {
+  const onClick = (orderBy: OrderMarktes) => {
+    if (orderBy === orderedBy) {
       router.query.direction = direction === "asc" ? "desc" : "asc";
     } else {
       router.query.direction = "desc";
     }
-    router.query.orderby = sortBy;
+    router.query.orderby = orderBy;
     router.push(router);
   };
 
@@ -98,15 +102,15 @@ export default function TableHeader({ HEADERS, sortedBy, direction }: Props) {
       {HEADERS.map((header) => {
         return (
           <NoStyleButton
-            disabled={!header.sortBy}
+            disabled={!header.orderBy}
             key={header.name}
-            isActive={header.sortBy === sortedBy}
-            onClick={() => onClick(header.sortBy ?? "tradeVolume")}
+            isActive={header.orderBy === orderedBy}
+            onClick={() => onClick(header.orderBy ?? "tradeVolume")}
           >
             {header.name}
             <DownArrow
               direction={direction === "asc" ? "up" : "down"}
-              isActive={header.sortBy === sortedBy}
+              isActive={header.orderBy === orderedBy}
             />
           </NoStyleButton>
         );

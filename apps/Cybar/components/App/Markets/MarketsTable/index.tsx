@@ -44,7 +44,7 @@ export interface MarketsTableProps {
 }
 export default function Table({ direction, orderBy }: MarketsTableProps) {
   const { markets, searchProps } = useMarketsSearch({
-    sortBy: orderBy,
+    orderBy,
     direction,
   });
   const searchMarketsValue = searchProps?.ref?.current?.value || "";
@@ -61,13 +61,13 @@ export default function Table({ direction, orderBy }: MarketsTableProps) {
         HEADERS={[
           { name: "" },
           { name: "Name" },
-          { name: "Price", sortBy: "price" },
-          { name: "24h Change", sortBy: "priceChangePercent" },
-          { name: "24h Volume", sortBy: "tradeVolume" },
-          { name: "Notional Cap", sortBy: "notionalCap" },
+          { name: "Price", orderBy: "price" },
+          { name: "24h Change", orderBy: "priceChangePercent" },
+          { name: "24h Volume", orderBy: "tradeVolume" },
+          { name: "Notional Cap", orderBy: "notionalCap" },
           { name: "Action" },
         ]}
-        sortedBy={orderBy}
+        orderedBy={orderBy}
         direction={direction}
       />
       <TableBody markets={markets} searchValue={searchMarketsValue} />
