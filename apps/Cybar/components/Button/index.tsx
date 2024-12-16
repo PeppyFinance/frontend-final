@@ -264,5 +264,5 @@ export const PositionActionButton = styled(SecondaryButton)<{
 export const NoStyleButton = styled.button`
   all: unset;
   display: inline-block;
-  cursor: pointer;
+  cursor: ${(props) => (props.disabled ? "cursor" : "pointer")};
 `;

@@ -79,11 +79,15 @@ interface Props {
   sortedBy: OrderMarktes;
   direction: Direction;
 }
-export default function TableHeader({ HEADERS, sortedBy }: Props) {
+export default function TableHeader({ HEADERS, sortedBy, direction }: Props) {
   return (
     <HeaderWrap>
       {HEADERS.map((header) => {
-        return <NoStyleButton key={header.name}>{header.name}</NoStyleButton>;
+        return (
+          <NoStyleButton disabled={!header.sortBy} key={header.name}>
+            {header.name}
+          </NoStyleButton>
+        );
       })}
     </HeaderWrap>
   );
