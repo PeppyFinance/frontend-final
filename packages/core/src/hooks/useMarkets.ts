@@ -49,7 +49,11 @@ import find from "lodash/find.js";
 
 import { useFavorites } from "../state/user/hooks";
 import { Market } from "../types/market";
-import { useErrorMessages, useMarkets } from "../state/hedger/hooks";
+import {
+  OrderMarktesProps,
+  useErrorMessages,
+  useMarkets,
+} from "../state/hedger/hooks";
 
 export function useMarket(id: number | undefined): Market | undefined {
   const markets = useMarkets();
@@ -78,8 +82,8 @@ function fuzzySearch(
   return fuse.search(query);
 }
 
-export function useMarketsSearch() {
-  const markets = useMarkets();
+export function useMarketsSearch({ sortBy }: OrderMarktesProps = {}) {
+  const markets = useMarkets({ sortBy });
 
   const options: SelectSearchOption[] = useMemo(() => {
     return markets.map((market: Market) => ({ ...market, value: market.name }));

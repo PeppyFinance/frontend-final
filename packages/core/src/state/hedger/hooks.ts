@@ -80,10 +80,10 @@ export function useWebSocketStatus() {
   return webSocketStatus;
 }
 
-interface Props {
+export interface OrderMarktesProps {
   sortBy?: keyof MarketsInfo[string];
 }
-export function useMarkets({ sortBy }: Props = {}) {
+export function useMarkets({ sortBy }: OrderMarktesProps = {}) {
   const markets: Market[] = useAppSelector((state) => state.hedger.markets);
   const { marketsInfo, infoStatus } = useAllMarketsData();
   // TODO: consider sorting library like fast-sort if too slow
