@@ -5,7 +5,7 @@ import {
   OrderMarktes,
 } from "@symmio/frontend-sdk/state/hedger/hooks";
 import { DownArrow } from "assets/icons/DownArrow";
-import { NoStyleButton } from "components/Button";
+import { MarketsHeaderButton } from "components/Button";
 import { RowBetween } from "components/Row";
 import { useRouter } from "next/router";
 
@@ -101,7 +101,7 @@ export default function TableHeader({
     <HeaderWrap>
       {HEADERS.map((header) => {
         return (
-          <NoStyleButton
+          <MarketsHeaderButton
             disabled={!header.orderBy}
             key={header.name}
             isActive={header.orderBy === orderedBy}
@@ -112,7 +112,7 @@ export default function TableHeader({
               direction={direction === "asc" ? "up" : "down"}
               isActive={header.orderBy === orderedBy}
             />
-          </NoStyleButton>
+          </MarketsHeaderButton>
         );
       })}
     </HeaderWrap>

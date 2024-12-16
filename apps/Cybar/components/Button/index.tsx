@@ -261,7 +261,7 @@ export const PositionActionButton = styled(SecondaryButton)<{
   `};
 `;
 
-export const NoStyleButton = styled.button<{ isActive: boolean }>`
+export const MarketsHeaderButton = styled.button<{ isActive: boolean }>`
   all: unset;
   display: inline-flex;
   align-items: center;
