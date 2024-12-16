@@ -71,7 +71,6 @@ const HeaderWrap = styled(TableStructure)`
   }
 `;
 
-// TODO: rename to ordered
 interface Props {
   HEADERS: {
     name: string;
