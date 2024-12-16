@@ -107,7 +107,6 @@ export function useMarkets({ orderBy, direction }: OrderMarktesProps = {}) {
       return markets;
     }
   }, [direction, infoStatus, markets, marketsInfo, orderBy]);
-  // return markets;
 }
 
 export function useErrorMessages() {
