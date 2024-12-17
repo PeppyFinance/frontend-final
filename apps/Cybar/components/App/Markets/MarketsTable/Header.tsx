@@ -1,6 +1,13 @@
 import styled from "styled-components";
 
+import {
+  Direction,
+  OrderMarktes,
+} from "@symmio/frontend-sdk/state/hedger/hooks";
+import { Chevron } from "components/App/MarketBar/MarketInfo";
+import { MarketsHeaderButton } from "components/Button";
 import { RowBetween } from "components/Row";
+import { useRouter } from "next/router";
 
 const TableStructure = styled(RowBetween)`
   font-size: 12px;
@@ -64,15 +71,45 @@ const HeaderWrap = styled(TableStructure)`
   }
 `;
 
+interface Props {
+  HEADERS: {
+    name: string;
+    orderBy?: OrderMarktes;
+  }[];
+  orderedBy: OrderMarktes;
+  direction: Direction;
+}
 export default function TableHeader({
   HEADERS,
-}: {
-  HEADERS: string[];
-}): JSX.Element | null {
+  orderedBy: orderedBy,
+  direction,
+}: Props) {
+  const router = useRouter();
+
+  const onClick = (orderBy: OrderMarktes) => {
+    router.query.orderby = orderBy;
+    router.query.direction = "desc";
+    if (orderBy === orderedBy && direction === "desc") {
+      router.query.direction = "asc";
+    }
+    router.push(router);
+  };
+
   return (
     <HeaderWrap>
-      {HEADERS.map((item, key) => {
-        return <div key={key}>{item}</div>;
+      {HEADERS.map((header) => {
+        const isActive = header.orderBy === orderedBy;
+        return (
+          <MarketsHeaderButton
+            disabled={!header.orderBy}
+            key={header.name}
+            isActive={header.orderBy === orderedBy}
+            onClick={() => onClick(header.orderBy ?? "tradeVolume")}
+          >
+            {header.name}
+            {isActive && <Chevron open={direction === "asc"} />}
+          </MarketsHeaderButton>
+        );
       })}
     </HeaderWrap>
   );

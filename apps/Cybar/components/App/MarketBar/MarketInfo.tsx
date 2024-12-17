@@ -32,7 +32,7 @@ const InnerContentWrapper = styled(Row)`
   background: ${({ theme }) => theme.bg3};
 `;
 
-const Chevron = styled(ChevronDown)<{
+export const Chevron = styled(ChevronDown)<{
   open: boolean;
 }>`
   transform: rotateX(${({ open }) => (open ? "180deg" : "0deg")});

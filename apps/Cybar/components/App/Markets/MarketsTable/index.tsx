@@ -1,10 +1,14 @@
 import styled from "styled-components";
 
+import { useMarketsSearch } from "@symmio/frontend-sdk/hooks/useMarkets";
+import {
+  OrderMarktes,
+  Direction,
+} from "@symmio/frontend-sdk/state/hedger/hooks";
+import { InputField } from "components/App/MarketBar/InputField";
+import { RowBetween } from "components/Row";
 import TableBody from "./Body";
 import TableHeader from "./Header";
-import { RowBetween } from "components/Row";
-import { InputField } from "components/App/MarketBar/InputField";
-import { useMarketsSearch } from "@symmio/frontend-sdk/hooks/useMarkets";
 
 const TableWrapper = styled.div`
   border-radius: 4px;
@@ -34,8 +38,15 @@ const InputWrapper = styled.div`
   }
 `;
 
-export default function Table() {
-  const { markets, searchProps } = useMarketsSearch();
+export interface MarketsTableProps {
+  direction: Direction;
+  orderBy: OrderMarktes;
+}
+export default function Table({ direction, orderBy }: MarketsTableProps) {
+  const { markets, searchProps } = useMarketsSearch({
+    orderBy,
+    direction,
+  });
   const searchMarketsValue = searchProps?.ref?.current?.value || "";
 
   return (
@@ -48,14 +59,16 @@ export default function Table() {
       </Title>
       <TableHeader
         HEADERS={[
-          "",
-          "Name",
-          "Price",
-          "24h Change",
-          "24h Volume",
-          "Notional Cap",
-          "Action",
+          { name: "" },
+          { name: "Name" },
+          { name: "Price", orderBy: "price" },
+          { name: "24h Change", orderBy: "priceChangePercent" },
+          { name: "24h Volume", orderBy: "tradeVolume" },
+          { name: "Notional Cap", orderBy: "notionalCap" },
+          { name: "Action" },
         ]}
+        orderedBy={orderBy}
+        direction={direction}
       />
       <TableBody markets={markets} searchValue={searchMarketsValue} />
     </TableWrapper>
