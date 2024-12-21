@@ -681,7 +681,6 @@ function QuoteRow({
           ) : (
             <div>{quoteSize}</div>
           )}
-
           {/* Position Value */}
           <div>
             {toBN(notionalValue).isEqualTo(0)
@@ -710,7 +709,6 @@ function QuoteRow({
           {instantCloseStatusInfo.isInstantClose && (
             <InstantCloseText>{instantCloseStatusInfo.text}</InstantCloseText>
           )}
-          {/* // TODO Align columns  */}
           {/* Estimated Liquidation Price */}
           {quoteLiquidationPrice}
           {/* Status */}
@@ -718,7 +716,7 @@ function QuoteRow({
             liquidatePending ? (
               <LiquidatedStatusValue>Liquidation...</LiquidatedStatusValue>
             ) : quoteStatus === QuoteStatus.OPENED ? (
-              <PnlValue color={color} style={{ width: "15%" }}>
+              <PnlValue color={color} style={{ width: "15%", marginLeft: "10px", textAlign: "center" }}>
                 {value === "-"
                   ? value
                   : `${value} (${Math.abs(Number(upnlPercent))})%`}
@@ -765,7 +763,7 @@ function QuoteRow({
               ) : (
                 <Row gap="5px">
                   <Row width="unset">
-                    <div>{tp} /</div>
+                    <div>{tp ? `${tp}/`: ''}</div>
                     <div>{sl}</div>
                   </Row>
                   <Row style={{ width: "unset", gap: "5px" }}>
