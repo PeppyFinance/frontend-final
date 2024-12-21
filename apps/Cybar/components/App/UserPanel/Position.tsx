@@ -77,7 +77,7 @@ import ManageTpSlModal from "../TPSL/manage";
 import EditPencil from "components/Icons/EditPencil";
 import { useTpSlAvailable } from "@symmio/frontend-sdk/state/chains";
 
-const TableStructure = styled(RowBetween)<{ active?: boolean }>`
+const TableStructure = styled(RowBetween) <{ active?: boolean }>`
   width: 100%;
   color: ${({ theme }) => theme.text2};
   font-size: 12px;
@@ -107,7 +107,7 @@ export const TpWrapper = styled(Row)`
   gap: 6px;
 `;
 
-const QuoteWrap = styled(TableStructure)<{
+const QuoteWrap = styled(TableStructure) <{
   canceled?: boolean;
   pending?: boolean;
   custom?: string;
@@ -136,7 +136,7 @@ const QuoteWrap = styled(TableStructure)<{
   &:hover {
     animation: none;
     background: ${({ theme, custom }) =>
-      custom ? lighten(0.05, custom) : theme.bg6};
+    custom ? lighten(0.05, custom) : theme.bg6};
   }
 `;
 
@@ -156,7 +156,7 @@ const TwoColumn = styled(Column)`
   }
 `;
 
-const TwoColumnPnl = styled(Column)<{ color?: string }>`
+const TwoColumnPnl = styled(Column) <{ color?: string }>`
   gap: 4px;
   font-weight: 500;
   font-size: 10px;
@@ -697,11 +697,10 @@ function QuoteRow({
           {quoteStatus === QuoteStatus.CLOSE_PENDING ? (
             <TwoColumn>
               <div>{quoteOpenPrice}</div>
-              <div>{`Close Price: ${
-                orderType === OrderType.LIMIT
+              <div>{`Close Price: ${orderType === OrderType.LIMIT
                   ? `$${formatAmount(requestedCloseLimitPrice, 6, true)}`
                   : "Market"
-              }`}</div>
+                }`}</div>
             </TwoColumn>
           ) : (
             <div>{quoteOpenPrice}</div>
@@ -758,12 +757,12 @@ function QuoteRow({
           {tpSlAvailable && (
             <TpWrapper>
               {tpSlState === TpSlDataState.LOADING ||
-              tpSlState === TpSlDataState.FORCE_CHECKING ? (
+                tpSlState === TpSlDataState.FORCE_CHECKING ? (
                 <Loader />
               ) : (
                 <Row gap="5px">
                   <Row width="unset">
-                    <div>{tp ? `${tp}/`: ''}</div>
+                    <div>{tp ? `${tp}/` : ''}</div>
                     <div>{sl}</div>
                   </Row>
                   <Row style={{ width: "unset", gap: "5px" }}>
