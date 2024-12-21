@@ -14,6 +14,7 @@ import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 import {
   useActiveMarket,
   useLimitPrice,
+  useLockedPercentages,
   useOrderType,
   usePositionType,
 } from "@symmio/frontend-sdk/state/trade/hooks";
@@ -83,7 +84,9 @@ export default function TradeOverview() {
     [formattedAmounts]
   );
   const notionalValue = useNotionalValue(quantityAsset.toString(), price);
-  const { cva, lf } = useLockedValues(notionalValue);
+  const { adjustedCollateralValue, liquidationFeeAmount } =
+    useLockedValues(notionalValue);
+  const { cva, lf } = useLockedPercentages();
 
   const tradingFee = useMemo(
     () =>
@@ -93,12 +96,13 @@ export default function TradeOverview() {
     [notionalValue, market]
   );
   const userLeverage = useLeverage();
-  const mmr = Number(formattedAmounts[0]) * userLeverage;
+  const mmr = (Number(cva) + Number(lf)) / 100;
 
   return (
     <>
       <Wrapper>
         <PositionWrap>
+          {/* // TODO handle NaN */}
           <div>Est. Liquidation Price:</div>
           <PositionValue>
             <div>
@@ -108,13 +112,17 @@ export default function TradeOverview() {
                   : positionType === PositionType.LONG
                   ? formatAmount(
                       toBN(price).times(
-                        1 - 1 / userLeverage + (Number(cva) + Number(lf)) / mmr
-                      )
+                        1 - 1 / userLeverage + mmr / userLeverage
+                      ),
+                      6,
+                      true
                     )
                   : formatAmount(
                       toBN(price).times(
-                        1 + 1 / userLeverage - (Number(cva) + Number(lf)) / mmr
-                      )
+                        1 + 1 / userLeverage - mmr / userLeverage
+                      ),
+                      6,
+                      true
                     )
               } ${collateralCurrency?.symbol}`}
             </div>
@@ -141,8 +149,11 @@ export default function TradeOverview() {
         <InfoItem
           label="Maintenance Margin (CVA):"
           amount={`${
-            !toBN(cva).isNaN() && !toBN(lf).isNaN()
-              ? formatAmount(toBN(cva).plus(lf))
+            !toBN(adjustedCollateralValue).isNaN() &&
+            !toBN(liquidationFeeAmount).isNaN()
+              ? formatAmount(
+                  toBN(adjustedCollateralValue).plus(liquidationFeeAmount)
+                )
               : "0"
           } ${collateralCurrency?.symbol}`}
         />
