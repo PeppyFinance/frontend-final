@@ -6,7 +6,7 @@ import {
   formatAmount,
   toBN,
 } from "@symmio/frontend-sdk/utils/numbers";
-import { OrderType, PositionType } from "@symmio/frontend-sdk/types/trade";
+import { OrderType } from "@symmio/frontend-sdk/types/trade";
 import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
 import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
 
@@ -15,7 +15,6 @@ import {
   useActiveMarket,
   useLimitPrice,
   useOrderType,
-  usePositionType,
 } from "@symmio/frontend-sdk/state/trade/hooks";
 import useTradePage, {
   useLockedValues,
@@ -68,7 +67,6 @@ export default function TradeOverview() {
   );
   const limitPrice = useLimitPrice();
   const orderType = useOrderType();
-  const positionType = usePositionType();
 
   const { price: markPrice, formattedAmounts } = useTradePage();
 
@@ -93,7 +91,6 @@ export default function TradeOverview() {
     [notionalValue, market]
   );
   const userLeverage = useLeverage();
-  const mmr = Number(formattedAmounts[0]) * userLeverage;
 
   return (
     <>
