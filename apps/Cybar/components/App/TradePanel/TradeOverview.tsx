@@ -99,28 +99,6 @@ export default function TradeOverview() {
     <>
       <Wrapper>
         <PositionWrap>
-          <div>Est. Liquidation Price:</div>
-          <PositionValue>
-            <div>
-              {`${
-                toBN(formattedAmounts[0]).isNaN() || toBN(userLeverage).isNaN()
-                  ? 0
-                  : positionType === PositionType.LONG
-                  ? formatAmount(
-                      toBN(price).times(
-                        1 - 1 / userLeverage + (Number(cva) + Number(lf)) / mmr
-                      )
-                    )
-                  : formatAmount(
-                      toBN(price).times(
-                        1 + 1 / userLeverage - (Number(cva) + Number(lf)) / mmr
-                      )
-                    )
-              } ${collateralCurrency?.symbol}`}
-            </div>
-          </PositionValue>
-        </PositionWrap>
-        <PositionWrap>
           <div>Position Value:</div>
           <PositionValue>
             <div>{`${
