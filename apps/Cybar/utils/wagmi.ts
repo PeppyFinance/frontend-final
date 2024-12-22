@@ -67,6 +67,6 @@ export const getWagmiConfig = () => {
   return {
     wagmiConfig: config,
     chains,
-    initialChain: chains[0],
+    initialChain: chains[5],
   };
 };
