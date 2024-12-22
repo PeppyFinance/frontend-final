@@ -55,7 +55,6 @@ export function InputField({
         type="text"
         placeholder={placeholder}
         spellCheck="false"
-        onBlur={() => null}
       />
     </SearchWrapper>
   );
