@@ -63,10 +63,10 @@ export const getWagmiConfig = () => {
     cacheTime: 2000,
     pollingInterval: 2000,
   });
-
+  
   return {
     wagmiConfig: config,
     chains,
-    initialChain: chains[0],
+    initialChain: chains[5],
   };
 };

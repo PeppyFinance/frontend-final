@@ -55,6 +55,7 @@ export default function Overviews() {
   useEffect(() => {
     if (mobileVersion) setPanelType(PanelType.ACCOUNT_OVERVIEW);
   }, [mobileVersion]);
+
   return (
     <Wrapper>
       {!mobileVersion && (
