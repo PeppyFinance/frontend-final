@@ -43,12 +43,6 @@ const HiddenText = styled.span`
   height: 1;
 `;
 
-const HiddenText = styled.span`
-  visibitlity: hidden;
-  width: 0;
-  height: 1;
-`;
-
 export default function Markets(props: MarketsTableProps) {
   return (
     <Container>
