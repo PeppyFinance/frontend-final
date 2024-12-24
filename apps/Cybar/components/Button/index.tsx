@@ -260,3 +260,15 @@ export const PositionActionButton = styled(SecondaryButton)<{
     margin-top: 5px;
   `};
 `;
+
+export const MarketsHeaderButton = styled.button<{ isActive: boolean }>`
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: ${({ disabled }) => (disabled ? "cursor" : "pointer")};
+  background-color: ${({ isActive, theme }) =>
+    isActive ? `${theme.bg3}` : "none"};
+  border-radius: 4px;
+  padding: 0.2rem 0.4rem;
+`;
