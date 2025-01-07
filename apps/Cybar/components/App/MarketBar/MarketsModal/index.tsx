@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import styled from "styled-components";
 import { Z_INDEX } from "theme";
 
@@ -95,30 +95,38 @@ export function MarketsModal({
   isOpen: boolean;
   onDismiss: () => void;
 }) {
-  const { markets, searchProps } = useMarketsSearch();
+  const { markets } = useMarketsSearch();
   const favorites = useFavoriteMarkets();
 
-  function getInnerContent() {
-    return (
-      <>
-        <UpperRow>
-          <Wrapper>
-            <InputField searchProps={searchProps} placeholder="Search" />
-            <Close onClick={onDismiss}>
-              <CloseIcon size={16} onClick={onDismiss} />
-            </Close>
-          </Wrapper>
-        </UpperRow>
-        <div>
-          <Markets
-            markets={markets}
-            favoriteMarkets={favorites}
-            onDismiss={onDismiss}
-          />
-        </div>
-      </>
+  const [search, setSearch] = useState("");
+
+  const { filtered } = useMemo(() => {
+    const filtered = markets.filter((market) =>
+      market.name.toLowerCase().includes(search)
     );
-  }
+
+    return { filtered };
+  }, [search, markets]);
+
+  const getInnerContent = () => (
+    <>
+      <UpperRow>
+        <Wrapper>
+          <InputField setSearch={setSearch} placeholder="Search" />
+          <Close onClick={onDismiss}>
+            <CloseIcon size={16} onClick={onDismiss} />
+          </Close>
+        </Wrapper>
+      </UpperRow>
+      <div>
+        <Markets
+          markets={filtered}
+          favoriteMarkets={favorites} // TODO favorites should be saved locally.
+          onDismiss={onDismiss}
+        />
+      </div>
+    </>
+  );
 
   return isModal ? (
     <Modal
