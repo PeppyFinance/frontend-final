@@ -4,7 +4,6 @@ import { setCoinCategories } from "./actions";
 
 
 export function MarketsUpdater(): null {
-
   useEffect(() => {
     loadCoinCategories()
   }, [])
@@ -18,10 +17,6 @@ async function loadCoinCategories() {
     setCoinCategories(res)
   }
 }
-
-
-
-
 
 async function getCoinCategories() {
   const url = process.env.NEXT_PUBLIC_COIN_CATEGORIES_URL
