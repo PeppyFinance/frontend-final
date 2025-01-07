@@ -9,10 +9,12 @@ import trade from "./trade/reducer";
 import notifications from "./notifications/reducer";
 import quotes from "./quotes/reducer";
 import chains from "./chains/reducer";
+import { marketReducer as market } from "./market/reducer"
 
 const reducer = combineReducers({
   application,
   chains,
+  market,
   transactions,
   user,
   hedger,
