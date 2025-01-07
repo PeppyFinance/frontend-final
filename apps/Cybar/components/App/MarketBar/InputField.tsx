@@ -40,17 +40,17 @@ const Input = styled.input<{
 `;
 
 export function InputField({
-  searchProps,
+  setSearch,
   placeholder,
 }: {
-  searchProps: any;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
   placeholder: string;
 }) {
   return (
     <SearchWrapper>
       <SearchIcon size={15} />
       <Input
-        {...searchProps}
+        onChange={(e) => setSearch(e.target.value)}
         autoFocus
         type="text"
         placeholder={placeholder}
