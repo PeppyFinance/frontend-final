@@ -1,7 +1,23 @@
+import { useEffect } from "react";
 import { makeHttpRequestV2 } from "../../utils/http"
+import { setCoinCategories } from "./actions";
 
 
+export function MarketsUpdater(): null {
 
+  useEffect(() => {
+    loadCoinCategories()
+  }, [])
+
+  return null
+}
+
+async function loadCoinCategories() {
+  const res = await getCoinCategories();
+  if (res) {
+    setCoinCategories(res)
+  }
+}
 
 
 
