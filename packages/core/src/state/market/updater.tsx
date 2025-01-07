@@ -3,7 +3,7 @@ import { makeHttpRequestV2 } from "../../utils/http"
 import { setCoinCategories } from "./actions";
 
 
-export function MarketsUpdater(): null {
+export function MarketUpdater(): null {
   useEffect(() => {
     loadCoinCategories()
   }, [])

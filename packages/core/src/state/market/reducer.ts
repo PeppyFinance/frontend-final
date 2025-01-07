@@ -11,5 +11,6 @@ export const initialState: MarketState = {
 export const createMarketReducer = createReducer(initialState, build =>
   build.addCase(setMarket, (state, action) => {
     console.log("setMarket:\n ========================\n", { state, action })
+    return action.payload
   })
 )
