@@ -1,4 +1,4 @@
-type StorageType = 'localStorage' | 'sessionStorage';
+type StorageType = "localStorage" | "sessionStorage";
 
 interface StorageOperations {
   getItem: (key: string) => any;
@@ -10,11 +10,12 @@ interface StorageOperations {
 export class BrowserStorage implements StorageOperations {
   private storage: Storage;
 
-  constructor(type: StorageType = 'localStorage') {
-    if (typeof window !== 'undefined') {
-      this.storage = type === 'localStorage' ? window.localStorage : window.sessionStorage;
+  constructor(type: StorageType = "localStorage") {
+    if (typeof window !== "undefined") {
+      this.storage =
+        type === "localStorage" ? window.localStorage : window.sessionStorage;
     } else {
-      throw new Error('Browser storage is not available on the server side');
+      throw new Error("Browser storage is not available on the server side");
     }
   }
 
@@ -49,7 +50,7 @@ export class BrowserStorage implements StorageOperations {
     try {
       this.storage.clear();
     } catch (error) {
-      console.error('Error clearing storage:', error);
+      console.error("Error clearing storage:", error);
     }
   }
 }
@@ -57,7 +58,9 @@ export class BrowserStorage implements StorageOperations {
 export const setCookie = (name: string, value: string, days: number = 7) => {
   try {
     const expires = new Date(Date.now() + days * 864e5).toUTCString();
-    document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
+    document.cookie = `${name}=${encodeURIComponent(
+      value
+    )}; expires=${expires}; path=/`;
   } catch (error) {
     console.error(`Error setting cookie ${name}:`, error);
   }
@@ -66,15 +69,17 @@ export const setCookie = (name: string, value: string, days: number = 7) => {
 export const getCookie = (name: string): string | null => {
   try {
     const nameEQ = name + "=";
-    const cookies = document.cookie.split(';');
-    
+    const cookies = document.cookie.split(";");
+
     for (let i = 0; i < cookies.length; i++) {
       let cookie = cookies[i];
-      while (cookie.charAt(0) === ' ') {
+      while (cookie.charAt(0) === " ") {
         cookie = cookie.substring(1, cookie.length);
       }
       if (cookie.indexOf(nameEQ) === 0) {
-        return decodeURIComponent(cookie.substring(nameEQ.length, cookie.length));
+        return decodeURIComponent(
+          cookie.substring(nameEQ.length, cookie.length)
+        );
       }
     }
     return null;
@@ -85,5 +90,5 @@ export const getCookie = (name: string): string | null => {
 };
 
 export const removeCookie = (name: string) => {
-  setCookie(name, '', -1);
+  setCookie(name, "", -1);
 };
