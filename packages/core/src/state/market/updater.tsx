@@ -15,6 +15,7 @@ async function loadCoinCategories() {
   const res = await getCoinCategories();
   if (res) {
     setCoinCategories(res)
+    setCoinCategories(res);
   }
 }
 
