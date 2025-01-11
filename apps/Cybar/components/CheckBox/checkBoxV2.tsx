@@ -1,5 +1,5 @@
-import { Row } from "components/Row";
-import styled, { keyframes } from "styled-components";
+import {Row} from "components/Row";
+import styled, {keyframes} from "styled-components";
 
 const Wrapper = styled(Row)`
   gap: 8px;
@@ -13,10 +13,10 @@ const Input = styled.input`
   z-index: -1;
 `;
 
-const Label = styled.label<{ disabled?: boolean }>`
+const Label = styled.label<{disabled?: boolean}>`
   position: relative;
   display: inline-block;
-  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
+  cursor: ${({disabled}) => (disabled ? "not-allowed" : "pointer")};
 
   margin-left: 8px;
   font-size: 12px;
@@ -34,12 +34,12 @@ const rotate = keyframes`
   }
 `;
 
-const Indicator = styled.div<{ checked?: boolean; disabled: boolean }>`
+const Indicator = styled.div<{checked?: boolean; disabled: boolean}>`
   width: 20px;
   height: 20px;
-  background: ${({ theme, checked }) => (checked ? theme.blue1 : "unset")};
+  background: ${({theme, checked}) => (checked ? theme.blue1 : "unset")};
   border: 2px solid
-    ${({ theme, disabled }) => (disabled ? theme.text2 : theme.blue2)};
+    ${({theme, disabled}) => (disabled ? theme.text2 : theme.blue2)};
   position: absolute;
   top: 0em;
   left: -1.6em;
@@ -68,10 +68,10 @@ const Indicator = styled.div<{ checked?: boolean; disabled: boolean }>`
   }
 `;
 
-const Text = styled.div<{ disabled: boolean }>`
+const Text = styled.div<{disabled: boolean}>`
   font-size: 14px;
   font-weight: 400;
-  color: ${({ theme, disabled }) => (disabled ? theme.text2 : theme.white)};
+  color: ${({theme, disabled}) => (disabled ? theme.text2 : theme.white)};
   text-align: center;
   height: 100%;
   margin-top: 5px;

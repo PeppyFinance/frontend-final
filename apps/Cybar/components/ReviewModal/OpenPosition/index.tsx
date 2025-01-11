@@ -1,1 +1,1 @@
-export { default as OpenPositionModal } from "./Modal";
+export {default as OpenPositionModal} from "./Modal";

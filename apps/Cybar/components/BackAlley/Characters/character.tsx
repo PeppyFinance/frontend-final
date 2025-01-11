@@ -1,8 +1,8 @@
-import styled, { css, DefaultTheme, keyframes } from "styled-components";
-import { CharacterId } from "./characterIds.type";
-import { CharacterProps } from "./characterConfig";
-import { Z_INDEX } from "theme";
-import { useCallback } from "react";
+import {useCallback} from "react";
+import styled, {css, DefaultTheme, keyframes} from "styled-components";
+import {Z_INDEX} from "theme";
+import {CharacterProps} from "./characterConfig";
+import {CharacterId} from "./characterIds.type";
 
 export interface CharacterInteractiveProps extends CharacterProps {
   onClick?: (name: CharacterId) => void;
@@ -44,16 +44,16 @@ export const glow = (theme: DefaultTheme) => keyframes`
 
 const CharacterImg = styled.img<Omit<CharacterInteractiveProps, "id">>`
   position: absolute;
-  cursor: ${({ onClick }) => (onClick ? "pointer" : "default")};
-  bottom: ${({ bottom }) => bottom};
-  height: ${({ height }) => height};
-  left: ${({ left }) => left};
-  z-index: ${({ zIndex }) => (zIndex ? zIndex : "0")};
+  cursor: ${({onClick}) => (onClick ? "pointer" : "default")};
+  bottom: ${({bottom}) => bottom};
+  height: ${({height}) => height};
+  left: ${({left}) => left};
+  z-index: ${({zIndex}) => (zIndex ? zIndex : "0")};
   overflow: hidden;
   transition: ease-in-out 0.3s;
-  animation: ${({ onClick, theme }) =>
+  animation: ${({onClick, theme}) =>
     onClick && css`${glow(theme)} 4s ${pulseAnimation}}`};
-  ${({ isActive, focusedBottom, focusedLeft, focusedHeight }) =>
+  ${({isActive, focusedBottom, focusedLeft, focusedHeight}) =>
     isActive &&
     css`
       z-index: ${Z_INDEX.modalBackdrop - 1};

@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -11,6 +10,6 @@ const Wrapper = styled.div`
   z-index: 1020;
 `;
 
-export default function Warning({ message }: { message: string }) {
+export default function Warning({message}: {message: string}) {
   return <Wrapper>{message}</Wrapper>;
 }

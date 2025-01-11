@@ -20,7 +20,7 @@ export enum CloseQuote {
   FORCE_CANCEL_CLOSE,
 }
 
-export const CloseQuoteMessages: { [closeQuoteType: number]: string } = {
+export const CloseQuoteMessages: {[closeQuoteType: number]: string} = {
   [CloseQuote.CANCEL_CLOSE_REQUEST]: "Cancel Close Position",
   [CloseQuote.CANCEL_QUOTE]: "Cancel Order",
   [CloseQuote.CLOSE_POSITION]: "Close Position",

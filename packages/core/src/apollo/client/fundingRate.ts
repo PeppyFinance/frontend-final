@@ -1,12 +1,12 @@
-import { createApolloClient } from "./index";
 import useActiveWagmi from "../../lib/hooks/useActiveWagmi";
-import { useFundingRateSubgraphAddress } from "../../state/chains";
+import {useFundingRateSubgraphAddress} from "../../state/chains";
+import {createApolloClient} from "./index";
 
 // FUNDING RATE SUBGRAPH
 const apolloClients = {};
 
 export function useFundingRateApolloClient() {
-  const { chainId } = useActiveWagmi();
+  const {chainId} = useActiveWagmi();
   const uri = useFundingRateSubgraphAddress();
 
   if (!chainId || !uri) {

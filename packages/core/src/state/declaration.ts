@@ -1,3 +1,4 @@
+import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
 import {
   Action,
   AnyAction,
@@ -5,8 +6,7 @@ import {
   ThunkAction,
   ThunkDispatch,
 } from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
-import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
-const { configureStore } = ((toolkitRaw as any).default ??
+const {configureStore} = ((toolkitRaw as any).default ??
   toolkitRaw) as typeof toolkitRaw;
 // import { persistReducer, persistStore } from "redux-persist";
 // import storage from "redux-persist/lib/storage";
@@ -37,7 +37,7 @@ export type RootState = ReturnType<typeof reducer>;
 function makeStore() {
   return configureStore({
     reducer,
-    middleware: (getDefaultMiddleware) =>
+    middleware: getDefaultMiddleware =>
       getDefaultMiddleware({
         thunk: true,
         immutableCheck: true,

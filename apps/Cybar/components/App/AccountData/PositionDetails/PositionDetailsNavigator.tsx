@@ -1,8 +1,7 @@
-import { useMemo } from "react";
-import styled, { useTheme } from "styled-components";
 import findIndex from "lodash/findIndex.js";
+import {useMemo} from "react";
+import styled, {useTheme} from "styled-components";
 
-import { Quote, QuoteStatus } from "@symmio/frontend-sdk/types/quote";
 import {
   useHistoryQuotes,
   usePendingsQuotes,
@@ -10,25 +9,26 @@ import {
   useQuoteDetail,
   useSetQuoteDetailCallback,
 } from "@symmio/frontend-sdk/state/quotes/hooks";
+import {Quote, QuoteStatus} from "@symmio/frontend-sdk/types/quote";
 
-import { PreviousIcon } from "./styles";
-import { RowEnd } from "components/Row";
-import { NextIcon } from "components/Icons";
-import { ItemsPerPage } from "components/App/UserPanel/PaginateTable";
-import { sortQuotesByModifyTimestamp } from "@symmio/frontend-sdk/hooks/useQuotes";
+import {sortQuotesByModifyTimestamp} from "@symmio/frontend-sdk/hooks/useQuotes";
+import {ItemsPerPage} from "components/App/UserPanel/PaginateTable";
+import {NextIcon} from "components/Icons";
+import {RowEnd} from "components/Row";
+import {PreviousIcon} from "./styles";
 
-const ChangePositionBtn = styled.button<{ disabled?: boolean }>`
+const ChangePositionBtn = styled.button<{disabled?: boolean}>`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 36px;
   height: 20px;
   border-radius: 2px;
-  background-color: ${({ theme, disabled }) =>
+  background-color: ${({theme, disabled}) =>
     disabled ? theme.bg2 : theme.bg5};
 
   &:hover {
-    cursor: ${({ disabled }) => (disabled ? "unset" : "pointer")};
+    cursor: ${({disabled}) => (disabled ? "unset" : "pointer")};
   }
 `;
 
@@ -38,9 +38,9 @@ export default function PositionDetailsNavigator() {
   const quote = useQuoteDetail() || ({} as Quote);
   const setQuoteDetail = useSetQuoteDetailCallback();
 
-  const { quotes: closed } = useHistoryQuotes();
-  const { quotes: positions } = usePositionsQuotes();
-  const { quotes: pendings } = usePendingsQuotes();
+  const {quotes: closed} = useHistoryQuotes();
+  const {quotes: positions} = usePositionsQuotes();
+  const {quotes: pendings} = usePendingsQuotes();
   const positionQuotes: Quote[] = useMemo(() => {
     return [...pendings, ...positions].sort(sortQuotesByModifyTimestamp);
   }, [pendings, positions]);

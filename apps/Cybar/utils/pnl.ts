@@ -1,11 +1,11 @@
-import { BN_ZERO, formatPrice, toBN } from "@symmio/frontend-sdk/utils/numbers";
+import {BN_ZERO, formatPrice, toBN} from "@symmio/frontend-sdk/utils/numbers";
 
 export function getTargetPnl(
   targetPrice: string,
   openedPrice: string,
   quantityToClose: string,
   negativeFlag: boolean,
-  leverage: string
+  leverage: string,
 ) {
   const pnl =
     toBN(targetPrice)
@@ -20,5 +20,5 @@ export function getTargetPnl(
     .times(100)
     .toFixed(2);
 
-  return { pnl: pnl !== "NaN" ? formatPrice(pnl, 2) : pnl, pnlPercent };
+  return {pnl: pnl !== "NaN" ? formatPrice(pnl, 2) : pnl, pnlPercent};
 }

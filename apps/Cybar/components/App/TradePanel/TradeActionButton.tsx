@@ -1,35 +1,35 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { DotFlashing } from "components/Icons";
-import { useToggleOpenPositionModal } from "@symmio/frontend-sdk/state/application/hooks";
+import {WEB_SETTING} from "@symmio/frontend-sdk/config";
+import {DEFAULT_PRECISION} from "@symmio/frontend-sdk/constants/misc";
+import {useSendDelegateAccess} from "@symmio/frontend-sdk/hooks/useTpSl";
+import useTradePage from "@symmio/frontend-sdk/hooks/useTradePage";
+import {useToggleOpenPositionModal} from "@symmio/frontend-sdk/state/application/hooks";
+import {useWebSocketStatus} from "@symmio/frontend-sdk/state/hedger/hooks";
+import {
+  useActiveMarket,
+  useSetLimitPrice,
+  useSetTypedValue,
+  useTpSlDelegate,
+  useTradeTpSl,
+} from "@symmio/frontend-sdk/state/trade/hooks";
+import {useIsHavePendingTransaction} from "@symmio/frontend-sdk/state/transactions/hooks";
+import {
+  useIsTermsAccepted,
+  useUserWhitelist,
+} from "@symmio/frontend-sdk/state/user/hooks";
+import {ConnectionStatus} from "@symmio/frontend-sdk/types/api";
+import {InputField} from "@symmio/frontend-sdk/types/trade";
+import {MainButton} from "components/Button";
+import ErrorButton from "components/Button/ErrorButton";
+import OpenPositionButton from "components/Button/OpenPositionButton";
+import {DotFlashing} from "components/Icons";
 import {
   ContextError,
   InvalidContext,
   useInvalidContext,
 } from "components/InvalidContext";
-import ErrorButton from "components/Button/ErrorButton";
-import { useWebSocketStatus } from "@symmio/frontend-sdk/state/hedger/hooks";
-import {
-  useSetLimitPrice,
-  useActiveMarket,
-  useSetTypedValue,
-  useTpSlDelegate,
-  useTradeTpSl,
-} from "@symmio/frontend-sdk/state/trade/hooks";
-import { useIsHavePendingTransaction } from "@symmio/frontend-sdk/state/transactions/hooks";
-import { MainButton } from "components/Button";
-import { RowStart } from "components/Row";
-import useTradePage from "@symmio/frontend-sdk/hooks/useTradePage";
-import { DEFAULT_PRECISION } from "@symmio/frontend-sdk/constants/misc";
-import { calculateString } from "utils/calculationalString";
-import { InputField } from "@symmio/frontend-sdk/types/trade";
-import { ConnectionStatus } from "@symmio/frontend-sdk/types/api";
-import {
-  useUserWhitelist,
-  useIsTermsAccepted,
-} from "@symmio/frontend-sdk/state/user/hooks";
-import { WEB_SETTING } from "@symmio/frontend-sdk/config";
-import OpenPositionButton from "components/Button/OpenPositionButton";
-import { useSendDelegateAccess } from "@symmio/frontend-sdk/hooks/useTpSl";
+import {RowStart} from "components/Row";
+import {useCallback, useEffect, useMemo, useState} from "react";
+import {calculateString} from "utils/calculationalString";
 
 export default function TradeActionButtons(): JSX.Element | null {
   const validatedContext = useInvalidContext();
@@ -38,7 +38,7 @@ export default function TradeActionButtons(): JSX.Element | null {
 
   const toggleShowTradeInfoModal = useToggleOpenPositionModal();
   const isPendingTxs = useIsHavePendingTransaction();
-  const { tp, sl } = useTradeTpSl();
+  const {tp, sl} = useTradeTpSl();
   const delegateStatus = useTpSlDelegate();
   const [delegateLoading, setDelegateLoading] = useState(false);
   const [calculationMode, setCalculationMode] = useState(false);
@@ -49,22 +49,21 @@ export default function TradeActionButtons(): JSX.Element | null {
   const userWhitelisted = useUserWhitelist();
   const isAcceptTerms = useIsTermsAccepted();
 
-  const { formattedAmounts, state, balance } = useTradePage();
+  const {formattedAmounts, state, balance} = useTradePage();
 
   const pricePrecision = useMemo(
     () => (market ? market.pricePrecision : DEFAULT_PRECISION),
-    [market]
+    [market],
   );
-  const { callback: setDelegateAccessCallBack, error } =
-    useSendDelegateAccess();
+  const {callback: setDelegateAccessCallBack, error} = useSendDelegateAccess();
 
   const handleDelegateAccess = useCallback(async () => {
-    if (error) console.debug({ error });
+    if (error) console.debug({error});
     if (!setDelegateAccessCallBack) return;
     try {
       setDelegateLoading(true);
       const txHash = await setDelegateAccessCallBack();
-      console.log({ txHash });
+      console.log({txHash});
     } catch (e) {
       console.error(e);
     }
@@ -77,7 +76,7 @@ export default function TradeActionButtons(): JSX.Element | null {
       formattedAmounts[0],
       balance,
       pricePrecision,
-      "1"
+      "1",
     );
     setTypedValue(result, InputField.PRICE);
     setCalculationLoading(false);

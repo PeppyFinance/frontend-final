@@ -1,10 +1,10 @@
-import { useMemo } from "react";
-import { Token } from "@uniswap/sdk-core";
+import {Token} from "@uniswap/sdk-core";
 import BigNumber from "bignumber.js";
+import {useMemo} from "react";
 
-import { Address, erc20Abi } from "viem";
-import { useReadContract } from "wagmi";
-import { BN_TEN, toBN } from "../../utils/numbers";
+import {Address, erc20Abi} from "viem";
+import {useReadContract} from "wagmi";
+import {BN_TEN, toBN} from "../../utils/numbers";
 
 interface UseERC20Allowance {
   token?: Token;
@@ -23,7 +23,7 @@ export function useERC20Allowance({
   isSyncing: boolean;
   refetch: ReturnType<typeof useReadContract>["refetch"];
 } {
-  const { data, isLoading, refetch } = useReadContract({
+  const {data, isLoading, refetch} = useReadContract({
     address: token?.address ? (token?.address as Address) : undefined,
     abi: erc20Abi,
     functionName: "allowance",
@@ -42,6 +42,6 @@ export function useERC20Allowance({
       isSyncing: isLoading,
       refetch,
     }),
-    [data, isLoading, refetch, token]
+    [data, isLoading, refetch, token],
   );
 }

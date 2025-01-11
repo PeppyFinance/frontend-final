@@ -1,7 +1,7 @@
-import { useCallback, useEffect } from "react";
+import {useCallback, useEffect} from "react";
 
-import { useAppDispatch } from "../../state/declaration";
-import { updateTimestamp } from "../../state/notifications/actions";
+import {useAppDispatch} from "../../state/declaration";
+import {updateTimestamp} from "../../state/notifications/actions";
 
 export default function useNotificationHistory() {
   // save timestamp when enter the page
@@ -14,7 +14,7 @@ export default function useNotificationHistory() {
     localStorage.getItem("lastUpdateTimestamp");
   const setCurrentTimestamp = useCallback(
     () => localStorage.setItem("lastUpdateTimestamp", currentTimestamp()),
-    []
+    [],
   );
   const currentTimestamp = () => Math.floor(Date.now() / 1000).toString();
 
@@ -30,7 +30,7 @@ export default function useNotificationHistory() {
       localStorageTimestamp === null
         ? currentTimestamp()
         : localStorageTimestamp;
-    dispatch(updateTimestamp({ timestamp }));
+    dispatch(updateTimestamp({timestamp}));
     setCurrentTimestamp();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

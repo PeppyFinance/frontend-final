@@ -1,23 +1,21 @@
-import React from "react";
-
-import { Quote } from "@symmio/frontend-sdk/types/quote";
+import {Quote} from "@symmio/frontend-sdk/types/quote";
 
 import {
   NotificationDetails,
   NotificationType,
 } from "@symmio/frontend-sdk/state/notifications/types";
-import { useGetExistedQuoteByIdsCallback } from "@symmio/frontend-sdk/state/quotes/hooks";
+import {useGetExistedQuoteByIdsCallback} from "@symmio/frontend-sdk/state/quotes/hooks";
 
-import { useGetQuoteByIds } from "@symmio/frontend-sdk/hooks/useQuotes";
-import { useUserAccounts } from "@symmio/frontend-sdk/hooks/useAccounts";
+import {useUserAccounts} from "@symmio/frontend-sdk/hooks/useAccounts";
+import {useGetQuoteByIds} from "@symmio/frontend-sdk/hooks/useQuotes";
 
-import TransferCollateral from "./TransferCollateralCard";
+import Default from "./DefaultCard";
+import HedgerError from "./ErrorCard";
 import LiquidationAlert from "./LiquidationAlertCard";
 import PartiallyFill from "./PartialFillCard";
 import SeenByHedger from "./SeenCard";
 import SuccessQuote from "./SuccessQuoteCard";
-import HedgerError from "./ErrorCard";
-import Default from "./DefaultCard";
+import TransferCollateral from "./TransferCollateralCard";
 
 export default function Cards({
   notification,
@@ -25,21 +23,21 @@ export default function Cards({
   notification: NotificationDetails;
 }) {
   // TODO:handling state when user account didn't selected
-  const { quoteId, notificationType, counterpartyAddress } = notification;
-  const { accounts } = useUserAccounts();
+  const {quoteId, notificationType, counterpartyAddress} = notification;
+  const {accounts} = useUserAccounts();
   const subAccount = accounts.find(
-    (account) =>
+    account =>
       account.accountAddress.toLowerCase() ===
-      counterpartyAddress?.toLowerCase()
+      counterpartyAddress?.toLowerCase(),
   );
   const existedQuoteCallback = useGetExistedQuoteByIdsCallback();
   const existedQuote = existedQuoteCallback(quoteId);
-  const { quotes, loading } = useGetQuoteByIds([Number(quoteId)]);
+  const {quotes, loading} = useGetQuoteByIds([Number(quoteId)]);
   const quoteData = existedQuote
     ? existedQuote
     : !loading
-    ? quotes[0]
-    : ({} as Quote);
+      ? quotes[0]
+      : ({} as Quote);
 
   if (!subAccount) return <></>;
 

@@ -5,7 +5,7 @@ import Box from "components/Box";
 
 export const InputWrapper = styled(Box)`
   padding: 0 20px;
-  border-radius: ${({ theme }) => theme.borderRadius0};
+  border-radius: ${({theme}) => theme.borderRadius0};
 `;
 
 export const InputField = styled.input<{
@@ -18,15 +18,15 @@ export const InputField = styled.input<{
   flex: 1;
   border: none;
 
-  background: ${({ theme, calculationMode }) =>
+  background: ${({theme, calculationMode}) =>
     calculationMode ? theme.blue2 : "transparent"};
   -webkit-background-clip: text;
-  -webkit-text-fill-color: ${({ calculationMode }) =>
+  -webkit-text-fill-color: ${({calculationMode}) =>
     calculationMode ? "transparent" : "unset"};
-  font-family: ${({ theme }) => theme.fontPrimary};
+  font-family: ${({theme}) => theme.fontPrimary};
   font-size: 16px;
   font-weight: 600;
-  color: ${({ theme }) => theme.text0};
+  color: ${({theme}) => theme.text0};
   text-align: left;
 
   @keyframes blink {
@@ -40,13 +40,13 @@ export const InputField = styled.input<{
       opacity: 1;
     }
   }
-  animation: ${({ calculationMode, calculationLoading }) =>
+  animation: ${({calculationMode, calculationLoading}) =>
     calculationMode && calculationLoading
       ? "blink 1s linear infinite"
       : "none"};
 
   &:active {
-    color: ${({ theme }) => theme.text0};
+    color: ${({theme}) => theme.text0};
   }
 
   &:focus,
@@ -94,7 +94,7 @@ export function makeRegex(precision: number, calculational: boolean): RegExp {
 
 const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`); // match escaped "." characters via in a non-capturing group
 const calculationalInputRegex = RegExp(
-  "^([$%]?\\d*(\\.?\\d*)?)(?:\\s*([-+])\\s*([$%]?\\d*(\\.?\\d*)?)?)?$"
+  "^([$%]?\\d*(\\.?\\d*)?)(?:\\s*([-+])\\s*([$%]?\\d*(\\.?\\d*)?)?)?$",
 );
 export const NumericalInput = ({
   value,

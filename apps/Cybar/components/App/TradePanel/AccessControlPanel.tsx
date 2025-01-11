@@ -1,46 +1,45 @@
-import React from "react";
-import styled, { useTheme } from "styled-components";
+import styled, {useTheme} from "styled-components";
 
-import { useActiveMarket } from "@symmio/frontend-sdk/state/trade/hooks";
+import {useActiveMarket} from "@symmio/frontend-sdk/state/trade/hooks";
 
-import { ColumnCenter } from "components/Column";
-import { RowCenter } from "components/Row";
-import { MainButton } from "components/Button";
+import {MainButton} from "components/Button";
+import {ColumnCenter} from "components/Column";
 import BigExclamationMark from "components/Icons/BigExclamationMark";
+import {RowCenter} from "components/Row";
 
 const ErrorWrapper = styled(ColumnCenter)<{
   blacklisted?: boolean;
   position?: string;
 }>`
   justify-content: center;
-  position: ${({ position }) => position ?? "absolute"};
+  position: ${({position}) => position ?? "absolute"};
   z-index: 1;
   height: 100%;
   width: 100%;
   padding: 12px;
-  background: ${({ blacklisted, theme }) =>
+  background: ${({blacklisted, theme}) =>
     blacklisted
       ? "linear-gradient(180deg, rgba(71, 42, 42, 0.83) 0%, #21242C 100%)"
       : theme.gradError};
 `;
 
-const ErrorIconWrapper = styled(RowCenter)<{ blacklisted?: boolean }>`
-  padding-bottom: ${({ blacklisted }) => (blacklisted ? "24px" : "16px")};
+const ErrorIconWrapper = styled(RowCenter)<{blacklisted?: boolean}>`
+  padding-bottom: ${({blacklisted}) => (blacklisted ? "24px" : "16px")};
 `;
 
-const ErrorTitle = styled.h3<{ color: string }>`
+const ErrorTitle = styled.h3<{color: string}>`
   padding-bottom: 12px;
   font-size: 14px;
   font-weight: 600;
-  color: ${({ color }) => color};
+  color: ${({color}) => color};
 `;
 
-const ErrorText = styled.p<{ color: string; blacklisted?: boolean }>`
+const ErrorText = styled.p<{color: string; blacklisted?: boolean}>`
   padding: 0 16px;
-  color: ${({ color }) => color};
+  color: ${({color}) => color};
   text-align: center;
   font-size: 12px;
-  line-height: ${({ blacklisted }) => (blacklisted ? "26px" : "22px")};
+  line-height: ${({blacklisted}) => (blacklisted ? "26px" : "22px")};
 `;
 
 const ContactButton = styled(MainButton)`

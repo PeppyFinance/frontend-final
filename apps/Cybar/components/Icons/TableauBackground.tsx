@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function TableauBackground({
   width = 524,
   height = 72,
@@ -20,7 +18,7 @@ export default function TableauBackground({
     >
       <mask
         id="mask0_113_381"
-        style={{ maskType: "alpha" }}
+        style={{maskType: "alpha"}}
         maskUnits="userSpaceOnUse"
         x="0"
         y="0"

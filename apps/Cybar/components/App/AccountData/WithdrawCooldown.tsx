@@ -1,58 +1,58 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import {useCallback, useEffect, useMemo, useState} from "react";
+import {toast} from "react-hot-toast";
 import styled from "styled-components";
-import { toast } from "react-hot-toast";
 
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 
-import { TransferTab } from "@symmio/frontend-sdk/types/transfer";
-import { getRemainingTime } from "@symmio/frontend-sdk/utils/time";
-import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
-import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
+import {useCollateralToken} from "@symmio/frontend-sdk/constants/tokens";
+import {TransferTab} from "@symmio/frontend-sdk/types/transfer";
 import {
   formatCurrency,
   formatPrice,
   toBN,
 } from "@symmio/frontend-sdk/utils/numbers";
+import {getRemainingTime} from "@symmio/frontend-sdk/utils/time";
+import {useGetTokenWithFallbackChainId} from "@symmio/frontend-sdk/utils/token";
 
+import {useModalOpen} from "@symmio/frontend-sdk/state/application/hooks";
+import {ApplicationModal} from "@symmio/frontend-sdk/state/application/reducer";
 import {
   useAccountPartyAStat,
   useActiveAccountAddress,
 } from "@symmio/frontend-sdk/state/user/hooks";
-import { useModalOpen } from "@symmio/frontend-sdk/state/application/hooks";
-import { ApplicationModal } from "@symmio/frontend-sdk/state/application/reducer";
 
-import { useTransferCollateral } from "@symmio/frontend-sdk/callbacks/useTransferCollateral";
+import {useTransferCollateral} from "@symmio/frontend-sdk/callbacks/useTransferCollateral";
 
-import { RowCenter, RowBetween } from "components/Row";
-import { DotFlashing } from "components/Icons";
+import {DotFlashing} from "components/Icons";
+import {RowBetween, RowCenter} from "components/Row";
 
-const RemainingWrap = styled(RowCenter)<{ cursor?: string }>`
+const RemainingWrap = styled(RowCenter)<{cursor?: string}>`
   position: relative;
   overflow: hidden;
   border-radius: 4px;
-  border: 1px solid ${({ theme }) => theme.primary0};
-  background: ${({ theme }) => theme.bg7};
-  color: ${({ theme }) => theme.white};
+  border: 1px solid ${({theme}) => theme.primary0};
+  background: ${({theme}) => theme.bg7};
+  color: ${({theme}) => theme.white};
   height: 40px;
   font-size: 12px;
   width: 162px;
   height: 40px;
-  cursor: ${({ cursor }) => cursor ?? "progress"};
+  cursor: ${({cursor}) => cursor ?? "progress"};
 `;
 
-const RemainingBlock = styled.div<{ width?: string }>`
-  background: ${({ theme }) => theme.hoverGrad};
+const RemainingBlock = styled.div<{width?: string}>`
+  background: ${({theme}) => theme.hoverGrad};
   opacity: 0.2;
   height: 100%;
   left: 0;
   bottom: 0;
   position: absolute;
-  width: ${({ width }) => width ?? "unset"};
+  width: ${({width}) => width ?? "unset"};
 `;
 
-const Text = styled(RowBetween)<{ filling?: boolean }>`
-  justify-content: ${({ filling }) => (filling ? "space-between" : "center")};
-  color: ${({ theme }) => theme.primary0};
+const Text = styled(RowBetween)<{filling?: boolean}>`
+  justify-content: ${({filling}) => (filling ? "space-between" : "center")};
+  color: ${({theme}) => theme.primary0};
   padding: 0 12px;
   font-weight: 500;
   font-size: 12px;
@@ -60,25 +60,22 @@ const Text = styled(RowBetween)<{ filling?: boolean }>`
 `;
 
 const TimerText = styled.span`
-  color: ${({ theme }) => theme.warning0};
+  color: ${({theme}) => theme.warning0};
 `;
 
 function Timer() {
   const [, setState] = useState(false);
 
   const activeAccountAddress = useActiveAccountAddress();
-  const { withdrawCooldown, cooldownMA } =
+  const {withdrawCooldown, cooldownMA} =
     useAccountPartyAStat(activeAccountAddress);
-  const { hours, seconds, minutes } = getRemainingTime(
-    toBN(withdrawCooldown).plus(cooldownMA).times(1000).toNumber()
+  const {hours, seconds, minutes} = getRemainingTime(
+    toBN(withdrawCooldown).plus(cooldownMA).times(1000).toNumber(),
   );
 
   useEffect(() => {
     // for forcing component to re-render every second
-    const interval = setInterval(
-      () => setState((prevState) => !prevState),
-      1000
-    );
+    const interval = setInterval(() => setState(prevState => !prevState), 1000);
     return () => {
       clearInterval(interval);
     };
@@ -100,20 +97,20 @@ export default function WithdrawCooldown({
   formatedAmount: boolean;
   text?: string;
 }) {
-  const { chainId } = useActiveWagmi();
+  const {chainId} = useActiveWagmi();
   const activeAccountAddress = useActiveAccountAddress();
-  const { accountBalance, withdrawCooldown, cooldownMA } =
+  const {accountBalance, withdrawCooldown, cooldownMA} =
     useAccountPartyAStat(activeAccountAddress);
 
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(
     COLLATERAL_TOKEN,
-    chainId
+    chainId,
   );
-  const { callback: transferBalanceCallback, error: transferBalanceError } =
+  const {callback: transferBalanceCallback, error: transferBalanceError} =
     useTransferCollateral(
       formatPrice(accountBalance, collateralCurrency?.decimals),
-      TransferTab.WITHDRAW
+      TransferTab.WITHDRAW,
     );
   const [awaitingConfirmation, setAwaitingConfirmation] = useState(false);
 
@@ -127,8 +124,8 @@ export default function WithdrawCooldown({
       ? cooldownRemainPercent.toFixed(0)
       : null;
   }, [cooldownMA, currentTimestamp, withdrawCooldown]);
-  const { diff } = getRemainingTime(
-    toBN(withdrawCooldown).plus(cooldownMA).times(1000).toNumber()
+  const {diff} = getRemainingTime(
+    toBN(withdrawCooldown).plus(cooldownMA).times(1000).toNumber(),
   );
 
   const showWithdrawBarModal = useModalOpen(ApplicationModal.WITHDRAW_BAR);
@@ -163,7 +160,7 @@ export default function WithdrawCooldown({
 
   const fixedAccountBalance = formatPrice(
     accountBalance,
-    collateralCurrency?.decimals
+    collateralCurrency?.decimals,
   );
 
   if (toBN(fixedAccountBalance).isGreaterThan(0)) {

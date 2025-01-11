@@ -1,28 +1,28 @@
-import { RowBetween } from "components/Row";
+import {RowBetween} from "components/Row";
 import ShimmerAnimation from "components/ShimmerAnimation";
 import styled from "styled-components";
 
-const Row = styled(RowBetween)<{ margin?: string }>`
+const Row = styled(RowBetween)<{margin?: string}>`
   flex-flow: row nowrap;
-  margin: ${({ margin }) => margin ?? "8px 0px"};
+  margin: ${({margin}) => margin ?? "8px 0px"};
 `;
 
-const Label = styled.div<{ color?: string }>`
+const Label = styled.div<{color?: string}>`
   font-size: 14px;
   font-weight: 400;
   justify-self: start;
-  color: ${({ theme, color }) => color ?? theme.text3};
-  ${({ theme }) => theme.mediaWidth.upToMedium`
+  color: ${({theme, color}) => color ?? theme.text3};
+  ${({theme}) => theme.mediaWidth.upToMedium`
     font-size: 12px;
   `};
 `;
 
-const Value = styled.div<{ color?: string }>`
+const Value = styled.div<{color?: string}>`
   font-weight: 500;
   font-size: 14px;
   justify-self: end;
-  color: ${({ theme, color }) => color ?? theme.text0};
-  ${({ theme }) => theme.mediaWidth.upToMedium`
+  color: ${({theme, color}) => color ?? theme.text0};
+  ${({theme}) => theme.mediaWidth.upToMedium`
     font-size: 12px;
   `};
 `;

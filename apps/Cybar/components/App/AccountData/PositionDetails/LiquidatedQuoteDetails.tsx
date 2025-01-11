@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import styled, { useTheme } from "styled-components";
+import {useEffect, useState} from "react";
+import styled, {useTheme} from "styled-components";
 
-import { Quote } from "@symmio/frontend-sdk/types/quote";
-import { PositionType } from "@symmio/frontend-sdk/types/trade";
-import { formatTimestamp } from "@symmio/frontend-sdk/utils/time";
-import { formatAmount, toBN } from "@symmio/frontend-sdk/utils/numbers";
+import {Quote} from "@symmio/frontend-sdk/types/quote";
+import {PositionType} from "@symmio/frontend-sdk/types/trade";
+import {formatAmount, toBN} from "@symmio/frontend-sdk/utils/numbers";
+import {formatTimestamp} from "@symmio/frontend-sdk/utils/time";
 
-import { useMarketData } from "@symmio/frontend-sdk/state/hedger/hooks";
+import {useMarketData} from "@symmio/frontend-sdk/state/hedger/hooks";
 
-import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
+import {useMarket} from "@symmio/frontend-sdk/hooks/useMarkets";
 import {
   useLockedMargin,
   useQuoteLeverage,
@@ -16,37 +16,37 @@ import {
   useQuoteUpnlAndPnl,
 } from "@symmio/frontend-sdk/hooks/useQuotes";
 
-import { LongArrow, ShortArrow } from "components/Icons";
-import ClosedAmountDetails from "./ClosedSizeDetails/ClosedAmountDetails";
+import {useCollateralToken} from "@symmio/frontend-sdk/constants/tokens";
+import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
+import {useGetTokenWithFallbackChainId} from "@symmio/frontend-sdk/utils/token";
 import {
+  Chevron,
   ContentWrapper,
   DataWrap,
-  Label,
-  Value,
-  Row,
-  TopWrap,
-  PositionInfoBox,
-  MarketName,
-  Wrapper,
-  Leverage,
-  QuoteData,
-  PositionPnl,
-  Chevron,
   FlexColumn,
+  Label,
+  Leverage,
+  MarketName,
+  PositionInfoBox,
+  PositionPnl,
+  QuoteData,
+  Row,
   RowPnl,
+  TopWrap,
+  Value,
+  Wrapper,
 } from "components/App/AccountData/PositionDetails/styles";
-import { RowEnd, Row as RowComponent } from "components/Row";
+import {LongArrow, ShortArrow} from "components/Icons";
+import {Row as RowComponent, RowEnd} from "components/Row";
+import ClosedAmountDetails from "./ClosedSizeDetails/ClosedAmountDetails";
 import PositionDetailsNavigator from "./PositionDetailsNavigator";
-import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
-import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
-import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
 
 const LiquidateWrap = styled(DataWrap)`
-  background: ${({ theme }) => theme.bgLoose};
+  background: ${({theme}) => theme.bgLoose};
 `;
 
 const LiquidateLabel = styled(Label)`
-  color: ${({ theme }) => theme.negative};
+  color: ${({theme}) => theme.negative};
 `;
 
 export default function LiquidatedQuoteDetails({
@@ -59,7 +59,7 @@ export default function LiquidatedQuoteDetails({
   mobileVersion: boolean;
 }): JSX.Element {
   const theme = useTheme();
-  const { chainId } = useActiveWagmi();
+  const {chainId} = useActiveWagmi();
   const {
     id,
     positionType,
@@ -70,12 +70,12 @@ export default function LiquidatedQuoteDetails({
     liquidatePrice,
     openedPrice,
   } = quote;
-  const { symbol, name, asset } = useMarket(marketId) || {};
+  const {symbol, name, asset} = useMarket(marketId) || {};
   const marketData = useMarketData(name);
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(
     COLLATERAL_TOKEN,
-    chainId
+    chainId,
   );
 
   const quoteSize = useQuoteSize(quote);
@@ -148,7 +148,7 @@ export default function LiquidatedQuoteDetails({
             <RowPnl>
               <Label>PNL:</Label>
               <PositionPnl color={PNLColor}>{`${PNL} (${Math.abs(
-                Number(PNLPercent)
+                Number(PNLPercent),
               )}%)`}</PositionPnl>
             </RowPnl>
           )}
@@ -166,7 +166,7 @@ export default function LiquidatedQuoteDetails({
               <LiquidateLabel>PNL:</LiquidateLabel>
               <RowEnd>
                 <PositionPnl color={PNLColor}>{`${PNL} (${Math.abs(
-                  Number(PNLPercent)
+                  Number(PNLPercent),
                 )}%)`}</PositionPnl>
               </RowEnd>
             </Row>
@@ -175,7 +175,7 @@ export default function LiquidatedQuoteDetails({
               <Value>{`${formatAmount(
                 liquidateAmount,
                 6,
-                true
+                true,
               )} ${symbol}`}</Value>
             </Row>
             <Row>
@@ -183,7 +183,7 @@ export default function LiquidatedQuoteDetails({
               <Value>{`${formatAmount(
                 liquidatePrice,
                 6,
-                true
+                true,
               )} ${asset}`}</Value>
             </Row>
           </LiquidateWrap>
@@ -209,11 +209,11 @@ export default function LiquidatedQuoteDetails({
               <Value>{`${formatAmount(
                 toBN(platformFee).div(2),
                 3,
-                true
+                true,
               )} (OPEN) / ${formatAmount(
                 toBN(platformFee).div(2),
                 3,
-                true
+                true,
               )} (CLOSE) ${collateralCurrency?.symbol}`}</Value>
             </Row>
           </ContentWrapper>

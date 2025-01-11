@@ -1,18 +1,18 @@
-import React, { useMemo, useState } from "react";
+import {useMemo, useState} from "react";
 import styled from "styled-components";
-import { Z_INDEX } from "theme";
+import {Z_INDEX} from "theme";
 
 import {
   useFavoriteMarkets,
   useMarketsSearch,
 } from "@symmio/frontend-sdk/hooks/useMarkets";
 
-import { Card } from "components/Card";
-import { RowStart, Row } from "components/Row";
-import { Close as CloseIcon } from "components/Icons";
-import { Modal as ModalBody } from "components/Modal";
+import {InputField} from "components/App/MarketBar/InputField";
 import Markets from "components/App/MarketBar/MarketsModal/Markets";
-import { InputField } from "components/App/MarketBar/InputField";
+import {Card} from "components/Card";
+import {Close as CloseIcon} from "components/Icons";
+import {Modal as ModalBody} from "components/Modal";
+import {Row, RowStart} from "components/Row";
 
 const ModalWrapper = styled(Card)`
   padding: 0.6rem;
@@ -32,19 +32,19 @@ const ModalWrapper = styled(Card)`
 const Wrapper = styled(Row)`
   height: 36px;
   border-radius: 4px;
-  background: ${({ theme }) => theme.bg3};
+  background: ${({theme}) => theme.bg3};
 `;
 
-const InlineModal = styled(Card)<{ isOpen: boolean; height?: string }>`
+const InlineModal = styled(Card)<{isOpen: boolean; height?: string}>`
   padding: 0px;
   width: clamp(200px, 400px, 99%);
-  max-height: ${({ height }) => height ?? "554px"};
+  max-height: ${({height}) => height ?? "554px"};
   position: absolute;
   z-index: ${Z_INDEX.modal};
   transform: translate(-1px, 29px);
-  background: ${({ theme }) => theme.bg1};
-  border: 2px solid ${({ theme }) => theme.bg6};
-  display: ${(props) => (props.isOpen ? "flex" : "none")};
+  background: ${({theme}) => theme.bg1};
+  border: 2px solid ${({theme}) => theme.bg6};
+  display: ${props => (props.isOpen ? "flex" : "none")};
 
   & > * {
     &:last-child {
@@ -83,7 +83,7 @@ const Close = styled.div`
   cursor: pointer;
   border-radius: 4px;
   margin: 2px 2px 1px 0px;
-  background: ${({ theme }) => theme.bg6};
+  background: ${({theme}) => theme.bg6};
 `;
 
 export function MarketsModal({
@@ -95,17 +95,17 @@ export function MarketsModal({
   isOpen: boolean;
   onDismiss: () => void;
 }) {
-  const { markets } = useMarketsSearch();
+  const {markets} = useMarketsSearch();
   const favorites = useFavoriteMarkets();
 
   const [search, setSearch] = useState("");
 
-  const { filtered } = useMemo(() => {
-    const filtered = markets.filter((market) =>
-      market.name.toLowerCase().includes(search)
+  const {filtered} = useMemo(() => {
+    const filtered = markets.filter(market =>
+      market.name.toLowerCase().includes(search),
     );
 
-    return { filtered };
+    return {filtered};
   }, [search, markets]);
 
   const getInnerContent = () => (

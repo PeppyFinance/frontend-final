@@ -1,41 +1,41 @@
-import { useEffect, useMemo, useRef } from "react";
+import {useEffect, useMemo, useRef} from "react";
 
-import { useSingleContractMultipleMethods } from "../lib/hooks/multicall";
-import { OrderType, PositionType } from "../types/trade";
-import { Quote, QuoteStatus } from "../types/quote";
-import { BN_ZERO, fromWei, toBN } from "../utils/numbers";
+import {useSingleContractMultipleMethods} from "../lib/hooks/multicall";
+import {Quote, QuoteStatus} from "../types/quote";
+import {OrderType, PositionType} from "../types/trade";
+import {BN_ZERO, fromWei, toBN} from "../utils/numbers";
 
 import {
-  useAccountPartyAStat,
-  useActiveAccountAddress,
-} from "../state/user/hooks";
+  usePartialFillNotifications,
+  useVisibleNotifications,
+} from "../state/notifications/hooks";
 import {
   LastSeenAction,
   NotificationDetails,
   NotificationType,
 } from "../state/notifications/types";
 import {
-  usePartialFillNotifications,
-  useVisibleNotifications,
-} from "../state/notifications/hooks";
+  useAccountPartyAStat,
+  useActiveAccountAddress,
+} from "../state/user/hooks";
 
-import { useDiamondAddress } from "../state/chains";
-import { useMarket } from "./useMarkets";
-import { useSupportedChainId } from "../lib/hooks/useSupportedChainId";
-import useBidAskPrice from "./useBidAskPrice";
-import { Market } from "../types/market";
+import {DIAMOND_ABI} from "../constants";
+import useActiveWagmi from "../lib/hooks/useActiveWagmi";
+import {useSupportedChainId} from "../lib/hooks/useSupportedChainId";
+import {useDiamondAddress} from "../state/chains";
 import {
   useQuoteInstantCloseData,
   useUpdateInstantCloseDataCallback,
 } from "../state/quotes/hooks";
-import { InstantCloseStatus } from "../state/quotes/types";
-import useActiveWagmi from "../lib/hooks/useActiveWagmi";
-import { DIAMOND_ABI } from "../constants";
+import {InstantCloseStatus} from "../state/quotes/types";
+import {Market} from "../types/market";
+import useBidAskPrice from "./useBidAskPrice";
+import {useMarket} from "./useMarkets";
 
 export function getPositionTypeByIndex(x: number): PositionType {
   return PositionType[
     Object.keys(PositionType).find(
-      (key, index) => index === x
+      (key, index) => index === x,
     ) as keyof typeof PositionType
   ];
 }
@@ -43,7 +43,7 @@ export function getPositionTypeByIndex(x: number): PositionType {
 export function getQuoteStateByIndex(x: number): QuoteStatus {
   return QuoteStatus[
     Object.keys(QuoteStatus).find(
-      (key, index) => index === x
+      (key, index) => index === x,
     ) as keyof typeof QuoteStatus
   ];
 }
@@ -56,11 +56,11 @@ export function useGetPositions(): {
   positions: Quote[] | undefined;
   loading: boolean;
 } {
-  const { chainId } = useActiveWagmi();
+  const {chainId} = useActiveWagmi();
   const isSupportedChainId = useSupportedChainId();
   const activeAccountAddress = useActiveAccountAddress();
 
-  const { positionsCount } = useAccountPartyAStat(activeAccountAddress);
+  const {positionsCount} = useAccountPartyAStat(activeAccountAddress);
 
   const DIAMOND_ADDRESS = useDiamondAddress();
 
@@ -77,7 +77,7 @@ export function useGetPositions(): {
             ]
           : []
         : [],
-    [isSupportedChainId, activeAccountAddress, start, size]
+    [isSupportedChainId, activeAccountAddress, start, size],
   );
 
   const {
@@ -87,7 +87,7 @@ export function useGetPositions(): {
   } = useSingleContractMultipleMethods(
     chainId ? DIAMOND_ADDRESS[chainId] : "",
     DIAMOND_ABI,
-    calls
+    calls,
   );
 
   const quotesValue = useMemo(
@@ -97,14 +97,14 @@ export function useGetPositions(): {
       Array.isArray(quoteResults[0].result)
         ? quoteResults[0].result
         : [],
-    [isQuoteSuccess, quoteResults]
+    [isQuoteSuccess, quoteResults],
   );
 
   const quotes: Quote[] = useMemo(() => {
     return (
       quotesValue
-        ?.filter((quote) => quote[0]?.toString() !== "0") //remove garbage outputs
-        .map((quote) => toQuote(quote))
+        ?.filter(quote => quote[0]?.toString() !== "0") //remove garbage outputs
+        .map(quote => toQuote(quote))
         .sort(sortQuotesByModifyTimestamp) || []
     );
   }, [quotesValue]);
@@ -114,7 +114,7 @@ export function useGetPositions(): {
       positions: quotes.length > 0 ? quotes : undefined,
       loading: isQuoteLoading,
     }),
-    [isQuoteLoading, quotes]
+    [isQuoteLoading, quotes],
   );
 }
 
@@ -122,7 +122,7 @@ export function useGetQuoteByIds(ids: number[]): {
   quotes: Quote[];
   loading: boolean;
 } {
-  const { chainId } = useActiveWagmi();
+  const {chainId} = useActiveWagmi();
   const isSupportedChainId = useSupportedChainId();
 
   const DIAMOND_ADDRESS = useDiamondAddress();
@@ -130,9 +130,9 @@ export function useGetQuoteByIds(ids: number[]): {
   const calls = useMemo(
     () =>
       isSupportedChainId
-        ? ids.map((id) => ({ functionName: "getQuote", callInputs: [id] }))
+        ? ids.map(id => ({functionName: "getQuote", callInputs: [id]}))
         : [],
-    [ids, isSupportedChainId]
+    [ids, isSupportedChainId],
   );
 
   const {
@@ -142,7 +142,7 @@ export function useGetQuoteByIds(ids: number[]): {
   } = useSingleContractMultipleMethods(
     chainId ? DIAMOND_ADDRESS[chainId] : "",
     DIAMOND_ABI,
-    calls
+    calls,
   );
 
   const quotesValue = useMemo(
@@ -150,23 +150,23 @@ export function useGetQuoteByIds(ids: number[]): {
       isSuccess &&
       quoteResults !== undefined &&
       quoteResults?.[0]?.status === "success"
-        ? quoteResults?.map((qs) =>
+        ? quoteResults?.map(qs =>
             qs.result
               ? qs.result["id"]
                 ? qs.result
                 : qs.result[0]
-                ? qs.result[0]
-                : null
-              : null
+                  ? qs.result[0]
+                  : null
+              : null,
           )
         : [],
-    [isSuccess, quoteResults]
+    [isSuccess, quoteResults],
   );
 
   const quotes: Quote[] = useMemo(() => {
     return quotesValue
-      .filter((quote) => quote)
-      .map((quote) => toQuote(quote))
+      .filter(quote => quote)
+      .map(quote => toQuote(quote))
       .sort(sortQuotesByModifyTimestamp);
   }, [quotesValue]);
 
@@ -175,7 +175,7 @@ export function useGetQuoteByIds(ids: number[]): {
       quotes,
       loading: isLoading,
     }),
-    [isLoading, quotes]
+    [isLoading, quotes],
   );
 }
 
@@ -183,7 +183,7 @@ export function useGetPendingIds(): {
   pendingIds: number[];
   loading: boolean;
 } {
-  const { chainId } = useActiveWagmi();
+  const {chainId} = useActiveWagmi();
   const isSupportedChainId = useSupportedChainId();
   const activeAccountAddress = useActiveAccountAddress();
 
@@ -201,7 +201,7 @@ export function useGetPendingIds(): {
             ]
           : []
         : [],
-    [activeAccountAddress, isSupportedChainId]
+    [activeAccountAddress, isSupportedChainId],
   );
 
   const {
@@ -211,7 +211,7 @@ export function useGetPendingIds(): {
   } = useSingleContractMultipleMethods(
     chainId ? DIAMOND_ADDRESS[chainId] : "",
     DIAMOND_ABI,
-    calls
+    calls,
   );
 
   const quoteIdsValue = useMemo(
@@ -221,12 +221,12 @@ export function useGetPendingIds(): {
       Array.isArray(quoteResults[0].result)
         ? quoteResults[0].result
         : [],
-    [isSuccess, quoteResults]
+    [isSuccess, quoteResults],
   );
 
   const quoteIds: number[] = useMemo(() => {
     return quoteIdsValue
-      .map((quoteId) => toBN(quoteId.toString()).toNumber())
+      .map(quoteId => toBN(quoteId.toString()).toNumber())
       .sort((a: number, b: number) => b - a);
   }, [quoteIdsValue]);
 
@@ -235,7 +235,7 @@ export function useGetPendingIds(): {
       pendingIds: quoteIds,
       loading: isLoading,
     }),
-    [isLoading, quoteIds]
+    [isLoading, quoteIds],
   );
 }
 
@@ -243,7 +243,7 @@ export function useQuoteUpnlAndPnl(
   quote: Quote,
   currentPrice: string | number,
   quantityToClose?: string | number,
-  closedPrice?: string | number
+  closedPrice?: string | number,
 ): string[] {
   const {
     openedPrice,
@@ -299,8 +299,8 @@ export function useQuoteUpnlAndPnl(
 }
 
 export function useQuoteSize(quote: Quote): string {
-  const { quoteStatus, quantity, closedAmount, marketId } = quote;
-  const { quantityPrecision } = useMarket(marketId) || {};
+  const {quoteStatus, quantity, closedAmount, marketId} = quote;
+  const {quantityPrecision} = useMarket(marketId) || {};
   return useMemo(() => {
     if (
       quoteStatus === QuoteStatus.CLOSED ||
@@ -358,16 +358,16 @@ export function useQuoteLeverage(quote: Quote): string {
 }
 
 export function useQuoteFillAmount(quote: Quote): string | null {
-  const { quoteStatus, orderType, id, statusModifyTimestamp } = quote;
+  const {quoteStatus, orderType, id, statusModifyTimestamp} = quote;
   const partiallyFillNotifications: NotificationDetails[] =
     usePartialFillNotifications();
   let foundNotification: NotificationDetails | undefined | null;
   try {
     foundNotification = partiallyFillNotifications.find(
-      (notification) =>
+      notification =>
         notification.quoteId === id.toString() &&
         notification.notificationType === NotificationType.PARTIAL_FILL &&
-        toBN(statusModifyTimestamp).lt(notification.modifyTime)
+        toBN(statusModifyTimestamp).lt(notification.modifyTime),
     );
   } catch (error) {
     foundNotification = null;
@@ -399,7 +399,7 @@ export function useQuoteFillAmount(quote: Quote): string | null {
 }
 
 export function useInstantCloseNotifications(quote: Quote) {
-  const { id } = quote;
+  const {id} = quote;
   const updateInstantCloseData = useUpdateInstantCloseDataCallback();
   const instantCloseData = useQuoteInstantCloseData(quote.id) ?? {};
 
@@ -407,7 +407,7 @@ export function useInstantCloseNotifications(quote: Quote) {
   const foundNotification = useRef<NotificationDetails | undefined>();
 
   useEffect(() => {
-    notifications.forEach((notification) => {
+    notifications.forEach(notification => {
       if (
         notification.quoteId === id.toString() &&
         ((notification.notificationType === NotificationType.SUCCESS &&
@@ -430,7 +430,7 @@ export function useInstantCloseNotifications(quote: Quote) {
           } else if (
             notification.notificationType === NotificationType.HEDGER_ERROR
           ) {
-            updateInstantCloseData({ id, status: InstantCloseStatus.FAILED });
+            updateInstantCloseData({id, status: InstantCloseStatus.FAILED});
           }
         }
       }
@@ -442,11 +442,11 @@ export function useInstantCloseNotifications(quote: Quote) {
 
 export function useClosingLastMarketPrice(
   quote: Quote | null,
-  market?: Market
+  market?: Market,
 ): string {
   // market price for closing position
 
-  const { bid, ask } = useBidAskPrice(market);
+  const {bid, ask} = useBidAskPrice(market);
 
   if (quote) {
     if (quote.positionType === PositionType.LONG) {
@@ -461,10 +461,10 @@ export function useClosingLastMarketPrice(
 
 export function useOpeningLastMarketPrice(
   quote: Quote | null,
-  market?: Market
+  market?: Market,
 ): string {
   // market price for opening position
-  const { bid, ask } = useBidAskPrice(market);
+  const {bid, ask} = useBidAskPrice(market);
 
   if (quote)
     if (quote.positionType === PositionType.LONG) {
@@ -482,7 +482,7 @@ function toQuote(quote: any) {
     partyBsWhiteList: quote["partyBsWhiteList"],
     marketId: Number(quote["symbolId"].toString()),
     positionType: getPositionTypeByIndex(
-      Number(quote["positionType"].toString())
+      Number(quote["positionType"].toString()),
     ),
     orderType:
       Number(quote["orderType"].toString()) === 1
@@ -504,10 +504,10 @@ function toQuote(quote: any) {
     initialCVA: fromWei(quote["initialLockedValues"]["cva"].toString()),
     initialLF: fromWei(quote["initialLockedValues"]["lf"].toString()),
     initialPartyAMM: fromWei(
-      quote["initialLockedValues"]["partyAmm"].toString()
+      quote["initialLockedValues"]["partyAmm"].toString(),
     ),
     initialPartyBMM: fromWei(
-      quote["initialLockedValues"]["partyBmm"].toString()
+      quote["initialLockedValues"]["partyBmm"].toString(),
     ),
 
     CVA: fromWei(quote["lockedValues"]["cva"].toString()),
@@ -528,7 +528,7 @@ function toQuote(quote: any) {
     createTimestamp: Number(quote["createTimestamp"].toString()),
     statusModifyTimestamp: Number(quote["statusModifyTimestamp"].toString()),
     lastFundingPaymentTimestamp: Number(
-      quote["lastFundingPaymentTimestamp"].toString()
+      quote["lastFundingPaymentTimestamp"].toString(),
     ),
     deadline: Number(quote["deadline"].toString()),
     tradingFee: Number(quote["tradingFee"].toString()),

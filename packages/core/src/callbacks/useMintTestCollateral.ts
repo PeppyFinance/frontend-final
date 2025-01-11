@@ -1,10 +1,10 @@
-import { useCallback, useMemo } from "react";
 import BigNumber from "bignumber.js";
+import {useCallback, useMemo} from "react";
 
 import useActiveWagmi from "../lib/hooks/useActiveWagmi";
-import { useSupportedChainId } from "../lib/hooks/useSupportedChainId";
+import {useSupportedChainId} from "../lib/hooks/useSupportedChainId";
 
-import { useTransactionAdder } from "../state/transactions/hooks";
+import {useTransactionAdder} from "../state/transactions/hooks";
 import {
   MintTransactionInfo,
   TransactionType,
@@ -14,18 +14,18 @@ import {
   createTransactionCallback,
 } from "../utils/web3";
 
-import { Abi, Address, encodeFunctionData } from "viem";
-import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
-import { useCollateralToken } from "../constants/tokens";
-import { useCollateralAddress, useWagmiConfig } from "../state/chains";
-import { COLLATERAL_ABI } from "../constants";
+import {useAddRecentTransaction} from "@rainbow-me/rainbowkit";
+import {Abi, Address, encodeFunctionData} from "viem";
+import {COLLATERAL_ABI} from "../constants";
+import {useCollateralToken} from "../constants/tokens";
+import {useCollateralAddress, useWagmiConfig} from "../state/chains";
 
 export function useMintCollateral(): {
   state: TransactionCallbackState;
   callback: null | (() => Promise<any>);
   error: string | null;
 } {
-  const { account, chainId } = useActiveWagmi();
+  const {account, chainId} = useActiveWagmi();
   const COLLATERAL_ADDRESS = useCollateralAddress();
 
   const isSupportedChainId = useSupportedChainId();
@@ -106,7 +106,7 @@ export function useMintCollateral(): {
           addRecentTransaction,
           txInfo,
           wagmiConfig,
-          summary
+          summary,
         ),
     };
   }, [

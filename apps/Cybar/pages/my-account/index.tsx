@@ -1,19 +1,19 @@
 import styled from "styled-components";
 
 import AccountBalance from "components/App/AccountData/MyAccount/AccountBalance";
-import BalanceHistory from "components/App/AccountData/MyAccount/BalanceHistory";
-import WithdrawBar from "components/App/AccountData/MyAccount/WithdrawBar";
 import AccountOverview from "components/App/AccountData/MyAccount/AccountOverview";
 import AccountPositions from "components/App/AccountData/MyAccount/AccountPositions";
+import BalanceHistory from "components/App/AccountData/MyAccount/BalanceHistory";
+import WithdrawBar from "components/App/AccountData/MyAccount/WithdrawBar";
 import WrapperBanner from "components/Banner";
-import { Container } from "pages/trade/[id]";
+import {Container} from "pages/trade/[id]";
 
 const Wrapper = styled(Container)`
   padding: 0px 111px;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
+  ${({theme}) => theme.mediaWidth.upToSmall`
     padding: 0px 54px;
   `}
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+  ${({theme}) => theme.mediaWidth.upToExtraSmall`
     padding: 0px 16px;
   `}
 `;
@@ -28,10 +28,10 @@ const Layout = styled.div`
   width: 100%;
   gap: 16px;
 
-  ${({ theme }) => theme.mediaWidth.upToLarge`
+  ${({theme}) => theme.mediaWidth.upToLarge`
     grid-template-columns: 1.5fr 1fr;
   `}
-  ${({ theme }) => theme.mediaWidth.upToMedium`
+  ${({theme}) => theme.mediaWidth.upToMedium`
     grid-template-columns: 1fr;
   `}
 `;

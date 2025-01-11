@@ -1,24 +1,24 @@
-import { useState, useEffect } from "react";
+import {useEffect, useState} from "react";
 import styled from "styled-components";
 
-import { DefaultContainer, DefaultHeader } from "../styles";
+import {DefaultContainer, DefaultHeader} from "../styles";
 
-import { ColumnCenter } from "components/Column";
-import HistoryData from "components/App/AccountData/MyAccount/BalanceHistory/BalanceData";
+import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 import {
   useActiveAccountAddress,
   useBalanceHistory,
   useGetBalanceHistoryCallback,
 } from "@symmio/frontend-sdk/state/user/hooks";
-import { ApiState } from "@symmio/frontend-sdk/types/api";
-import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
+import {ApiState} from "@symmio/frontend-sdk/types/api";
+import HistoryData from "components/App/AccountData/MyAccount/BalanceHistory/BalanceData";
+import {ColumnCenter} from "components/Column";
 
 const Container = styled(DefaultContainer)`
   position: relative;
   overflow: hidden;
   min-height: 442px;
 
-  ${({ theme }) => theme.mediaWidth.upToMedium`
+  ${({theme}) => theme.mediaWidth.upToMedium`
     grid-row: 3;
     height: 442px;
   `}
@@ -31,11 +31,11 @@ const Header = styled.div`
   padding: 20px 12px 12px;
 `;
 
-const HeaderText = styled.div<{ justify?: "start" | "center" | "end" }>`
+const HeaderText = styled.div<{justify?: "start" | "center" | "end"}>`
   font-weight: 400;
   font-size: 12px;
-  color: ${({ theme }) => theme.text2};
-  justify-self: ${({ justify }) => justify || "initial"};
+  color: ${({theme}) => theme.text2};
+  justify-self: ${({justify}) => justify || "initial"};
 `;
 
 const ItemsContainer = styled(ColumnCenter)`
@@ -51,7 +51,7 @@ const EmptyCenteredContent = styled.div`
   top: 50%;
   transform: translate(-50%, -50%);
   font-size: 16px;
-  color: ${({ theme }) => theme.text1};
+  color: ${({theme}) => theme.text1};
   font-weight: 400;
 `;
 
@@ -70,10 +70,10 @@ function BalanceHistoryBody() {
   );
 }
 export default function BalanceHistory() {
-  const { chainId } = useActiveWagmi();
+  const {chainId} = useActiveWagmi();
   const activeAccountAddress = useActiveAccountAddress();
   const getBalanceHistory = useGetBalanceHistoryCallback();
-  const { balanceHistory, balanceHistoryState } = useBalanceHistory();
+  const {balanceHistory, balanceHistoryState} = useBalanceHistory();
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {

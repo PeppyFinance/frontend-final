@@ -1,5 +1,5 @@
-import { CloseQuote, PositionType, TradeState } from "../../types/trade";
-import { TransferTab } from "../../types/transfer";
+import {CloseQuote, PositionType, TradeState} from "../../types/trade";
+import {TransferTab} from "../../types/transfer";
 
 export interface SerializableTransactionReceipt {
   to: string;

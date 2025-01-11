@@ -1,20 +1,20 @@
 import styled from "styled-components";
 
-import { Quote } from "@symmio/frontend-sdk/types/quote";
-import { IQuotesInfo } from "@symmio/frontend-sdk/types/quotesOverview";
-import { AccountPositionsContext } from "./context";
+import {Quote} from "@symmio/frontend-sdk/types/quote";
+import {IQuotesInfo} from "@symmio/frontend-sdk/types/quotesOverview";
+import {AccountPositionsContext} from "./context";
 
-import { usePositionValue } from "@symmio/frontend-sdk/hooks/usePositionOverview";
+import {usePositionValue} from "@symmio/frontend-sdk/hooks/usePositionOverview";
+import {usePositionsQuotes} from "@symmio/frontend-sdk/state/quotes/hooks";
 import useGenerateRandomColors from "lib/hooks/useGenerateRandomColor";
-import { usePositionsQuotes } from "@symmio/frontend-sdk/state/quotes/hooks";
 
-import { DefaultContainer, DefaultHeader } from "../styles";
+import {useUpnlWebSocketStatus} from "@symmio/frontend-sdk/state/user/hooks";
+import {ConnectionStatus} from "@symmio/frontend-sdk/types/api";
+import {RowBetween} from "components/Row";
+import {DefaultContainer, DefaultHeader} from "../styles";
 import AccountTable from "./AccountTable";
 import PositionStatus from "./PositionStatus";
 import PositionsPieChart from "./PositionsPieChart";
-import { RowBetween } from "components/Row";
-import { ConnectionStatus } from "@symmio/frontend-sdk/types/api";
-import { useUpnlWebSocketStatus } from "@symmio/frontend-sdk/state/user/hooks";
 
 const Container = styled(DefaultContainer)`
   padding: 20px 16px 24px;
@@ -33,13 +33,13 @@ const Center = styled.div`
   top: 50%;
   transform: translate(-50%, -50%);
   font-size: 16px;
-  color: ${({ theme }) => theme.text1};
+  color: ${({theme}) => theme.text1};
   font-weight: 400;
 `;
 
 const ChartInfo = styled(RowBetween)`
   align-items: flex-start;
-  ${({ theme }) => theme.mediaWidth.upToLarge`
+  ${({theme}) => theme.mediaWidth.upToLarge`
     flex-direction: column;
     align-items: center;
   `}
@@ -51,19 +51,19 @@ const ChartWrapper = styled.div`
   width: 240px;
   height: 240px;
 
-  ${({ theme }) => theme.mediaWidth.upToMedium`
+  ${({theme}) => theme.mediaWidth.upToMedium`
     width: 180px;
     height: 180px;
   `}
 `;
 
-function AccountPositionsBody({ positions }: { positions: Quote[] }) {
+function AccountPositionsBody({positions}: {positions: Quote[]}) {
   const marketQuotesInfo: IQuotesInfo = usePositionValue(positions);
 
   const colors = useGenerateRandomColors(marketQuotesInfo.length);
 
   return (
-    <AccountPositionsContext.Provider value={{ marketQuotesInfo, colors }}>
+    <AccountPositionsContext.Provider value={{marketQuotesInfo, colors}}>
       <PositionStatus />
       <ChartInfo>
         <AccountTable />
@@ -76,7 +76,7 @@ function AccountPositionsBody({ positions }: { positions: Quote[] }) {
 }
 
 export default function AccountPositions() {
-  const { quotes } = usePositionsQuotes();
+  const {quotes} = usePositionsQuotes();
   const upnlLoadingStatus = useUpnlWebSocketStatus();
   const loading = upnlLoadingStatus === ConnectionStatus.CLOSED;
 

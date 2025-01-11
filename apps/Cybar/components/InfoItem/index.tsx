@@ -1,13 +1,13 @@
-import { useCallback } from "react";
+import {useCallback} from "react";
 import styled from "styled-components";
 
-import { RowBetween, RowStart } from "components/Row";
-import { ToolTip } from "components/ToolTip";
-import { Info as InfoIcon } from "components/Icons";
+import {Info as InfoIcon} from "components/Icons";
+import {RowBetween, RowStart} from "components/Row";
 import ShimmerAnimation from "components/ShimmerAnimation";
+import {ToolTip} from "components/ToolTip";
 
 const StyledInfoIcon = styled(InfoIcon)`
-  color: ${({ theme }) => theme.text2};
+  color: ${({theme}) => theme.text2};
   width: 12px;
   height: 12px;
   margin: 4px 4px 0px 4px;
@@ -19,13 +19,13 @@ export const DataRow = styled(RowBetween)`
   padding: 0px 3px;
 `;
 
-export const Label = styled(RowStart)<{ size?: string }>`
-  font-size: ${({ size }) => size ?? "12px"};
+export const Label = styled(RowStart)<{size?: string}>`
+  font-size: ${({size}) => size ?? "12px"};
   justify-self: start;
   font-weight: 400;
   width: 50%;
-  color: ${({ theme }) => theme.text3};
-  ${({ theme }) => theme.mediaWidth.upToMedium`
+  color: ${({theme}) => theme.text3};
+  ${({theme}) => theme.mediaWidth.upToMedium`
     font-size: 12px;
   `};
 `;
@@ -35,12 +35,12 @@ export const Value = styled.div<{
   cursor?: string;
   size?: string;
 }>`
-  font-size: ${({ size }) => size ?? "12px"};
+  font-size: ${({size}) => size ?? "12px"};
   justify-self: end;
-  color: ${({ theme, color }) => color ?? theme.text0};
+  color: ${({theme, color}) => color ?? theme.text0};
   white-space: nowrap;
-  cursor: ${({ cursor }) => cursor ?? "default"};
-  ${({ theme }) => theme.mediaWidth.upToMedium`
+  cursor: ${({cursor}) => cursor ?? "default"};
+  ${({theme}) => theme.mediaWidth.upToMedium`
     font-size: 10px;
   `};
 `;

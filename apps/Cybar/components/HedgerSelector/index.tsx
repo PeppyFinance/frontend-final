@@ -1,16 +1,16 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
+import {isMobile} from "react-device-detect";
 import styled from "styled-components";
-import { isMobile } from "react-device-detect";
 
 import useOnOutsideClick from "lib/hooks/useOnOutsideClick";
 
-import { NavButton } from "components/Button";
-import HedgersModal from "./HedgersModal";
 import {
   useGetAddedHedgers,
   useSetHedgerDataCallback,
 } from "@symmio/frontend-sdk/state/user/hooks";
-import { AddedHedgersData } from "@symmio/frontend-sdk/state/user/types";
+import {AddedHedgersData} from "@symmio/frontend-sdk/state/user/types";
+import {NavButton} from "components/Button";
+import HedgersModal from "./HedgersModal";
 
 const Container = styled.div`
   display: unset;

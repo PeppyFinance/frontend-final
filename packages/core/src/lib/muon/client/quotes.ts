@@ -1,12 +1,12 @@
-import { toast } from "react-hot-toast";
+import {toast} from "react-hot-toast";
 
-import { MuonClient } from "./base";
-import { toWei } from "../../../utils/numbers";
-import { Address } from "viem";
+import {Address} from "viem";
+import {toWei} from "../../../utils/numbers";
+import {MuonClient} from "./base";
 
 export class QuotesClient extends MuonClient {
   constructor() {
-    super({ APP_METHOD: "uPnl_A_withSymbolPrice" });
+    super({APP_METHOD: "uPnl_A_withSymbolPrice"});
   }
 
   static createInstance(isEnabled: boolean): QuotesClient | null {
@@ -20,7 +20,7 @@ export class QuotesClient extends MuonClient {
     account: string | null,
     chainId?: number,
     contractAddress?: string,
-    marketId?: number
+    marketId?: number,
   ): string[][] | Error {
     if (!account) return new Error("Param `account` is missing.");
     if (!chainId) return new Error("Param `chainId` is missing.");
@@ -42,14 +42,14 @@ export class QuotesClient extends MuonClient {
     urls: string[],
     chainId?: number,
     contractAddress?: string,
-    marketId?: number
+    marketId?: number,
   ) {
     try {
       const requestParams = this._getRequestParams(
         account,
         chainId,
         contractAddress,
-        marketId
+        marketId,
       );
       if (requestParams instanceof Error)
         throw new Error(requestParams.message);
@@ -98,15 +98,15 @@ export class QuotesClient extends MuonClient {
         upnl,
         price: price ? price : toWei(0),
         gatewaySignature,
-        sigs: { signature, owner, nonce },
+        sigs: {signature, owner, nonce},
       };
 
-      return { success: true, signature: generatedSignature };
+      return {success: true, signature: generatedSignature};
     } catch (error) {
       console.error(error);
       toast.remove();
       toast.error("Unable to get response from Muon");
-      return { success: false, error };
+      return {success: false, error};
     }
   }
 }

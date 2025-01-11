@@ -2,7 +2,7 @@ import {
   DEFAULT_PRECISION,
   DEFAULT_SLIPPAGE,
 } from "@symmio/frontend-sdk/constants";
-import { useTpSlAvailable } from "@symmio/frontend-sdk/state/chains";
+import {useTpSlAvailable} from "@symmio/frontend-sdk/state/chains";
 import {
   useActiveMarket,
   useActiveMarketPrice,
@@ -12,26 +12,26 @@ import {
   useTradeTpSl,
   useTypedValue,
 } from "@symmio/frontend-sdk/state/trade/hooks";
-import { TpSlProcessState } from "@symmio/frontend-sdk/state/trade/types";
-import { OrderType } from "@symmio/frontend-sdk/types/trade";
-import { getCurrentTimeInSecond } from "@symmio/frontend-sdk/utils/time";
+import {TpSlProcessState} from "@symmio/frontend-sdk/state/trade/types";
+import {OrderType} from "@symmio/frontend-sdk/types/trade";
+import {getCurrentTimeInSecond} from "@symmio/frontend-sdk/utils/time";
 import Checkbox from "components/CheckBox/checkBoxV2";
 import Column from "components/Column";
-import { NumericalInput } from "components/Input";
-import { Row, RowBetween } from "components/Row";
-import { ToolTip } from "components/ToolTip";
-import { useState } from "react";
+import {NumericalInput} from "components/Input";
+import {Row, RowBetween} from "components/Row";
+import {ToolTip} from "components/ToolTip";
+import {useState} from "react";
 import styled from "styled-components";
 
-const InputWrapperSimple = styled(RowBetween)<{ FocusEnabled?: boolean }>`
+const InputWrapperSimple = styled(RowBetween)<{FocusEnabled?: boolean}>`
   height: 32px;
   width: 100%;
   border-radius: 6px;
   padding-left: 10px;
   font-size: 12px;
-  color: ${({ theme }) => theme.text1};
-  background-color: ${({ theme }) => theme.bg3};
-  border: ${({ theme, FocusEnabled }) =>
+  color: ${({theme}) => theme.text1};
+  background-color: ${({theme}) => theme.bg3};
+  border: ${({theme, FocusEnabled}) =>
     FocusEnabled ? `1px solid ${theme.blue1}` : "unset"};
   & .input-tradePanel-tp,
   .input-tradePanel-sl {
@@ -42,10 +42,10 @@ const InputWrapperSimple = styled(RowBetween)<{ FocusEnabled?: boolean }>`
   & .input-tradePanel-tp::placeholder,
   .input-tradePanel-sl::placeholder {
     font-size: 13px;
-    color: ${({ theme }) => theme.text1};
+    color: ${({theme}) => theme.text1};
   }
   &:hover {
-    border: ${({ theme, FocusEnabled }) =>
+    border: ${({theme, FocusEnabled}) =>
       FocusEnabled ? `1px solid ${theme.blue1}` : "1px solid #454a74;"};
   }
 `;
@@ -61,7 +61,7 @@ export function TPSL() {
   const orderType = useOrderType();
   const openedPrice = orderType === OrderType.MARKET ? price : limitPrice;
   const setTradeTpSl = useSetTpSl();
-  const { tp, sl, state: tpSlState, tpSlippage, slSlippage } = useTradeTpSl();
+  const {tp, sl, state: tpSlState, tpSlippage, slSlippage} = useTradeTpSl();
   const market = useActiveMarket();
   const pricePrecision = market ? market.pricePrecision : DEFAULT_PRECISION;
 
@@ -117,7 +117,7 @@ export function TPSL() {
         </a>
       </RowBetween>
       {showTpSl && tpSlAvailable && (
-        <Column style={{ gap: "5px" }}>
+        <Column style={{gap: "5px"}}>
           <Row gap="10px">
             <InputWrapperSimple>
               <div>Take Profit:</div>

@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc.js";
-import relativeTime from "dayjs/plugin/relativeTime.js";
 import localizedFormat from "dayjs/plugin/localizedFormat.js";
+import relativeTime from "dayjs/plugin/relativeTime.js";
+import utc from "dayjs/plugin/utc.js";
 
 dayjs.extend(utc);
 dayjs.extend(relativeTime);
@@ -23,7 +23,7 @@ export function getRemainingTime(timeStamp: number): {
   const minutes = dayjs.utc(diff).minute();
   const seconds = dayjs.utc(diff).second();
 
-  return { diff, day, hours, minutes, seconds };
+  return {diff, day, hours, minutes, seconds};
 }
 
 export function formatTimestamp(timeLength: number, format?: string): string {

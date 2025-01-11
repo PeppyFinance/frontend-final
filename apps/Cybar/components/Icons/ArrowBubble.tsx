@@ -1,6 +1,5 @@
-import React from "react";
+import {ArrowDown} from "react-feather";
 import styled from "styled-components";
-import { ArrowDown } from "react-feather";
 
 const Circle = styled.div<{
   size: number;
@@ -9,9 +8,9 @@ const Circle = styled.div<{
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  width: ${({ size }) => size + "px"};
-  height: ${({ size }) => size + "px"};
-  background: ${({ theme }) => theme.bg1};
+  width: ${({size}) => size + "px"};
+  height: ${({size}) => size + "px"};
+  background: ${({theme}) => theme.bg1};
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 

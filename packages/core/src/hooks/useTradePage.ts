@@ -1,40 +1,35 @@
-import { useMemo } from "react";
 import BigNumber from "bignumber.js";
+import {useMemo} from "react";
 
 import {
   DEFAULT_PRECISION,
   MARKET_PRICE_COEFFICIENT,
   MAX_PENDINGS_POSITIONS_NUMBER,
 } from "../constants/misc";
-import { removeTrailingZeros, RoundMode, toBN } from "../utils/numbers";
-import {
-  InputField,
-  OrderType,
-  ErrorState,
-  PositionType,
-} from "../types/trade";
 import {
   useMarketNotionalCap,
   useMarketOpenInterest,
   useMarketPriceRange,
 } from "../state/hedger/hooks";
 import {
+  useActiveMarket,
+  useActiveMarketPrice,
+  useInputField,
+  useLimitPrice,
+  useLockedPercentages,
+  useOrderType,
+  usePositionType,
+  useTypedValue,
+} from "../state/trade/hooks";
+import {
   useExpertMode,
   useLeverage,
   useSlippageTolerance,
 } from "../state/user/hooks";
-import {
-  useActiveMarket,
-  useActiveMarketPrice,
-  useLockedPercentages,
-  useLimitPrice,
-  useOrderType,
-  usePositionType,
-  useInputField,
-  useTypedValue,
-} from "../state/trade/hooks";
+import {ErrorState, InputField, OrderType, PositionType} from "../types/trade";
+import {RoundMode, removeTrailingZeros, toBN} from "../utils/numbers";
 
-import { usePendingsQuotes } from "../state/quotes/hooks";
+import {usePendingsQuotes} from "../state/quotes/hooks";
 import useAccountData from "./useAccountData";
 
 export default function useTradePage(): {
@@ -49,18 +44,18 @@ export default function useTradePage(): {
   const orderType = useOrderType();
   const positionType = usePositionType();
   const market = useActiveMarket();
-  const { quotes: pendingQuotes } = usePendingsQuotes();
+  const {quotes: pendingQuotes} = usePendingsQuotes();
   const marketPrice = useActiveMarketPrice();
   const priceRange = useMarketPriceRange();
   const openInterest = useMarketOpenInterest();
-  const { availableForOrder } = useAccountData();
-  const { marketNotionalCap } = useMarketNotionalCap();
+  const {availableForOrder} = useAccountData();
+  const {marketNotionalCap} = useMarketNotionalCap();
   const {
     name: notionalCapName,
     used: notionalCapUsedValue,
     totalCap: totalNotionalCap,
   } = marketNotionalCap;
-  const { used: usedOpenInterest, total: totalOpenInterest } = openInterest;
+  const {used: usedOpenInterest, total: totalOpenInterest} = openInterest;
   const leverage = useLeverage();
   const slippage = useSlippageTolerance();
   const autoSlippage = market ? market.autoSlippage : MARKET_PRICE_COEFFICIENT;
@@ -112,17 +107,17 @@ export default function useTradePage(): {
       inputField === InputField.PRICE
         ? typedValue
         : independentValue
-        ? removeTrailingZeros(
-            independentValue.toFixed(pricePrecision, RoundMode.ROUND_DOWN)
-          )
-        : "",
+          ? removeTrailingZeros(
+              independentValue.toFixed(pricePrecision, RoundMode.ROUND_DOWN),
+            )
+          : "",
       inputField === InputField.QUANTITY
         ? typedValue
         : independentValue
-        ? removeTrailingZeros(
-            independentValue.toFixed(quantityPrecision, RoundMode.ROUND_DOWN)
-          )
-        : "",
+          ? removeTrailingZeros(
+              independentValue.toFixed(quantityPrecision, RoundMode.ROUND_DOWN),
+            )
+          : "",
     ];
   }, [
     inputField,
@@ -141,7 +136,7 @@ export default function useTradePage(): {
 
   const outOfRangePrice = useMemo(() => {
     // check limit price range)
-    const { name, maxPrice, minPrice } = priceRange;
+    const {name, maxPrice, minPrice} = priceRange;
 
     if (orderType === OrderType.LIMIT && market && market.name === name) {
       if (positionType === PositionType.LONG) {
@@ -220,26 +215,26 @@ export default function useTradePage(): {
   ]);
 
   return useMemo(
-    () => ({ price, formattedAmounts, state, balance }),
-    [price, formattedAmounts, state, balance]
+    () => ({price, formattedAmounts, state, balance}),
+    [price, formattedAmounts, state, balance],
   );
 }
 
 //Notional Value
 export function useNotionalValue(
   quantity: BigNumber.Value,
-  price: BigNumber.Value
+  price: BigNumber.Value,
 ): string {
   return useMemo(
     () => toBN(quantity).times(price).toString(),
-    [quantity, price]
+    [quantity, price],
   );
 }
 
 //Credit Valuation Adjustment
 export function useLockedCVA(notionalValue: string): string {
   const leverage = useLeverage();
-  const { cva } = useLockedPercentages();
+  const {cva} = useLockedPercentages();
 
   return useMemo(
     () =>
@@ -248,13 +243,13 @@ export function useLockedCVA(notionalValue: string): string {
         .div(100)
         .div(leverage)
         .toString(),
-    [cva, leverage, notionalValue]
+    [cva, leverage, notionalValue],
   );
 }
 
 // partyB mm => percent of notional value
 export function usePartyBLockedMM(notionalValue: string): string {
-  const { partyBmm } = useLockedPercentages();
+  const {partyBmm} = useLockedPercentages();
 
   return useMemo(
     () =>
@@ -262,14 +257,14 @@ export function usePartyBLockedMM(notionalValue: string): string {
         .times(partyBmm ?? 0)
         .div(100)
         .toString(),
-    [partyBmm, notionalValue]
+    [partyBmm, notionalValue],
   );
 }
 
 //Maintenance Margin
 export function usePartyALockedMM(notionalValue: string): string {
   const leverage = useLeverage();
-  const { partyAmm } = useLockedPercentages();
+  const {partyAmm} = useLockedPercentages();
 
   return useMemo(
     () =>
@@ -278,14 +273,14 @@ export function usePartyALockedMM(notionalValue: string): string {
         .div(100)
         .div(leverage)
         .toString(),
-    [leverage, partyAmm, notionalValue]
+    [leverage, partyAmm, notionalValue],
   );
 }
 
 //Liquidation Fee
 export function useLockedLF(notionalValue: string): string {
   const leverage = useLeverage();
-  const { lf } = useLockedPercentages();
+  const {lf} = useLockedPercentages();
 
   return useMemo(
     () =>
@@ -294,7 +289,7 @@ export function useLockedLF(notionalValue: string): string {
         .div(100)
         .div(leverage)
         .toString(),
-    [leverage, lf, notionalValue]
+    [leverage, lf, notionalValue],
   );
 }
 
@@ -320,6 +315,6 @@ export function useLockedValues(notionalValue: string): {
       partyAmm,
       total: toBN(cva).plus(partyAmm).plus(lf).toString(),
     }),
-    [lf, partyAmm, cva]
+    [lf, partyAmm, cva],
   );
 }

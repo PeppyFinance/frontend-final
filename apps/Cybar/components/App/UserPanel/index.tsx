@@ -1,10 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import {useEffect, useMemo, useState} from "react";
 import styled from "styled-components";
 
-import { Quote } from "@symmio/frontend-sdk/types/quote";
+import {Quote} from "@symmio/frontend-sdk/types/quote";
 
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
-import { useActiveAccountAddress } from "@symmio/frontend-sdk/state/user/hooks";
 import {
   useGetOpenInstantClosesCallback,
   useGetOrderHistoryCallback,
@@ -14,15 +13,16 @@ import {
   useQuoteDetail,
   useSetQuoteDetailCallback,
 } from "@symmio/frontend-sdk/state/quotes/hooks";
+import {useActiveAccountAddress} from "@symmio/frontend-sdk/state/user/hooks";
 
-import { Card } from "components/Card";
-import History from "./History";
-import Position from "./Position";
-import OrdersTab, { StateTabs } from "./OrdersTab";
-import { ItemsPerPage } from "./PaginateTable";
+import {Card} from "components/Card";
+import {IconWrapper} from "components/Icons";
 import ArrowRightTriangle from "components/Icons/ArrowRightTriangle";
-import { RowCenter } from "components/Row";
-import { IconWrapper } from "components/Icons";
+import {RowCenter} from "components/Row";
+import History from "./History";
+import OrdersTab, {StateTabs} from "./OrdersTab";
+import {ItemsPerPage} from "./PaginateTable";
+import Position from "./Position";
 
 const Wrapper = styled(Card)`
   padding: 0;
@@ -38,25 +38,25 @@ const PaginationItems = styled(RowCenter)`
   text-align: center;
 `;
 
-const ArrowWrapper = styled.button<{ left?: boolean; active?: boolean }>`
-  transform: rotate(${({ left }) => (left ? "180deg" : "0")});
-  opacity: ${({ active }) => (active ? "1" : "0.5")};
+const ArrowWrapper = styled.button<{left?: boolean; active?: boolean}>`
+  transform: rotate(${({left}) => (left ? "180deg" : "0")});
+  opacity: ${({active}) => (active ? "1" : "0.5")};
   &:hover {
-    cursor: ${({ active }) => (active ? "pointer" : "default")};
+    cursor: ${({active}) => (active ? "pointer" : "default")};
   }
 `;
 
 export default function UserPanel(): JSX.Element | null {
   const account = useActiveAccountAddress();
-  const { chainId } = useActiveWagmi();
+  const {chainId} = useActiveWagmi();
 
   const [selectedTab, setSelectedTab] = useState(StateTabs.POSITIONS);
   const [page, setPage] = useState(1);
   const quoteDetail = useQuoteDetail();
   const setQuoteDetail = useSetQuoteDetailCallback();
-  const { quotes: closed, hasMoreHistory } = useHistoryQuotes();
-  const { quotes: positions } = usePositionsQuotes();
-  const { quotes: pendings } = usePendingsQuotes();
+  const {quotes: closed, hasMoreHistory} = useHistoryQuotes();
+  const {quotes: positions} = usePositionsQuotes();
+  const {quotes: pendings} = usePendingsQuotes();
   const getHistory = useGetOrderHistoryCallback();
   const getOpenInstantCloses = useGetOpenInstantClosesCallback();
 
@@ -75,7 +75,7 @@ export default function UserPanel(): JSX.Element | null {
   const positionQuotes: Quote[] = useMemo(() => {
     return [...pendings, ...positions].sort(
       (a: Quote, b: Quote) =>
-        Number(b.statusModifyTimestamp) - Number(a.statusModifyTimestamp)
+        Number(b.statusModifyTimestamp) - Number(a.statusModifyTimestamp),
     );
   }, [pendings, positions]);
 
@@ -104,7 +104,7 @@ export default function UserPanel(): JSX.Element | null {
   // This use effect manage pagination
   useEffect(() => {
     if (currentOrders.length === (page - 1) * ItemsPerPage && page > 1) {
-      setPage((page) => page - 1);
+      setPage(page => page - 1);
     }
   }, [currentOrders.length]);
 
@@ -115,7 +115,7 @@ export default function UserPanel(): JSX.Element | null {
 
   useEffect(() => {
     const isQuoteInPositions = positionQuotes.some(
-      (quote) => quote.id === quoteDetail?.id
+      quote => quote.id === quoteDetail?.id,
     );
 
     if (!isQuoteInPositions && selectedTab === StateTabs.POSITIONS) {
@@ -172,7 +172,7 @@ function Pagination({
 }) {
   return (
     <PaginationItems>
-      <div style={{ display: "flex", gap: "40px", alignItems: "center" }}>
+      <div style={{display: "flex", gap: "40px", alignItems: "center"}}>
         <ArrowWrapper
           active={activePrevious}
           left={true}

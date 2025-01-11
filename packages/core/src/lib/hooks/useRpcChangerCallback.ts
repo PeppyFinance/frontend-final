@@ -1,13 +1,13 @@
-import { useCallback } from "react";
+import {useCallback} from "react";
 
-import { ChainInfo } from "../../constants/chainInfo";
-import { SupportedChainId } from "../../constants/chains";
+import {useSwitchChain} from "wagmi";
+import {ChainInfo} from "../../constants/chainInfo";
+import {SupportedChainId} from "../../constants/chains";
 import useWagmi from "./useWagmi";
-import { useSwitchChain } from "wagmi";
 
 export default function useRpcChangerCallback() {
-  const { chainId } = useWagmi();
-  const { switchChainAsync } = useSwitchChain();
+  const {chainId} = useWagmi();
+  const {switchChainAsync} = useSwitchChain();
 
   return useCallback(
     async (targetChainId: SupportedChainId) => {
@@ -16,7 +16,7 @@ export default function useRpcChangerCallback() {
       if (targetChainId === chainId) return true;
 
       try {
-        await switchChainAsync?.({ chainId: targetChainId });
+        await switchChainAsync?.({chainId: targetChainId});
         return true;
       } catch (switchError) {
         // This error code indicates that the chain has not been added to MetaMask.
@@ -24,24 +24,24 @@ export default function useRpcChangerCallback() {
         if (switchError instanceof Error) {
           if (switchError.name === "ChainNotConfiguredForConnectorError") {
             console.log(
-              `The application does not currently accommodate chainId: ${targetChainId}`
+              `The application does not currently accommodate chainId: ${targetChainId}`,
             );
             return;
           } else {
             console.log(
-              "Unknown error occurred when trying to change the network RPC: "
+              "Unknown error occurred when trying to change the network RPC: ",
             );
             return;
           }
         }
         console.log(
           "Unknown warning occurred when trying to change the network RPC: ",
-          switchError
+          switchError,
         );
         return false;
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     },
-    [chainId, switchChainAsync]
+    [chainId, switchChainAsync],
   );
 }

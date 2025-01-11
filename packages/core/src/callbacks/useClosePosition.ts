@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import {useCallback, useMemo} from "react";
 
 import {
   DEFAULT_PRECISION,
@@ -6,52 +6,52 @@ import {
   MARKET_ORDER_DEADLINE,
   MARKET_PRICE_COEFFICIENT,
 } from "../constants/misc";
-import {
-  createTransactionCallback,
-  TransactionCallbackState,
-} from "../utils/web3";
+import {useSupportedChainId} from "../lib/hooks/useSupportedChainId";
+import {Quote} from "../types/quote";
+import {OrderType, PositionType, TradeState} from "../types/trade";
 import {
   BN_ZERO,
+  RoundMode,
   formatPrice,
   fromWei,
   removeTrailingZeros,
-  RoundMode,
   toBN,
   toWei,
   toWeiBN,
 } from "../utils/numbers";
-import { Quote } from "../types/quote";
-import { OrderType, PositionType, TradeState } from "../types/trade";
-import { useSupportedChainId } from "../lib/hooks/useSupportedChainId";
+import {
+  TransactionCallbackState,
+  createTransactionCallback,
+} from "../utils/web3";
 
-import { useExpertMode, useSlippageTolerance } from "../state/user/hooks";
-import { useMarketData } from "../state/hedger/hooks";
-import { useTransactionAdder } from "../state/transactions/hooks";
+import {useMarketData} from "../state/hedger/hooks";
+import {useTransactionAdder} from "../state/transactions/hooks";
 import {
   TradeTransactionInfo,
   TransactionType,
 } from "../state/transactions/types";
+import {useExpertMode, useSlippageTolerance} from "../state/user/hooks";
 
-import { useMarket } from "../hooks/useMarkets";
-import { useMultiAccountable } from "../hooks/useMultiAccountable";
-import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
-import { ConstructCallReturnType } from "../types/web3";
-import { Address, encodeFunctionData } from "viem";
+import {useAddRecentTransaction} from "@rainbow-me/rainbowkit";
+import {Address, encodeFunctionData} from "viem";
+import {DIAMOND_ABI} from "../constants";
+import {useMarket} from "../hooks/useMarkets";
+import {useMultiAccountable} from "../hooks/useMultiAccountable";
 import useActiveWagmi from "../lib/hooks/useActiveWagmi";
-import { useDiamondAddress, useWagmiConfig } from "../state/chains";
-import { DIAMOND_ABI } from "../constants";
+import {useDiamondAddress, useWagmiConfig} from "../state/chains";
+import {ConstructCallReturnType} from "../types/web3";
 
 export function useClosePosition(
   quote: Quote | null,
   orderType: OrderType,
   typedPrice: string,
-  quantityToClose: string
+  quantityToClose: string,
 ): {
   state: TransactionCallbackState;
   callback: null | (() => Promise<any>);
   error: string | null;
 } {
-  const { account, chainId } = useActiveWagmi();
+  const {account, chainId} = useActiveWagmi();
   const addTransaction = useTransactionAdder();
   const addRecentTransaction = useAddRecentTransaction();
   const isSupportedChainId = useSupportedChainId();
@@ -67,7 +67,7 @@ export function useClosePosition(
   const positionType = quote?.positionType;
   const pricePrecision = useMemo(
     () => market?.pricePrecision ?? DEFAULT_PRECISION,
-    [market]
+    [market],
   );
 
   const slippage = useSlippageTolerance();
@@ -76,19 +76,19 @@ export function useClosePosition(
   const markPriceBN = useMemo(() => {
     if (!marketData || !marketData.markPrice) return BN_ZERO;
     return toWeiBN(
-      toBN(marketData.markPrice).toFixed(pricePrecision, RoundMode.ROUND_DOWN)
+      toBN(marketData.markPrice).toFixed(pricePrecision, RoundMode.ROUND_DOWN),
     );
   }, [marketData, pricePrecision]);
 
   const typedPriceBN = useMemo(
     () =>
       toWeiBN(toBN(typedPrice).toFixed(pricePrecision, RoundMode.ROUND_DOWN)),
-    [typedPrice, pricePrecision]
+    [typedPrice, pricePrecision],
   );
 
   const closePriceBN = useMemo(
     () => (orderType === OrderType.MARKET ? markPriceBN : typedPriceBN),
-    [orderType, markPriceBN, typedPriceBN]
+    [orderType, markPriceBN, typedPriceBN],
   );
 
   const closePriceFinal = useMemo(() => {
@@ -109,7 +109,7 @@ export function useClosePosition(
   //TODO: remove this way
   const closePriceWied = useMemo(
     () => toWei(formatPrice(fromWei(closePriceFinal), pricePrecision)),
-    [closePriceFinal, pricePrecision]
+    [closePriceFinal, pricePrecision],
   );
 
   const preConstructCall = useCallback(async (): ConstructCallReturnType => {
@@ -231,7 +231,7 @@ export function useClosePosition(
           txInfo,
           wagmiConfig,
           summary,
-          userExpertMode
+          userExpertMode,
         ),
     };
   }, [

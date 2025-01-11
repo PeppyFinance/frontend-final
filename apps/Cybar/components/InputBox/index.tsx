@@ -1,23 +1,23 @@
-import React, { useCallback } from "react";
-import styled, { useTheme } from "styled-components";
-import { isMobile } from "react-device-detect";
-import { darken } from "polished";
+import {darken} from "polished";
+import {useCallback} from "react";
+import {isMobile} from "react-device-detect";
+import styled, {useTheme} from "styled-components";
 
+import {EnterButton, MaxButton} from "components/Button";
+import {ChevronDown as ChevronDownIcon, Enter} from "components/Icons";
 import ImageWithFallback from "components/ImageWithFallback";
-import { NumericalInput } from "components/Input";
-import { RowBetween, RowCenter, RowEnd } from "components/Row";
-import { ChevronDown as ChevronDownIcon, Enter } from "components/Icons";
-import { MaxButton, EnterButton } from "components/Button";
-import { StaticImageData } from "next/legacy/image";
+import {NumericalInput} from "components/Input";
+import {RowBetween, RowCenter, RowEnd} from "components/Row";
+import {StaticImageData} from "next/legacy/image";
 
 export const Wrapper = styled.div`
   width: 100%;
   font-size: 12px;
   font-weight: 400;
   white-space: nowrap;
-  background: ${({ theme }) => theme.bg4};
+  background: ${({theme}) => theme.bg4};
   position: relative;
-  border-radius: ${({ theme }) => theme.borderRadius0};
+  border-radius: ${({theme}) => theme.borderRadius0};
   padding: 8px 12px;
   padding-bottom: 0px;
 `;
@@ -27,20 +27,20 @@ const NumericalWrapper = styled(RowBetween)`
   font-size: 16px;
   font-weight: 600;
   position: relative;
-  color: ${({ theme }) => theme.text0};
+  color: ${({theme}) => theme.text0};
   margin-top: 10px;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
+  ${({theme}) => theme.mediaWidth.upToSmall`
     font-size: 12px;
     right: 0;
 `};
 `;
 
-export const CurrencySymbol = styled.div<{ active?: any }>`
+export const CurrencySymbol = styled.div<{active?: any}>`
   font-size: 16px;
   font-weight: 500;
-  color: ${({ theme }) => theme.text0};
+  color: ${({theme}) => theme.text0};
 
-  ${({ theme }) => theme.mediaWidth.upToSmall`
+  ${({theme}) => theme.mediaWidth.upToSmall`
     font-size: 12px;
   `}
 `;
@@ -63,9 +63,9 @@ export const CalculationResult = styled.div`
   font-weight: 500;
   margin-top: 5px;
   margin-bottom: 3px;
-  color: ${({ theme }) => theme.text3};
+  color: ${({theme}) => theme.text3};
 
-  ${({ theme }) => theme.mediaWidth.upToSmall`
+  ${({theme}) => theme.mediaWidth.upToSmall`
     font-size: 12px;
   `}
 `;
@@ -73,40 +73,40 @@ export const CalculationResult = styled.div`
 export const RightWrapper = styled.div``;
 
 export const BalanceTitle = styled.span`
-  color: ${({ theme }) => theme.text3};
+  color: ${({theme}) => theme.text3};
   margin-right: 4px;
 `;
 
-export const LogoWrapper = styled(RowCenter)<{ active?: any }>`
+export const LogoWrapper = styled(RowCenter)<{active?: any}>`
   height: 100%;
   width: 80px;
   min-width: 60px;
-  cursor: ${({ active }) => active && "pointer"};
+  cursor: ${({active}) => active && "pointer"};
 `;
 
 export const ChevronDown = styled(ChevronDownIcon)`
   margin-left: 7px;
   width: 16px;
-  color: ${({ theme }) => theme.text1};
+  color: ${({theme}) => theme.text1};
 
-  ${({ theme }) => theme.mediaWidth.upToSmall`
+  ${({theme}) => theme.mediaWidth.upToSmall`
       margin-left: 4px;
   `}
 `;
 
-const Balance = styled(RowEnd)<{ disabled?: boolean }>`
+const Balance = styled(RowEnd)<{disabled?: boolean}>`
   width: unset;
   margin-left: 5px;
 
   &:hover {
-    color: ${({ theme, disabled }) => !disabled && darken(0.1, theme.text0)};
-    cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
+    color: ${({theme, disabled}) => !disabled && darken(0.1, theme.text0)};
+    cursor: ${({disabled}) => (disabled ? "default" : "pointer")};
   }
 `;
 
 const MinBalance = styled(Balance)`
   font-size: 12px;
-  background: ${({ theme }) => theme.primary0};
+  background: ${({theme}) => theme.primary0};
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   &:hover {
@@ -118,7 +118,7 @@ const MinBalance = styled(Balance)`
 export const TextLabel = styled.span`
   font-size: 10px;
   line-height: 14px;
-  background: ${({ theme }) => theme.blue2};
+  background: ${({theme}) => theme.blue2};
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 `;
@@ -307,7 +307,7 @@ export function CustomInputBox2({
                 <Enter
                   color={theme.blue2}
                   size={20}
-                  style={{ marginLeft: "4px" }}
+                  style={{marginLeft: "4px"}}
                 />
               </>
             )}

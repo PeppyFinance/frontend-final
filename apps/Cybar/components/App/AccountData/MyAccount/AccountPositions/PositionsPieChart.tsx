@@ -1,17 +1,17 @@
-import React, { useCallback, useContext, useState } from "react";
-import styled, { useTheme } from "styled-components";
 import Image from "next/legacy/image";
-import { PieChart, Pie, Cell, ResponsiveContainer, Sector } from "recharts";
+import {useCallback, useContext, useState} from "react";
+import {Cell, Pie, PieChart, ResponsiveContainer, Sector} from "recharts";
+import styled, {useTheme} from "styled-components";
 
-import { ConnectionStatus } from "@symmio/frontend-sdk/types/api";
-import { PositionType } from "@symmio/frontend-sdk/types/trade";
-import { AccountPositionsContext } from "./context";
+import {ConnectionStatus} from "@symmio/frontend-sdk/types/api";
+import {PositionType} from "@symmio/frontend-sdk/types/trade";
+import {AccountPositionsContext} from "./context";
 
 // TODO: replace svg with cybar
+import {RowCenter} from "components/Row";
 import Clover from "/public/static/images/Clover.svg";
-import { RowCenter } from "components/Row";
 
-import { useUpnlWebSocketStatus } from "@symmio/frontend-sdk/state/user/hooks";
+import {useUpnlWebSocketStatus} from "@symmio/frontend-sdk/state/user/hooks";
 
 const shapeDim = {
   width: 36,
@@ -29,7 +29,7 @@ const CenterWrapper = styled(RowCenter)`
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background-color: ${({ theme }) => theme.bg4};
+  background-color: ${({theme}) => theme.bg4};
 `;
 
 const ChartContent = styled.div`
@@ -98,7 +98,7 @@ const renderActiveShape = (props: any) => {
         y={ey}
         textAnchor={textAnchor}
         fill={color}
-        style={{ fontSize: "12px" }}
+        style={{fontSize: "12px"}}
       >
         {name}
       </text>
@@ -108,7 +108,7 @@ const renderActiveShape = (props: any) => {
         dy={18}
         textAnchor={textAnchor}
         fill="#F1F1F1"
-        style={{ fontSize: "12px" }}
+        style={{fontSize: "12px"}}
       >
         {`${(percent * 100).toFixed(2)}%`}
       </text>
@@ -121,8 +121,8 @@ export default function PositionsPieChart() {
   const upnlLoadingStatus = useUpnlWebSocketStatus();
   const loading = upnlLoadingStatus === ConnectionStatus.CLOSED;
 
-  const { marketQuotesInfo, colors } = useContext(AccountPositionsContext);
-  const data = marketQuotesInfo.map((quoteInfo) => ({
+  const {marketQuotesInfo, colors} = useContext(AccountPositionsContext);
+  const data = marketQuotesInfo.map(quoteInfo => ({
     name: quoteInfo.marketName,
     color:
       quoteInfo.positionType === PositionType.LONG
@@ -136,7 +136,7 @@ export default function PositionsPieChart() {
     (_, index) => {
       setActiveIndex(index);
     },
-    [setActiveIndex]
+    [setActiveIndex],
   );
   const onPieLeave = useCallback(() => {
     setActiveIndex(-1);
@@ -155,7 +155,7 @@ export default function PositionsPieChart() {
       <ResponsiveContainer>
         <PieChart>
           <Pie
-            data={[{ name: "full", value: 1 }]}
+            data={[{name: "full", value: 1}]}
             dataKey={"value"}
             innerRadius={"70%"}
             outerRadius={"104%"}
@@ -188,7 +188,7 @@ export default function PositionsPieChart() {
             </linearGradient>
           </defs>
           <Pie
-            data={[{ name: "full", value: 1 }]}
+            data={[{name: "full", value: 1}]}
             dataKey={"value"}
             innerRadius={"70%"}
             outerRadius={"104%"}

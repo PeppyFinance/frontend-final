@@ -1,6 +1,6 @@
-import styled, { keyframes } from "styled-components";
+import styled, {keyframes} from "styled-components";
 
-import { Row } from "components/Row";
+import {Row} from "components/Row";
 
 const Input = styled.input`
   height: 0;
@@ -9,10 +9,10 @@ const Input = styled.input`
   z-index: -1;
 `;
 
-const Label = styled.label<{ disabled?: boolean }>`
+const Label = styled.label<{disabled?: boolean}>`
   position: relative;
   display: inline-block;
-  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
+  cursor: ${({disabled}) => (disabled ? "not-allowed" : "pointer")};
   margin: 0.6em 0;
   margin-left: 8px;
   font-size: 12px;
@@ -30,15 +30,15 @@ const rotate = keyframes`
   }
 `;
 
-const Indicator = styled.div<{ checked?: boolean }>`
+const Indicator = styled.div<{checked?: boolean}>`
   width: 1.2em;
   height: 1.2em;
-  background: ${({ theme, checked }) =>
+  background: ${({theme, checked}) =>
     checked ? theme.primaryDarkBg : theme.primaryDarkOld};
   position: absolute;
   top: 0em;
   left: -1.6em;
-  border: 1px solid ${({ theme }) => theme.primary0};
+  border: 1px solid ${({theme}) => theme.primary0};
   border-radius: 0.2em;
   &::after {
     content: "";
@@ -51,7 +51,7 @@ const Indicator = styled.div<{ checked?: boolean }>`
     left: 0.35em;
     width: 30%;
     height: 60%;
-    border: solid ${({ theme }) => theme.primary0};
+    border: solid ${({theme}) => theme.primary0};
     border-width: 0 0.1em 0.1em 0;
     animation-name: ${rotate};
     animation-duration: 0.3s;

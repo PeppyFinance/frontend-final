@@ -1,14 +1,14 @@
-import { useCallback, useMemo } from "react";
-import { Address, erc20Abi } from "viem";
-import { simulateContract, writeContract } from "@wagmi/core";
-import { useReadContract } from "wagmi";
-import { Currency, Token } from "@uniswap/sdk-core";
+import {Currency, Token} from "@uniswap/sdk-core";
+import {simulateContract, writeContract} from "@wagmi/core";
+import {useCallback, useMemo} from "react";
+import {Address, erc20Abi} from "viem";
+import {useReadContract} from "wagmi";
 
-import { useERC20Allowance } from "./useERC20Allowance";
 import BigNumber from "bignumber.js";
-import { BN_TEN } from "../../utils/numbers";
+import {useWagmiConfig} from "../../state/chains";
+import {BN_TEN} from "../../utils/numbers";
+import {useERC20Allowance} from "./useERC20Allowance";
 import useWagmi from "./useWagmi";
-import { useWagmiConfig } from "../../state/chains";
 
 export enum ApprovalState {
   UNKNOWN = "UNKNOWN",
@@ -22,11 +22,11 @@ export function useApprovalStateForSpender(
   amountToApprove: BigNumber.Value | undefined,
   owner: Address | undefined,
   spender: string | undefined,
-  useIsPendingApproval: (token?: Token, spender?: string) => boolean
+  useIsPendingApproval: (token?: Token, spender?: string) => boolean,
 ): [ApprovalState, ReturnType<typeof useReadContract>["refetch"]] {
   const token = currency?.isToken ? currency.wrapped : undefined;
 
-  const { tokenAllowance, refetch } = useERC20Allowance({
+  const {tokenAllowance, refetch} = useERC20Allowance({
     token,
     owner,
     spender,
@@ -65,15 +65,14 @@ export function useApproval(
   amountToApprove: BigNumber.Value | undefined,
   owner: Address | undefined,
   spender: string | undefined,
-  useIsPendingApproval: (token?: Token, spender?: string) => boolean
+  useIsPendingApproval: (token?: Token, spender?: string) => boolean,
 ): [
   ApprovalState,
   () => Promise<
-    | { response: string; tokenAddress: string; spenderAddress: string }
-    | undefined
-  >
+    {response: string; tokenAddress: string; spenderAddress: string} | undefined
+  >,
 ] {
-  const { chainId } = useWagmi();
+  const {chainId} = useWagmi();
   const config = useWagmiConfig();
 
   const token = currency?.isToken ? currency.wrapped : undefined;
@@ -84,7 +83,7 @@ export function useApproval(
     amountToApprove,
     owner,
     spender,
-    useIsPendingApproval
+    useIsPendingApproval,
   );
 
   const approve = useCallback(async () => {
@@ -110,7 +109,7 @@ export function useApproval(
       .times(amountToApprove || 0)
       .toString();
 
-    const { request } = await simulateContract(config, {
+    const {request} = await simulateContract(config, {
       abi: erc20Abi,
       address: token.address as Address,
       functionName: "approve",

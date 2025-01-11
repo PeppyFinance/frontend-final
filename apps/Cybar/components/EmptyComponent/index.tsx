@@ -1,11 +1,11 @@
-import { useEffect, useMemo } from "react";
-import { useRouter } from "next/router";
 import find from "lodash/find.js";
+import {useRouter} from "next/router";
+import {useEffect, useMemo} from "react";
 
-import { Market } from "@symmio/frontend-sdk/types/market";
-import { DEFAULT_HEDGER } from "constants/chains/hedgers";
+import {Market} from "@symmio/frontend-sdk/types/market";
+import {DEFAULT_HEDGER} from "constants/chains/hedgers";
 
-import { useMarkets } from "@symmio/frontend-sdk/state/hedger/hooks";
+import {useMarkets} from "@symmio/frontend-sdk/state/hedger/hooks";
 import {
   useActiveMarket,
   useActiveMarketPrice,
@@ -19,8 +19,8 @@ export function UpdaterRoot() {
     document.title = !market
       ? "Loading..."
       : price
-      ? `${price} | ${market.name}`
-      : `${market.name}`;
+        ? `${price} | ${market.name}`
+        : `${market.name}`;
   }, [price, market]);
 
   const markets = useMarkets();
@@ -62,7 +62,7 @@ function useValidatedSymbolFromURL(markets: Market[]): Market | null {
     if (!parsedId) {
       return null;
     }
-    const va = find(markets, { id: parsedId });
+    const va = find(markets, {id: parsedId});
 
     return va ?? null;
   }, [parsedId, markets]);

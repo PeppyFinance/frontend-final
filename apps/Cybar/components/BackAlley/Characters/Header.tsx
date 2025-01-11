@@ -5,7 +5,8 @@ const ModalHeader = styled.header`
   align-items: center;
   height: 52px;
   width: 100%;
-  box-shadow: 0px 1px 11px 0px #c6f0ee,
+  box-shadow:
+    0px 1px 11px 0px #c6f0ee,
     0px 11px 12px 0px rgba(107, 219, 214, 0.9);
   background-color: rgba(17, 18, 18, 0.95);
   overflow: visible;
@@ -49,7 +50,7 @@ interface Props {
   onClose: () => void;
 }
 
-export const Header = ({ characterName, onClose }: Props) => {
+export const Header = ({characterName, onClose}: Props) => {
   return (
     <ModalHeader>
       <ModalHeaderText>{characterName}</ModalHeaderText>

@@ -7,7 +7,7 @@ const fs = require("fs");
 function getTsFiles(dir, fileList = []) {
   const files = fs.readdirSync(dir);
 
-  files.forEach((file) => {
+  files.forEach(file => {
     const filePath = path.join(dir, file);
     const fileStat = fs.lstatSync(filePath);
 
@@ -29,7 +29,7 @@ function calculateRelativePath(from, to) {
 
 const files = getTsFiles("./"); // Adjust the path accordingly
 
-files.forEach((file) => {
+files.forEach(file => {
   let content = fs.readFileSync(file, "utf-8");
 
   // Replace imports
@@ -39,7 +39,7 @@ files.forEach((file) => {
       const targetPath = path.resolve("./", `./${p1}`);
       const relativePath = calculateRelativePath(file, targetPath);
       return `from "${relativePath}"`;
-    }
+    },
   );
 
   fs.writeFileSync(file, content, "utf-8");

@@ -1,26 +1,26 @@
-import { useMemo } from "react";
-import styled, { useTheme } from "styled-components";
-import { Z_INDEX } from "theme";
+import {useMemo} from "react";
+import styled, {useTheme} from "styled-components";
+import {Z_INDEX} from "theme";
 
 import {
   Account as AccountType,
   BalanceInfo,
 } from "@symmio/frontend-sdk/types/user";
 
-import { RowBetween, RowEnd, RowStart } from "components/Row";
-import { useCustomAccountUpnl } from "@symmio/frontend-sdk/state/user/hooks";
-import { formatAmount, toBN } from "@symmio/frontend-sdk/utils/numbers";
-import { ApiState } from "@symmio/frontend-sdk/types/api";
-import { Loader } from "components/Icons";
+import {useCustomAccountUpnl} from "@symmio/frontend-sdk/state/user/hooks";
+import {ApiState} from "@symmio/frontend-sdk/types/api";
+import {formatAmount, toBN} from "@symmio/frontend-sdk/utils/numbers";
+import {Loader} from "components/Icons";
+import {RowBetween, RowEnd, RowStart} from "components/Row";
 
-const AccountWrapper = styled.div<{ active?: boolean }>`
+const AccountWrapper = styled.div<{active?: boolean}>`
   position: relative;
   padding: 12px;
   height: 82px;
   margin: 8px 0px;
   border-radius: 3px;
-  background: ${({ theme, active }) => (active ? theme.bg6 : theme.bg3)};
-  border: 1px solid ${({ theme, active }) => (active ? theme.text0 : theme.bg7)};
+  background: ${({theme, active}) => (active ? theme.bg6 : theme.bg3)};
+  border: 1px solid ${({theme, active}) => (active ? theme.text0 : theme.bg7)};
   z-index: ${Z_INDEX.tooltip};
 `;
 
@@ -32,24 +32,24 @@ const Row = styled(RowBetween)`
 
 const Label = styled(RowStart)`
   font-size: 12px;
-  color: ${({ theme }) => theme.text1};
+  color: ${({theme}) => theme.text1};
 `;
 
 const Value = styled(RowEnd)`
   font-size: 12px;
-  color: ${({ theme }) => theme.text0};
+  color: ${({theme}) => theme.text0};
 `;
 
 const UpnlText = styled(RowEnd)`
   font-size: 10px;
-  color: ${({ theme }) => theme.text3};
+  color: ${({theme}) => theme.text3};
 `;
 
-const UpnlValue = styled.div<{ color?: string }>`
+const UpnlValue = styled.div<{color?: string}>`
   font-size: 12px;
   justify-self: end;
   margin-left: 4px;
-  color: ${({ theme, color }) => color ?? theme.text1};
+  color: ${({theme, color}) => color ?? theme.text1};
 `;
 export default function Account({
   account,
@@ -79,9 +79,9 @@ export default function Account({
     return [`-`, undefined];
   }, [customAccount?.upnl, theme]);
 
-  const { availableForOrder, lockedMargin } = useMemo(() => {
+  const {availableForOrder, lockedMargin} = useMemo(() => {
     if (!balanceInfo || balanceInfoStatus !== ApiState.OK)
-      return { availableForOrder: undefined, lockedMargin: undefined };
+      return {availableForOrder: undefined, lockedMargin: undefined};
 
     let availableForOrder = "0";
     const {
@@ -119,13 +119,13 @@ export default function Account({
         .minus(considering_mm)
         .toString();
     }
-    return { availableForOrder, lockedMargin: mm };
+    return {availableForOrder, lockedMargin: mm};
   }, [balanceInfo, balanceInfoStatus, value]);
 
   return (
     <AccountWrapper active={active} onClick={onClick}>
       <Row>
-        <Label style={{ color: theme.text0 }}>{account.name}</Label>
+        <Label style={{color: theme.text0}}>{account.name}</Label>
 
         <UpnlText>
           uPNL:

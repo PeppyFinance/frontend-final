@@ -1,13 +1,13 @@
-import React, { useMemo } from "react";
-import styled, { useTheme } from "styled-components";
-import Image, { StaticImageData } from "next/legacy/image";
-import { isMobile } from "react-device-detect";
+import Image, {StaticImageData} from "next/legacy/image";
+import {useMemo} from "react";
+import {isMobile} from "react-device-detect";
+import styled, {useTheme} from "styled-components";
 
-import { formatTimestamp } from "@symmio/frontend-sdk/utils/time";
+import {formatTimestamp} from "@symmio/frontend-sdk/utils/time";
 
 import Column from "components/Column";
 import Logos from "components/Notifications/Logos";
-import { Row, RowCenter, RowEnd, RowStart } from "components/Row";
+import {Row, RowCenter, RowEnd, RowStart} from "components/Row";
 import ShimmerAnimation from "components/ShimmerAnimation";
 
 const Container = styled(Row)<{
@@ -16,11 +16,11 @@ const Container = styled(Row)<{
   report?: boolean;
   cursor?: string;
 }>`
-  border-radius: ${({ report }) => (report ? "4px 4px 0px 0px" : "4px")};
-  background: ${({ theme, bg }) => (bg ? bg : theme.bg5)};
-  cursor: ${({ cursor }) => (cursor ? cursor : "default")};
+  border-radius: ${({report}) => (report ? "4px 4px 0px 0px" : "4px")};
+  background: ${({theme, bg}) => (bg ? bg : theme.bg5)};
+  cursor: ${({cursor}) => (cursor ? cursor : "default")};
 
-  ${({ border }) =>
+  ${({border}) =>
     border &&
     `
     border: 1px solid ${border};
@@ -33,29 +33,29 @@ const Wrapper = styled(Column)`
   overflow: hidden;
 `;
 
-const LogoWrapper = styled(RowCenter)<{ rotate?: number }>`
+const LogoWrapper = styled(RowCenter)<{rotate?: number}>`
   width: unset;
   min-width: 54px;
   padding: 8px 0px 8px 8px;
-  rotate: ${({ rotate }) => (rotate ? `${rotate}deg` : "none")};
+  rotate: ${({rotate}) => (rotate ? `${rotate}deg` : "none")};
 `;
 
 const TextRow = styled(Row)`
   font-weight: 400;
   font-size: 12px;
-  color: ${({ theme }) => theme.text0};
+  color: ${({theme}) => theme.text0};
 `;
 
-const AccountName = styled(RowEnd)<{ alert?: string }>`
+const AccountName = styled(RowEnd)<{alert?: string}>`
   font-weight: 400;
   font-size: 12px;
   width: unset;
-  color: ${({ theme, alert }) => (alert ? alert : theme.text4)};
+  color: ${({theme, alert}) => (alert ? alert : theme.text4)};
 `;
 
 const Timestamp = styled(AccountName)`
   margin-left: 6px;
-  color: ${({ theme, alert }) => (alert ? alert : theme.text3)};
+  color: ${({theme, alert}) => (alert ? alert : theme.text3)};
 `;
 
 const Report = styled(RowCenter)`
@@ -65,8 +65,8 @@ const Report = styled(RowCenter)`
   text-align: center;
   margin-top: -10px;
   border-radius: 0px 0px 2px 2px;
-  color: ${({ theme }) => theme.text0};
-  background: ${({ theme }) => theme.bg6};
+  color: ${({theme}) => theme.text0};
+  background: ${({theme}) => theme.bg6};
 `;
 
 export default function BaseCard({
@@ -149,7 +149,7 @@ export default function BaseCard({
         </LogoWrapper>
 
         <Wrapper>
-          <TextRow style={{ marginBottom: "8px" }}>
+          <TextRow style={{marginBottom: "8px"}}>
             <RowStart width={"70%"}>{title}</RowStart>
             <RowEnd>
               <AccountName

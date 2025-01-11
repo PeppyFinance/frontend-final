@@ -1,65 +1,59 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import styled, { useTheme } from "styled-components";
-import { Activity } from "react-feather";
 import isEqual from "lodash/isEqual.js";
-import { lighten } from "polished";
-import { useConnect } from "wagmi";
+import {lighten} from "polished";
+import React, {useCallback, useEffect, useMemo, useRef, useState} from "react";
+import {Activity} from "react-feather";
+import styled, {useTheme} from "styled-components";
+import {useConnect} from "wagmi";
 
-import { useAppDispatch } from "@symmio/frontend-sdk/state";
-import { truncateAddress } from "@symmio/frontend-sdk/utils/address";
-import { ChainInfo } from "@symmio/frontend-sdk/constants/chainInfo";
-import { FALLBACK_CHAIN_ID, FALLBACK_FE_NAME } from "constants/chains/chains";
-import { WEB_SETTING } from "@symmio/frontend-sdk/config";
+import {WEB_SETTING} from "@symmio/frontend-sdk/config";
+import {ChainInfo} from "@symmio/frontend-sdk/constants/chainInfo";
+import {useAppDispatch} from "@symmio/frontend-sdk/state";
+import {truncateAddress} from "@symmio/frontend-sdk/utils/address";
+import {FALLBACK_CHAIN_ID, FALLBACK_FE_NAME} from "constants/chains/chains";
 
-import useRpcChangerCallback from "@symmio/frontend-sdk/lib/hooks/useRpcChangerCallback";
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 import usePrevious from "@symmio/frontend-sdk/lib/hooks/usePrevious";
+import useRpcChangerCallback from "@symmio/frontend-sdk/lib/hooks/useRpcChangerCallback";
+import {updateAccount} from "@symmio/frontend-sdk/state/user/actions";
 import {
   useAccountPartyAStat,
   useActiveAccount,
   useSetFEName,
 } from "@symmio/frontend-sdk/state/user/hooks";
-import { updateAccount } from "@symmio/frontend-sdk/state/user/actions";
 
 import {
   useAccountsLength,
   useUserAccounts,
 } from "@symmio/frontend-sdk/hooks/useAccounts";
 
-import { NavButton } from "components/Button";
-import { ChevronDown, Switch, Status as StatusIcon } from "components/Icons";
-import { Row, RowCenter, RowEnd, RowStart } from "components/Row";
-import AccountsModal from "./AccountsModal";
-import CreateAccountModal from "components/ReviewModal/CreateAccountModal";
-import {
-  GradientButtonWrapper,
-  GradientColorButton,
-} from "components/Button/GradientButton";
-import AccountUpnl from "components/App/AccountData/AccountUpnl";
-import ImageWithFallback from "components/ImageWithFallback";
-import Badge from "./Badge";
-import { useAccountModal, useConnectModal } from "@rainbow-me/rainbowkit";
-import { getChainLogo } from "utils/chainLogo";
-import { useV3Ids } from "@symmio/frontend-sdk/state/chains/hooks";
-import { ApplicationModal } from "@symmio/frontend-sdk/state/application/reducer";
+import {useAccountModal, useConnectModal} from "@rainbow-me/rainbowkit";
 import {
   useCreateAccountModalToggle,
   useModalOpen,
 } from "@symmio/frontend-sdk/state/application/hooks";
+import {ApplicationModal} from "@symmio/frontend-sdk/state/application/reducer";
+import {useV3Ids} from "@symmio/frontend-sdk/state/chains/hooks";
+import {AllAccountsUpdater} from "@symmio/frontend-sdk/state/user/allAccountsUpdater";
+import AccountUpnl from "components/App/AccountData/AccountUpnl";
+import {NavButton} from "components/Button";
+import {
+  GradientButtonWrapper,
+  GradientColorButton,
+} from "components/Button/GradientButton";
+import {ChevronDown, Status as StatusIcon, Switch} from "components/Icons";
+import ImageWithFallback from "components/ImageWithFallback";
+import CreateAccountModal from "components/ReviewModal/CreateAccountModal";
+import {Row, RowCenter, RowEnd, RowStart} from "components/Row";
 import useOnOutsideClick from "lib/hooks/useOnOutsideClick";
-import { AllAccountsUpdater } from "@symmio/frontend-sdk/state/user/allAccountsUpdater";
+import {getChainLogo} from "utils/chainLogo";
+import AccountsModal from "./AccountsModal";
+import Badge from "./Badge";
 
 const Container = styled.div`
   display: inline-flex;
   align-items: center;
   width: 244px;
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+  ${({theme}) => theme.mediaWidth.upToExtraSmall`
     width: 204px;
   `}
 `;
@@ -68,9 +62,9 @@ const InnerContentWrapper = styled(Row)`
   padding: 11px 8px 10px 12px;
   height: 36px;
   font-size: 12px;
-  color: ${({ theme }) => theme.text0};
-  background: ${({ theme }) => theme.bg2};
-  border: 1px solid ${({ theme }) => theme.border3};
+  color: ${({theme}) => theme.text0};
+  background: ${({theme}) => theme.bg2};
+  border: 1px solid ${({theme}) => theme.border3};
   border-radius: 3px;
 `;
 
@@ -79,7 +73,7 @@ const UserStatus = styled(RowStart)`
   gap: 4px;
 `;
 
-const NameWrapper = styled.div<{ nameLength: number }>`
+const NameWrapper = styled.div<{nameLength: number}>`
   overflow: hidden;
   width: 80px;
   padding: 8px 0;
@@ -89,12 +83,12 @@ const NameWrapper = styled.div<{ nameLength: number }>`
       transform: translateX(100%);
     }
     to {
-      transform: translateX(-${({ nameLength }) => nameLength * 10}%);
+      transform: translateX(-${({nameLength}) => nameLength * 10}%);
     }
   }
 
   &:hover .account-name {
-    animation: scrolling-forward ${({ nameLength }) => nameLength * 0.5}s linear
+    animation: scrolling-forward ${({nameLength}) => nameLength * 0.5}s linear
       infinite;
   }
 `;
@@ -113,7 +107,7 @@ const ErrorButton = styled(GradientColorButton)`
   &:hover,
   &:focus {
     cursor: pointer;
-    color: ${({ theme }) => lighten(0.1, theme.primary0)};
+    color: ${({theme}) => lighten(0.1, theme.primary0)};
   }
 `;
 
@@ -130,7 +124,7 @@ const MainButton = styled(NavButton)`
   &:focus {
     cursor: pointer;
     /* background: none; */
-    background: ${({ theme }) => theme.bg4};
+    background: ${({theme}) => theme.bg4};
   }
 `;
 
@@ -143,8 +137,8 @@ const Button = styled.div`
   font-weight: 500;
   font-size: 12px;
   text-align: center;
-  color: ${({ theme }) => theme.bg};
-  background: ${({ theme }) => theme.gradLight};
+  color: ${({theme}) => theme.bg};
+  background: ${({theme}) => theme.gradLight};
   border-radius: 3px;
   padding: 10px 0px;
 `;
@@ -152,12 +146,12 @@ const Button = styled.div`
 const ChooseAccountButton = styled(Button)`
   background: transparent;
   border: none;
-  color: ${({ theme }) => theme.text0};
+  color: ${({theme}) => theme.text0};
 `;
 
 const UpnlText = styled(RowCenter)`
   font-size: 10px;
-  color: ${({ theme }) => theme.text2};
+  color: ${({theme}) => theme.text2};
   margin-right: 12px;
 `;
 
@@ -174,9 +168,9 @@ const ConnectWalletWrapper = styled.div`
   gap: 40px;
 `;
 
-const AccountAddress = styled.div<{ width?: string; color?: string }>`
-  width: ${({ width }) => width ?? "120px"};
-  color: ${({ theme, color }) => color ?? theme.text0};
+const AccountAddress = styled.div<{width?: string; color?: string}>`
+  width: ${({width}) => width ?? "120px"};
+  color: ${({theme, color}) => color ?? theme.text0};
   padding: 13px 0px;
 `;
 
@@ -185,15 +179,15 @@ const NetworkButton = styled(NavButton)`
   cursor: pointer;
   overflow: visible;
   padding: 0px 5px;
-  color: ${({ theme }) => theme.text1};
+  color: ${({theme}) => theme.text1};
 
-  background: ${({ theme }) => theme.red6};
-  border: 1px solid ${({ theme }) => theme.red2};
+  background: ${({theme}) => theme.red6};
+  border: 1px solid ${({theme}) => theme.red2};
   border-radius: 8px;
 `;
 
-const Chevron = styled(ChevronDown)<{ open: boolean }>`
-  transform: rotateX(${({ open }) => (open ? "180deg" : "0deg")});
+const Chevron = styled(ChevronDown)<{open: boolean}>`
+  transform: rotateX(${({open}) => (open ? "180deg" : "0deg")});
   transition: 0.5s;
 `;
 
@@ -206,12 +200,12 @@ const SwitchIcon = styled.div`
 //TODO pending actions
 export default function MultiAccount() {
   const theme = useTheme();
-  const { accounts } = useUserAccounts();
+  const {accounts} = useUserAccounts();
   const previousAccounts = usePrevious(accounts);
-  const { openConnectModal } = useConnectModal();
+  const {openConnectModal} = useConnectModal();
   const setFrontEndName = useSetFEName();
 
-  const { account, chainId } = useActiveWagmi();
+  const {account, chainId} = useActiveWagmi();
 
   //TODO remove it and use rainbow
   const ENSName = undefined; //use ens from wagmi
@@ -221,10 +215,10 @@ export default function MultiAccount() {
   const rpcChangerCallback = useRpcChangerCallback();
   const dispatch = useAppDispatch();
 
-  const { accountAddress, name } = activeAccount || {};
-  const { loading: accountsLoading } = useAccountsLength();
+  const {accountAddress, name} = activeAccount || {};
+  const {loading: accountsLoading} = useAccountsLength();
 
-  const { loading: statsLoading } = useAccountPartyAStat(accountAddress);
+  const {loading: statsLoading} = useAccountPartyAStat(accountAddress);
   const ref = useRef(null);
   useOnOutsideClick(ref, () => {
     if (!showCreateAccountModal && !showDepositModal) setClickAccounts(false);
@@ -235,7 +229,7 @@ export default function MultiAccount() {
   const v3_ids = useV3Ids();
   const Chain = ChainInfo[FALLBACK_CHAIN_ID];
 
-  const { error } = useConnect();
+  const {error} = useConnect();
 
   const standardAccountName = (() => {
     if (name && name.length > 10) return `${name.slice(0, 10)}...`;
@@ -260,7 +254,7 @@ export default function MultiAccount() {
     return !v3_ids.includes(chainId);
   }, [chainId, account, v3_ids]);
 
-  const { openAccountModal } = useAccountModal();
+  const {openAccountModal} = useAccountModal();
 
   const handleNetwork = useCallback(async () => {
     const response = await rpcChangerCallback(FALLBACK_CHAIN_ID);
@@ -270,7 +264,7 @@ export default function MultiAccount() {
   function getInnerContent() {
     return (
       <InnerContentWrapper
-        onClick={() => setClickAccounts((previousValue) => !previousValue)}
+        onClick={() => setClickAccounts(previousValue => !previousValue)}
       >
         {activeAccount ? (
           <>
@@ -334,7 +328,7 @@ export default function MultiAccount() {
               <AccountAddress onClick={openConnectModal}>
                 <StatusIcon
                   connected
-                  style={{ marginRight: "12px", marginLeft: "6px" }}
+                  style={{marginRight: "12px", marginLeft: "6px"}}
                 />
                 {ENSName || truncateAddress(account)}
               </AccountAddress>
@@ -351,7 +345,7 @@ export default function MultiAccount() {
               <AccountAddress onClick={openConnectModal}>
                 <StatusIcon
                   connected
-                  style={{ marginRight: "12px", marginLeft: "6px" }}
+                  style={{marginRight: "12px", marginLeft: "6px"}}
                 />
                 {ENSName || truncateAddress(account)}
               </AccountAddress>
@@ -368,7 +362,7 @@ export default function MultiAccount() {
             <AccountAddress onClick={openAccountModal}>
               <StatusIcon
                 connected
-                style={{ marginRight: "12px", marginLeft: "6px" }}
+                style={{marginRight: "12px", marginLeft: "6px"}}
               />
               {ENSName || truncateAddress(account)}
             </AccountAddress>
@@ -377,7 +371,7 @@ export default function MultiAccount() {
                 <div>
                   <AccountsModal
                     onDismiss={() =>
-                      setClickAccounts((previousValue) => !previousValue)
+                      setClickAccounts(previousValue => !previousValue)
                     }
                     data={accounts}
                   />
@@ -403,7 +397,7 @@ export default function MultiAccount() {
         <MainButton>
           <ConnectWalletWrapper onClick={openConnectModal}>
             <AccountAddress color={theme.text1}>
-              <StatusIcon style={{ marginRight: "12px", marginLeft: "6px" }} />
+              <StatusIcon style={{marginRight: "12px", marginLeft: "6px"}} />
               {`Not connected`}
             </AccountAddress>
 

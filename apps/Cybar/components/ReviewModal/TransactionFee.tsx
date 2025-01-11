@@ -1,9 +1,9 @@
-import React, { useMemo } from "react";
+import {useMemo} from "react";
 import styled from "styled-components";
 
 import QuestionMark from "components/Icons/QuestionMark";
-import { ToolTip } from "components/ToolTip";
-import { AmountsWrapper, DefaultOptionButton, QuestionMarkWrap } from "./index";
+import {ToolTip} from "components/ToolTip";
+import {AmountsWrapper, DefaultOptionButton, QuestionMarkWrap} from "./index";
 
 const Wrapper = styled.div`
   justify-content: space-between;
@@ -12,9 +12,9 @@ const Wrapper = styled.div`
 
 export const Title = styled.div`
   font-weight: 400;
-  color: ${({ theme }) => theme.text1};
+  color: ${({theme}) => theme.text1};
 
-  ${({ theme }) => theme.mediaWidth.upToMedium`
+  ${({theme}) => theme.mediaWidth.upToMedium`
     font-size: 12px;
   `}
 `;
@@ -23,7 +23,7 @@ export const Option = styled(DefaultOptionButton)`
   height: 42px;
   width: 120px;
 
-  ${({ theme }) => theme.mediaWidth.upToMedium`
+  ${({theme}) => theme.mediaWidth.upToMedium`
     font-size:12px;
     width: 80px;
     height: 36px;

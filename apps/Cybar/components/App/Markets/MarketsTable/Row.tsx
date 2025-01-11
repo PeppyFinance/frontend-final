@@ -1,18 +1,18 @@
-import styled from "styled-components";
 import Image from "next/image";
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
+import styled from "styled-components";
 
 import {
   useFavorites,
   useToggleUserFavoriteCallback,
 } from "@symmio/frontend-sdk/state/user/hooks";
-import { formatDollarAmount, toBN } from "@symmio/frontend-sdk/utils/numbers";
-import { Market } from "@symmio/frontend-sdk/types/market";
+import {Market} from "@symmio/frontend-sdk/types/market";
+import {formatDollarAmount, toBN} from "@symmio/frontend-sdk/utils/numbers";
 
 import useCurrencyLogo from "lib/hooks/useCurrencyLogo";
 
-import { Star } from "components/Icons";
-import { Row, RowBetween, RowCenter, RowStart } from "components/Row";
+import {Star} from "components/Icons";
+import {Row, RowBetween, RowCenter, RowStart} from "components/Row";
 
 const TableStructure = styled(RowBetween)`
   font-size: 12px;
@@ -33,7 +33,7 @@ const TableStructure = styled(RowBetween)`
       width: 12%;
     }
 
-    ${({ theme }) => theme.mediaWidth.upToSmall`
+    ${({theme}) => theme.mediaWidth.upToSmall`
       &:nth-child(1) {
         width: 14px;
         margin-right: 0;
@@ -51,7 +51,7 @@ const TableStructure = styled(RowBetween)`
         display: none;
       }
     `}
-    ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    ${({theme}) => theme.mediaWidth.upToExtraSmall`
       &:nth-child(2) {
         width: 27%;
       }
@@ -64,10 +64,10 @@ const TableStructure = styled(RowBetween)`
 
 const RowWrap = styled(TableStructure)`
   height: 56px;
-  color: ${({ theme }) => theme.text0};
-  background: ${({ theme }) => theme.bg0};
+  color: ${({theme}) => theme.text0};
+  background: ${({theme}) => theme.bg0};
   padding: 12px 24px 12px 12px;
-  border-bottom: 1px solid ${({ theme }) => theme.bg};
+  border-bottom: 1px solid ${({theme}) => theme.bg};
 
   & > * {
     &:nth-child(1) {
@@ -90,13 +90,13 @@ const MarketName = styled.span`
   font-size: 10px;
 `;
 
-const ColorLabel = styled(Row)<{ color: "green" | "red" | "gray" }>`
-  color: ${({ color, theme }) =>
+const ColorLabel = styled(Row)<{color: "green" | "red" | "gray"}>`
+  color: ${({color, theme}) =>
     color === "green"
       ? theme.positive
       : color === "red"
-      ? theme.negative
-      : theme.text2};
+        ? theme.negative
+        : theme.text2};
 `;
 
 const ActionBtn = styled.button`
@@ -104,14 +104,14 @@ const ActionBtn = styled.button`
   width: 80px;
   height: 30px;
   padding: 8px 24px;
-  color: ${({ theme }) => theme.primary0};
-  border: 1px solid ${({ theme }) => theme.primary0};
+  color: ${({theme}) => theme.primary0};
+  border: 1px solid ${({theme}) => theme.primary0};
   border-radius: 6px;
   font-weight: 600;
 
   &:hover {
-    background: ${({ theme }) => theme.primary0};
-    color: ${({ theme }) => theme.bg};
+    background: ${({theme}) => theme.primary0};
+    color: ${({theme}) => theme.bg};
     transition: all 0.3s;
   }
 `;
@@ -128,8 +128,8 @@ export default function MarketRow({
     notionalCap: string;
   };
 }) {
-  const { symbol, name, pricePrecision, id } = market;
-  const { price, priceChangePercent, tradeVolume, notionalCap } =
+  const {symbol, name, pricePrecision, id} = market;
+  const {price, priceChangePercent, tradeVolume, notionalCap} =
     marketInfo || {};
 
   const router = useRouter();

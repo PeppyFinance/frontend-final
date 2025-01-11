@@ -1,8 +1,8 @@
-import { CharacterContextValue } from "components/BackAlley/characterContext";
-import { CharacterId } from "../characterIds.type";
-import { charBackAlley1 } from "./charBackAlley1";
-import { charBackAlley2 } from "./charBackAlley2";
-import { charBackAlley3 } from "./charBackAlley3";
+import {CharacterContextValue} from "components/BackAlley/characterContext";
+import {CharacterId} from "../characterIds.type";
+import {charBackAlley1} from "./charBackAlley1";
+import {charBackAlley2} from "./charBackAlley2";
+import {charBackAlley3} from "./charBackAlley3";
 
 interface DialogContent {
   text: string;

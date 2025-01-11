@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function EmptyPosition({
   width = 300,
   height = 70,

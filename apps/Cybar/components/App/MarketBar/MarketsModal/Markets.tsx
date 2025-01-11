@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import {useState} from "react";
 import styled from "styled-components";
 
-import { Market } from "@symmio/frontend-sdk/types/market";
+import {Market} from "@symmio/frontend-sdk/types/market";
 
-import { useNeutralMarkets } from "@symmio/frontend-sdk/hooks/useMarkets";
+import {useNeutralMarkets} from "@symmio/frontend-sdk/hooks/useMarkets";
 
-import { EmptySearch } from "components/Icons";
+import {EmptySearch} from "components/Icons";
 import MarketRow from "./MarketRow";
 
 const EmptyRow = styled.div`
@@ -18,7 +18,7 @@ const Title = styled.div`
   font-weight: 500;
   font-size: 12px;
   margin: 12px 0px 4px 14px;
-  color: ${({ theme }) => theme.text2};
+  color: ${({theme}) => theme.text2};
 `;
 
 export default function Markets({

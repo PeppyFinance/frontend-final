@@ -1,20 +1,20 @@
-import React, { useMemo, useCallback } from "react";
+import {useCallback, useMemo} from "react";
 import styled from "styled-components";
 
-import { toBN } from "@symmio/frontend-sdk/utils/numbers";
+import {toBN} from "@symmio/frontend-sdk/utils/numbers";
 
 import QuestionMark from "components/Icons/QuestionMark";
-import { ToolTip } from "components/ToolTip";
+import {Row} from "components/Row";
+import {ToolTip} from "components/ToolTip";
 import {
+  AmountsInnerWrapper,
   AmountsWrapper,
   CustomOption,
   DefaultOptionButton,
+  InputAmount,
   QuestionMarkWrap,
   Title,
-  InputAmount,
-  AmountsInnerWrapper,
 } from "./index";
-import { Row } from "components/Row";
 
 const Wrapper = styled.div`
   margin-top: 5px;
@@ -23,7 +23,7 @@ const Wrapper = styled.div`
 `;
 
 const UnlockDateValue = styled.div`
-  color: ${({ theme }) => theme.border2};
+  color: ${({theme}) => theme.border2};
   margin-top: 6px;
   font-weight: 400;
   font-size: 12px;
@@ -57,7 +57,7 @@ export default function AdvancedOptions({
   }, [amount, MIN, setAmount]);
 
   const handleCustomChange = useCallback(
-    (e) => {
+    e => {
       const value = e.currentTarget.value;
       if (value !== "" && value >= 0) {
         setAmount(value);
@@ -65,12 +65,12 @@ export default function AdvancedOptions({
         setAmount("0");
       }
     },
-    [setAmount]
+    [setAmount],
   );
 
   const customSelected = useMemo(
     () => !defaultAmounts.includes(amount),
-    [defaultAmounts, amount]
+    [defaultAmounts, amount],
   );
 
   return useMemo(() => {
@@ -94,7 +94,7 @@ export default function AdvancedOptions({
 
         <AmountsWrapper>
           <AmountsInnerWrapper hasCustom={hasCustom}>
-            {defaultAmounts.map((a) => {
+            {defaultAmounts.map(a => {
               return (
                 <DefaultOptionButton
                   key={a}
@@ -116,7 +116,7 @@ export default function AdvancedOptions({
                 onBlur={() => {
                   handleMinAmount();
                 }}
-                onChange={(e) => handleCustomChange(e)}
+                onChange={e => handleCustomChange(e)}
                 placeholder={amount.toString()}
               />
               {unit}

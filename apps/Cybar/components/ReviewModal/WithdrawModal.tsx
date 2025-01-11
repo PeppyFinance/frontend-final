@@ -1,40 +1,39 @@
-import React, { useCallback, useMemo, useState } from "react";
-import styled from "styled-components";
-import { toast } from "react-hot-toast";
 import BigNumber from "bignumber.js";
+import {useCallback, useMemo, useState} from "react";
+import {toast} from "react-hot-toast";
+import styled from "styled-components";
 
+import {useCollateralToken} from "@symmio/frontend-sdk/constants/tokens";
+import {TransferTab} from "@symmio/frontend-sdk/types/transfer";
 import {
-  toBN,
   formatAmount,
   formatPrice,
+  toBN,
 } from "@symmio/frontend-sdk/utils/numbers";
-import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
-import { TransferTab } from "@symmio/frontend-sdk/types/transfer";
-import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
+import {useGetTokenWithFallbackChainId} from "@symmio/frontend-sdk/utils/token";
 
-import { ApplicationModal } from "@symmio/frontend-sdk/state/application/reducer";
 import {
   useModalOpen,
   useWithdrawModalToggle,
 } from "@symmio/frontend-sdk/state/application/hooks";
-import { useIsHavePendingTransaction } from "@symmio/frontend-sdk/state/transactions/hooks";
+import {ApplicationModal} from "@symmio/frontend-sdk/state/application/reducer";
+import {useIsHavePendingTransaction} from "@symmio/frontend-sdk/state/transactions/hooks";
 import {
   useAccountPartyAStat,
   useActiveAccountAddress,
 } from "@symmio/frontend-sdk/state/user/hooks";
 
-import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
+import {useTransferCollateral} from "@symmio/frontend-sdk/callbacks/useTransferCollateral";
 import useAccountData from "@symmio/frontend-sdk/hooks/useAccountData";
-import { useTransferCollateral } from "@symmio/frontend-sdk/callbacks/useTransferCollateral";
+import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 
-import { Modal } from "components/Modal";
-import { Option } from "components/Tab";
-import { DotFlashing } from "components/Icons";
-import { PrimaryButton } from "components/Button";
-import { CustomInputBox2 } from "components/InputBox";
-import { Close as CloseIcon } from "components/Icons";
-import { Row, RowBetween, RowStart } from "components/Row";
-import { WithdrawBarModalContent } from "./WithdrawBarModal";
+import {PrimaryButton} from "components/Button";
+import {Close as CloseIcon, DotFlashing} from "components/Icons";
+import {CustomInputBox2} from "components/InputBox";
+import {Modal} from "components/Modal";
+import {Row, RowBetween, RowStart} from "components/Row";
+import {Option} from "components/Tab";
+import {WithdrawBarModalContent} from "./WithdrawBarModal";
 
 const Wrapper = styled.div`
   display: flex;
@@ -44,14 +43,14 @@ const Wrapper = styled.div`
   padding: 1rem;
   gap: 0.8rem;
 
-  ${({ theme }) => theme.mediaWidth.upToMedium`
+  ${({theme}) => theme.mediaWidth.upToMedium`
     padding: 0.5rem;
   `};
 `;
 
 const WithdrawInfo = styled(RowStart)`
   font-size: 12px;
-  color: ${({ theme }) => theme.text1};
+  color: ${({theme}) => theme.text1};
 `;
 
 const LabelsRow = styled(Row)`
@@ -73,38 +72,38 @@ const Close = styled.div`
   cursor: pointer;
   border-radius: 4px;
   margin: 2px 2px 1px 0px;
-  background: ${({ theme }) => theme.bg6};
+  background: ${({theme}) => theme.bg6};
 `;
 
 export default function WithdrawModal() {
-  const { chainId } = useActiveWagmi();
+  const {chainId} = useActiveWagmi();
   const activeAccountAddress = useActiveAccountAddress();
   const [typedAmount, setTypedAmount] = useState("");
   const isPendingTxs = useIsHavePendingTransaction();
-  const { availableForOrder } = useAccountData();
+  const {availableForOrder} = useAccountData();
   const [awaitingConfirmation, setAwaitingConfirmation] = useState(false);
   const showWithdrawModal = useModalOpen(ApplicationModal.WITHDRAW);
   const toggleWithdrawModal = useWithdrawModalToggle();
 
-  const { allocatedBalance: subAccountAllocatedBalance } =
+  const {allocatedBalance: subAccountAllocatedBalance} =
     useAccountPartyAStat(activeAccountAddress);
 
   const [amountForDeallocate, insufficientBalance] = useMemo(() => {
     const deallocateAmount = BigNumber.min(
       availableForOrder,
-      subAccountAllocatedBalance
+      subAccountAllocatedBalance,
     );
     const insufficientBalance = deallocateAmount.isLessThan(typedAmount);
     if (deallocateAmount.isLessThan(0)) return ["0", insufficientBalance];
     return [deallocateAmount.toString(), insufficientBalance];
   }, [availableForOrder, subAccountAllocatedBalance, typedAmount]);
 
-  const { callback: transferBalanceCallback, error: transferBalanceError } =
+  const {callback: transferBalanceCallback, error: transferBalanceError} =
     useTransferCollateral(typedAmount, TransferTab.DEALLOCATE);
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(
     COLLATERAL_TOKEN,
-    chainId
+    chainId,
   );
 
   const handleAction = useCallback(async () => {

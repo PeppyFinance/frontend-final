@@ -1,10 +1,10 @@
-import { CharacterActions } from "./characterActions";
+import {CharacterActions} from "./characterActions";
 import {
   BackAlleyChars,
   CharacterProps,
   Dialog,
 } from "./Characters/characterConfig";
-import { CharacterId } from "./Characters/characterIds.type";
+import {CharacterId} from "./Characters/characterIds.type";
 
 type SetActive = {
   type: typeof CharacterActions.SET_ACTIVE;
@@ -29,17 +29,17 @@ export type DispatchAction = SetActive | SetInactive | SetDialog;
 
 export const characterReducer = (
   state: CharacterState,
-  action: DispatchAction
+  action: DispatchAction,
 ) => {
   switch (action.type) {
     case "SET_ACTIVE": {
       const character = BackAlleyChars.find(
-        (character) => character.id === action.characterId
+        character => character.id === action.characterId,
       );
       return {
         ...state,
         character,
-        dialog: character?.dialogs?.find((dialog) => dialog.id === 0),
+        dialog: character?.dialogs?.find(dialog => dialog.id === 0),
       };
     }
     case "SET_INACTIVE": {
@@ -53,7 +53,7 @@ export const characterReducer = (
       return {
         ...state,
         dialog: state.character?.dialogs?.find(
-          (dialog) => dialog.id === action.dialogId
+          dialog => dialog.id === action.dialogId,
         ),
       };
     }

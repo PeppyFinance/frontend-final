@@ -1,9 +1,9 @@
-import { StaticImageData } from "next/legacy/image";
 import {
   SupportedChainId,
   isSupportedChain,
 } from "@symmio/frontend-sdk/constants/chains";
-export const ChainInfo: { [chainId: number]: StaticImageData } = {
+import {StaticImageData} from "next/legacy/image";
+export const ChainInfo: {[chainId: number]: StaticImageData} = {
   [SupportedChainId.MAINNET]: require("/public/static/images/networks/mainnet.svg"),
   [SupportedChainId.ROPSTEN]: require("/public/static/images/networks/mainnet.svg"),
   [SupportedChainId.RINKEBY]: require("/public/static/images/networks/mainnet.svg"),

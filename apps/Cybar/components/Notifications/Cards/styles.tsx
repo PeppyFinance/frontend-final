@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { RowStart } from "components/Row";
+import {RowStart} from "components/Row";
 
 export const LiquidationText = styled(RowStart)`
   font-size: 12px;
@@ -8,10 +8,10 @@ export const LiquidationText = styled(RowStart)`
 
   & > * {
     &:first-child {
-      color: ${({ theme }) => theme.text0};
+      color: ${({theme}) => theme.text0};
     }
     &:last-child {
-      color: ${({ theme }) => theme.negative};
+      color: ${({theme}) => theme.negative};
     }
   }
 `;
@@ -23,11 +23,11 @@ export const PartiallyFillTitle = styled(RowStart)`
 
   & > * {
     &:first-child {
-      color: ${({ theme }) => theme.text0};
+      color: ${({theme}) => theme.text0};
     }
     &:last-child {
       margin-left: 4px;
-      color: ${({ theme }) => theme.text1};
+      color: ${({theme}) => theme.text1};
     }
   }
 `;
@@ -39,10 +39,10 @@ export const PartiallyFillText = styled(RowStart)`
 
   & > * {
     &:first-child {
-      color: ${({ theme }) => theme.primary0};
+      color: ${({theme}) => theme.primary0};
     }
     &:last-child {
-      color: ${({ theme }) => theme.text1};
+      color: ${({theme}) => theme.text1};
     }
   }
 `;

@@ -1,10 +1,10 @@
-import { useCallback, useEffect } from "react";
-import useBlockNumber from "../useBlockNumber";
+import {waitForTransactionReceipt} from "@wagmi/core";
+import {useCallback, useEffect} from "react";
+import {Address, TransactionReceipt} from "viem";
+import {usePublicClient} from "wagmi";
+import {useWagmiConfig} from "../../../state/chains";
 import useActiveWagmi from "../useActiveWagmi";
-import { usePublicClient } from "wagmi";
-import { Address, TransactionReceipt } from "viem";
-import { waitForTransactionReceipt } from "@wagmi/core";
-import { useWagmiConfig } from "../../../state/chains";
+import useBlockNumber from "../useBlockNumber";
 
 interface Transaction {
   addedTime: number;
@@ -31,8 +31,8 @@ export function shouldCheck(lastBlockNumber: number, tx: Transaction): boolean {
 }
 
 interface UpdaterProps {
-  pendingTransactions: { [hash: string]: Transaction };
-  onCheck: (tx: { chainId: number; hash: string; blockNumber: number }) => void;
+  pendingTransactions: {[hash: string]: Transaction};
+  onCheck: (tx: {chainId: number; hash: string; blockNumber: number}) => void;
   onReceipt: (tx: {
     chainId: number;
     hash: string;
@@ -45,7 +45,7 @@ export default function Updater({
   onCheck,
   onReceipt,
 }: UpdaterProps): null {
-  const { chainId } = useActiveWagmi();
+  const {chainId} = useActiveWagmi();
   const provider = usePublicClient();
   const lastBlockNumber = useBlockNumber();
   const wagmiConfig = useWagmiConfig();
@@ -56,7 +56,7 @@ export default function Updater({
         if (!provider || !chainId) throw new Error("No provider or chainId");
         return await waitForTransactionReceipt(wagmiConfig, {
           hash: hash as Address,
-          onReplaced: (transaction) => console.log("OnReplace", transaction),
+          onReplaced: transaction => console.log("OnReplace", transaction),
         });
       } catch (event) {
         if (event) {
@@ -64,29 +64,29 @@ export default function Updater({
         }
       }
     },
-    [chainId, provider, wagmiConfig]
+    [chainId, provider, wagmiConfig],
   );
 
   useEffect(() => {
     if (!chainId || !provider || !lastBlockNumber) return;
     const cancels = Object.keys(pendingTransactions)
-      .filter((hash) => shouldCheck(lastBlockNumber, pendingTransactions[hash]))
-      .map((hash) => {
+      .filter(hash => shouldCheck(lastBlockNumber, pendingTransactions[hash]))
+      .map(hash => {
         const resultReceipt = getReceipt(hash);
         resultReceipt
-          .then((receipt) => {
+          .then(receipt => {
             if (receipt) {
-              onReceipt({ chainId, hash, receipt });
+              onReceipt({chainId, hash, receipt});
             } else {
-              onCheck({ chainId, hash, blockNumber: lastBlockNumber });
+              onCheck({chainId, hash, blockNumber: lastBlockNumber});
             }
           })
-          .catch((error) => {
+          .catch(error => {
             console.log("error reciept", error);
             if (!error.isCancelledError) {
               console.warn(
                 `Failed to get transaction receipt for ${hash}`,
-                error
+                error,
               );
             }
           });
@@ -94,7 +94,7 @@ export default function Updater({
       });
 
     return () => {
-      cancels.forEach((cancel) => cancel());
+      cancels.forEach(cancel => cancel());
     };
   }, [
     chainId,

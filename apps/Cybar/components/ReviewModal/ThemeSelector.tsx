@@ -1,9 +1,9 @@
-import React, { useMemo } from "react";
+import {useMemo} from "react";
 import styled from "styled-components";
 
 import ThemeIconDark from "components/Icons/ThemeIconDark";
 import ThemeIconLight from "components/Icons/ThemeIconLight";
-import { RowBetween } from "components/Row";
+import {RowBetween} from "components/Row";
 
 const Wrapper = styled(RowBetween)`
   padding: 10px 20px;
@@ -21,13 +21,13 @@ const RightElement = styled.div`
 
 const HorizontalLine = styled.div`
   height: 1px;
-  background: ${({ theme }) => theme.border2};
+  background: ${({theme}) => theme.border2};
 `;
 
 const Title = styled.div`
   font-weight: 400;
-  color: ${({ theme }) => theme.text2};
-  ${({ theme }) => theme.mediaWidth.upToMedium`
+  color: ${({theme}) => theme.text2};
+  ${({theme}) => theme.mediaWidth.upToMedium`
     font-size:12px;
   `}
 `;

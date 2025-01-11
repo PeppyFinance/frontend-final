@@ -1,4 +1,4 @@
-import { CharacterProps } from "components/BackAlley/Characters/characterConfig";
+import {CharacterProps} from "components/BackAlley/Characters/characterConfig";
 
 export const visitor5: CharacterProps = {
   name: "visitor5",

@@ -1,6 +1,6 @@
+import {Address} from "viem";
+import {useInjectedAddress} from "../../state/application/hooks";
 import useWagmi from "./useWagmi";
-import { useInjectedAddress } from "../../state/application/hooks";
-import { Address } from "viem";
 
 export default function useActiveWagmi() {
   const wagmiData = useWagmi();
@@ -8,7 +8,7 @@ export default function useActiveWagmi() {
   const context =
     injectedAddress === ""
       ? wagmiData
-      : { ...wagmiData, account: injectedAddress as Address };
+      : {...wagmiData, account: injectedAddress as Address};
 
   return context;
 }

@@ -1,18 +1,18 @@
-import { useCallback, useMemo } from "react";
-import { AppState, useAppDispatch, useAppSelector } from "../declaration";
-import { setChains } from "./actions";
-import { ChainsState, MuonDataType } from "./reducer";
+import {useCallback, useMemo} from "react";
 import useActiveWagmi from "../../lib/hooks/useActiveWagmi";
-import { useFEName } from "../user/hooks";
-import { useHedgerInfo } from "../hedger/hooks";
+import {AppState, useAppDispatch, useAppSelector} from "../declaration";
+import {useHedgerInfo} from "../hedger/hooks";
+import {useFEName} from "../user/hooks";
+import {setChains} from "./actions";
+import {ChainsState, MuonDataType} from "./reducer";
 
 type InputObject = {
-  [chainId: number]: { [name: string]: any };
+  [chainId: number]: {[name: string]: any};
 };
 
 function compatibleWithLegacyStructure(chains, v3_ids, parameter_name) {
   return Object.keys(chains)
-    .filter((key) => v3_ids.includes(parseInt(key)))
+    .filter(key => v3_ids.includes(parseInt(key)))
     .reduce((obj, key) => {
       obj[key] = Object.keys(chains[key]).reduce((obj, FeName) => {
         obj[FeName] = chains[key][FeName][parameter_name];
@@ -24,9 +24,9 @@ function compatibleWithLegacyStructure(chains, v3_ids, parameter_name) {
 
 function getValuesByName(
   inputObj: InputObject,
-  name: string
-): { [chainId: number]: any } {
-  const result: { [chainId: number]: any } = {};
+  name: string,
+): {[chainId: number]: any} {
+  const result: {[chainId: number]: any} = {};
 
   for (const chainId in inputObj) {
     if (inputObj[chainId].hasOwnProperty(name)) {
@@ -48,7 +48,7 @@ export function useCollateralAddress(): {
     const data = compatibleWithLegacyStructure(
       chains,
       v3_ids,
-      "COLLATERAL_ADDRESS"
+      "COLLATERAL_ADDRESS",
     );
 
     return getValuesByName(data, FE_NAME);
@@ -66,7 +66,7 @@ export function useCollateralSymbol(): {
     const data = compatibleWithLegacyStructure(
       chains,
       v3_ids,
-      "COLLATERAL_SYMBOL"
+      "COLLATERAL_SYMBOL",
     );
     return getValuesByName(data, FE_NAME);
   }, [FE_NAME, chains, v3_ids]);
@@ -83,7 +83,7 @@ export function useCollateralDecimal(): {
     const data = compatibleWithLegacyStructure(
       chains,
       v3_ids,
-      "COLLATERAL_DECIMALS"
+      "COLLATERAL_DECIMALS",
     );
     return getValuesByName(data, FE_NAME);
   }, [FE_NAME, chains, v3_ids]);
@@ -98,7 +98,7 @@ export function useDiamondAddress() {
     const data = compatibleWithLegacyStructure(
       chains,
       v3_ids,
-      "DIAMOND_ADDRESS"
+      "DIAMOND_ADDRESS",
     );
     return getValuesByName(data, FE_NAME);
   }, [FE_NAME, chains, v3_ids]);
@@ -113,7 +113,7 @@ export function useMultiAccountAddress() {
     const data = compatibleWithLegacyStructure(
       chains,
       v3_ids,
-      "MULTI_ACCOUNT_ADDRESS"
+      "MULTI_ACCOUNT_ADDRESS",
     );
     return getValuesByName(data, FE_NAME);
   }, [FE_NAME, chains, v3_ids]);
@@ -128,7 +128,7 @@ export function useTpSlWalletAddress() {
     const data = compatibleWithLegacyStructure(
       chains,
       v3_ids,
-      "TP_SL_WALLET_ADDRESS"
+      "TP_SL_WALLET_ADDRESS",
     );
     return getValuesByName(data, FE_NAME);
   }, [FE_NAME, chains, v3_ids]);
@@ -137,8 +137,8 @@ export function useTpSlWalletAddress() {
 export function useTpSlAvailable() {
   const FE_NAME = useFEName();
   const chains = useAppSelector((state: AppState) => state.chains.chains);
-  const { chainId } = useActiveWagmi();
-  const { tpslUrl } = useHedgerInfo() || {};
+  const {chainId} = useActiveWagmi();
+  const {tpslUrl} = useHedgerInfo() || {};
   const isEnableTpSl = chains?.[chainId ?? 1]?.[FE_NAME]?.TP_SL_WALLET_ADDRESS;
 
   return (
@@ -154,7 +154,7 @@ export function useAllMultiAccountAddresses() {
     return compatibleWithLegacyStructure(
       chains,
       v3_ids,
-      "MULTI_ACCOUNT_ADDRESS"
+      "MULTI_ACCOUNT_ADDRESS",
     );
   }, [chains, v3_ids]);
 }
@@ -168,7 +168,7 @@ export function useSignatureStoreAddress() {
     const data = compatibleWithLegacyStructure(
       chains,
       v3_ids,
-      "SIGNATURE_STORE_ADDRESS"
+      "SIGNATURE_STORE_ADDRESS",
     );
     return getValuesByName(data, FE_NAME);
   }, [FE_NAME, chains, v3_ids]);
@@ -183,7 +183,7 @@ export function usePartyBWhitelistAddress() {
     const data = compatibleWithLegacyStructure(
       chains,
       v3_ids,
-      "PARTY_B_WHITELIST"
+      "PARTY_B_WHITELIST",
     );
     return getValuesByName(data, FE_NAME);
   }, [FE_NAME, chains, v3_ids]);
@@ -198,7 +198,7 @@ export function useMultiCallAddress() {
     const data = compatibleWithLegacyStructure(
       chains,
       v3_ids,
-      "MULTICALL3_ADDRESS"
+      "MULTICALL3_ADDRESS",
     );
     return getValuesByName(data, FE_NAME);
   }, [FE_NAME, chains, v3_ids]);
@@ -222,7 +222,7 @@ export function useV3Ids(): number[] {
 
 export function useFallbackChainId() {
   const fallbackChainId = useAppSelector(
-    (state: AppState) => state.chains.FALLBACK_CHAIN_ID
+    (state: AppState) => state.chains.FALLBACK_CHAIN_ID,
   );
   return fallbackChainId;
 }
@@ -238,7 +238,7 @@ export function useAppName() {
 }
 
 export function useOrderHistorySubgraphAddress() {
-  const { chainId } = useActiveWagmi();
+  const {chainId} = useActiveWagmi();
   const frontEndName = useFEName();
   const chainsData = useAppSelector((state: AppState) => state.chains.chains);
 
@@ -253,7 +253,7 @@ export function useOrderHistorySubgraphAddress() {
 }
 
 export function useAnalyticsSubgraphAddress() {
-  const { chainId } = useActiveWagmi();
+  const {chainId} = useActiveWagmi();
   const frontEndName = useFEName();
   const chainsData = useAppSelector((state: AppState) => state.chains.chains);
 
@@ -269,7 +269,7 @@ export function useAnalyticsSubgraphAddress() {
 }
 
 export function useFundingRateSubgraphAddress() {
-  const { chainId } = useActiveWagmi();
+  const {chainId} = useActiveWagmi();
   const frontEndName = useFEName();
   const chainsData = useAppSelector((state: AppState) => state.chains.chains);
 
@@ -284,14 +284,14 @@ export function useFundingRateSubgraphAddress() {
   return address;
 }
 
-export function useMuonData(): { [chainId: number]: MuonDataType } {
+export function useMuonData(): {[chainId: number]: MuonDataType} {
   const MuonData = useAppSelector((state: AppState) => state.chains.MuonData);
   return MuonData;
 }
 
 export function useWagmiConfig() {
   const wagmiConfig = useAppSelector(
-    (state: AppState) => state.chains.wagmiConfig
+    (state: AppState) => state.chains.wagmiConfig,
   );
   return wagmiConfig;
 }
@@ -325,9 +325,9 @@ export function useSetSdkConfig(): ({
           appName,
           MuonData,
           wagmiConfig,
-        })
+        }),
       );
     },
-    [dispatch]
+    [dispatch],
   );
 }

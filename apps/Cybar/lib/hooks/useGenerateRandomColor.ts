@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import {useEffect, useState} from "react";
 
 export default function useGenerateRandomColors(length: number) {
   const [colorList, setColorList] = useState<string[]>([]);
@@ -19,7 +19,7 @@ export default function useGenerateRandomColors(length: number) {
     let generatedColor = generateColorString();
     while (colorList.includes(generatedColor))
       generatedColor = generateColorString();
-    setColorList((prevColorList) => [...prevColorList, generatedColor]);
+    setColorList(prevColorList => [...prevColorList, generatedColor]);
   };
 
   useEffect(() => {

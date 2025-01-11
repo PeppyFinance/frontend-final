@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { OrderType, InputField } from "@symmio/frontend-sdk/types/trade";
+import {InputField, OrderType} from "@symmio/frontend-sdk/types/trade";
+import {useEffect} from "react";
 
 import {
   useOrderType,
@@ -8,7 +8,7 @@ import {
   useSetTypedValue,
 } from "@symmio/frontend-sdk/state/trade/hooks";
 
-import { Tab } from "components/Tab";
+import {Tab} from "components/Tab";
 
 export default function OrderTypeTab() {
   const orderType = useOrderType();

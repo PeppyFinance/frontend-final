@@ -1,16 +1,16 @@
-import { useMemo } from "react";
-import { Currency, Token } from "@uniswap/sdk-core";
+import {Currency, Token} from "@uniswap/sdk-core";
+import {useMemo} from "react";
 
-import { useTokenShorthand } from "../../constants/tokens";
-import { isSupportedChain } from "../../constants/chains";
-import { isAddress } from "../../utils/validate";
+import {isSupportedChain} from "../../constants/chains";
+import {useTokenShorthand} from "../../constants/tokens";
+import {isAddress} from "../../utils/validate";
 
 import useWagmi from "./useWagmi";
 
+import {useV3Ids} from "../../state/chains/hooks";
 import useNativeCurrency from "./useNativeCurrency";
-import { useV3Ids } from "../../state/chains/hooks";
 
-type TokenMap = { [address: string]: Token };
+type TokenMap = {[address: string]: Token};
 
 /**
  * Returns a Token from the tokenAddress.
@@ -19,7 +19,7 @@ type TokenMap = { [address: string]: Token };
  */
 export function useTokenFromMapOrNetwork(
   tokens: TokenMap,
-  tokenAddress?: string | null
+  tokenAddress?: string | null,
 ): Token | null | undefined {
   const address = tokenAddress ? isAddress(tokenAddress) : false;
   const token: Token | undefined = address ? tokens[address] : undefined;
@@ -34,14 +34,14 @@ export function useTokenFromMapOrNetwork(
  */
 export function useCurrencyFromMap(
   tokens: TokenMap,
-  currencyId?: string | null
+  currencyId?: string | null,
 ): Currency | null | undefined {
-  const { chainId } = useWagmi();
+  const {chainId} = useWagmi();
   const nativeCurrency = useNativeCurrency();
   const isNative = Boolean(
     nativeCurrency &&
       (currencyId?.toUpperCase() === "ETH" ||
-        currencyId?.toUpperCase() === "FTM")
+        currencyId?.toUpperCase() === "FTM"),
   );
   const TOKEN_SHORTHANDS = useTokenShorthand();
   const v3_ids = useV3Ids();
@@ -58,7 +58,7 @@ export function useCurrencyFromMap(
 
   const token = useTokenFromMapOrNetwork(
     tokens,
-    isNative ? undefined : shorthandMatchAddress ?? currencyId
+    isNative ? undefined : (shorthandMatchAddress ?? currencyId),
   );
 
   if (

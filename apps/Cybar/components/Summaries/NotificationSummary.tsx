@@ -1,29 +1,28 @@
-import React from "react";
 import styled from "styled-components";
 
 import {
-  NotificationMessages,
   NotificationDetails,
+  NotificationMessages,
   NotificationType,
 } from "@symmio/frontend-sdk/state/notifications/types";
 
-import { RowStart } from "components/Row";
 import {
   useErrorMessage,
   useMarket,
 } from "@symmio/frontend-sdk/hooks/useMarkets";
-import { useGetExistedQuoteByIdsCallback } from "@symmio/frontend-sdk/state/quotes/hooks";
-import { useGetQuoteByIds } from "@symmio/frontend-sdk/hooks/useQuotes";
-import { Quote } from "@symmio/frontend-sdk/types/quote";
+import {useGetQuoteByIds} from "@symmio/frontend-sdk/hooks/useQuotes";
+import {useGetExistedQuoteByIdsCallback} from "@symmio/frontend-sdk/state/quotes/hooks";
+import {Quote} from "@symmio/frontend-sdk/types/quote";
+import {RowStart} from "components/Row";
 
 const NotificationText = styled(RowStart)`
   font-size: 12px;
   font-weight: 500;
-  color: ${({ theme }) => theme.text0};
+  color: ${({theme}) => theme.text0};
 
   & > * {
     &:first-child {
-      /* color: ${({ theme }) => theme.primary0}; */
+      /* color: ${({theme}) => theme.primary0}; */
       margin-right: 4px;
     }
   }
@@ -34,16 +33,16 @@ export default function NotificationSummary({
 }: {
   notification: NotificationDetails;
 }): JSX.Element | null {
-  const { notificationType, quoteId, lastSeenAction, errorCode } = notification;
+  const {notificationType, quoteId, lastSeenAction, errorCode} = notification;
   const existedQuoteCallback = useGetExistedQuoteByIdsCallback();
   const existedQuote = existedQuoteCallback(quoteId);
-  const { quotes, loading } = useGetQuoteByIds([Number(quoteId)]);
+  const {quotes, loading} = useGetQuoteByIds([Number(quoteId)]);
   const quoteData = existedQuote
     ? existedQuote
     : !loading
-    ? quotes[0]
-    : ({} as Quote);
-  const { name } = useMarket(quoteData?.marketId) || {};
+      ? quotes[0]
+      : ({} as Quote);
+  const {name} = useMarket(quoteData?.marketId) || {};
   const text =
     lastSeenAction !== null ? NotificationMessages[lastSeenAction] : "";
   const errorMessage = useErrorMessage(errorCode);

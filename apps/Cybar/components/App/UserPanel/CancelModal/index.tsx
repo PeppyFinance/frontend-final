@@ -1,21 +1,21 @@
-import React, { useCallback, useMemo, useState } from "react";
+import {useCallback, useMemo, useState} from "react";
 import styled from "styled-components";
 
+import {useCancelQuote} from "@symmio/frontend-sdk/callbacks/useCancelQuote";
+import {useMarket} from "@symmio/frontend-sdk/hooks/useMarkets";
+import {useQuoteFillAmount} from "@symmio/frontend-sdk/hooks/useQuotes";
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
-import { Quote, QuoteStatus } from "@symmio/frontend-sdk/types/quote";
-import { CloseQuote } from "@symmio/frontend-sdk/types/trade";
-import { BN_ZERO, formatPrice, toBN } from "@symmio/frontend-sdk/utils/numbers";
-import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
-import { useQuoteFillAmount } from "@symmio/frontend-sdk/hooks/useQuotes";
-import { useCancelQuote } from "@symmio/frontend-sdk/callbacks/useCancelQuote";
-import { useIsHavePendingTransaction } from "@symmio/frontend-sdk/state/transactions/hooks";
+import {useIsHavePendingTransaction} from "@symmio/frontend-sdk/state/transactions/hooks";
+import {Quote, QuoteStatus} from "@symmio/frontend-sdk/types/quote";
+import {CloseQuote} from "@symmio/frontend-sdk/types/trade";
+import {BN_ZERO, formatPrice, toBN} from "@symmio/frontend-sdk/utils/numbers";
 
-import ConnectWallet from "components/ConnectWallet";
-import { Modal, ModalHeader } from "components/Modal";
-import { PrimaryButton } from "components/Button";
-import { DotFlashing } from "components/Icons";
+import {PrimaryButton} from "components/Button";
 import Column from "components/Column";
+import ConnectWallet from "components/ConnectWallet";
+import {DotFlashing} from "components/Icons";
 import InfoItem from "components/InfoItem";
+import {Modal, ModalHeader} from "components/Modal";
 
 const Wrapper = styled(Column)`
   padding: 12px;
@@ -31,7 +31,7 @@ const Wrapper = styled(Column)`
       margin-top: 20px;
     }
   }
-  ${({ theme }) => theme.mediaWidth.upToMedium`
+  ${({theme}) => theme.mediaWidth.upToMedium`
     padding: 1rem;
   `};
 `;
@@ -51,7 +51,7 @@ export default function CloseModal({
   toggleModal: () => void;
   quote: Quote | null;
 }) {
-  const { account, chainId } = useActiveWagmi();
+  const {account, chainId} = useActiveWagmi();
   const isPendingTxs = useIsHavePendingTransaction();
   const {
     marketId,
@@ -107,20 +107,20 @@ export default function CloseModal({
     return quote?.quoteStatus === QuoteStatus.PENDING
       ? CloseQuote.CANCEL_QUOTE
       : quote?.quoteStatus === QuoteStatus.LOCKED
-      ? CloseQuote.CANCEL_QUOTE
-      : quote?.quoteStatus === QuoteStatus.CLOSE_PENDING
-      ? CloseQuote.CANCEL_CLOSE_REQUEST
-      : quote?.quoteStatus === QuoteStatus.CANCEL_PENDING
-      ? CloseQuote.FORCE_CANCEL
-      : quote?.quoteStatus === QuoteStatus.CANCEL_CLOSE_PENDING
-      ? CloseQuote.FORCE_CANCEL_CLOSE
-      : null;
+        ? CloseQuote.CANCEL_QUOTE
+        : quote?.quoteStatus === QuoteStatus.CLOSE_PENDING
+          ? CloseQuote.CANCEL_CLOSE_REQUEST
+          : quote?.quoteStatus === QuoteStatus.CANCEL_PENDING
+            ? CloseQuote.FORCE_CANCEL
+            : quote?.quoteStatus === QuoteStatus.CANCEL_CLOSE_PENDING
+              ? CloseQuote.FORCE_CANCEL_CLOSE
+              : null;
   }, [quote]);
 
-  const { callback: closeCallback, error } = useCancelQuote(quote, closeQuote);
+  const {callback: closeCallback, error} = useCancelQuote(quote, closeQuote);
 
   const handleManage = useCallback(async () => {
-    if (error) console.debug({ error });
+    if (error) console.debug({error});
 
     if (!closeCallback) return;
     try {
@@ -128,7 +128,7 @@ export default function CloseModal({
       const txHash = await closeCallback();
       setAwaitingCancelConfirmation(false);
       toggleModal();
-      console.log("Transaction Hash:", { txHash });
+      console.log("Transaction Hash:", {txHash});
     } catch (e) {
       toggleModal();
       setAwaitingCancelConfirmation(false);
@@ -143,7 +143,7 @@ export default function CloseModal({
           ? "Cancel Close"
           : "Cancel"
         : `Cancel Remaining ${notFilledPercent.toFixed(2)}%`,
-    [notFilledPercent, quote?.quoteStatus]
+    [notFilledPercent, quote?.quoteStatus],
   );
 
   function getActionButton(): JSX.Element | null {
@@ -184,14 +184,14 @@ export default function CloseModal({
           label="Order Filled Size:"
           amount={`${filledPercent.toFixed(2)}% (${formatPrice(
             filledAmount,
-            quantityPrecision
+            quantityPrecision,
           )} ${symbol})`}
         />
         <InfoItem
           label="Order Not Filled Size:"
           amount={`${notFilledPercent.toFixed(2)}% (${formatPrice(
             notFilledAmount,
-            quantityPrecision
+            quantityPrecision,
           )} ${symbol})`}
         />
         {getActionButton()}

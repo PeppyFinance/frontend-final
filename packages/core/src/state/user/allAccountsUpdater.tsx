@@ -1,13 +1,13 @@
-import { useEffect, useMemo } from "react";
 import isEmpty from "lodash/isEmpty.js";
+import {useEffect, useMemo} from "react";
 
-import useWebSocket, { ReadyState } from "react-use-websocket";
-import { useUserAccounts } from "../../hooks/useAccounts";
-import { useAppDispatch } from "../declaration";
+import useWebSocket, {ReadyState} from "react-use-websocket";
+import {useUserAccounts} from "../../hooks/useAccounts";
 import useIsWindowVisible from "../../lib/hooks/useIsWindowVisible";
-import { useHedgerInfo } from "../hedger/hooks";
-import { AccountUpnl } from "../../types/user";
-import { updateAllAccountsUpnl } from "./actions";
+import {AccountUpnl} from "../../types/user";
+import {useAppDispatch} from "../declaration";
+import {useHedgerInfo} from "../hedger/hooks";
+import {updateAllAccountsUpnl} from "./actions";
 
 export function AllAccountsUpdater() {
   const accounts = useUserAccounts();
@@ -18,7 +18,7 @@ export function AllAccountsUpdater() {
 
   return (
     <>
-      {accounts.accounts.map((account) => (
+      {accounts.accounts.map(account => (
         <AccountUpdater
           key={account.accountAddress}
           account={account.accountAddress}
@@ -28,10 +28,10 @@ export function AllAccountsUpdater() {
   );
 }
 
-function AccountUpdater({ account }: { account: string }) {
+function AccountUpdater({account}: {account: string}) {
   const dispatch = useAppDispatch();
   const windowVisible = useIsWindowVisible();
-  const { webSocketUpnlUrl } = useHedgerInfo() || {};
+  const {webSocketUpnlUrl} = useHedgerInfo() || {};
 
   const url = useMemo(() => {
     if (webSocketUpnlUrl) {
@@ -48,7 +48,7 @@ function AccountUpdater({ account }: { account: string }) {
     reconnectAttempts: 2,
     onOpen: () => console.log("websocket connection opened"),
     shouldReconnect: () => true,
-    onError: (e) => console.log("WebSocket connection has error ", e),
+    onError: e => console.log("WebSocket connection has error ", e),
   });
 
   useEffect(() => {
@@ -67,7 +67,7 @@ function AccountUpdater({ account }: { account: string }) {
               upnl: 0,
               timestamp: 0,
             },
-          })
+          }),
         );
         return;
       }
@@ -79,7 +79,7 @@ function AccountUpdater({ account }: { account: string }) {
         timestamp: msg.timestamp,
       };
 
-      dispatch(updateAllAccountsUpnl({ account, upnl: lastMessage }));
+      dispatch(updateAllAccountsUpnl({account, upnl: lastMessage}));
     } catch (error) {
       dispatch(
         updateAllAccountsUpnl({
@@ -88,7 +88,7 @@ function AccountUpdater({ account }: { account: string }) {
             upnl: 0,
             timestamp: 0,
           },
-        })
+        }),
       );
     }
   }, [dispatch, upnlWebSocketMessage, windowVisible]);

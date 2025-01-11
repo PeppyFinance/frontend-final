@@ -1,30 +1,26 @@
-import { useMemo } from "react";
+import {useMemo} from "react";
 import styled from "styled-components";
 
-import {
-  BN_ZERO,
-  formatAmount,
-  toBN,
-} from "@symmio/frontend-sdk/utils/numbers";
-import { OrderType } from "@symmio/frontend-sdk/types/trade";
-import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
-import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
+import {useCollateralToken} from "@symmio/frontend-sdk/constants/tokens";
+import {OrderType} from "@symmio/frontend-sdk/types/trade";
+import {BN_ZERO, formatAmount, toBN} from "@symmio/frontend-sdk/utils/numbers";
+import {useGetTokenWithFallbackChainId} from "@symmio/frontend-sdk/utils/token";
 
+import useTradePage, {
+  useLockedValues,
+  useNotionalValue,
+} from "@symmio/frontend-sdk/hooks/useTradePage";
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 import {
   useActiveMarket,
   useLimitPrice,
   useOrderType,
 } from "@symmio/frontend-sdk/state/trade/hooks";
-import useTradePage, {
-  useLockedValues,
-  useNotionalValue,
-} from "@symmio/frontend-sdk/hooks/useTradePage";
 
+import {useLeverage} from "@symmio/frontend-sdk/state/user/hooks";
+import {Column} from "components/Column";
 import InfoItem from "components/InfoItem";
-import { Column } from "components/Column";
-import { RowBetween, RowEnd } from "components/Row";
-import { useLeverage } from "@symmio/frontend-sdk/state/user/hooks";
+import {RowBetween, RowEnd} from "components/Row";
 
 const Wrapper = styled(Column)`
   padding: 0px;
@@ -36,8 +32,8 @@ const PositionWrap = styled(RowBetween)`
   font-weight: 400;
   padding: 0px 3px;
   white-space: nowrap;
-  color: ${({ theme }) => theme.text3};
-  ${({ theme }) => theme.mediaWidth.upToMedium`
+  color: ${({theme}) => theme.text3};
+  ${({theme}) => theme.mediaWidth.upToMedium`
     font-size: 10px;
   `};
 `;
@@ -45,50 +41,50 @@ const PositionWrap = styled(RowBetween)`
 const PositionValue = styled(RowEnd)`
   gap: 4px;
   font-size: 12px;
-  color: ${({ theme }) => theme.text3};
+  color: ${({theme}) => theme.text3};
   & > * {
     &:last-child {
       font-weight: 500;
-      color: ${({ theme }) => theme.text0};
+      color: ${({theme}) => theme.text0};
     }
   }
-  ${({ theme }) => theme.mediaWidth.upToMedium`
+  ${({theme}) => theme.mediaWidth.upToMedium`
     font-size: 10px;
   `};
 `;
 
 export default function TradeOverview() {
-  const { chainId } = useActiveWagmi();
+  const {chainId} = useActiveWagmi();
   const market = useActiveMarket();
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(
     COLLATERAL_TOKEN,
-    chainId
+    chainId,
   );
   const limitPrice = useLimitPrice();
   const orderType = useOrderType();
 
-  const { price: markPrice, formattedAmounts } = useTradePage();
+  const {price: markPrice, formattedAmounts} = useTradePage();
 
   const price = useMemo(
     () => (orderType === OrderType.MARKET ? markPrice : limitPrice),
-    [orderType, markPrice, limitPrice]
+    [orderType, markPrice, limitPrice],
   );
 
   const quantityAsset = useMemo(
     () =>
       toBN(formattedAmounts[1]).isNaN() ? BN_ZERO : toBN(formattedAmounts[1]),
-    [formattedAmounts]
+    [formattedAmounts],
   );
   const notionalValue = useNotionalValue(quantityAsset.toString(), price);
-  const { cva, lf } = useLockedValues(notionalValue);
+  const {cva, lf} = useLockedValues(notionalValue);
 
   const tradingFee = useMemo(
     () =>
       market?.tradingFee
         ? toBN(notionalValue).times(market.tradingFee).toString()
         : "0",
-    [notionalValue, market]
+    [notionalValue, market],
   );
   const userLeverage = useLeverage();
 
@@ -129,11 +125,11 @@ export default function TradeOverview() {
               ? `${formatAmount(
                   toBN(tradingFee).div(2),
                   3,
-                  true
+                  true,
                 )} (OPEN) / ${formatAmount(
                   toBN(tradingFee).div(2),
                   3,
-                  true
+                  true,
                 )} (CLOSE) ${collateralCurrency?.symbol}`
               : `0 (OPEN) / 0 (CLOSE) ${collateralCurrency?.symbol}`
           }`}

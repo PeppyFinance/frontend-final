@@ -1,17 +1,16 @@
-import React from "react";
+import {useDetectAdBlock} from "adblock-detect-react";
 import Image from "next/legacy/image";
 import styled from "styled-components";
-import { useDetectAdBlock } from "adblock-detect-react";
 
 import LOADING_CHART from "/public/static/images/etc/LoadChart.svg";
 
-import { useActiveMarket } from "@symmio/frontend-sdk/state/trade/hooks";
+import {useActiveMarket} from "@symmio/frontend-sdk/state/trade/hooks";
 
-import { Card } from "components/Card";
+import {Card} from "components/Card";
 // TODO: replace icon
-import { LottieCloverfield } from "components/Icons";
 import TVChart from "components/App/Chart/TVChart";
-import { RowCenter } from "components/Row";
+import {LottieCloverfield} from "components/Icons";
+import {RowCenter} from "components/Row";
 
 const Wrapper = styled(Card)`
   display: flex;
@@ -20,7 +19,7 @@ const Wrapper = styled(Card)`
   padding: 0;
   position: relative;
   justify-content: center;
-  background: ${({ theme }) => theme.bg0};
+  background: ${({theme}) => theme.bg0};
   border: none;
 `;
 
@@ -28,13 +27,13 @@ const AdBlockText = styled(RowCenter)`
   width: 100%;
   font-size: 16px;
   margin-bottom: 20px;
-  color: ${({ theme }) => theme.text1};
+  color: ${({theme}) => theme.text1};
 `;
 
 const WarningText = styled.span`
   font-size: 16px;
   margin: 0px 4px;
-  color: ${({ theme }) => theme.warning0};
+  color: ${({theme}) => theme.warning0};
 `;
 
 const LoadChartImage = styled.div`

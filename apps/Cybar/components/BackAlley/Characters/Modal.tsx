@@ -1,8 +1,8 @@
-import { useCharacterContext } from "components/BackAlley/characterContext";
-import styled, { keyframes } from "styled-components";
-import { DialogButton, DialogButtonText } from "./DialogButton";
-import { Header } from "./Header";
-import { Z_INDEX } from "theme";
+import {useCharacterContext} from "components/BackAlley/characterContext";
+import styled, {keyframes} from "styled-components";
+import {Z_INDEX} from "theme";
+import {DialogButton, DialogButtonText} from "./DialogButton";
+import {Header} from "./Header";
 
 const growAnimation = keyframes`
   from {
@@ -50,7 +50,7 @@ const Modal = styled.div`
   }
 `;
 
-const ModalBody = styled.div<{ isClickable: boolean }>`
+const ModalBody = styled.div<{isClickable: boolean}>`
   height: auto;
   flex-grow: 1;
   width: 100%;
@@ -66,7 +66,7 @@ const ModalBody = styled.div<{ isClickable: boolean }>`
   overflow: visible;
   border-radius: 0px 0px 18px 18px;
   padding: 24px 16px 16px 16px;
-  cursor: ${(props) => (props.isClickable ? "pointer" : "default")};
+  cursor: ${props => (props.isClickable ? "pointer" : "default")};
 
   @media screen and (min-width: 720px) {
     padding: 48px 48px 24px 48px;
@@ -106,9 +106,9 @@ const ButtonWrapper = styled.div`
 `;
 
 export const CharacterModal = () => {
-  const { characterState, characterDispatch } = useCharacterContext();
+  const {characterState, characterDispatch} = useCharacterContext();
   const onClose = () => {
-    characterDispatch({ type: "SET_INACTIVE" });
+    characterDispatch({type: "SET_INACTIVE"});
   };
 
   const onAnswer = (dialogId: number | undefined) => {
@@ -160,7 +160,7 @@ export const CharacterModal = () => {
             <ModalBodyText>{characterState.dialog.text}</ModalBodyText>
             <ButtonWrapper>
               <>
-                {characterState.dialog.answers?.map((answer) => (
+                {characterState.dialog.answers?.map(answer => (
                   <DialogButton
                     key={answer.text}
                     onClick={() => onAnswer(answer.nextDialog)}

@@ -1,14 +1,14 @@
-import { Token, WETH9 } from "@uniswap/sdk-core";
-import { duplicateTokenByAddressMap } from "../utils/token";
-import { SupportedChainId } from "./chains";
+import {Token, WETH9} from "@uniswap/sdk-core";
 import {
   useCollateralAddress,
-  useCollateralSymbol,
   useCollateralDecimal,
+  useCollateralSymbol,
   useUSDCAddress,
   useV3Ids,
 } from "../state/chains/hooks";
-import { ChainInfo } from "./chainInfo";
+import {duplicateTokenByAddressMap} from "../utils/token";
+import {ChainInfo} from "./chainInfo";
+import {SupportedChainId} from "./chains";
 
 /* =====================================
                              TOKENS
@@ -28,7 +28,7 @@ export function useCollateralToken() {
     6,
     COLLATERAL_SYMBOL,
     COLLATERAL_SYMBOL,
-    COLLATERAL_DECIMALS
+    COLLATERAL_DECIMALS,
   );
 }
 
@@ -47,65 +47,64 @@ export function useTokenShorthand() {
 /* =====================================
                              WRAPPED TOKENS
 ===================================== */
-export const WRAPPED_NATIVE_CURRENCY: { [chainId: number]: Token | undefined } =
-  {
-    ...(WETH9 as Record<SupportedChainId, Token>),
+export const WRAPPED_NATIVE_CURRENCY: {[chainId: number]: Token | undefined} = {
+  ...(WETH9 as Record<SupportedChainId, Token>),
 
-    [SupportedChainId.ARBITRUM]: new Token(
-      SupportedChainId.ARBITRUM,
-      ChainInfo[SupportedChainId.ARBITRUM].WRAPPED_NATIVE_ADDRESS,
-      18,
-      "WETH",
-      "Wrapped Ether"
-    ),
-    [SupportedChainId.BASE]: new Token(
-      SupportedChainId.BASE,
-      ChainInfo[SupportedChainId.BASE].WRAPPED_NATIVE_ADDRESS,
-      18,
-      "WETH",
-      "Wrapped Ether"
-    ),
-    [SupportedChainId.POLYGON]: new Token(
-      SupportedChainId.POLYGON,
-      ChainInfo[SupportedChainId.POLYGON].WRAPPED_NATIVE_ADDRESS,
-      18,
-      "WMATIC",
-      "Wrapped MATIC"
-    ),
-    [SupportedChainId.FANTOM]: new Token(
-      SupportedChainId.FANTOM,
-      ChainInfo[SupportedChainId.FANTOM].WRAPPED_NATIVE_ADDRESS,
-      18,
-      "WFTM",
-      "Wrapped Fantom"
-    ),
-    [SupportedChainId.BSC]: new Token(
-      SupportedChainId.BSC,
-      ChainInfo[SupportedChainId.BSC].WRAPPED_NATIVE_ADDRESS,
-      18,
-      "WBNB",
-      "Wrapped BNB"
-    ),
-    [SupportedChainId.BSC_TESTNET]: new Token(
-      SupportedChainId.BSC_TESTNET,
-      ChainInfo[SupportedChainId.BSC_TESTNET].WRAPPED_NATIVE_ADDRESS,
-      18,
-      "tBNB",
-      "test BNB"
-    ),
+  [SupportedChainId.ARBITRUM]: new Token(
+    SupportedChainId.ARBITRUM,
+    ChainInfo[SupportedChainId.ARBITRUM].WRAPPED_NATIVE_ADDRESS,
+    18,
+    "WETH",
+    "Wrapped Ether",
+  ),
+  [SupportedChainId.BASE]: new Token(
+    SupportedChainId.BASE,
+    ChainInfo[SupportedChainId.BASE].WRAPPED_NATIVE_ADDRESS,
+    18,
+    "WETH",
+    "Wrapped Ether",
+  ),
+  [SupportedChainId.POLYGON]: new Token(
+    SupportedChainId.POLYGON,
+    ChainInfo[SupportedChainId.POLYGON].WRAPPED_NATIVE_ADDRESS,
+    18,
+    "WMATIC",
+    "Wrapped MATIC",
+  ),
+  [SupportedChainId.FANTOM]: new Token(
+    SupportedChainId.FANTOM,
+    ChainInfo[SupportedChainId.FANTOM].WRAPPED_NATIVE_ADDRESS,
+    18,
+    "WFTM",
+    "Wrapped Fantom",
+  ),
+  [SupportedChainId.BSC]: new Token(
+    SupportedChainId.BSC,
+    ChainInfo[SupportedChainId.BSC].WRAPPED_NATIVE_ADDRESS,
+    18,
+    "WBNB",
+    "Wrapped BNB",
+  ),
+  [SupportedChainId.BSC_TESTNET]: new Token(
+    SupportedChainId.BSC_TESTNET,
+    ChainInfo[SupportedChainId.BSC_TESTNET].WRAPPED_NATIVE_ADDRESS,
+    18,
+    "tBNB",
+    "test BNB",
+  ),
 
-    [SupportedChainId.MANTLE]: new Token(
-      SupportedChainId.MANTLE,
-      ChainInfo[SupportedChainId.MANTLE].WRAPPED_NATIVE_ADDRESS,
-      18,
-      "WMANTLE",
-      "Wrapped MANTLE"
-    ),
-    [SupportedChainId.BLAST]: new Token(
-      SupportedChainId.BLAST,
-      ChainInfo[SupportedChainId.BLAST].WRAPPED_NATIVE_ADDRESS,
-      18,
-      "WETH",
-      "Wrapped Ether"
-    ),
-  };
+  [SupportedChainId.MANTLE]: new Token(
+    SupportedChainId.MANTLE,
+    ChainInfo[SupportedChainId.MANTLE].WRAPPED_NATIVE_ADDRESS,
+    18,
+    "WMANTLE",
+    "Wrapped MANTLE",
+  ),
+  [SupportedChainId.BLAST]: new Token(
+    SupportedChainId.BLAST,
+    ChainInfo[SupportedChainId.BLAST].WRAPPED_NATIVE_ADDRESS,
+    18,
+    "WETH",
+    "Wrapped Ether",
+  ),
+};

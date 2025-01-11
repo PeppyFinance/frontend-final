@@ -1,63 +1,63 @@
-import { useTheme } from "styled-components";
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
+import {useTheme} from "styled-components";
 
-import { useCheckQuoteIsExpired } from "lib/hooks/useCheckQuoteIsExpired";
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
+import {useCheckQuoteIsExpired} from "lib/hooks/useCheckQuoteIsExpired";
 
-import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
-import { Quote, QuoteStatus } from "@symmio/frontend-sdk/types/quote";
-import { PositionType } from "@symmio/frontend-sdk/types/trade";
+import {useCollateralToken} from "@symmio/frontend-sdk/constants/tokens";
+import {Quote, QuoteStatus} from "@symmio/frontend-sdk/types/quote";
+import {PositionType} from "@symmio/frontend-sdk/types/trade";
+import {
+  formatAmount,
+  formatCurrency,
+  toBN,
+} from "@symmio/frontend-sdk/utils/numbers";
 import {
   formatTimestamp,
   getRemainingTime,
 } from "@symmio/frontend-sdk/utils/time";
-import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
-import {
-  formatAmount,
-  toBN,
-  formatCurrency,
-} from "@symmio/frontend-sdk/utils/numbers";
+import {useGetTokenWithFallbackChainId} from "@symmio/frontend-sdk/utils/token";
 
-import { useMarketData } from "@symmio/frontend-sdk/state/hedger/hooks";
-import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
 import useBidAskPrice from "@symmio/frontend-sdk/hooks/useBidAskPrice";
+import useFetchFundingRate, {
+  shouldPayFundingRate,
+  useGetPaidAmount,
+} from "@symmio/frontend-sdk/hooks/useFundingRate";
+import {useMarket} from "@symmio/frontend-sdk/hooks/useMarkets";
 import {
   useLockedMargin,
   useQuoteLeverage,
   useQuoteSize,
   useQuoteUpnlAndPnl,
 } from "@symmio/frontend-sdk/hooks/useQuotes";
-import { useNotionalValue } from "@symmio/frontend-sdk/hooks/useTradePage";
-import { FundingRateData } from "@symmio/frontend-sdk/state/hedger/types";
-import useFetchFundingRate, {
-  shouldPayFundingRate,
-  useGetPaidAmount,
-} from "@symmio/frontend-sdk/hooks/useFundingRate";
-import { ApiState } from "@symmio/frontend-sdk/types/api";
+import {useNotionalValue} from "@symmio/frontend-sdk/hooks/useTradePage";
+import {useMarketData} from "@symmio/frontend-sdk/state/hedger/hooks";
+import {FundingRateData} from "@symmio/frontend-sdk/state/hedger/types";
+import {ApiState} from "@symmio/frontend-sdk/types/api";
 
-import { RowEnd, Row as RowComponent } from "components/Row";
-import ClosePendingDetails from "./ClosedSizeDetails/ClosePendingDetails";
-import ClosedAmountDetails from "./ClosedSizeDetails/ClosedAmountDetails";
-import { Loader, LongArrow, ShortArrow } from "components/Icons";
-import BlinkingPrice from "components/App/FavoriteBar/BlinkingPrice";
-import { PositionActionButton } from "components/Button";
 import {
-  Wrapper,
-  MarketName,
-  Leverage,
-  QuoteData,
-  PositionInfoBox,
-  TopWrap,
-  PositionPnl,
+  Chevron,
   ContentWrapper,
   DataWrap,
-  Label,
-  Value,
-  Row,
-  Chevron,
-  RowPnl,
   FlexColumn,
+  Label,
+  Leverage,
+  MarketName,
+  PositionInfoBox,
+  PositionPnl,
+  QuoteData,
+  Row,
+  RowPnl,
+  TopWrap,
+  Value,
+  Wrapper,
 } from "components/App/AccountData/PositionDetails/styles";
+import BlinkingPrice from "components/App/FavoriteBar/BlinkingPrice";
+import {PositionActionButton} from "components/Button";
+import {Loader, LongArrow, ShortArrow} from "components/Icons";
+import {Row as RowComponent, RowEnd} from "components/Row";
+import ClosePendingDetails from "./ClosedSizeDetails/ClosePendingDetails";
+import ClosedAmountDetails from "./ClosedSizeDetails/ClosedAmountDetails";
 import PositionDetailsNavigator from "./PositionDetailsNavigator";
 
 export default function OpenedQuoteDetails({
@@ -76,7 +76,7 @@ export default function OpenedQuoteDetails({
   mobileVersion: boolean;
 }): JSX.Element {
   const theme = useTheme();
-  const { chainId } = useActiveWagmi();
+  const {chainId} = useActiveWagmi();
   const {
     id,
     positionType,
@@ -88,12 +88,12 @@ export default function OpenedQuoteDetails({
     statusModifyTimestamp,
   } = quote;
   const market = useMarket(marketId);
-  const { symbol, name, asset } = market || {};
-  const { ask: askPrice, bid: bidPrice } = useBidAskPrice(market);
+  const {symbol, name, asset} = market || {};
+  const {ask: askPrice, bid: bidPrice} = useBidAskPrice(market);
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(
     COLLATERAL_TOKEN,
-    chainId
+    chainId,
   );
   const marketData = useMarketData(name);
   const quoteSize = useQuoteSize(quote);
@@ -105,10 +105,10 @@ export default function OpenedQuoteDetails({
     quote,
     marketData?.markPrice || 0,
     undefined,
-    undefined
+    undefined,
   );
   const [expanded, setExpanded] = useState(!mobileVersion);
-  const { expired } = useCheckQuoteIsExpired(quote);
+  const {expired} = useCheckQuoteIsExpired(quote);
 
   useEffect(() => {
     if (!mobileVersion) {
@@ -176,7 +176,7 @@ export default function OpenedQuoteDetails({
               <RowPnl>
                 <Label>PNL:</Label>
                 <PositionPnl color={PNLColor}>{`${PNL} (${Math.abs(
-                  Number(PNLPercent)
+                  Number(PNLPercent),
                 )}%)`}</PositionPnl>
               </RowPnl>
             ) : (
@@ -216,7 +216,7 @@ export default function OpenedQuoteDetails({
                 <Label>PNL:</Label>
                 <RowEnd>
                   <PositionPnl color={PNLColor}>{`${PNL} (${Math.abs(
-                    Number(PNLPercent)
+                    Number(PNLPercent),
                   )}%)`}</PositionPnl>
                 </RowEnd>
               </Row>
@@ -342,11 +342,11 @@ export default function OpenedQuoteDetails({
               <Value>{`${formatAmount(
                 toBN(platformFee).div(2),
                 3,
-                true
+                true,
               )} (OPEN) / ${formatAmount(
                 toBN(platformFee).div(2),
                 3,
-                true
+                true,
               )} (CLOSE) ${collateralCurrency?.symbol}`}</Value>
             </Row>
           </ContentWrapper>
@@ -373,7 +373,7 @@ function FundingRate({
 }) {
   const theme = useTheme();
   const fundingRates = useFetchFundingRate(
-    quoteStatus !== QuoteStatus.CLOSED ? name : undefined
+    quoteStatus !== QuoteStatus.CLOSED ? name : undefined,
   );
   const fundingRate =
     name && fundingRates
@@ -384,11 +384,11 @@ function FundingRate({
           next_funding_rate_short: "",
         } as FundingRateData);
 
-  const { paidAmount, status } = useGetPaidAmount(quoteId);
+  const {paidAmount, status} = useGetPaidAmount(quoteId);
 
-  const { next_funding_rate_long, next_funding_rate_short, next_funding_time } =
+  const {next_funding_rate_long, next_funding_rate_short, next_funding_time} =
     fundingRate;
-  const { diff, hours, minutes, seconds } = getRemainingTime(next_funding_time);
+  const {diff, hours, minutes, seconds} = getRemainingTime(next_funding_time);
 
   const nextFunding =
     positionType === PositionType.LONG
@@ -398,7 +398,7 @@ function FundingRate({
   const color = shouldPayFundingRate(
     positionType,
     next_funding_rate_long,
-    next_funding_rate_short
+    next_funding_rate_short,
   )
     ? theme.negative
     : theme.positive;
@@ -414,8 +414,8 @@ function FundingRate({
             paidAmountBN.lt(0)
               ? theme.positive
               : paidAmountBN.isEqualTo(0)
-              ? theme.text0
-              : theme.negative
+                ? theme.text0
+                : theme.negative
           }
         >
           {status === ApiState.LOADING ? (
@@ -424,7 +424,7 @@ function FundingRate({
             `${formatAmount(
               paidAmountBN.isGreaterThanOrEqualTo(1) || paidAmountBN.lt(0)
                 ? paidAmountBN.abs()
-                : "0"
+                : "0",
             )} ${symbol}`
           )}
         </PositionPnl>
@@ -436,7 +436,7 @@ function FundingRate({
             <PositionPnl color={color}>
               {!toBN(nextFunding).isNaN()
                 ? `${formatAmount(
-                    toBN(notionalValue).times(nextFunding).abs()
+                    toBN(notionalValue).times(nextFunding).abs(),
                   )} `
                 : "-"}
             </PositionPnl>

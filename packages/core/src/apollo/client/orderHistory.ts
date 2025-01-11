@@ -1,12 +1,12 @@
-import { createApolloClient } from "./index";
 import useActiveWagmi from "../../lib/hooks/useActiveWagmi";
-import { useOrderHistorySubgraphAddress } from "../../state/chains";
+import {useOrderHistorySubgraphAddress} from "../../state/chains";
+import {createApolloClient} from "./index";
 
 // ORDER HISTORY SUBGRAPH
 const apolloClients = {};
 
 export function useOrderHistoryApolloClient() {
-  const { chainId } = useActiveWagmi();
+  const {chainId} = useActiveWagmi();
   const uri = useOrderHistorySubgraphAddress();
 
   if (!chainId || !uri) {

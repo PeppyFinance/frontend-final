@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import {useCallback, useMemo} from "react";
 
 import {
   createTransactionCallback,
@@ -6,26 +6,26 @@ import {
 } from "../utils/web3";
 
 import useActiveWagmi from "../lib/hooks/useActiveWagmi";
-import { useSupportedChainId } from "../lib/hooks/useSupportedChainId";
-import { useTransactionAdder } from "../state/transactions/hooks";
+import {useSupportedChainId} from "../lib/hooks/useSupportedChainId";
+import {useTransactionAdder} from "../state/transactions/hooks";
 import {
   AddAccountTransactionInfo,
   TransactionType,
 } from "../state/transactions/types";
 
-import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
-import { Abi, Address, encodeFunctionData } from "viem";
-import { ConstructCallReturnType } from "../types/web3";
-import { useWalletClient } from "wagmi";
-import { useMultiAccountAddress, useWagmiConfig } from "../state/chains";
-import { MULTI_ACCOUNT_ABI } from "../constants";
+import {useAddRecentTransaction} from "@rainbow-me/rainbowkit";
+import {Abi, Address, encodeFunctionData} from "viem";
+import {useWalletClient} from "wagmi";
+import {MULTI_ACCOUNT_ABI} from "../constants";
+import {useMultiAccountAddress, useWagmiConfig} from "../state/chains";
+import {ConstructCallReturnType} from "../types/web3";
 
 export function useAddAccountToContract(accountName: string): {
   state: TransactionCallbackState;
   callback: null | (() => Promise<any>);
   error: string | null;
 } {
-  const { account, chainId } = useActiveWagmi();
+  const {account, chainId} = useActiveWagmi();
   const addTransaction = useTransactionAdder();
   const isSupportedChainId = useSupportedChainId();
   const MULTI_ACCOUNT_ADDRESS = useMultiAccountAddress();
@@ -106,7 +106,7 @@ export function useAddAccountToContract(accountName: string): {
           addRecentTransaction,
           txInfo,
           wagmiConfig,
-          summary
+          summary,
         ),
     };
   }, [
@@ -126,8 +126,8 @@ export function useSignMessage(): {
   callback: null | ((message: string) => Promise<string>);
   error: string | null;
 } {
-  const { account, chainId } = useActiveWagmi();
-  const { data: provider } = useWalletClient();
+  const {account, chainId} = useActiveWagmi();
+  const {data: provider} = useWalletClient();
   const MULTI_ACCOUNT_ADDRESS = useMultiAccountAddress();
 
   return useMemo(() => {
@@ -152,11 +152,11 @@ export function useSignMessage(): {
           throw new Error("No message provided");
         }
         return provider
-          .signMessage({ message })
-          .then((response) => {
+          .signMessage({message})
+          .then(response => {
             return response;
           })
-          .catch((error) => {
+          .catch(error => {
             // if the user rejected the tx, pass this along
             if (error?.code === 4001) {
               throw new Error("Transaction rejected.");

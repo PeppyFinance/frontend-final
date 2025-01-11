@@ -1,64 +1,51 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import styled, { useTheme } from "styled-components";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import toast from "react-hot-toast";
+import styled, {useTheme} from "styled-components";
 
-import { WEB_SETTING } from "@symmio/frontend-sdk/config";
-import { Quote } from "@symmio/frontend-sdk/types/quote";
-import { makeHttpRequest } from "@symmio/frontend-sdk/utils/http";
-import { PriceRange } from "@symmio/frontend-sdk/state/hedger/types";
+import {WEB_SETTING} from "@symmio/frontend-sdk/config";
+import {useCollateralToken} from "@symmio/frontend-sdk/constants/tokens";
+import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
+import {PriceRange} from "@symmio/frontend-sdk/state/hedger/types";
+import {Quote} from "@symmio/frontend-sdk/types/quote";
 import {
   ErrorState,
   OrderType,
   PositionType,
 } from "@symmio/frontend-sdk/types/trade";
+import {makeHttpRequest} from "@symmio/frontend-sdk/utils/http";
 import {
   BN_ZERO,
-  formatAmount,
-  toBN,
-  formatPrice,
   RoundMode,
+  formatAmount,
+  formatPrice,
+  toBN,
 } from "@symmio/frontend-sdk/utils/numbers";
-import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
-import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
-import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
-import { calculateString, calculationPattern } from "utils/calculationalString";
+import {useGetTokenWithFallbackChainId} from "@symmio/frontend-sdk/utils/token";
+import {calculateString, calculationPattern} from "utils/calculationalString";
 
+import {useMarketData} from "@symmio/frontend-sdk/state/hedger/hooks";
 import {
   useActiveAccount,
   useExpertMode,
 } from "@symmio/frontend-sdk/state/user/hooks";
-import { useMarketData } from "@symmio/frontend-sdk/state/hedger/hooks";
 
-import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
-import { getAppNameHeader } from "@symmio/frontend-sdk/state/hedger/thunks";
+import {useMarket} from "@symmio/frontend-sdk/hooks/useMarkets";
+import {getAppNameHeader} from "@symmio/frontend-sdk/state/hedger/thunks";
 
+import useInstantClose from "@symmio/frontend-sdk/hooks/useInstantClose";
 import {
   useClosingLastMarketPrice,
-  useQuoteUpnlAndPnl,
-  useQuoteLeverage,
   useInstantCloseNotifications,
+  useQuoteLeverage,
+  useQuoteUpnlAndPnl,
 } from "@symmio/frontend-sdk/hooks/useQuotes";
-import useInstantClose from "@symmio/frontend-sdk/hooks/useInstantClose";
-import { useHedgerInfo } from "@symmio/frontend-sdk/state/hedger/hooks";
-import { useIsHavePendingTransaction } from "@symmio/frontend-sdk/state/transactions/hooks";
+import {useHedgerInfo} from "@symmio/frontend-sdk/state/hedger/hooks";
+import {useIsHavePendingTransaction} from "@symmio/frontend-sdk/state/transactions/hooks";
 
-import { useClosePosition } from "@symmio/frontend-sdk/callbacks/useClosePosition";
-import { useDelegateAccess } from "@symmio/frontend-sdk/callbacks/useDelegateAccess";
-import { useAppName } from "@symmio/frontend-sdk/state/chains/hooks";
+import {useClosePosition} from "@symmio/frontend-sdk/callbacks/useClosePosition";
+import {useDelegateAccess} from "@symmio/frontend-sdk/callbacks/useDelegateAccess";
+import {useAppName} from "@symmio/frontend-sdk/state/chains/hooks";
 
-import ConnectWallet from "components/ConnectWallet";
-import { TabModal } from "components/Tab";
-import { Modal, ModalHeader } from "components/Modal";
-import { CustomInputBox2 } from "components/InputBox";
-import { PrimaryButton } from "components/Button";
-import { DotFlashing } from "components/Icons";
-import MarketClosePanel from "./MarketClose";
-import LimitClose from "./LimitClose";
-import Column from "components/Column";
-import InfoItem, { DataRow, Label } from "components/InfoItem";
-import { PnlValue } from "components/App/UserPanel/Common";
-import GuidesDropDown from "components/App/UserPanel/CloseModal/GuidesDropdown";
-import ErrorButton from "components/Button/ErrorButton";
 import {
   DEFAULT_PRECISION,
   MARKET_PRICE_COEFFICIENT,
@@ -67,7 +54,20 @@ import {
   useInstantCloseDataCallback,
   useInstantClosesData,
 } from "@symmio/frontend-sdk/state/quotes/hooks";
-import { InstantCloseStatus } from "@symmio/frontend-sdk/state/quotes/types";
+import {InstantCloseStatus} from "@symmio/frontend-sdk/state/quotes/types";
+import GuidesDropDown from "components/App/UserPanel/CloseModal/GuidesDropdown";
+import {PnlValue} from "components/App/UserPanel/Common";
+import {PrimaryButton} from "components/Button";
+import ErrorButton from "components/Button/ErrorButton";
+import Column from "components/Column";
+import ConnectWallet from "components/ConnectWallet";
+import {DotFlashing} from "components/Icons";
+import InfoItem, {DataRow, Label} from "components/InfoItem";
+import {CustomInputBox2} from "components/InputBox";
+import {Modal, ModalHeader} from "components/Modal";
+import {TabModal} from "components/Tab";
+import LimitClose from "./LimitClose";
+import MarketClosePanel from "./MarketClose";
 
 const Wrapper = styled(Column)`
   padding: 12px;
@@ -83,7 +83,7 @@ const Wrapper = styled(Column)`
       margin-top: 20px;
     }
   }
-  ${({ theme }) => theme.mediaWidth.upToMedium`
+  ${({theme}) => theme.mediaWidth.upToMedium`
     padding: 1rem;
   `};
 `;
@@ -118,9 +118,8 @@ export default function CloseModal({
   quote: Quote | null;
 }) {
   const theme = useTheme();
-  const { chainId } = useActiveWagmi();
-  const { CVA, partyAMM, LF, openedPrice, marketId, positionType } =
-    quote || {};
+  const {chainId} = useActiveWagmi();
+  const {CVA, partyAMM, LF, openedPrice, marketId, positionType} = quote || {};
   const market = useMarket(marketId);
   const {
     name: marketName,
@@ -138,7 +137,7 @@ export default function CloseModal({
             .minus(quote.closedAmount)
             .toFixed(quantityPrecision)
         : "0",
-    [quote, quantityPrecision]
+    [quote, quantityPrecision],
   );
 
   const [size, setSize] = useState(availableAmount);
@@ -150,23 +149,23 @@ export default function CloseModal({
   const isPendingTxs = useIsHavePendingTransaction();
   const appName = useAppName();
 
-  const { accountAddress: account } = useActiveAccount() || {};
+  const {accountAddress: account} = useActiveAccount() || {};
 
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(
     COLLATERAL_TOKEN,
-    chainId
+    chainId,
   );
 
   const correctOpenPrice = formatPrice(openedPrice ?? "0", pricePrecision);
   const marketData = useMarketData(marketName);
-  const { markPrice } = marketData || {};
-  const { baseUrl, fetchData } = useHedgerInfo() || {};
+  const {markPrice} = marketData || {};
+  const {baseUrl, fetchData} = useHedgerInfo() || {};
   const [calculationMode, setCalculationMode] = useState(false);
   const [calculationLoading, setCalculationLoading] = useState(false);
   const markPriceBN = useMemo(
     () => toBN(markPrice ?? "0").toString(),
-    [markPrice]
+    [markPrice],
   );
   const lastMarketPrice = useClosingLastMarketPrice(quote, market);
 
@@ -175,27 +174,27 @@ export default function CloseModal({
     quote ?? ({} as Quote),
     markPriceBN,
     undefined,
-    undefined
+    undefined,
   );
   const [, limitPnl] = useQuoteUpnlAndPnl(
     quote || ({} as Quote),
     marketData?.markPrice || 0,
     size,
-    price
+    price,
   );
 
   useEffect(() => {
     async function fetchPriceRange() {
       try {
         if (fetchData && marketName && baseUrl) {
-          const { href: priceRangeUrl } = new URL(
+          const {href: priceRangeUrl} = new URL(
             `price-range/${marketName}`,
-            baseUrl
+            baseUrl,
           );
           const tempResponse =
             await makeHttpRequest<FetchPriceRangeResponseType>(
               priceRangeUrl,
-              getAppNameHeader(appName)
+              getAppNameHeader(appName),
             );
           if (!tempResponse) return;
           const priceRangeRes = tempResponse;
@@ -216,11 +215,11 @@ export default function CloseModal({
     fetchPriceRange();
   }, [appName, baseUrl, fetchData, marketName]);
 
-  const { callback: closeCallback, error } = useClosePosition(
+  const {callback: closeCallback, error} = useClosePosition(
     quote,
     activeTab,
     price,
-    size
+    size,
   );
 
   const quoteLockedMargin = useMemo(() => {
@@ -232,7 +231,7 @@ export default function CloseModal({
   const outOfRangePrice = useMemo(() => {
     // check limit price range)
     if (!priceRange || !quote) return false;
-    const { name, maxPrice, minPrice } = priceRange;
+    const {name, maxPrice, minPrice} = priceRange;
     if (activeTab === OrderType.LIMIT && marketName === name) {
       if (quote.positionType === PositionType.LONG) {
         return toBN(price).isGreaterThan(maxPrice);
@@ -261,8 +260,8 @@ export default function CloseModal({
           .minus(minAcceptableQuoteValue)
           .div(quoteLockedMargin)
           .times(availableAmount),
-        quantityPrecision
-      )
+        quantityPrecision,
+      ),
     );
     return amount.toString();
   }, [
@@ -350,11 +349,11 @@ export default function CloseModal({
           .toFixed(pricePrecision ?? DEFAULT_PRECISION, RoundMode.ROUND_DOWN);
 
   const instantClosesData = useInstantClosesData();
-  const { handleInstantClose, text, loading } = useInstantClosePosition(
+  const {handleInstantClose, text, loading} = useInstantClosePosition(
     size,
     instantClosePrice,
     quote?.id,
-    closeModal
+    closeModal,
   );
   const instantCloseEnabled =
     quote &&
@@ -428,7 +427,7 @@ export default function CloseModal({
       size,
       availableAmount,
       quantityPrecision,
-      tempPrice
+      tempPrice,
     );
     setPrice(tempPrice);
     setSize(result);
@@ -517,7 +516,7 @@ export default function CloseModal({
           setActiveTab={setActiveTab}
           notionalValue={formatPrice(
             toBN(markPriceBN).times(availableAmount),
-            pricePrecision
+            pricePrecision,
           )}
           availableAmount={availableAmount}
           availableToClose={availableToClose}
@@ -530,9 +529,9 @@ export default function CloseModal({
               marketData ? (
                 <PnlValue
                   color={marketValueColor}
-                  style={{ fontSize: "12px" }}
+                  style={{fontSize: "12px"}}
                 >{`${marketValue} (${Math.abs(
-                  Number(marketValuePercent)
+                  Number(marketValuePercent),
                 )}%)`}</PnlValue>
               ) : (
                 "-"
@@ -542,9 +541,9 @@ export default function CloseModal({
             ) : (
               <PnlValue
                 color={limitValueColor}
-                style={{ fontSize: "12px" }}
+                style={{fontSize: "12px"}}
               >{`${limitValue} (${Math.abs(
-                Number(limitValuePercent)
+                Number(limitValuePercent),
               )}%)`}</PnlValue>
             )}
           </DataRow>
@@ -566,14 +565,14 @@ export function useInstantClosePosition(
   size: string,
   price: string | undefined,
   id: number | undefined,
-  closeModal?: () => void
+  closeModal?: () => void,
 ) {
-  const { instantClose, isAccessDelegated, cancelClose } = useInstantClose(
+  const {instantClose, isAccessDelegated, cancelClose} = useInstantClose(
     size,
     price,
-    id
+    id,
   );
-  const { callback: delegateAccessCallback, error } = useDelegateAccess();
+  const {callback: delegateAccessCallback, error} = useDelegateAccess();
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
   const addInstantCloseData = useInstantCloseDataCallback();

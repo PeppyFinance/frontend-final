@@ -1,5 +1,5 @@
-import { ChainInfo } from "../constants/chainInfo";
-import { SupportedChainId } from "../constants/chains";
+import {ChainInfo} from "../constants/chainInfo";
+import {SupportedChainId} from "../constants/chains";
 
 export enum ExplorerDataType {
   TRANSACTION = "transaction",
@@ -11,7 +11,7 @@ export function getExplorerLink(
   chainId: SupportedChainId,
   type: ExplorerDataType,
   data: string,
-  FALLBACK_CHAIN_ID: number
+  FALLBACK_CHAIN_ID: number,
 ): string {
   const base =
     chainId in ChainInfo

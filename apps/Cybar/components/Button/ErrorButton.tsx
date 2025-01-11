@@ -1,12 +1,12 @@
-import { useMemo } from "react";
-import styled, { useTheme } from "styled-components";
+import {useMemo} from "react";
+import styled, {useTheme} from "styled-components";
 
-import { ErrorState } from "@symmio/frontend-sdk/types/trade";
+import {ErrorState} from "@symmio/frontend-sdk/types/trade";
 
-import { PrimaryButton } from ".";
-import { ExclamationMark } from "components/Icons";
-import { ToolTipLeft } from "components/ToolTip";
-import { MAX_PENDINGS_POSITIONS_NUMBER } from "@symmio/frontend-sdk/constants/misc";
+import {MAX_PENDINGS_POSITIONS_NUMBER} from "@symmio/frontend-sdk/constants/misc";
+import {ExclamationMark} from "components/Icons";
+import {ToolTipLeft} from "components/ToolTip";
+import {PrimaryButton} from ".";
 
 const MainButton = styled(PrimaryButton).attrs({
   height: "48px",
@@ -21,11 +21,11 @@ const LiquidationButton = styled(PrimaryButton).attrs({
   cursor: default;
   font-weight: 700;
   border-radius: 8px;
-  color: ${({ theme }) => theme.negative};
-  background: ${({ theme }) => theme.bgLoose};
+  color: ${({theme}) => theme.negative};
+  background: ${({theme}) => theme.bgLoose};
   &:focus,
   &:hover {
-    background: ${({ theme }) => theme.bgLoose};
+    background: ${({theme}) => theme.bgLoose};
   }
 `;
 

@@ -1,13 +1,13 @@
 import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
-const { createAsyncThunk } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
-import { makeHttpRequest } from "../../utils/http";
+import {makeHttpRequest} from "../../utils/http";
 import {
-  NotificationResponse,
   NotificationDetails,
+  NotificationResponse,
   NotificationUrlResponseType,
 } from "./types";
-import { groupingNotification, toNotification } from "./updater";
+import {groupingNotification, toNotification} from "./updater";
+const {createAsyncThunk} = ((toolkitRaw as any).default ??
+  toolkitRaw) as typeof toolkitRaw;
 
 export const getNotifications = createAsyncThunk(
   "notification/getNotifications",
@@ -35,9 +35,9 @@ export const getNotifications = createAsyncThunk(
       modify_time_gte: timestamp,
     });
 
-    const { href: getNotificationsUrl } = new URL(
+    const {href: getNotificationsUrl} = new URL(
       `position-state/${start}/${size}`,
-      baseUrl
+      baseUrl,
     );
     let unreadNotifications: NotificationDetails[] = [];
 
@@ -57,16 +57,16 @@ export const getNotifications = createAsyncThunk(
         unreadNotifications = notificationsRes.value.position_state.map(
           (n: NotificationResponse) => {
             const notification: NotificationDetails = groupingNotification(
-              toNotification(n)
+              toNotification(n),
             );
             return notification;
-          }
+          },
         );
       }
     } catch (error) {
       console.error(error, "happened in getNotifications");
-      return { unreadNotifications: [] };
+      return {unreadNotifications: []};
     }
-    return { unreadNotifications };
-  }
+    return {unreadNotifications};
+  },
 );

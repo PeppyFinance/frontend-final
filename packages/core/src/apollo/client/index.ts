@@ -1,5 +1,5 @@
-import { ApolloClient, InMemoryCache } from "@apollo/client/core/index.js";
-import { HttpLink } from "@apollo/client/link/http/HttpLink.js";
+import {ApolloClient, InMemoryCache} from "@apollo/client/core/index.js";
+import {HttpLink} from "@apollo/client/link/http/HttpLink.js";
 
 export function createApolloClient(uri: string) {
   return new ApolloClient({

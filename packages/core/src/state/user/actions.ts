@@ -1,31 +1,31 @@
 import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
-const { createAction } = ((toolkitRaw as any).default ??
+import {ConnectionStatus} from "../../types/api";
+import {Account, AccountUpnl, UserPartyAStatDetail} from "../../types/user";
+import {AddedHedger, AddedHedgersData, TermsStatus} from "./types";
+const {createAction} = ((toolkitRaw as any).default ??
   toolkitRaw) as typeof toolkitRaw;
-import { AddedHedger, AddedHedgersData, TermsStatus } from "./types";
-import { Account, AccountUpnl, UserPartyAStatDetail } from "../../types/user";
-import { ConnectionStatus } from "../../types/api";
 
-export const updateMatchesDarkMode = createAction<{ matchesDarkMode: boolean }>(
-  "user/updateMatchesDarkMode"
+export const updateMatchesDarkMode = createAction<{matchesDarkMode: boolean}>(
+  "user/updateMatchesDarkMode",
 );
-export const updateUserDarkMode = createAction<{ userDarkMode: boolean }>(
-  "user/updateUserDarkMode"
+export const updateUserDarkMode = createAction<{userDarkMode: boolean}>(
+  "user/updateUserDarkMode",
 );
-export const updateUserExpertMode = createAction<{ userExpertMode: boolean }>(
-  "user/updateUserExpertMode"
+export const updateUserExpertMode = createAction<{userExpertMode: boolean}>(
+  "user/updateUserExpertMode",
 );
 export const updateUserFavorites = createAction<string[]>(
-  "user/updateUserFavorites"
+  "user/updateUserFavorites",
 );
 export const updateUserLeverage = createAction<number>(
-  "user/updateUserLeverage"
+  "user/updateUserLeverage",
 );
 export const updateUserSlippageTolerance = createAction<{
   userSlippageTolerance: "auto";
 }>("user/updateUserSlippageTolerance");
 export const updateAccount = createAction<Account | null>("user/updateAccount");
 export const updateAccountUpnl = createAction<AccountUpnl>(
-  "user/updateAccountUpnl"
+  "user/updateAccountUpnl",
 );
 
 export const updateUpnlWebSocketStatus = createAction<{
@@ -37,7 +37,7 @@ export const updateAccountPartyAStat = createAction<{
 }>("user/updateAccountPartyAStat");
 
 export const updateAcceptTerms = createAction<TermsStatus>(
-  "user/updateAcceptTerms"
+  "user/updateAcceptTerms",
 );
 export const updateAllAccountsUpnl = createAction<{
   account: string;
@@ -46,7 +46,7 @@ export const updateAllAccountsUpnl = createAction<{
 export const setFEName = createAction<string>("user/setFEName");
 
 export const setAllHedgerData = createAction<AddedHedgersData>(
-  "user/setAllHedgerData"
+  "user/setAllHedgerData",
 );
 
 export const addHedger = createAction<{

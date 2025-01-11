@@ -1,17 +1,17 @@
-import { useMemo } from "react";
+import {useMemo} from "react";
 
-import { TermsStatus } from "../state/user/types";
-import { useSupportedChainId } from "../lib/hooks/useSupportedChainId";
-import { useSingleContractMultipleMethods } from "../lib/hooks/multicall";
-import { WEB_SETTING } from "../config";
-import { useSignatureStoreAddress } from "../state/chains";
+import {WEB_SETTING} from "../config";
+import {SIGNATURE_STORE_ABI} from "../constants";
+import {useSingleContractMultipleMethods} from "../lib/hooks/multicall";
 import useActiveWagmi from "../lib/hooks/useActiveWagmi";
-import { SIGNATURE_STORE_ABI } from "../constants";
+import {useSupportedChainId} from "../lib/hooks/useSupportedChainId";
+import {useSignatureStoreAddress} from "../state/chains";
+import {TermsStatus} from "../state/user/types";
 
 export function useCheckSignedMessage(account: string | undefined): {
   isTermsAccepted: TermsStatus;
 } {
-  const { chainId } = useActiveWagmi();
+  const {chainId} = useActiveWagmi();
   const isSupportedChainId = useSupportedChainId();
   const SIGNATURE_STORE_ADDRESS = useSignatureStoreAddress();
 
@@ -27,11 +27,11 @@ export function useCheckSignedMessage(account: string | undefined): {
         : []
       : [];
 
-  const { data: signResult } = useSingleContractMultipleMethods(
+  const {data: signResult} = useSingleContractMultipleMethods(
     chainId ? SIGNATURE_STORE_ADDRESS[chainId] : "",
     SIGNATURE_STORE_ABI,
     calls,
-    { enabled: calls.length > 0 }
+    {enabled: calls.length > 0},
   );
 
   const isTermsAccepted = useMemo(
@@ -41,34 +41,34 @@ export function useCheckSignedMessage(account: string | undefined): {
           ? TermsStatus.ACCEPTED
           : TermsStatus.NOT_ACCEPTED
         : TermsStatus.UNCLEAR,
-    [signResult]
+    [signResult],
   );
 
   return useMemo(
     () => ({
       isTermsAccepted,
     }),
-    [isTermsAccepted]
+    [isTermsAccepted],
   );
 }
 
 export function useGetMessage(): string {
-  const { chainId } = useActiveWagmi();
+  const {chainId} = useActiveWagmi();
   const SIGNATURE_STORE_ADDRESS = useSignatureStoreAddress();
   const isSupportedChainId = useSupportedChainId();
 
   const calls =
     isSupportedChainId && WEB_SETTING.showSignModal
-      ? [{ functionName: "getCurrentVersionMessage", callInputs: [] }]
+      ? [{functionName: "getCurrentVersionMessage", callInputs: []}]
       : [];
 
-  const { data: messageResult } = useSingleContractMultipleMethods(
+  const {data: messageResult} = useSingleContractMultipleMethods(
     chainId ? SIGNATURE_STORE_ADDRESS[chainId] : "",
     SIGNATURE_STORE_ABI,
     calls,
     {
       enabled: calls.length > 0,
-    }
+    },
   );
 
   const message = useMemo(
@@ -76,7 +76,7 @@ export function useGetMessage(): string {
       messageResult && messageResult[0]
         ? (messageResult[0].result as string)
         : "",
-    [messageResult]
+    [messageResult],
   );
 
   return message;

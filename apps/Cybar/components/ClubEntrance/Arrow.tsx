@@ -1,6 +1,6 @@
-import { pulseAnimation } from "components/BackAlley/Characters/character";
+import {pulseAnimation} from "components/BackAlley/Characters/character";
 import Link from "next/link";
-import styled, { keyframes, useTheme } from "styled-components";
+import styled, {keyframes, useTheme} from "styled-components";
 
 const slideDesktopArrowBackalley = keyframes`
   50% {
@@ -76,7 +76,7 @@ type Props = {
   display: boolean;
 };
 
-export const NavigationArrow = ({ href, display = true }: Props) => {
+export const NavigationArrow = ({href, display = true}: Props) => {
   if (!display) return null;
   return (
     <NavigationArrowLeft href={href}>

@@ -1,11 +1,11 @@
-import { useCallback, useMemo } from "react";
-import { Abi, Address, encodeFunctionData } from "viem";
+import {useCallback, useMemo} from "react";
+import {Abi, Address, encodeFunctionData} from "viem";
 
-import { Quote } from "../types/quote";
-import { CloseQuote, CloseQuoteMessages } from "../types/trade";
+import {Quote} from "../types/quote";
+import {CloseQuote, CloseQuoteMessages} from "../types/trade";
 
-import { useTransactionAdder } from "../state/transactions/hooks";
-import { useSupportedChainId } from "../lib/hooks/useSupportedChainId";
+import {useSupportedChainId} from "../lib/hooks/useSupportedChainId";
+import {useTransactionAdder} from "../state/transactions/hooks";
 import {
   CancelQuoteTransactionInfo,
   TransactionType,
@@ -15,24 +15,24 @@ import {
   createTransactionCallback,
 } from "../utils/web3";
 
-import { useMarket } from "../hooks/useMarkets";
-import { useMultiAccountable } from "../hooks/useMultiAccountable";
-import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
-import { ConstructCallReturnType } from "../types/web3";
+import {useAddRecentTransaction} from "@rainbow-me/rainbowkit";
+import {DIAMOND_ABI} from "../constants";
+import {useMarket} from "../hooks/useMarkets";
+import {useMultiAccountable} from "../hooks/useMultiAccountable";
 import useActiveWagmi from "../lib/hooks/useActiveWagmi";
-import { useExpertMode } from "../state/user/hooks";
-import { useDiamondAddress, useWagmiConfig } from "../state/chains";
-import { DIAMOND_ABI } from "../constants";
+import {useDiamondAddress, useWagmiConfig} from "../state/chains";
+import {useExpertMode} from "../state/user/hooks";
+import {ConstructCallReturnType} from "../types/web3";
 
 export function useCancelQuote(
   quote: Quote | null,
-  closeQuote: CloseQuote | null
+  closeQuote: CloseQuote | null,
 ): {
   state: TransactionCallbackState;
   callback: null | (() => Promise<any>);
   error: string | null;
 } {
-  const { account, chainId } = useActiveWagmi();
+  const {account, chainId} = useActiveWagmi();
   const addTransaction = useTransactionAdder();
   const addRecentTransaction = useAddRecentTransaction();
   const isSupportedChainId = useSupportedChainId();
@@ -45,12 +45,12 @@ export function useCancelQuote(
     return closeQuote === CloseQuote.CANCEL_CLOSE_REQUEST
       ? "requestToCancelCloseRequest"
       : closeQuote === CloseQuote.CANCEL_QUOTE
-      ? "requestToCancelQuote"
-      : closeQuote === CloseQuote.FORCE_CANCEL
-      ? "forceCancelQuote"
-      : closeQuote === CloseQuote.FORCE_CANCEL_CLOSE
-      ? "forceCancelCloseRequest"
-      : null;
+        ? "requestToCancelQuote"
+        : closeQuote === CloseQuote.FORCE_CANCEL
+          ? "forceCancelQuote"
+          : closeQuote === CloseQuote.FORCE_CANCEL_CLOSE
+            ? "forceCancelCloseRequest"
+            : null;
   }, [closeQuote]);
 
   const market = useMarket(quote?.marketId);
@@ -140,7 +140,7 @@ export function useCancelQuote(
           txInfo,
           wagmiConfig,
           summary,
-          userExpertMode
+          userExpertMode,
         ),
     };
   }, [

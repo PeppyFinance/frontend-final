@@ -1,21 +1,21 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import {useEffect, useMemo, useRef, useState} from "react";
 import styled from "styled-components";
 
-import { ChainInfo } from "@symmio/frontend-sdk/constants/chainInfo";
+import {ChainInfo} from "@symmio/frontend-sdk/constants/chainInfo";
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 
-import { NavButton } from "components/Button";
-import { ChevronDown } from "components/Icons";
-import ImageWithFallback from "components/ImageWithFallback";
-import { isMobile } from "react-device-detect";
-import { NetworksModal } from "./NetworksModal";
-import useOnOutsideClick from "lib/hooks/useOnOutsideClick";
-import { getChainLogo } from "utils/chainLogo";
 import {
   useAllMultiAccountAddresses,
   useV3Ids,
 } from "@symmio/frontend-sdk/state/chains/hooks";
-import { useSetFEName } from "@symmio/frontend-sdk/state/user/hooks";
+import {useSetFEName} from "@symmio/frontend-sdk/state/user/hooks";
+import {NavButton} from "components/Button";
+import {ChevronDown} from "components/Icons";
+import ImageWithFallback from "components/ImageWithFallback";
+import useOnOutsideClick from "lib/hooks/useOnOutsideClick";
+import {isMobile} from "react-device-detect";
+import {getChainLogo} from "utils/chainLogo";
+import {NetworksModal} from "./NetworksModal";
 
 const Container = styled.div`
   display: inline-flex;
@@ -25,14 +25,14 @@ const Container = styled.div`
 
 const Button = styled(NavButton)`
   gap: 4px;
-  width: ${({ width }) => (width ? width : "40px")};
+  width: ${({width}) => (width ? width : "40px")};
   font-size: 12px;
   padding: 0px 3px;
   cursor: default;
 `;
 
-const Chevron = styled(ChevronDown)<{ open: boolean }>`
-  transform: rotateX(${({ open }) => (open ? "180deg" : "0deg")});
+const Chevron = styled(ChevronDown)<{open: boolean}>`
+  transform: rotateX(${({open}) => (open ? "180deg" : "0deg")});
   transition: 0.5s;
 `;
 
@@ -40,7 +40,7 @@ export default function Web3Network() {
   const ref = useRef(null);
   const v3_ids = useV3Ids();
   const MULTI_ACCOUNT_ADDRESS = useAllMultiAccountAddresses();
-  const { account, chainId } = useActiveWagmi();
+  const {account, chainId} = useActiveWagmi();
   const [networksModal, toggleNetworksModal] = useState(false);
   const setFrontEndName = useSetFEName();
   useOnOutsideClick(ref, () => toggleNetworksModal(false));

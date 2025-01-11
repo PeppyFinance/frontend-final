@@ -1,21 +1,21 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import styled, { css } from "styled-components";
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
+import {useCallback, useEffect, useRef, useState} from "react";
+import styled, {css} from "styled-components";
 
-import { Market } from "@symmio/frontend-sdk/types/market";
+import {Market} from "@symmio/frontend-sdk/types/market";
 
-import { useFavoriteMarkets } from "@symmio/frontend-sdk/hooks/useMarkets";
+import {useFavoriteMarkets} from "@symmio/frontend-sdk/hooks/useMarkets";
 
-import { Row, RowCenter } from "components/Row";
-import { Star } from "components/Icons";
 import BlinkingPrice from "components/App/FavoriteBar/BlinkingPrice";
+import {Star} from "components/Icons";
+import {Row, RowCenter} from "components/Row";
 
 const Wrapper = styled(Row)`
   position: relative;
   min-height: 50px;
-  border-radius: ${({ theme }) => theme.borderRadius0};
-  border: 1px solid ${({ theme }) => theme.border1};
-  background: ${({ theme }) => theme.bg0};
+  border-radius: ${({theme}) => theme.borderRadius0};
+  border: 1px solid ${({theme}) => theme.border1};
+  background: ${({theme}) => theme.bg0};
 `;
 
 const FavoritesWrap = styled(Row)`
@@ -27,37 +27,37 @@ const FavoritesWrap = styled(Row)`
   overflow-x: auto;
   overflow-y: hidden;
   flex: 1 1 0%;
-  border-radius: ${({ theme }) => theme.borderRadius0};
+  border-radius: ${({theme}) => theme.borderRadius0};
   margin-left: 12px;
-  background: ${({ theme }) => theme.bg0};
+  background: ${({theme}) => theme.bg0};
 `;
 
-const Nav = styled.div<{ direction: "right" | "left" }>`
+const Nav = styled.div<{direction: "right" | "left"}>`
   position: absolute;
-  ${({ direction }) => (direction === "left" ? "left: 42px" : "right: 0px")};
+  ${({direction}) => (direction === "left" ? "left: 42px" : "right: 0px")};
   top: 0;
   height: 100%;
   z-index: 99;
 `;
 
-const StyledNavButton = styled.button<{ direction: "right" | "left" }>`
+const StyledNavButton = styled.button<{direction: "right" | "left"}>`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 48px;
   height: 100%;
-  background: ${({ theme }) => css`
+  background: ${({theme}) => css`
     linear-gradient(90deg, ${theme.bg0} 50%, #ffffff00 100%);
   `};
-  transform: ${({ direction }) =>
+  transform: ${({direction}) =>
     direction === "left" ? "rotate(0deg)" : "rotate(180deg)"};
 `;
 
 const Arrow = styled.div`
   width: 12px;
   height: 12px;
-  border: solid ${({ theme }) => theme.text0};
+  border: solid ${({theme}) => theme.text0};
   border-width: 0 2px 2px 0;
   rotate: 135deg;
 `;
@@ -68,21 +68,21 @@ const Item = styled(RowCenter)`
   height: 30px;
   padding: 8px 12px;
   margin: 0px 7.5px;
-  border-radius: ${({ theme }) => theme.borderRadius0};
+  border-radius: ${({theme}) => theme.borderRadius0};
 
   &:hover {
     cursor: pointer;
-    background: ${({ theme }) => theme.bg5};
+    background: ${({theme}) => theme.bg5};
   }
 
-  ${({ theme }) => theme.mediaWidth.upToMedium`
+  ${({theme}) => theme.mediaWidth.upToMedium`
     min-width: 130px;
   `};
 `;
 
 const Empty = styled(RowCenter)`
   font-size: 12px;
-  color: ${({ theme }) => theme.text1};
+  color: ${({theme}) => theme.text1};
 `;
 
 const Name = styled.div`
@@ -92,7 +92,7 @@ const Name = styled.div`
   white-space: nowrap;
   margin-right: 8px;
   margin-top: 1px;
-  color: ${({ theme }) => theme.text1};
+  color: ${({theme}) => theme.text1};
 `;
 
 export default function FavoriteBar() {
@@ -145,8 +145,8 @@ export default function FavoriteBar() {
 
       <FavoritesWrap
         ref={ref}
-        onScroll={(e) => {
-          const { scrollLeft, scrollWidth, clientWidth } = e.currentTarget;
+        onScroll={e => {
+          const {scrollLeft, scrollWidth, clientWidth} = e.currentTarget;
           const maxScroll = scrollWidth - clientWidth;
 
           if (scrollLeft > THRESHOLD) {
@@ -202,7 +202,7 @@ function NavButton({
   );
 }
 
-function FavoriteItem({ market }: { market: Market }) {
+function FavoriteItem({market}: {market: Market}) {
   const router = useRouter();
 
   const onClick = useCallback(() => {

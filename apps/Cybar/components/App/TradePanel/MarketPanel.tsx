@@ -1,11 +1,10 @@
-import React from "react";
 import styled from "styled-components";
 
-import { toBN } from "@symmio/frontend-sdk/utils/numbers";
+import {toBN} from "@symmio/frontend-sdk/utils/numbers";
 
-import { PositionType } from "@symmio/frontend-sdk/types/trade";
-import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
-import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
+import {useCollateralToken} from "@symmio/frontend-sdk/constants/tokens";
+import {PositionType} from "@symmio/frontend-sdk/types/trade";
+import {useGetTokenWithFallbackChainId} from "@symmio/frontend-sdk/utils/token";
 
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 import {
@@ -13,10 +12,10 @@ import {
   usePositionType,
 } from "@symmio/frontend-sdk/state/trade/hooks";
 
-import { RowBetween, RowEnd } from "components/Row";
-import { InnerCard } from "components/Card";
-import SlippageTolerance from "components/App/SlippageTolerance";
 import useBidAskPrice from "@symmio/frontend-sdk/hooks/useBidAskPrice";
+import SlippageTolerance from "components/App/SlippageTolerance";
+import {InnerCard} from "components/Card";
+import {RowBetween, RowEnd} from "components/Row";
 
 const PriceWrap = styled(InnerCard)`
   padding-top: 8px;
@@ -29,18 +28,18 @@ const PriceWrap = styled(InnerCard)`
 `;
 
 const Title = styled.div`
-  color: ${({ theme }) => theme.text1};
+  color: ${({theme}) => theme.text1};
   font-size: 12px;
   font-weight: 400;
 `;
 
 const Price = styled.div`
-  color: ${({ theme }) => theme.text0};
+  color: ${({theme}) => theme.text0};
   font-size: 12px;
   font-weight: 400;
 `;
 
-export const InputAmount = styled.input.attrs({ type: "number" })<{
+export const InputAmount = styled.input.attrs({type: "number"})<{
   active?: boolean;
 }>`
   border: 0;
@@ -50,7 +49,7 @@ export const InputAmount = styled.input.attrs({ type: "number" })<{
   margin-left: 2px;
   font-size: 12px;
   background: transparent;
-  color: ${({ theme, active }) => (active ? theme.text0 : theme.text2)};
+  color: ${({theme, active}) => (active ? theme.text0 : theme.text2)};
 
   appearance: textfield;
 
@@ -65,15 +64,15 @@ export const InputAmount = styled.input.attrs({ type: "number" })<{
 `;
 
 export default function MarketPanel() {
-  const { chainId } = useActiveWagmi();
+  const {chainId} = useActiveWagmi();
   const market = useActiveMarket();
   const positionType = usePositionType();
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(
     COLLATERAL_TOKEN,
-    chainId
+    chainId,
   );
-  const { ask, bid } = useBidAskPrice(market);
+  const {ask, bid} = useBidAskPrice(market);
 
   const lastMarketPrice = (() => {
     if (positionType === PositionType.LONG) {

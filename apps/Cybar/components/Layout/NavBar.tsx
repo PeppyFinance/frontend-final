@@ -1,30 +1,30 @@
-import React, { useState } from "react";
+import {useState} from "react";
 import styled from "styled-components";
-import { Z_INDEX } from "theme";
+import {Z_INDEX} from "theme";
 
-import { useIsMobile } from "lib/hooks/useWindowSize";
-import { useNewNotification } from "@symmio/frontend-sdk/state/notifications/hooks";
-import { useInjectedAddress } from "lib/hooks/useInjectedAddress";
+import {useNewNotification} from "@symmio/frontend-sdk/state/notifications/hooks";
+import {useInjectedAddress} from "lib/hooks/useInjectedAddress";
+import {useIsMobile} from "lib/hooks/useWindowSize";
 
-import { Row } from "components/Row";
+import {Row} from "components/Row";
 import Web3Network from "components/Web3Network";
 
-import Web3Status from "components/Web3Status";
-import { InfoHeader } from "components/InfoHeader";
-import NavLogo from "./NavLogo";
-import WithdrawCooldown from "components/App/AccountData/WithdrawCooldown";
-import Notifications from "components/Notifications";
-import Warning from "./Warning";
-import Menu from "./Menu";
-import Column from "components/Column";
+import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 import {
   useModalOpen,
   useWithdrawBarModalToggle,
 } from "@symmio/frontend-sdk/state/application/hooks";
-import { ApplicationModal } from "@symmio/frontend-sdk/state/application/reducer";
-import WithdrawBarModal from "components/ReviewModal/WithdrawBarModal";
+import {ApplicationModal} from "@symmio/frontend-sdk/state/application/reducer";
+import WithdrawCooldown from "components/App/AccountData/WithdrawCooldown";
+import Column from "components/Column";
 import HedgerSelector from "components/HedgerSelector";
-import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
+import {InfoHeader} from "components/InfoHeader";
+import Notifications from "components/Notifications";
+import WithdrawBarModal from "components/ReviewModal/WithdrawBarModal";
+import Web3Status from "components/Web3Status";
+import Menu from "./Menu";
+import NavLogo from "./NavLogo";
+import Warning from "./Warning";
 
 const Wrapper = styled(Row)`
   gap: 5px;
@@ -33,13 +33,13 @@ const Wrapper = styled(Row)`
   padding: 10px 32px;
   position: relative;
   z-index: ${Z_INDEX.fixed};
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    background-color: ${({ theme }) => theme.bg};
+  ${({theme}) => theme.mediaWidth.upToSmall`
+    background-color: ${({theme}) => theme.bg};
     padding: 0px 1.25rem;
   `};
 `;
 
-const BackgroundWrapper = styled(Wrapper)<{ newNotification?: boolean }>`
+const BackgroundWrapper = styled(Wrapper)<{newNotification?: boolean}>`
   @keyframes fade {
     0% {
       opacity: 0;
@@ -54,9 +54,9 @@ const BackgroundWrapper = styled(Wrapper)<{ newNotification?: boolean }>`
   padding: 0px;
   overflow: hidden;
   position: absolute;
-  background: ${({ theme, newNotification }) =>
+  background: ${({theme, newNotification}) =>
     newNotification ? theme.primaryDisable : theme.bg};
-  animation: ${({ newNotification }) =>
+  animation: ${({newNotification}) =>
     newNotification ? "fade 1s linear 1" : "none"};
 `;
 
@@ -65,14 +65,14 @@ const MobileWrapper = styled(Wrapper)`
   font-size: 12px;
   flex-wrap: wrap;
   padding: 16px 16px 8px 16px;
-  background-color: ${({ theme }) => theme.bg};
+  background-color: ${({theme}) => theme.bg};
 
   & > * {
     &:first-child {
       margin-right: auto;
     }
   }
-  ${({ theme }) => theme.mediaWidth.upToMedium`
+  ${({theme}) => theme.mediaWidth.upToMedium`
   padding: 16px 12px 8px 12px;
   & > * {
 
@@ -116,7 +116,7 @@ const Items = styled.div`
   gap: 12px;
   flex: 1;
 
-  ${({ theme }) => theme.mediaWidth.upToSmall`
+  ${({theme}) => theme.mediaWidth.upToSmall`
       gap: 5px;
   `};
 `;
@@ -129,14 +129,14 @@ const StatusWrapper = styled(Column)`
   z-index: -1;
 `;
 
-const CooldownWrapper = styled(Column)<{ width?: string }>`
-  ${({ width }) => width && `width: ${width};`}
+const CooldownWrapper = styled(Column)<{width?: string}>`
+  ${({width}) => width && `width: ${width};`}
   & > * {
     width: 100%;
     cursor: pointer;
   }
 
-  ${({ theme }) => theme.mediaWidth.upToMedium`
+  ${({theme}) => theme.mediaWidth.upToMedium`
     z-index: -1;
   `}
 `;
@@ -147,7 +147,7 @@ const BannerWrapper = styled.div`
 `;
 
 export default function NavBar() {
-  const { chainId } = useActiveWagmi();
+  const {chainId} = useActiveWagmi();
   const showWithdrawBarModal = useModalOpen(ApplicationModal.WITHDRAW_BAR);
   const toggleWithdrawBarModal = useWithdrawBarModalToggle();
 

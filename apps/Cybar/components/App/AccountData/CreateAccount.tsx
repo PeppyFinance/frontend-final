@@ -1,39 +1,39 @@
-import { useCallback, useState } from "react";
-import styled from "styled-components";
 import Image from "next/legacy/image";
+import {useCallback, useState} from "react";
+import styled from "styled-components";
 
 import CYBAR_LOGO from "/public/static/images/etc/CYBAR_WB_MARKE_LOGO_RZ-WHITE-short.svg";
 
-import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
-import { truncateAddress } from "@symmio/frontend-sdk/utils/address";
-import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
+import {useCollateralToken} from "@symmio/frontend-sdk/constants/tokens";
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
+import {truncateAddress} from "@symmio/frontend-sdk/utils/address";
+import {useGetTokenWithFallbackChainId} from "@symmio/frontend-sdk/utils/token";
 
-import { useAddAccountToContract } from "@symmio/frontend-sdk/callbacks/useMultiAccount";
+import {useAddAccountToContract} from "@symmio/frontend-sdk/callbacks/useMultiAccount";
 import {
   useIsTermsAccepted,
   useUserWhitelist,
 } from "@symmio/frontend-sdk/state/user/hooks";
 
+import {WEB_SETTING} from "@symmio/frontend-sdk/config";
+import GradientButton from "components/Button/GradientButton";
 import Column from "components/Column";
-import { Row, RowCenter, RowEnd, RowStart } from "components/Row";
 import {
   Client,
-  Wallet,
   Close as CloseIcon,
   DotFlashing,
+  Wallet,
 } from "components/Icons";
-import { WEB_SETTING } from "@symmio/frontend-sdk/config";
-import GradientButton from "components/Button/GradientButton";
+import {Row, RowCenter, RowEnd, RowStart} from "components/Row";
 import TermsAndServices from "components/TermsAndServices";
 
-const Wrapper = styled.div<{ modal?: boolean }>`
+const Wrapper = styled.div<{modal?: boolean}>`
   border: none;
   width: 100%;
   min-height: 379px;
-  border-radius: ${({ theme }) => theme.borderRadius0};
-  background: ${({ theme }) => theme.bg0};
-  ${({ theme }) => theme.mediaWidth.upToLarge`
+  border-radius: ${({theme}) => theme.borderRadius0};
+  background: ${({theme}) => theme.bg0};
+  ${({theme}) => theme.mediaWidth.upToLarge`
     width: 100%;
   `};
 `;
@@ -43,7 +43,7 @@ const Title = styled(RowStart)`
   font-weight: 500;
   font-size: 16px;
   line-height: 19px;
-  color: ${({ theme }) => theme.text0};
+  color: ${({theme}) => theme.text0};
 `;
 
 const ContentWrapper = styled(Column)`
@@ -58,19 +58,19 @@ const ImageWrapper = styled(RowCenter)`
 
 const AccountWrapper = styled(Row)`
   height: 40px;
-  background: ${({ theme }) => theme.bg2};
+  background: ${({theme}) => theme.bg2};
   border-radius: 6px;
   margin-bottom: 16px;
   padding: 10px 12px;
   font-weight: 500;
   font-size: 12px;
 
-  color: ${({ theme }) => theme.primary0};
+  color: ${({theme}) => theme.primary0};
 `;
 
 const AccountNameWrapper = styled(AccountWrapper)`
-  background: ${({ theme }) => theme.bg3};
-  color: ${({ theme }) => theme.text3};
+  background: ${({theme}) => theme.bg3};
+  color: ${({theme}) => theme.text3};
 `;
 
 const Input = styled.input<{
@@ -81,19 +81,19 @@ const Input = styled.input<{
   border: none;
   background: transparent;
   font-size: 12px;
-  /* color: ${({ theme }) => theme.text3}; */
+  /* color: ${({theme}) => theme.text3}; */
   padding-left: 2px;
 
   &::placeholder {
-    color: ${({ theme }) => theme.text3};
+    color: ${({theme}) => theme.text3};
   }
 
   &:focus,
   &:hover {
-    color: ${({ theme }) => theme.text0};
+    color: ${({theme}) => theme.text0};
     outline: none;
   }
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+  ${({theme}) => theme.mediaWidth.upToExtraSmall`
       font-size: 0.6rem;
     `}
 `;
@@ -105,7 +105,7 @@ const Close = styled.div`
   cursor: pointer;
   border-radius: 4px;
   margin: 2px 12px 1px 0px;
-  background: ${({ theme }) => theme.bg6};
+  background: ${({theme}) => theme.bg6};
 `;
 
 const DescriptionText = styled.div`
@@ -113,11 +113,11 @@ const DescriptionText = styled.div`
   text-align: center;
   margin-top: 16px;
 
-  color: ${({ theme }) => theme.text4};
+  color: ${({theme}) => theme.text4};
 `;
 
-export default function CreateAccount({ onClose }: { onClose?: () => void }) {
-  const { account, chainId } = useActiveWagmi();
+export default function CreateAccount({onClose}: {onClose?: () => void}) {
+  const {account, chainId} = useActiveWagmi();
   const [name, setName] = useState("");
   const [, setTxHash] = useState("");
   const [showTerms, setShowTerms] = useState(false);
@@ -128,10 +128,10 @@ export default function CreateAccount({ onClose }: { onClose?: () => void }) {
 
   const collateralCurrency = useGetTokenWithFallbackChainId(
     COLLATERAL_TOKEN,
-    chainId
+    chainId,
   );
   const [awaitingConfirmation, setAwaitingConfirmation] = useState(false);
-  const { callback: addAccountToContractCallback } =
+  const {callback: addAccountToContractCallback} =
     useAddAccountToContract(name);
 
   const onAddAccount = useCallback(async () => {
@@ -195,7 +195,7 @@ export default function CreateAccount({ onClose }: { onClose?: () => void }) {
               <CloseIcon
                 size={12}
                 onClick={onClose}
-                style={{ marginRight: "12px" }}
+                style={{marginRight: "12px"}}
               />
             </Close>
           )}

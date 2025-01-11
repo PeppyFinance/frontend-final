@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import Image, { StaticImageData } from "next/legacy/image";
+import Image, {StaticImageData} from "next/legacy/image";
+import {useEffect, useState} from "react";
 import styled from "styled-components";
 
 import NotFound from "/public/static/images/fallback/not-found-eth.svg";
@@ -10,7 +10,7 @@ const Wrapper = styled.div<{
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: ${({ round }) => (round ? "50%" : "0px")};
+  border-radius: ${({round}) => (round ? "50%" : "0px")};
   overflow: hidden;
   padding: 2px;
 `;
@@ -33,7 +33,7 @@ export default function ImageWithFallback({
   [x: string]: any;
 }) {
   const [imgSrc, setImgSrc] = useState<string | StaticImageData>(
-    "/static/images/fallback/loader.gif"
+    "/static/images/fallback/loader.gif",
   );
 
   useEffect(() => {

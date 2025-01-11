@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import {useState} from "react";
 import styled from "styled-components";
 
-import { ModalHeader, Modal } from "components/Modal";
-import AdvancedOptions from "./AdvancedOptions";
-import TransactionFee from "./TransactionFee";
-import ThemeSelector from "./ThemeSelector";
 import {
-  useSlippageTolerance,
-  useSetSlippageToleranceCallback,
   useDarkModeManager,
+  useSetSlippageToleranceCallback,
+  useSlippageTolerance,
 } from "@symmio/frontend-sdk/state/user/hooks";
+import {Modal, ModalHeader} from "components/Modal";
+import AdvancedOptions from "./AdvancedOptions";
+import ThemeSelector from "./ThemeSelector";
+import TransactionFee from "./TransactionFee";
 
 const MainModal = styled(Modal)`
   display: flex;
@@ -17,10 +17,10 @@ const MainModal = styled(Modal)`
   width: 100%;
   justify-content: center;
   flex-direction: column;
-  border: 1px solid ${({ theme }) => theme.border2};
+  border: 1px solid ${({theme}) => theme.border2};
   border-radius: 24px;
 
-  ${({ theme }) => theme.mediaWidth.upToMedium`
+  ${({theme}) => theme.mediaWidth.upToMedium`
     width: 90%;
     height: 560px;
   `};
@@ -34,7 +34,7 @@ const Wrapper = styled.div`
   padding: 1.5rem 0;
   overflow-y: scroll;
   height: auto;
-  background: ${({ theme }) => theme.bg1};
+  background: ${({theme}) => theme.bg1};
 `;
 
 export default function SettingsModal({

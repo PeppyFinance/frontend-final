@@ -1,23 +1,23 @@
-import { useEffect, useMemo, useState } from "react";
-import { useReadContract } from "wagmi";
-import { Address } from "viem";
+import {useEffect, useMemo, useState} from "react";
+import {Address} from "viem";
+import {useReadContract} from "wagmi";
 
-import { Account } from "../types/user";
+import {MULTI_ACCOUNT_ABI} from "../constants";
 import useActiveWagmi from "../lib/hooks/useActiveWagmi";
-import { BalanceInfosType } from "../state/user/types";
-import { ApiState } from "../types/api";
-import { useHedgerInfo } from "../state/hedger/hooks";
-import { useMultiAccountAddress } from "../state/chains";
-import { useSupportedChainId } from "../lib/hooks/useSupportedChainId";
-import { AppThunkDispatch, useAppDispatch } from "../state";
-import { getBalanceInfo } from "../state/user/thunks";
-import { MULTI_ACCOUNT_ABI } from "../constants";
+import {useSupportedChainId} from "../lib/hooks/useSupportedChainId";
+import {AppThunkDispatch, useAppDispatch} from "../state";
+import {useMultiAccountAddress} from "../state/chains";
+import {useHedgerInfo} from "../state/hedger/hooks";
+import {getBalanceInfo} from "../state/user/thunks";
+import {BalanceInfosType} from "../state/user/types";
+import {ApiState} from "../types/api";
+import {Account} from "../types/user";
 
 export function useUserAccounts() {
-  const { account, chainId } = useActiveWagmi();
+  const {account, chainId} = useActiveWagmi();
   const MULTI_ACCOUNT_ADDRESS = useMultiAccountAddress();
   const isSupportedChainId = useSupportedChainId();
-  const { accountLength } = useAccountsLength();
+  const {accountLength} = useAccountsLength();
 
   const {
     data: accounts,
@@ -48,7 +48,7 @@ export function useUserAccounts() {
         ({
           accountAddress: acc.accountAddress.toString(),
           name: acc.name,
-        } as Account)
+        }) as Account,
     );
   }, [accounts, isError, isSuccess]);
 
@@ -59,7 +59,7 @@ export function useUserAccounts() {
       isError,
       error,
     }),
-    [accountsUnsorted, error, isError, isLoading]
+    [accountsUnsorted, error, isError, isLoading],
   );
 }
 
@@ -69,10 +69,10 @@ export function useAccountsLength(): {
 } {
   const isSupportedChainId = useSupportedChainId();
 
-  const { account, chainId } = useActiveWagmi();
+  const {account, chainId} = useActiveWagmi();
   const MULTI_ACCOUNT_ADDRESS = useMultiAccountAddress();
 
-  const { data, isLoading, isSuccess, isError } = useReadContract({
+  const {data, isLoading, isSuccess, isError} = useReadContract({
     address: chainId ? (MULTI_ACCOUNT_ADDRESS[chainId] as Address) : undefined,
     abi: MULTI_ACCOUNT_ABI,
     functionName: "getAccountsLength",
@@ -88,19 +88,19 @@ export function useAccountsLength(): {
       loading: isLoading,
       isError,
     }),
-    [data, isError, isLoading, isSuccess]
+    [data, isError, isLoading, isSuccess],
   );
 }
 
 export function useBalanceInfos() {
   const [balanceInfo, setBalanceInfo] = useState<BalanceInfosType>({});
   const [balanceInfoStatus, setBalanceInfoStatus] = useState<ApiState>(
-    ApiState.OK
+    ApiState.OK,
   );
 
   const hedger = useHedgerInfo();
-  const { baseUrl, clientName } = hedger || {};
-  const { account, chainId } = useActiveWagmi();
+  const {baseUrl, clientName} = hedger || {};
+  const {account, chainId} = useActiveWagmi();
   const MULTI_ACCOUNT_ADDRESS = useMultiAccountAddress();
   const multiAccountAddress = chainId
     ? MULTI_ACCOUNT_ADDRESS[chainId]
@@ -109,9 +109,9 @@ export function useBalanceInfos() {
 
   useEffect(() => {
     setBalanceInfoStatus(ApiState.LOADING);
-    dispatch(getBalanceInfo({ account, multiAccountAddress, baseUrl }))
+    dispatch(getBalanceInfo({account, multiAccountAddress, baseUrl}))
       .unwrap()
-      .then((res) => {
+      .then(res => {
         setBalanceInfo(res);
         setBalanceInfoStatus(ApiState.OK);
       })
@@ -121,5 +121,5 @@ export function useBalanceInfos() {
       });
   }, [account, baseUrl, clientName, dispatch, multiAccountAddress]);
 
-  return { balanceInfo, balanceInfoStatus };
+  return {balanceInfo, balanceInfoStatus};
 }

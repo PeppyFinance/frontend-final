@@ -1,5 +1,3 @@
-import React from "react";
-
 export const SwitchWallet = ({
   size = 20,
   ...rest

@@ -1,16 +1,15 @@
-import React from "react";
 import styled from "styled-components";
 
-import { Row, RowCenter } from "components/Row";
-import CYBAR_LOGO_SHORT from "/public/static/images/cybar-short.svg";
+import {Row, RowCenter} from "components/Row";
 import Image from "next/legacy/image";
+import CYBAR_LOGO_SHORT from "/public/static/images/cybar-short.svg";
 
 const AutoSlippageContainer = styled.div`
   padding: 1px;
   width: 125px;
   height: 28px;
   border-radius: 4px;
-  background: ${({ theme }) => theme.gradLight};
+  background: ${({theme}) => theme.gradLight};
 `;
 
 const AutoSlippageWrapper = styled(Row)`
@@ -18,8 +17,8 @@ const AutoSlippageWrapper = styled(Row)`
   font-size: 10px;
   padding: 0px 6px;
   border-radius: 4px;
-  color: ${({ theme }) => theme.text0};
-  background: ${({ theme }) => theme.bg4};
+  color: ${({theme}) => theme.text0};
+  background: ${({theme}) => theme.bg4};
 `;
 
 export default function SlippageTolerance() {

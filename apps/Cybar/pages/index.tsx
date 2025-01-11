@@ -1,12 +1,12 @@
-import { updateAccount } from "@symmio/frontend-sdk/state/user/actions";
-import { useEffect } from "react";
+import {updateAccount} from "@symmio/frontend-sdk/state/user/actions";
+import {useEffect} from "react";
 // import { useActiveAccount } from "@symmio/frontend-sdk/src/state/user/hooks";
-import { useUserAccounts } from "@symmio/frontend-sdk/hooks/useAccounts";
-import { useAppDispatch } from "@symmio/frontend-sdk/state";
-import { BackAlley } from "components/BackAlley";
-import { Box } from "rebass/styled-components";
+import {useUserAccounts} from "@symmio/frontend-sdk/hooks/useAccounts";
+import {useAppDispatch} from "@symmio/frontend-sdk/state";
+import {BackAlley} from "components/BackAlley";
+import {CharacterContextProvider} from "components/BackAlley/characterContext";
+import {Box} from "rebass/styled-components";
 import styled from "styled-components";
-import { CharacterContextProvider } from "components/BackAlley/characterContext";
 
 export const Row = styled(Box)<{
   width?: string;
@@ -17,15 +17,15 @@ export const Row = styled(Box)<{
   gap?: string;
   borderRadius?: string;
 }>`
-  width: ${({ width }) => width ?? "100%"};
+  width: ${({width}) => width ?? "100%"};
   display: flex;
   padding: 0;
-  gap: ${({ gap }) => gap && `${gap}`};
-  align-items: ${({ align }) => align ?? "center"};
-  justify-content: ${({ justify }) => justify ?? "flex-start"};
-  padding: ${({ padding }) => padding};
-  padding: ${({ padding }) => padding};
-  border-radius: ${({ borderRadius }) => borderRadius};
+  gap: ${({gap}) => gap && `${gap}`};
+  align-items: ${({align}) => align ?? "center"};
+  justify-content: ${({justify}) => justify ?? "flex-start"};
+  padding: ${({padding}) => padding};
+  padding: ${({padding}) => padding};
+  border-radius: ${({borderRadius}) => borderRadius};
 `;
 
 export const RowCenter = styled(Row)`
@@ -64,7 +64,7 @@ export const BaseButton = styled(RowCenter)<{
 export default function MyFunction() {
   // const activeAccount = useActiveAccount();
   const dispatch = useAppDispatch();
-  const { accounts } = useUserAccounts();
+  const {accounts} = useUserAccounts();
   useEffect(() => {
     if (accounts !== null) {
       const lastSubAccount = accounts[accounts.length - 1];

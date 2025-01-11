@@ -1,33 +1,33 @@
 import React from "react";
 import styled from "styled-components";
 
-import { ApplicationModal } from "@symmio/frontend-sdk/state/application/reducer";
-import { useModalOpen } from "@symmio/frontend-sdk/state/application/hooks";
-import { WEB_SETTING } from "@symmio/frontend-sdk/config";
+import {WEB_SETTING} from "@symmio/frontend-sdk/config";
+import {useModalOpen} from "@symmio/frontend-sdk/state/application/hooks";
+import {ApplicationModal} from "@symmio/frontend-sdk/state/application/reducer";
 
 import Column from "components/Column";
 
-import TradeOverview from "components/App/TradePanel/TradeOverview";
 import PositionTypeTab from "components/App/TradePanel/PositionTypeTab";
+import TradeOverview from "components/App/TradePanel/TradeOverview";
 
-import { OpenPositionModal } from "components/ReviewModal/OpenPosition";
+import {OpenPositionModal} from "components/ReviewModal/OpenPosition";
+import {TpSlChecker} from "../TPSL/TpSlChecker";
+import {BlackList, Suspend} from "./AccessControlPanel";
 import AmountsPanel from "./AmountsPanel";
-import OrderTypeTab from "./OrderTypeTab";
 import MinPositionInfo from "./MinPositionInfo";
+import OrderTypeTab from "./OrderTypeTab";
 import TradeActionButtons from "./TradeActionButton";
-import { BlackList, Suspend } from "./AccessControlPanel";
-import { TpSlChecker } from "../TPSL/TpSlChecker";
 
-const Wrapper = styled.div<{ showTpSl?: boolean }>`
+const Wrapper = styled.div<{showTpSl?: boolean}>`
   position: relative;
 
   width: 100%;
   max-width: 480px;
-  border-radius: ${({ theme }) => theme.borderRadius0};
-  border: 1px solid ${({ theme }) => theme.border1};
-  height: ${({ showTpSl }) => (showTpSl ? "735px" : "635px")};
+  border-radius: ${({theme}) => theme.borderRadius0};
+  border: 1px solid ${({theme}) => theme.border1};
+  height: ${({showTpSl}) => (showTpSl ? "735px" : "635px")};
   overflow: scroll;
-  background: ${({ theme }) => theme.bg0};
+  background: ${({theme}) => theme.bg0};
   & > * {
     &:first-child {
       border-radius: 0px;
@@ -41,7 +41,7 @@ const Wrapper = styled.div<{ showTpSl?: boolean }>`
       }
     }
   }
-  ${({ theme }) => theme.mediaWidth.upToMedium`
+  ${({theme}) => theme.mediaWidth.upToMedium`
   max-width: unset;
 `};
 `;
@@ -49,7 +49,7 @@ const Wrapper = styled.div<{ showTpSl?: boolean }>`
 const Container = styled(Column)`
   padding: 12px;
   gap: 20px;
-  border-radius: ${({ theme }) => theme.borderRadius0};
+  border-radius: ${({theme}) => theme.borderRadius0};
   /* overflow-x: hidden; // for some reason this panel can overflow horizontally */
   & > * {
     &:first-child {

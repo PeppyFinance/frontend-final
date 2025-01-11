@@ -1,10 +1,10 @@
-import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
-import { PositionType } from "@symmio/frontend-sdk/types/trade";
-import { toBN } from "@symmio/frontend-sdk/utils/numbers";
-import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
+import {useCollateralToken} from "@symmio/frontend-sdk/constants/tokens";
+import {PositionType} from "@symmio/frontend-sdk/types/trade";
+import {toBN} from "@symmio/frontend-sdk/utils/numbers";
+import {useGetTokenWithFallbackChainId} from "@symmio/frontend-sdk/utils/token";
 
-import useTradePage from "@symmio/frontend-sdk/hooks/useTradePage";
 import useBidAskPrice from "@symmio/frontend-sdk/hooks/useBidAskPrice";
+import useTradePage from "@symmio/frontend-sdk/hooks/useTradePage";
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 
 import {
@@ -13,13 +13,13 @@ import {
   useSetLimitPrice,
 } from "@symmio/frontend-sdk/state/trade/hooks";
 
-import { CustomInputBox2 } from "components/InputBox";
-import { useExpertMode } from "@symmio/frontend-sdk/state/user/hooks";
-import { useMemo } from "react";
+import {useExpertMode} from "@symmio/frontend-sdk/state/user/hooks";
+import {CustomInputBox2} from "components/InputBox";
+import {useMemo} from "react";
 
 export default function LimitPricePanel(): JSX.Element | null {
-  const { chainId } = useActiveWagmi();
-  const { price } = useTradePage();
+  const {chainId} = useActiveWagmi();
+  const {price} = useTradePage();
   const market = useActiveMarket();
   const userExpertMode = useExpertMode();
   const positionType = usePositionType();
@@ -27,9 +27,9 @@ export default function LimitPricePanel(): JSX.Element | null {
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(
     COLLATERAL_TOKEN,
-    chainId
+    chainId,
   );
-  const { ask, bid } = useBidAskPrice(market);
+  const {ask, bid} = useBidAskPrice(market);
 
   const lastMarketPrice = (() => {
     if (positionType === PositionType.LONG) {
@@ -49,7 +49,7 @@ export default function LimitPricePanel(): JSX.Element | null {
 
   const precision = useMemo(
     () => (userExpertMode ? undefined : market?.pricePrecision),
-    [userExpertMode, market?.pricePrecision]
+    [userExpertMode, market?.pricePrecision],
   );
 
   return (

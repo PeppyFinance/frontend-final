@@ -1,21 +1,21 @@
 import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
-const { createReducer } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
 import find from "lodash/find.js";
 import remove from "lodash/remove.js";
+const {createReducer} = ((toolkitRaw as any).default ??
+  toolkitRaw) as typeof toolkitRaw;
 
+import {ApiState} from "../../types/api";
 import {
   addReadNotification,
   addUnreadNotification,
+  readOneNotification,
   setReadNotifications,
   setUnreadNotifications,
-  readOneNotification,
-  updateTimestamp,
   updateIsNewNotification,
+  updateTimestamp,
 } from "./actions";
-import { NotificationDetails, NotificationType } from "./types";
-import { getNotifications } from "./thunks";
-import { ApiState } from "../../types/api";
+import {getNotifications} from "./thunks";
+import {NotificationDetails, NotificationType} from "./types";
 
 export interface NotificationState {
   unreadNotification: NotificationDetails[];
@@ -33,11 +33,11 @@ export const initialState: NotificationState = {
   isNewNotification: false,
 };
 
-export default createReducer(initialState, (builder) =>
+export default createReducer(initialState, builder =>
   builder
-    .addCase(addUnreadNotification, (state, { payload: { notification } }) => {
-      const { readNotification, unreadNotification } = state;
-      const { quoteId, notificationType, actionStatus } = notification;
+    .addCase(addUnreadNotification, (state, {payload: {notification}}) => {
+      const {readNotification, unreadNotification} = state;
+      const {quoteId, notificationType, actionStatus} = notification;
       const existedNotification = find(unreadNotification, {
         quoteId,
         notificationType,
@@ -73,32 +73,29 @@ export default createReducer(initialState, (builder) =>
       state.unreadNotification = unreadNotification;
       state.readNotification = readNotification;
     })
-    .addCase(addReadNotification, (state, { payload: { notification } }) => {
-      const { readNotification } = state;
-      const { quoteId, notificationType } = notification;
+    .addCase(addReadNotification, (state, {payload: {notification}}) => {
+      const {readNotification} = state;
+      const {quoteId, notificationType} = notification;
       const existedNotification = find(readNotification, {
         quoteId,
         notificationType,
       });
       if (existedNotification) {
-        remove(readNotification, { quoteId, notificationType });
+        remove(readNotification, {quoteId, notificationType});
       }
 
       readNotification.push(notification);
       state.readNotification = readNotification;
     })
-    .addCase(
-      setUnreadNotifications,
-      (state, { payload: { notifications } }) => {
-        state.unreadNotification = notifications;
-      }
-    )
-    .addCase(setReadNotifications, (state, { payload: { notifications } }) => {
+    .addCase(setUnreadNotifications, (state, {payload: {notifications}}) => {
+      state.unreadNotification = notifications;
+    })
+    .addCase(setReadNotifications, (state, {payload: {notifications}}) => {
       state.readNotification = notifications;
     })
-    .addCase(readOneNotification, (state, { payload: { notification } }) => {
-      const { unreadNotification, readNotification } = state;
-      const { quoteId, notificationType } = notification;
+    .addCase(readOneNotification, (state, {payload: {notification}}) => {
+      const {unreadNotification, readNotification} = state;
+      const {quoteId, notificationType} = notification;
       const existedNotification = find(unreadNotification, {
         quoteId,
         notificationType,
@@ -117,33 +114,33 @@ export default createReducer(initialState, (builder) =>
         readExistedNotification &&
         notificationType !== NotificationType.TRANSFER_COLLATERAL
       ) {
-        remove(readNotification, { quoteId, notificationType });
+        remove(readNotification, {quoteId, notificationType});
         state.readNotification = readNotification;
       }
 
-      remove(unreadNotification, { quoteId, notificationType });
+      remove(unreadNotification, {quoteId, notificationType});
       state.unreadNotification = unreadNotification;
       state.readNotification.push(notification);
     })
 
-    .addCase(getNotifications.pending, (state) => {
+    .addCase(getNotifications.pending, state => {
       state.notificationsStatus = ApiState.LOADING;
     })
     .addCase(
       getNotifications.fulfilled,
-      (state, { payload: { unreadNotifications } }) => {
+      (state, {payload: {unreadNotifications}}) => {
         state.unreadNotification = unreadNotifications;
         state.notificationsStatus = ApiState.OK;
-      }
+      },
     )
-    .addCase(getNotifications.rejected, (state) => {
+    .addCase(getNotifications.rejected, state => {
       state.notificationsStatus = ApiState.ERROR;
       console.error("Unable to getNotifications");
     })
-    .addCase(updateTimestamp, (state, { payload }) => {
+    .addCase(updateTimestamp, (state, {payload}) => {
       state.lastUpdateTimestamp = payload.timestamp;
     })
-    .addCase(updateIsNewNotification, (state, { payload: { flag } }) => {
+    .addCase(updateIsNewNotification, (state, {payload: {flag}}) => {
       state.isNewNotification = flag;
-    })
+    }),
 );

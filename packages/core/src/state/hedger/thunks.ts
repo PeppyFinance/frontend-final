@@ -1,8 +1,7 @@
+import {ApolloClient, NormalizedCacheObject} from "@apollo/client";
 import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
-import { ApolloClient, NormalizedCacheObject } from "@apollo/client";
-const { createAsyncThunk } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
-import { makeHttpRequest } from "../../utils/http";
+import {GET_PAID_AMOUNT} from "../../apollo/queries";
+import {OpenInterest} from "../../types/hedger";
 import {
   Market,
   MarketApiType,
@@ -10,7 +9,8 @@ import {
   OpenInterestResponseType,
   PriceRangeResponseType,
 } from "../../types/market";
-import { OpenInterest } from "../../types/hedger";
+import {makeHttpRequest} from "../../utils/http";
+import {toBN} from "../../utils/numbers";
 import {
   DepthResponse,
   ErrorMessages,
@@ -23,8 +23,8 @@ import {
   MarketsInfoRes,
   PriceRange,
 } from "./types";
-import { GET_PAID_AMOUNT } from "../../apollo/queries";
-import { toBN } from "../../utils/numbers";
+const {createAsyncThunk} = ((toolkitRaw as any).default ??
+  toolkitRaw) as typeof toolkitRaw;
 
 export const getMarkets = createAsyncThunk(
   "hedger/getAllApi",
@@ -33,19 +33,19 @@ export const getMarkets = createAsyncThunk(
     options,
   }: {
     hedgerUrl: string | undefined;
-    options?: { [x: string]: any };
+    options?: {[x: string]: any};
   }) => {
     if (!hedgerUrl) {
       throw new Error("hedgerUrl is empty");
     }
 
-    const { href: marketsUrl } = new URL(`contract-symbols`, hedgerUrl);
-    const { href: errorMessagesUrl } = new URL(`error_codes`, hedgerUrl);
+    const {href: marketsUrl} = new URL(`contract-symbols`, hedgerUrl);
+    const {href: errorMessagesUrl} = new URL(`error_codes`, hedgerUrl);
 
     let count = 0;
     let markets: Market[] = [];
     let errorMessages: ErrorMessages = {};
-    const openInterest: OpenInterest = { used: 0, total: 0 };
+    const openInterest: OpenInterest = {used: 0, total: 0};
 
     try {
       const [marketsRes, errorMessagesRes] = await Promise.allSettled([
@@ -55,7 +55,7 @@ export const getMarkets = createAsyncThunk(
 
       if (marketsRes.status === "fulfilled") {
         if (marketsRes.value?.symbols) {
-          markets = marketsRes.value.symbols.map((market) => ({
+          markets = marketsRes.value.symbols.map(market => ({
             id: market.symbol_id,
             name: market.name,
             symbol: market.symbol,
@@ -92,8 +92,8 @@ export const getMarkets = createAsyncThunk(
       console.error(error, "happened in getHedgerMarkets");
     }
 
-    return { markets, count, openInterest, errorMessages };
-  }
+    return {markets, count, openInterest, errorMessages};
+  },
 );
 
 export const getOpenInterest = createAsyncThunk(
@@ -103,15 +103,15 @@ export const getOpenInterest = createAsyncThunk(
     options,
   }: {
     hedgerUrl: string | undefined;
-    options?: { [x: string]: any };
+    options?: {[x: string]: any};
   }) => {
     if (!hedgerUrl) {
       throw new Error("hedgerUrl is empty");
     }
 
-    const { href: openUrl } = new URL(`open-interest`, hedgerUrl);
+    const {href: openUrl} = new URL(`open-interest`, hedgerUrl);
 
-    const openInterest: OpenInterest = { used: 0, total: 0 };
+    const openInterest: OpenInterest = {used: 0, total: 0};
 
     try {
       const [openRes] = await Promise.allSettled([
@@ -127,8 +127,8 @@ export const getOpenInterest = createAsyncThunk(
       throw new Error("error in getOpenInterest");
     }
 
-    return { openInterest };
-  }
+    return {openInterest};
+  },
 );
 
 export const getNotionalCap = createAsyncThunk(
@@ -153,7 +153,7 @@ export const getNotionalCap = createAsyncThunk(
 
     const notionalCapUrl = getNotionalCapUrl(market.id, hedgerUrl);
 
-    const notionalCap: MarketNotionalCap = { name: "", totalCap: -1, used: -1 };
+    const notionalCap: MarketNotionalCap = {name: "", totalCap: -1, used: -1};
 
     // add this part to have previous value if api doesn't working
     if (
@@ -170,7 +170,7 @@ export const getNotionalCap = createAsyncThunk(
       const [notionalCapRes] = await Promise.allSettled([
         makeHttpRequest<NotionalCapResponseType>(
           notionalCapUrl,
-          getAppNameHeader(appName)
+          getAppNameHeader(appName),
         ),
       ]);
 
@@ -184,8 +184,8 @@ export const getNotionalCap = createAsyncThunk(
       throw new Error("error in get notional cap");
     }
 
-    return { notionalCap };
-  }
+    return {notionalCap};
+  },
 );
 
 export const getPriceRange = createAsyncThunk(
@@ -206,18 +206,18 @@ export const getPriceRange = createAsyncThunk(
       throw new Error("market is empty");
     }
 
-    const { href: priceRangeUrl } = new URL(
+    const {href: priceRangeUrl} = new URL(
       `price-range/${market.name}`,
-      hedgerUrl
+      hedgerUrl,
     );
 
-    const priceRange: PriceRange = { name: "", minPrice: -1, maxPrice: -1 };
+    const priceRange: PriceRange = {name: "", minPrice: -1, maxPrice: -1};
 
     try {
       const [priceRangeRes] = await Promise.allSettled([
         makeHttpRequest<PriceRangeResponseType>(
           priceRangeUrl,
-          getAppNameHeader(appName)
+          getAppNameHeader(appName),
         ),
       ]);
 
@@ -230,8 +230,8 @@ export const getPriceRange = createAsyncThunk(
       console.error(error, "happened in getPriceRange");
     }
 
-    return { priceRange };
-  }
+    return {priceRange};
+  },
 );
 
 export const getMarketsDepth = createAsyncThunk(
@@ -241,10 +241,7 @@ export const getMarketsDepth = createAsyncThunk(
       throw new Error("Url is empty");
     }
     const depths: MarketDepthMap = {};
-    const { href: marketDepthUrl } = new URL(
-      `fapi/v1/ticker/bookTicker`,
-      apiUrl
-    );
+    const {href: marketDepthUrl} = new URL(`fapi/v1/ticker/bookTicker`, apiUrl);
 
     try {
       const [marketDepths] = await Promise.allSettled([
@@ -264,10 +261,10 @@ export const getMarketsDepth = createAsyncThunk(
       }
     } catch (error) {
       console.error(error, "happened in getMarketsDepth");
-      return { depths: {} };
+      return {depths: {}};
     }
-    return { depths };
-  }
+    return {depths};
+  },
 );
 
 export const getMarketsInfo = createAsyncThunk(
@@ -283,21 +280,21 @@ export const getMarketsInfo = createAsyncThunk(
       throw new Error("hedgerUrl is empty");
     }
 
-    const { href: marketsInfoUrl } = new URL(`get_market_info`, hedgerUrl);
+    const {href: marketsInfoUrl} = new URL(`get_market_info`, hedgerUrl);
     const marketsInfo: MarketsInfo = {};
     try {
       const [marketsInfoRes] = await Promise.allSettled([
         makeHttpRequest<MarketsInfoRes>(
           marketsInfoUrl,
-          getAppNameHeader(appName)
+          getAppNameHeader(appName),
         ),
       ]);
       if (marketsInfoRes.status === "fulfilled") {
         Object.entries(marketsInfoRes.value as MarketsInfoRes).forEach(
-          (localMarketEntry) => {
+          localMarketEntry => {
             const [marketName, marketInfoValue]: [
               marketName: string,
-              marketInfoValue: MarketInfoValue
+              marketInfoValue: MarketInfoValue,
             ] = localMarketEntry;
             marketsInfo[marketName] = {
               price: marketInfoValue.price.toString(),
@@ -306,7 +303,7 @@ export const getMarketsInfo = createAsyncThunk(
               tradeVolume: marketInfoValue.trade_volume.toString(),
               notionalCap: marketInfoValue.notional_cap.toString(),
             };
-          }
+          },
         );
       }
     } catch (error) {
@@ -315,8 +312,8 @@ export const getMarketsInfo = createAsyncThunk(
       throw new Error("error3");
     }
 
-    return { marketsInfo };
-  }
+    return {marketsInfo};
+  },
 );
 
 export const getFundingRate = createAsyncThunk(
@@ -339,7 +336,7 @@ export const getFundingRate = createAsyncThunk(
     }
 
     const fundingRateUrl = new URL(`get_funding_info`, hedgerUrl);
-    markets.forEach((m) => {
+    markets.forEach(m => {
       fundingRateUrl.searchParams.append("symbols", m);
     });
     console.log(fundingRateUrl, fundingRateUrl.href);
@@ -348,7 +345,7 @@ export const getFundingRate = createAsyncThunk(
       const [fundingRateRes] = await Promise.allSettled([
         makeHttpRequest<FundingRateRes>(
           fundingRateUrl.href,
-          getAppNameHeader(appName)
+          getAppNameHeader(appName),
         ),
       ]);
 
@@ -359,7 +356,7 @@ export const getFundingRate = createAsyncThunk(
     }
 
     return {};
-  }
+  },
 );
 
 export const getPaidAmount = createAsyncThunk(
@@ -377,21 +374,21 @@ export const getPaidAmount = createAsyncThunk(
 
     try {
       const {
-        data: { resultEntities },
+        data: {resultEntities},
       } = await client.query<{
-        resultEntities: { fee: string; __typename: string }[];
+        resultEntities: {fee: string; __typename: string}[];
       }>({
         query: GET_PAID_AMOUNT,
-        variables: { id: `${quoteId}` },
+        variables: {id: `${quoteId}`},
         fetchPolicy: "no-cache",
       });
-      if (resultEntities.length) return { fee: resultEntities[0].fee };
-      return { fee: "" };
+      if (resultEntities.length) return {fee: resultEntities[0].fee};
+      return {fee: ""};
     } catch (error) {
       console.error(error);
       throw new Error(`Unable to query Paid Amount from Client`);
     }
-  }
+  },
 );
 
 export function getAppNameHeader(appName: string) {
@@ -402,6 +399,6 @@ export function getAppNameHeader(appName: string) {
 }
 
 export function getNotionalCapUrl(marketId: number, baseUrl: string) {
-  const { href: notionalCapUrl } = new URL(`notional_cap/${marketId}`, baseUrl);
+  const {href: notionalCapUrl} = new URL(`notional_cap/${marketId}`, baseUrl);
   return notionalCapUrl;
 }

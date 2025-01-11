@@ -1,26 +1,26 @@
 import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
-const { createAction } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
+import {ConnectionStatus} from "../../types/api";
 import {
-  MarketDataMap,
-  MarketDepthMap,
-  MarketDepthData,
-  MarketNotionalCap,
   FundingRateMap,
+  MarketDataMap,
+  MarketDepthData,
+  MarketDepthMap,
+  MarketNotionalCap,
 } from "./types";
-import { ConnectionStatus } from "../../types/api";
+const {createAction} = ((toolkitRaw as any).default ??
+  toolkitRaw) as typeof toolkitRaw;
 
-export const updateWebSocketStatus = createAction<{ status: ConnectionStatus }>(
-  "hedger/updateWebSocketStatus"
+export const updateWebSocketStatus = createAction<{status: ConnectionStatus}>(
+  "hedger/updateWebSocketStatus",
 );
-export const updateHedgerId = createAction<{ id: string }>(
-  "hedger/updateHedgerId"
+export const updateHedgerId = createAction<{id: string}>(
+  "hedger/updateHedgerId",
 );
-export const updatePrices = createAction<{ prices: MarketDataMap }>(
-  "hedger/updatePrices"
+export const updatePrices = createAction<{prices: MarketDataMap}>(
+  "hedger/updatePrices",
 );
-export const updateDepths = createAction<{ depths: MarketDepthMap }>(
-  "hedger/updateDepths"
+export const updateDepths = createAction<{depths: MarketDepthMap}>(
+  "hedger/updateDepths",
 );
 export const updateDepth = createAction<{
   name: string;

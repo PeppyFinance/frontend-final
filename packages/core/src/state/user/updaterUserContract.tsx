@@ -1,22 +1,22 @@
 import isEqual from "lodash/isEqual.js";
+import {useEffect, useState} from "react";
+import {useCheckSignedMessage} from "../../hooks/useCheckSign";
+import {usePartyAStats} from "../../hooks/usePartyAStats";
 import useActiveWagmi from "../../lib/hooks/useActiveWagmi";
+import {useAppDispatch} from "../declaration";
+import {updateAcceptTerms, updateAccountPartyAStat} from "./actions";
 import {
   useAccountPartyAStat,
   useActiveAccountAddress,
   useIsTermsAccepted,
 } from "./hooks";
-import { usePartyAStats } from "../../hooks/usePartyAStats";
-import { useEffect, useState } from "react";
-import { updateAcceptTerms, updateAccountPartyAStat } from "./actions";
-import { useAppDispatch } from "../declaration";
-import { useCheckSignedMessage } from "../../hooks/useCheckSign";
 
 export function UpdaterUserContract(): null {
   const dispatch = useAppDispatch();
   //TODO: maybe there is better way?!
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [time, setTime] = useState(0);
-  const { account } = useActiveWagmi();
+  const {account} = useActiveWagmi();
   const previousAccountPartyAStat = useAccountPartyAStat(account);
   const activeAccountAddress = useActiveAccountAddress();
   const previousActiveAccountPartyAStat =
@@ -25,7 +25,7 @@ export function UpdaterUserContract(): null {
   const activePartyAStat = usePartyAStats(activeAccountAddress);
 
   const previousAcceptTerms = useIsTermsAccepted();
-  const { isTermsAccepted } = useCheckSignedMessage(account);
+  const {isTermsAccepted} = useCheckSignedMessage(account);
 
   useEffect(() => {
     if (
@@ -33,7 +33,7 @@ export function UpdaterUserContract(): null {
       !isEqual(previousAccountPartyAStat, accountPartyAStat)
     ) {
       dispatch(
-        updateAccountPartyAStat({ address: account, value: accountPartyAStat })
+        updateAccountPartyAStat({address: account, value: accountPartyAStat}),
       );
     }
   }, [accountPartyAStat, account, dispatch]);
@@ -47,7 +47,7 @@ export function UpdaterUserContract(): null {
         updateAccountPartyAStat({
           address: activeAccountAddress,
           value: activePartyAStat,
-        })
+        }),
       );
     }
   }, [activePartyAStat, activeAccountAddress, dispatch]);
@@ -60,7 +60,7 @@ export function UpdaterUserContract(): null {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setTime((prevTime) => prevTime + 1);
+      setTime(prevTime => prevTime + 1);
     }, 2000);
 
     return () => {

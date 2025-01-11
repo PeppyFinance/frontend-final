@@ -1,12 +1,12 @@
-import { createApolloClient } from "./index";
 import useActiveWagmi from "../../lib/hooks/useActiveWagmi";
-import { useAnalyticsSubgraphAddress } from "../../state/chains";
+import {useAnalyticsSubgraphAddress} from "../../state/chains";
+import {createApolloClient} from "./index";
 
 // ANALYTICS SUBGRAPH
 const apolloClients = {};
 
 export function useAnalyticsApolloClient() {
-  const { chainId } = useActiveWagmi();
+  const {chainId} = useActiveWagmi();
   const uri = useAnalyticsSubgraphAddress();
 
   if (!chainId || !uri) {

@@ -1,7 +1,7 @@
-import { useMemo } from "react";
+import {useMemo} from "react";
 
-import { toBN } from "../utils/numbers";
-import { WEB_SETTING } from "../config";
+import {WEB_SETTING} from "../config";
+import {toBN} from "../utils/numbers";
 
 import {
   useAccountPartyAStat,
@@ -9,7 +9,7 @@ import {
   useActiveAccount,
   useUpnlWebSocketStatus,
 } from "../state/user/hooks";
-import { ConnectionStatus } from "../types/api";
+import {ConnectionStatus} from "../types/api";
 
 export interface Emoji {
   symbol: string;
@@ -29,8 +29,8 @@ export interface AccountData {
 }
 
 export default function useAccountData(): AccountData {
-  const { upnl } = useAccountUpnl() || {};
-  const { accountAddress } = useActiveAccount() || {};
+  const {upnl} = useAccountUpnl() || {};
+  const {accountAddress} = useActiveAccount() || {};
 
   const {
     allocatedBalance,
@@ -62,7 +62,7 @@ export default function useAccountData(): AccountData {
     const healthColor = getAccountColor(health, liquidationStatus);
     const healthEmoji = getAccountEmoji(health, liquidationStatus);
 
-    return { health, healthColor, healthEmoji };
+    return {health, healthColor, healthEmoji};
   }, [allocatedBalance, equity, liquidationStatus, maintenanceMargin]);
 
   const totalLocked = toBN(lockedCVA)
@@ -110,7 +110,7 @@ export default function useAccountData(): AccountData {
       availableForOrder,
       loading,
     }),
-    [accountHealthData, availableForOrder, equity, loading, maintenanceMargin]
+    [accountHealthData, availableForOrder, equity, loading, maintenanceMargin],
   );
 }
 
@@ -135,19 +135,19 @@ function getAccountColor(accountHealth: string, isLiquidated: boolean) {
 function getAccountEmoji(accountHealth: string, isLiquidated: boolean): Emoji {
   const accountHealthBN = toBN(accountHealth);
   if (isLiquidated) {
-    return { symbol: "☠️", label: "skull-and-crossbones" };
+    return {symbol: "☠️", label: "skull-and-crossbones"};
   }
   if (!WEB_SETTING.showAccountHealthEmoji) {
-    return { symbol: "", label: "" };
+    return {symbol: "", label: ""};
   } else if (accountHealthBN.lt(10)) {
-    return { symbol: "🥵", label: "hot-face" };
+    return {symbol: "🥵", label: "hot-face"};
   } else if (accountHealthBN.lt(25)) {
-    return { symbol: "😨", label: "fearful-face" };
+    return {symbol: "😨", label: "fearful-face"};
   } else if (accountHealthBN.lt(50)) {
-    return { symbol: "🙄", label: "face-with-rolling-eyes" };
+    return {symbol: "🙄", label: "face-with-rolling-eyes"};
   } else if (accountHealthBN.lt(75)) {
-    return { symbol: "😊", label: "smiling-face-with-smiling-eyes" };
+    return {symbol: "😊", label: "smiling-face-with-smiling-eyes"};
   } else {
-    return { symbol: "😍", label: "smiling-face-with-heart-eyes" };
+    return {symbol: "😍", label: "smiling-face-with-heart-eyes"};
   }
 }

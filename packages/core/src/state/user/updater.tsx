@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useRef } from "react";
 import isEmpty from "lodash/isEmpty.js";
-import { AppDispatch, AppThunkDispatch, useAppDispatch } from "../declaration";
-import { useWebSocket } from "react-use-websocket/dist/lib/use-websocket.js";
+import {useEffect, useMemo, useRef} from "react";
+import {useWebSocket} from "react-use-websocket/dist/lib/use-websocket.js";
+import {AppDispatch, AppThunkDispatch, useAppDispatch} from "../declaration";
 
 // TODO: fix this { ReadyState } from "react-use-websocket"
 enum ReadyState {
@@ -15,36 +15,36 @@ enum ReadyState {
 import useActiveWagmi from "../../lib/hooks/useActiveWagmi";
 import useIsWindowVisible from "../../lib/hooks/useIsWindowVisible";
 
-import { AccountUpnl } from "../../types/user";
-import { useHedgerInfo } from "../hedger/hooks";
+import {AccountUpnl} from "../../types/user";
+import {useHedgerInfo} from "../hedger/hooks";
 
-import { updateAccountUpnl, updateMatchesDarkMode } from "./actions";
-import {
-  useActiveAccountAddress,
-  useSetUpnlWebSocketStatus,
-  useUserWhitelist,
-} from "./hooks";
-import { getIsWhiteList, getTotalDepositsAndWithdrawals } from "./thunks";
+import {useAnalyticsApolloClient} from "../../apollo/client/balanceHistory";
+import {useContractDelegateTpSl} from "../../hooks/useTpSl";
+import {ConnectionStatus} from "../../types/api";
+import {makeHttpRequestV2} from "../../utils/http";
+import {autoRefresh} from "../../utils/retry";
 import {
   useAnalyticsSubgraphAddress,
   useAppName,
   useMultiAccountAddress,
 } from "../chains/hooks";
-import { ConnectionStatus } from "../../types/api";
-import { useAnalyticsApolloClient } from "../../apollo/client/balanceHistory";
-import { useContractDelegateTpSl } from "../../hooks/useTpSl";
 import {
   useSetDelegateTpSl,
   useSetTpSlConfig,
   useTpSlDelegate,
 } from "../trade/hooks";
-import { autoRefresh } from "../../utils/retry";
-import { makeHttpRequestV2 } from "../../utils/http";
+import {updateAccountUpnl, updateMatchesDarkMode} from "./actions";
+import {
+  useActiveAccountAddress,
+  useSetUpnlWebSocketStatus,
+  useUserWhitelist,
+} from "./hooks";
+import {getIsWhiteList, getTotalDepositsAndWithdrawals} from "./thunks";
 
 export function UserUpdater(): null {
   const dispatch = useAppDispatch();
   const thunkDispatch: AppThunkDispatch = useAppDispatch();
-  const { account, chainId } = useActiveWagmi();
+  const {account, chainId} = useActiveWagmi();
   const activeAccountAddress = useActiveAccountAddress();
   const MULTI_ACCOUNT_ADDRESS = useMultiAccountAddress();
   const client = useAnalyticsApolloClient();
@@ -55,7 +55,7 @@ export function UserUpdater(): null {
   const setDelegateTpSl = useSetDelegateTpSl();
   const setTpSlConfig = useSetTpSlConfig();
   const configRequestRef = useRef<() => void>();
-  const { baseUrl, fetchData, tpslUrl } = useHedgerInfo() || {};
+  const {baseUrl, fetchData, tpslUrl} = useHedgerInfo() || {};
 
   useUpnlWebSocket(dispatch);
 
@@ -103,7 +103,7 @@ export function UserUpdater(): null {
           account,
           multiAccountAddress: MULTI_ACCOUNT_ADDRESS[chainId],
           appName,
-        })
+        }),
       );
   }, [
     thunkDispatch,
@@ -122,7 +122,7 @@ export function UserUpdater(): null {
           account: activeAccountAddress,
           chainId,
           client,
-        })
+        }),
       );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeAccountAddress, chainId, subgraphAddress, thunkDispatch]);
@@ -130,11 +130,11 @@ export function UserUpdater(): null {
   // keep dark mode in sync with the system
   useEffect(() => {
     const darkHandler = (match: MediaQueryListEvent) => {
-      dispatch(updateMatchesDarkMode({ matchesDarkMode: match.matches }));
+      dispatch(updateMatchesDarkMode({matchesDarkMode: match.matches}));
     };
 
     const match = window?.matchMedia("(prefers-color-scheme: dark)");
-    dispatch(updateMatchesDarkMode({ matchesDarkMode: match.matches }));
+    dispatch(updateMatchesDarkMode({matchesDarkMode: match.matches}));
 
     if (match?.addListener) {
       match?.addListener(darkHandler);
@@ -154,15 +154,12 @@ export function UserUpdater(): null {
   return null;
 }
 async function getTpSlConfigRequest(TP_SL_URL: string, APP_NAME: string) {
-  const { href: tpSlUrl } = new URL(
-    `conditional-order/dev/configs/`,
-    TP_SL_URL
-  );
+  const {href: tpSlUrl} = new URL(`conditional-order/dev/configs/`, TP_SL_URL);
   const options = {
     headers: [["App-Name", APP_NAME]],
   };
   try {
-    const { result, status }: { result: any; status: number } =
+    const {result, status}: {result: any; status: number} =
       await makeHttpRequestV2(tpSlUrl, options);
     if (status !== 200 && result?.error_message) {
       return null;
@@ -179,7 +176,7 @@ function useUpnlWebSocket(dispatch: AppDispatch) {
   const activeAccountAddress = useActiveAccountAddress();
   const updateWebSocketStatus = useSetUpnlWebSocketStatus();
   const isAccountWhiteList = useUserWhitelist();
-  const { webSocketUpnlUrl } = useHedgerInfo() || {};
+  const {webSocketUpnlUrl} = useHedgerInfo() || {};
 
   const url = useMemo(() => {
     if (isAccountWhiteList && webSocketUpnlUrl) {
@@ -202,7 +199,7 @@ function useUpnlWebSocket(dispatch: AppDispatch) {
       console.log("WebSocket connection established.");
     },
     shouldReconnect: () => true,
-    onError: (e) => console.log("WebSocket connection has error ", e),
+    onError: e => console.log("WebSocket connection has error ", e),
   });
 
   const connectionStatus = useMemo(() => {
@@ -231,7 +228,7 @@ function useUpnlWebSocket(dispatch: AppDispatch) {
             upnl: 0,
             timestamp: 0,
             available_balance: 0,
-          })
+          }),
         );
         return;
       }
@@ -250,7 +247,7 @@ function useUpnlWebSocket(dispatch: AppDispatch) {
           upnl: 0,
           timestamp: 0,
           available_balance: 0,
-        })
+        }),
       );
     }
   }, [dispatch, upnlWebSocketMessage, windowVisible]);

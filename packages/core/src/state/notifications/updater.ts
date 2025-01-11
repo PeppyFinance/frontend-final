@@ -1,36 +1,36 @@
-import { useCallback, useEffect, useMemo } from "react";
 import isEmpty from "lodash/isEmpty.js";
-import { useWebSocket } from "react-use-websocket/dist/lib/use-websocket.js";
+import {useCallback, useEffect, useMemo} from "react";
+import {useWebSocket} from "react-use-websocket/dist/lib/use-websocket.js";
 // const useWebSocket = useWebSocketRaw.useWebSocket;
 
-import { getNotifications } from "./thunks";
-import { L2_TXN_DISMISS_MS } from "../../constants/misc";
-import { AppThunkDispatch, useAppDispatch } from "../declaration";
+import {L2_TXN_DISMISS_MS} from "../../constants/misc";
+import {AppThunkDispatch, useAppDispatch} from "../declaration";
+import {getNotifications} from "./thunks";
 import {
-  NotificationResponse,
   ActionStatus,
-  StateType,
   NotificationDetails,
+  NotificationResponse,
   NotificationType,
+  StateType,
 } from "./types";
 
 import useNotificationHistory from "../../lib/hooks/useNotificationHistory";
 
-import { useHedgerInfo } from "../hedger/hooks";
-import { useActiveAccountAddress, useUserWhitelist } from "../user/hooks";
-import { useAddPopup } from "../application/hooks";
+import {useAddPopup} from "../application/hooks";
+import {useAppName} from "../chains/hooks";
+import {useHedgerInfo} from "../hedger/hooks";
+import {useActiveAccountAddress, useUserWhitelist} from "../user/hooks";
 import {
   useLastUpdateTimestamp,
-  useSetNewNotificationFlag,
   useNotificationAdderCallback,
+  useSetNewNotificationFlag,
 } from "./hooks";
-import { useAppName } from "../chains/hooks";
 
 export function NotificationUpdater(): null {
   const thunkDispatch: AppThunkDispatch = useAppDispatch();
   const account = useActiveAccountAddress();
   const timestamp = useLastUpdateTimestamp();
-  const { baseUrl, fetchData } = useHedgerInfo() || {};
+  const {baseUrl, fetchData} = useHedgerInfo() || {};
 
   useNotifications(account, fetchData, baseUrl, timestamp, thunkDispatch);
   useNotificationHistory();
@@ -45,7 +45,7 @@ function useNotificationsWebSocket() {
   const addPopup = useAddPopup();
   const activeAccountAddress = useActiveAccountAddress();
   const userIsWhitelist = useUserWhitelist();
-  const { webSocketNotificationUrl } = useHedgerInfo() || {};
+  const {webSocketNotificationUrl} = useHedgerInfo() || {};
 
   const url = useMemo(() => {
     if (userIsWhitelist && webSocketNotificationUrl) {
@@ -54,14 +54,14 @@ function useNotificationsWebSocket() {
     return null;
   }, [userIsWhitelist, webSocketNotificationUrl]);
 
-  const { sendJsonMessage, lastJsonMessage } = useWebSocket(url, {
+  const {sendJsonMessage, lastJsonMessage} = useWebSocket(url, {
     reconnectAttempts: 10,
     shouldReconnect: () => true,
     onOpen: () => {
       console.log("Notification websocket connection established.");
     },
     onClose: () => console.log("Notification websocket connection closed"),
-    onError: (e) =>
+    onError: e =>
       console.log("Notification webSocket connection has error ", e),
   });
 
@@ -84,7 +84,7 @@ function useNotificationsWebSocket() {
       }
 
       const notification: NotificationDetails = groupingNotification(
-        toNotification(lastMessage)
+        toNotification(lastMessage),
       );
 
       if (notification.notificationType !== NotificationType.OTHER) {
@@ -96,7 +96,7 @@ function useNotificationsWebSocket() {
         }
       }
     } catch (err) {
-      console.log("Notification Error:", { err });
+      console.log("Notification Error:", {err});
     }
   }, [addPopup, lastJsonMessage, newNotificationNotifier, notificationAdder]);
 }
@@ -106,7 +106,7 @@ function useNotifications(
   fetchData?: boolean,
   baseUrl?: string,
   timestamp?: string,
-  thunkDispatch?: AppThunkDispatch
+  thunkDispatch?: AppThunkDispatch,
 ) {
   const appName = useAppName();
   const cleanup = useCallback(() => {
@@ -122,7 +122,7 @@ function useNotifications(
           baseUrl,
           timestamp: Number(timestamp),
           appName,
-        })
+        }),
       );
       return cleanup;
     }
@@ -130,7 +130,7 @@ function useNotifications(
 }
 
 export function toNotification(
-  data: NotificationResponse
+  data: NotificationResponse,
 ): NotificationDetails {
   const notification: NotificationDetails = {
     id: data.id,
@@ -154,7 +154,7 @@ export function toNotification(
 }
 
 export function groupingNotification(
-  notification: NotificationDetails
+  notification: NotificationDetails,
 ): NotificationDetails {
   if (notification.stateType === StateType.REPORT) {
     notification.notificationType = NotificationType.PARTIAL_FILL;

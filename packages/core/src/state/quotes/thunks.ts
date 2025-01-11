@@ -1,17 +1,17 @@
+import {ApolloClient, NormalizedCacheObject} from "@apollo/client";
 import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
-const { createAsyncThunk } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
-import { ApolloClient, NormalizedCacheObject } from "@apollo/client";
-import { ORDER_HISTORY_DATA } from "../../apollo/queries";
-import { InstantCloseResponseType, SubGraphData } from "./types";
-import { Quote } from "../../types/quote";
-import { OrderType } from "../../types/trade";
-import { fromWei } from "../../utils/numbers";
+import {ORDER_HISTORY_DATA} from "../../apollo/queries";
 import {
   getPositionTypeByIndex,
   getQuoteStateByIndex,
 } from "../../hooks/useQuotes";
-import { makeHttpRequest } from "../../utils/http";
+import {Quote} from "../../types/quote";
+import {OrderType} from "../../types/trade";
+import {makeHttpRequest} from "../../utils/http";
+import {fromWei} from "../../utils/numbers";
+import {InstantCloseResponseType, SubGraphData} from "./types";
+const {createAsyncThunk} = ((toolkitRaw as any).default ??
+  toolkitRaw) as typeof toolkitRaw;
 
 function toQuoteFromGraph(entity: SubGraphData) {
   return {
@@ -74,26 +74,26 @@ export const getHistory = createAsyncThunk(
     try {
       let hasMore = false;
       const {
-        data: { resultEntities },
+        data: {resultEntities},
       } = await client.query({
         query: ORDER_HISTORY_DATA,
-        variables: { address: account, first, skip },
+        variables: {address: account, first, skip},
         fetchPolicy: "no-cache",
       });
 
       const quotes: Quote[] = resultEntities.map((entity: SubGraphData) =>
-        toQuoteFromGraph(entity)
+        toQuoteFromGraph(entity),
       );
       if (quotes.length === ItemsPerPage + 1) {
         hasMore = true;
       }
 
-      return { quotes, hasMore, chainId };
+      return {quotes, hasMore, chainId};
     } catch (error) {
       console.error(error);
       throw new Error(`Unable to query data from Client`);
     }
-  }
+  },
 );
 
 export const getInstantCloses = createAsyncThunk(
@@ -106,7 +106,7 @@ export const getInstantCloses = createAsyncThunk(
     baseUrl: string | undefined;
     account: string;
     appName: string;
-  }): Promise<{ openInstantCloses: InstantCloseResponseType }> => {
+  }): Promise<{openInstantCloses: InstantCloseResponseType}> => {
     if (!baseUrl) {
       throw new Error("baseUrl is empty");
     }
@@ -130,9 +130,9 @@ export const getInstantCloses = createAsyncThunk(
         openInstantCloses = instantClosesRes.value;
       }
 
-      return { openInstantCloses };
+      return {openInstantCloses};
     } catch (error) {
       throw new Error(`Unable to get instant closes data from hedger`);
     }
-  }
+  },
 );

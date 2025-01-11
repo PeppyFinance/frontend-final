@@ -1,5 +1,4 @@
-import React from "react";
-import styled, { keyframes, useTheme } from "styled-components";
+import styled, {keyframes, useTheme} from "styled-components";
 
 const rotate = keyframes`
   from {
@@ -14,9 +13,9 @@ const StyledSVG = styled.svg<{
   duration: string;
   size: string;
 }>`
-  animation: ${({ duration }) => duration} ${rotate} linear infinite;
-  height: ${({ size }) => size};
-  width: ${({ size }) => size};
+  animation: ${({duration}) => duration} ${rotate} linear infinite;
+  height: ${({size}) => size};
+  width: ${({size}) => size};
 `;
 
 export default function Loader({

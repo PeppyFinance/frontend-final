@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 
 interface ErrorBoundaryProps {
   children: React.ReactNode;
 }
-const ErrorBoundary: React.FC<ErrorBoundaryProps> = ({ children }) => {
+const ErrorBoundary: React.FC<ErrorBoundaryProps> = ({children}) => {
   useEffect(() => {
     const handleRuntimeError = (event: Event | string) => {
       console.log("Runtime error occurred:", event);

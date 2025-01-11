@@ -1,14 +1,14 @@
-import { useTheme } from "styled-components";
-import { PositionType } from "@symmio/frontend-sdk/types/trade";
+import {PositionType} from "@symmio/frontend-sdk/types/trade";
+import {useTheme} from "styled-components";
 
-import { LongArrow, ShortArrow } from "components/Icons";
-import { RowCenter } from "components/Row";
-import { TabModalJSX, TabOption } from "components/Tab";
 import {
   usePositionType,
   useSetPositionType,
 } from "@symmio/frontend-sdk/state/trade/hooks";
-import { lighten, rgba } from "polished";
+import {LongArrow, ShortArrow} from "components/Icons";
+import {RowCenter} from "components/Row";
+import {TabModalJSX, TabOption} from "components/Tab";
+import {lighten, rgba} from "polished";
 
 export default function PositionTypeTab() {
   const theme = useTheme();
@@ -28,7 +28,7 @@ export default function PositionTypeTab() {
             color={
               positionType === PositionType.LONG ? theme.positive : theme.text4
             }
-            style={{ marginLeft: "8px" }}
+            style={{marginLeft: "8px"}}
           />
         </RowCenter>
       ),
@@ -54,7 +54,7 @@ export default function PositionTypeTab() {
             color={
               positionType === PositionType.SHORT ? theme.negative : theme.text4
             }
-            style={{ marginLeft: "8px" }}
+            style={{marginLeft: "8px"}}
           />
         </RowCenter>
       ),

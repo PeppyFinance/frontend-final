@@ -1,15 +1,15 @@
-import { useState, createContext, useContext } from "react";
+import {createContext, useContext, useState} from "react";
 import styled from "styled-components";
 
-import { ChevronDown, IconWrapper } from "components/Icons";
+import {Card} from "components/Card";
+import {ChevronDown, IconWrapper} from "components/Icons";
 import ArrowRightTriangle from "components/Icons/ArrowRightTriangle";
-import { Card } from "components/Card";
-import { Row, RowBetween, RowEnd } from "components/Row";
+import {Row, RowBetween, RowEnd} from "components/Row";
 
 const Container = styled(RowEnd)`
   height: 48px;
   padding: 0 24px;
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+  ${({theme}) => theme.mediaWidth.upToExtraSmall`
     padding: 0 12px;
   `}
   position: relative;
@@ -30,7 +30,7 @@ const Pagination = styled(Row)`
 const RowPerPage = styled(Pagination)`
   width: 200px;
   font-weight: 400;
-  background-color: ${({ theme }) => theme.bg2};
+  background-color: ${({theme}) => theme.bg2};
   border-radius: 4px;
   padding: 12px;
   font-size: 12px;
@@ -38,21 +38,21 @@ const RowPerPage = styled(Pagination)`
     cursor: pointer;
   }
 
-  ${({ theme }) => theme.mediaWidth.upToSmall`
+  ${({theme}) => theme.mediaWidth.upToSmall`
     width: 64px;
   `}
 `;
 const RowPerPageText = styled.div`
   font-size: 12px;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
+  ${({theme}) => theme.mediaWidth.upToSmall`
     display: none;
   `}
 `;
-const ArrowWrapper = styled.button<{ left?: boolean; active?: boolean }>`
-  transform: rotate(${({ left }) => (left ? "180deg" : "0")});
-  opacity: ${({ active }) => (active ? "1" : "0.5")};
+const ArrowWrapper = styled.button<{left?: boolean; active?: boolean}>`
+  transform: rotate(${({left}) => (left ? "180deg" : "0")});
+  opacity: ${({active}) => (active ? "1" : "0.5")};
   &:hover {
-    cursor: ${({ active }) => (active ? "pointer" : "default")};
+    cursor: ${({active}) => (active ? "pointer" : "default")};
   }
 `;
 
@@ -62,8 +62,8 @@ const ChevronWrapper = styled.div`
   text-align: center;
 `;
 
-const Chevron = styled(ChevronDown)<{ open: boolean }>`
-  transform: rotateX(${({ open }) => (open ? "180deg" : "0deg")});
+const Chevron = styled(ChevronDown)<{open: boolean}>`
+  transform: rotateX(${({open}) => (open ? "180deg" : "0deg")});
   transition: 0.5s;
 `;
 
@@ -78,10 +78,10 @@ const HoverWrapper = styled(Card)`
   position: absolute;
   transform: translateY(-4px);
   z-index: 1;
-  background: ${({ theme }) => theme.bg2};
-  border-top: 1px solid ${({ theme }) => theme.bg5};
+  background: ${({theme}) => theme.bg2};
+  border-top: 1px solid ${({theme}) => theme.bg5};
   border-radius: 0 0 4px 4px;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
+  ${({theme}) => theme.mediaWidth.upToSmall`
     width: 64px;
   `};
 `;
@@ -89,7 +89,7 @@ const HoverWrapper = styled(Card)`
 const HoverItem = styled.div`
   &:hover {
     cursor: pointer;
-    background: ${({ theme }) => theme.bg0};
+    background: ${({theme}) => theme.bg0};
   }
 `;
 const HoverItemContent = styled.div`
@@ -154,8 +154,7 @@ function Arrow({
 }
 
 function PaginationNavigation() {
-  const { currentPage, pageCount, onPageChange } =
-    useContext(NavigationContext);
+  const {currentPage, pageCount, onPageChange} = useContext(NavigationContext);
   return (
     <Center>
       <Pagination width={"initial"} gap={"12px"}>
@@ -182,14 +181,14 @@ function PaginationNavigation() {
 }
 
 function PaginationPerPageCard() {
-  const { currentPage, rowsPerPage, onRowsPerPageChange } =
+  const {currentPage, rowsPerPage, onRowsPerPageChange} =
     useContext(CardContext);
   const [cardOpen, setCardOpen] = useState<boolean>(false);
   return (
     <div>
       <RowPerPage
         gap="4px"
-        onClick={() => setCardOpen((prevCardOpen) => !prevCardOpen)}
+        onClick={() => setCardOpen(prevCardOpen => !prevCardOpen)}
       >
         <RowBetween>
           <RowPerPageText>Rows per page</RowPerPageText>
@@ -201,7 +200,7 @@ function PaginationPerPageCard() {
       </RowPerPage>
       {cardOpen && (
         <HoverWrapper onClick={() => setCardOpen(false)}>
-          {[5, 10, 20].map((newRowsPerPage) => (
+          {[5, 10, 20].map(newRowsPerPage => (
             <HoverItem
               key={newRowsPerPage}
               onClick={() =>

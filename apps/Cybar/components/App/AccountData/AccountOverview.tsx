@@ -1,51 +1,51 @@
-import { useEffect, useState } from "react";
-import styled, { useTheme } from "styled-components";
 import Image from "next/legacy/image";
-import { toast } from "react-hot-toast";
+import {useEffect, useState} from "react";
+import {toast} from "react-hot-toast";
+import styled, {useTheme} from "styled-components";
 
+import {useCollateralToken} from "@symmio/frontend-sdk/constants/tokens";
 import {
   formatAmount,
   formatPrice,
   toBN,
 } from "@symmio/frontend-sdk/utils/numbers";
-import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
-import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
+import {useGetTokenWithFallbackChainId} from "@symmio/frontend-sdk/utils/token";
 
+import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
+import {
+  useDepositModalToggle,
+  useModalOpen,
+  useWithdrawModalToggle,
+} from "@symmio/frontend-sdk/state/application/hooks";
+import {ApplicationModal} from "@symmio/frontend-sdk/state/application/reducer";
 import {
   useAccountPartyAStat,
   useActiveAccount,
   useExpertMode,
   useSetExpertModeCallback,
 } from "@symmio/frontend-sdk/state/user/hooks";
-import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
-import { ApplicationModal } from "@symmio/frontend-sdk/state/application/reducer";
-import {
-  useDepositModalToggle,
-  useModalOpen,
-  useWithdrawModalToggle,
-} from "@symmio/frontend-sdk/state/application/hooks";
 
-import { useAccountsLength } from "@symmio/frontend-sdk/hooks/useAccounts";
 import useAccountData from "@symmio/frontend-sdk/hooks/useAccountData";
+import {useAccountsLength} from "@symmio/frontend-sdk/hooks/useAccounts";
 
-import { ColumnCenter } from "components/Column";
-import { Row, RowBetween, RowEnd } from "components/Row";
-import Emoji from "components/App/AccountData/Emoji";
-import GradientButton from "components/Button/GradientButton";
-import StartTrading from "components/App/AccountData/StartTrading";
-import CreateAccount from "components/App/AccountData/CreateAccount";
-import { ContextError, useInvalidContext } from "components/InvalidContext";
-import DepositModal from "components/ReviewModal/DepositModal";
 import AccountUpnl from "components/App/AccountData/AccountUpnl";
+import CreateAccount from "components/App/AccountData/CreateAccount";
 import DataRow from "components/App/AccountData/DataRow";
+import Emoji from "components/App/AccountData/Emoji";
+import StartTrading from "components/App/AccountData/StartTrading";
+import GradientButton from "components/Button/GradientButton";
+import {ColumnCenter} from "components/Column";
+import {ContextError, useInvalidContext} from "components/InvalidContext";
+import DepositModal from "components/ReviewModal/DepositModal";
 import WithdrawModal from "components/ReviewModal/WithdrawModal";
+import {Row, RowBetween, RowEnd} from "components/Row";
 
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
   flex-flow: column nowrap;
   border-radius: 4px;
-  background: ${({ theme }) => theme.bg0};
+  background: ${({theme}) => theme.bg0};
 `;
 
 const Title = styled(Row)`
@@ -53,25 +53,25 @@ const Title = styled(Row)`
   font-size: 16px;
   line-height: 19px;
   padding: 12px;
-  color: ${({ theme }) => theme.text0};
+  color: ${({theme}) => theme.text0};
   padding-bottom: 1rem;
-  ${({ theme }) => theme.mediaWidth.upToMedium`
+  ${({theme}) => theme.mediaWidth.upToMedium`
     font-size: 14px;
   `};
 `;
 
-const AccountHealth = styled(RowEnd)<{ color?: string }>`
+const AccountHealth = styled(RowEnd)<{color?: string}>`
   font-weight: 500;
   font-size: 16px;
   padding: 12px 12px 12px 0px;
-  color: ${({ theme, color }) => color ?? theme.text1};
+  color: ${({theme, color}) => color ?? theme.text1};
 `;
 
 export const AccountHealthText = styled.div`
   font-size: 10px;
   margin-right: 4px;
   margin-top: 4px;
-  color: ${({ theme }) => theme.text3};
+  color: ${({theme}) => theme.text3};
 `;
 
 const ContentWrapper = styled.div`
@@ -87,7 +87,7 @@ const DataWrap = styled.div`
   padding: 12px;
   flex-flow: column nowrap;
   position: relative;
-  background: ${({ theme }) => theme.bg2};
+  background: ${({theme}) => theme.bg2};
 `;
 
 const TopRow = styled(RowBetween)`
@@ -98,8 +98,8 @@ const TopRow = styled(RowBetween)`
 const Label = styled.div`
   font-size: 14px;
   justify-self: start;
-  color: ${({ theme }) => theme.text3};
-  ${({ theme }) => theme.mediaWidth.upToMedium`
+  color: ${({theme}) => theme.text3};
+  ${({theme}) => theme.mediaWidth.upToMedium`
     font-size: 12px;
   `};
 `;
@@ -112,7 +112,7 @@ const ButtonsWrapper = styled(RowEnd)`
 const ContextText = styled.div`
   font-size: 14px;
   margin-top: 28px;
-  color: ${({ theme }) => theme.text3};
+  color: ${({theme}) => theme.text3};
 `;
 
 const LiquidatedHealth = styled.span`
@@ -131,9 +131,9 @@ export default function AccountOverview({
   mobileVersion?: boolean;
 }) {
   const theme = useTheme();
-  const { chainId } = useActiveWagmi();
-  const { accountAddress, name: accountName } = useActiveAccount() || {};
-  const { accountLength, loading: accountsLoading } = useAccountsLength();
+  const {chainId} = useActiveWagmi();
+  const {accountAddress, name: accountName} = useActiveAccount() || {};
+  const {accountLength, loading: accountsLoading} = useAccountsLength();
   const validatedContext = useInvalidContext();
   const {
     allocatedBalance,
@@ -146,13 +146,13 @@ export default function AccountOverview({
   const {
     equity,
     maintenanceMargin,
-    accountHealthData: { health: accountHealth, healthColor, healthEmoji },
+    accountHealthData: {health: accountHealth, healthColor, healthEmoji},
     availableForOrder,
   } = useAccountData();
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(
     COLLATERAL_TOKEN,
-    chainId
+    chainId,
   );
 
   const showDepositModal = useModalOpen(ApplicationModal.DEPOSIT);
@@ -183,7 +183,7 @@ export default function AccountOverview({
                   <Emoji
                     symbol={healthEmoji.symbol}
                     label={healthEmoji.label}
-                    style={{ width: "22px", marginLeft: "4px" }}
+                    style={{width: "22px", marginLeft: "4px"}}
                   />
                 </>
               ) : isNaN(Number(accountHealth)) ? (
@@ -195,7 +195,7 @@ export default function AccountOverview({
                   <Emoji
                     symbol={healthEmoji.symbol}
                     label={healthEmoji.label}
-                    style={{ width: "22px", marginLeft: "4px" }}
+                    style={{width: "22px", marginLeft: "4px"}}
                   />
                 </>
               )}
@@ -203,7 +203,7 @@ export default function AccountOverview({
           </TopRow>
           <DataWrap>
             <TopRow>
-              <Label style={{ color: theme.text0 }}>Account Total uPnL:</Label>
+              <Label style={{color: theme.text0}}>Account Total uPnL:</Label>
               <AccountUpnl />
             </TopRow>
             <DataRow
@@ -254,10 +254,10 @@ export default function AccountOverview({
   }
 }
 
-function NotValidState({ text }: { text: string }) {
+function NotValidState({text}: {text: string}) {
   return (
     <Wrapper>
-      <ColumnCenter style={{ marginTop: "78px" }}>
+      <ColumnCenter style={{marginTop: "78px"}}>
         <Image
           src={"/static/images/etc/CYBAR_WB_MARKE_LOGO_RZ-WHITE-short.svg"}
           alt="Asset"
@@ -270,11 +270,7 @@ function NotValidState({ text }: { text: string }) {
   );
 }
 
-export const DeveloperModeTitle = ({
-  title,
-}: {
-  title: string | undefined;
-}) => {
+export const DeveloperModeTitle = ({title}: {title: string | undefined}) => {
   const setExpertMode = useSetExpertModeCallback();
   const isExpertMode = useExpertMode();
   const [tries, setTries] = useState(0);
@@ -282,7 +278,7 @@ export const DeveloperModeTitle = ({
   useEffect(() => {
     const toggleExpertMode = () => {
       toast.success(
-        `Developer mode ${isExpertMode ? "deactivated" : "activated"}!`
+        `Developer mode ${isExpertMode ? "deactivated" : "activated"}!`,
       );
       setExpertMode(!isExpertMode);
       setTries(0);
@@ -294,7 +290,7 @@ export const DeveloperModeTitle = ({
       toast.error(
         `Developer mode is ${
           isExpertMode ? "deactivating" : "activating"
-        } #${tries}`
+        } #${tries}`,
       );
     }
   }, [tries, setExpertMode, isExpertMode]);

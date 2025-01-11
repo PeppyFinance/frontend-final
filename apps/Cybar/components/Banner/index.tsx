@@ -1,22 +1,20 @@
-import React from "react";
 import styled from "styled-components";
 
-import { useUserWhitelist } from "@symmio/frontend-sdk/state/user/hooks";
+import {useUserWhitelist} from "@symmio/frontend-sdk/state/user/hooks";
 
-import { Info } from "components/Icons";
-import { Close as CloseIcon } from "components/Icons";
-import { RowStart } from "components/Row";
-import { ExternalLinkIcon } from "components/Link";
+import {Close as CloseIcon, Info} from "components/Icons";
+import {ExternalLinkIcon} from "components/Link";
+import {RowStart} from "components/Row";
 
 const Container = styled.div`
   margin: 0px 8px;
 `;
 
-const Wrapper = styled.div<{ bg?: string }>`
+const Wrapper = styled.div<{bg?: string}>`
   width: 100%;
   display: flex;
   justify-content: center;
-  background: ${({ theme, bg }) =>
+  background: ${({theme, bg}) =>
     bg ? (bg === "gray" ? theme.text3 : bg) : theme.warning0};
 `;
 
@@ -25,7 +23,7 @@ const Text = styled.div`
   font-size: 12px;
   line-height: 16px;
   margin: 8px 24px;
-  color: ${({ theme }) => theme.black};
+  color: ${({theme}) => theme.black};
 `;
 
 const CloseIconWrapper = styled.button`
@@ -34,18 +32,18 @@ const CloseIconWrapper = styled.button`
   right: 25px;
   cursor: pointer;
 
-  ${({ theme }) => theme.mediaWidth.upToSmall`
+  ${({theme}) => theme.mediaWidth.upToSmall`
     right: 6px;
   `}
 `;
 
 const InfoIcon = styled(Info)`
-  color: ${({ theme }) => theme.white};
+  color: ${({theme}) => theme.white};
   margin-top: 6px;
   margin-right: -15px;
   cursor: default !important;
 
-  ${({ theme }) => theme.mediaWidth.upToSmall`
+  ${({theme}) => theme.mediaWidth.upToSmall`
     margin-left: 6px;
   `}
 `;

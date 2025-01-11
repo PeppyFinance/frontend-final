@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import {useState} from "react";
 import styled from "styled-components";
 
-import { formatAmount } from "@symmio/frontend-sdk/utils/numbers";
+import {formatAmount} from "@symmio/frontend-sdk/utils/numbers";
 
-import { CustomInputBox2 } from "components/InputBox";
-import { Quote } from "@symmio/frontend-sdk/types/quote";
-import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
-import { useMarketData } from "@symmio/frontend-sdk/state/hedger/hooks";
-import { RowBetween, RowEnd } from "components/Row";
-import { InnerCard } from "components/Card";
-import { Column } from "components/Column";
+import {useMarket} from "@symmio/frontend-sdk/hooks/useMarkets";
+import {useMarketData} from "@symmio/frontend-sdk/state/hedger/hooks";
+import {Quote} from "@symmio/frontend-sdk/types/quote";
 import SlippageTolerance from "components/App/SlippageTolerance";
+import {InnerCard} from "components/Card";
+import {Column} from "components/Column";
+import {CustomInputBox2} from "components/InputBox";
+import {RowBetween, RowEnd} from "components/Row";
 
 const Wrapper = styled(Column)`
   & > * {
@@ -24,7 +24,7 @@ const Wrapper = styled(Column)`
       margin-top: 20px;
     }
   }
-  ${({ theme }) => theme.mediaWidth.upToMedium`
+  ${({theme}) => theme.mediaWidth.upToMedium`
     padding: 1rem;
   `};
 `;
@@ -40,12 +40,12 @@ const PriceWrap = styled(InnerCard)`
 `;
 
 const Title = styled.div`
-  color: ${({ theme }) => theme.text1};
+  color: ${({theme}) => theme.text1};
   font-size: 12px;
   font-weight: 400;
 `;
 
-export const InputAmount = styled.input.attrs({ type: "number" })<{
+export const InputAmount = styled.input.attrs({type: "number"})<{
   active?: boolean;
 }>`
   border: 0;
@@ -55,7 +55,7 @@ export const InputAmount = styled.input.attrs({ type: "number" })<{
   margin-left: 2px;
   font-size: 12px;
   background: transparent;
-  color: ${({ theme }) => theme.text0};
+  color: ${({theme}) => theme.text0};
 
   appearance: textfield;
 
@@ -67,16 +67,16 @@ export const InputAmount = styled.input.attrs({ type: "number" })<{
     -webkit-appearance: none;
     margin: 0;
   }
-  ${({ active, theme }) =>
+  ${({active, theme}) =>
     active &&
     `
     color: ${theme.text0};
   `}
 `;
 
-export default function MarketClosePanel({ quote }: { quote: Quote | null }) {
-  const { name: marketName, symbol } = useMarket(quote?.marketId) || {};
-  const { markPrice } = useMarketData(marketName) || {};
+export default function MarketClosePanel({quote}: {quote: Quote | null}) {
+  const {name: marketName, symbol} = useMarket(quote?.marketId) || {};
+  const {markPrice} = useMarketData(marketName) || {};
   const [closePrice, setClosePrice] = useState("");
   // const slippage = useSlippageTolerance()
   // const [amount, setAmount] = useState<string | number>(slippage)

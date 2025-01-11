@@ -1,19 +1,19 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import styled from "styled-components";
 
-import { useAllMarketsData } from "@symmio/frontend-sdk/hooks/useAllMarketsData";
-import { Market } from "@symmio/frontend-sdk/types/market";
-import { ApiState } from "@symmio/frontend-sdk/types/api";
+import {useAllMarketsData} from "@symmio/frontend-sdk/hooks/useAllMarketsData";
+import {ApiState} from "@symmio/frontend-sdk/types/api";
+import {Market} from "@symmio/frontend-sdk/types/market";
 
-import MarketRow from "./Row";
-import Footer from "./Footer";
 import Column from "components/Column";
-import { Loader } from "components/Icons";
-import { RowBetween } from "components/Row";
+import {Loader} from "components/Icons";
+import {RowBetween} from "components/Row";
+import Footer from "./Footer";
+import MarketRow from "./Row";
 
 const FooterWrapper = styled(RowBetween)`
   height: 56px;
-  background: ${({ theme }) => theme.bg0};
+  background: ${({theme}) => theme.bg0};
   border-radius: 0 0 4px 4px;
 `;
 
@@ -33,10 +33,10 @@ export default function TableBody({
   const [visibleMarkets, setVisibleMarkets] = useState<Market[]>(
     markets.slice(
       (page - 1) * marketsPerPage,
-      Math.min(page * marketsPerPage, markets.length)
-    )
+      Math.min(page * marketsPerPage, markets.length),
+    ),
   );
-  const { marketsInfo, infoStatus } = useAllMarketsData();
+  const {marketsInfo, infoStatus} = useAllMarketsData();
 
   const pageCount = Math.ceil(markets.length / marketsPerPage);
 
@@ -51,7 +51,7 @@ export default function TableBody({
   const onMarketsPerPageChange = (
     currentPage: number,
     prevRowsPerPageValue: number,
-    newRowsPerPageValue: number
+    newRowsPerPageValue: number,
   ) => {
     const rowsPerPageRatio = prevRowsPerPageValue / newRowsPerPageValue;
     const newCalculatedPage =
@@ -65,8 +65,8 @@ export default function TableBody({
     setVisibleMarkets(
       markets.slice(
         (page - 1) * marketsPerPage,
-        Math.min(page * marketsPerPage, markets.length)
-      )
+        Math.min(page * marketsPerPage, markets.length),
+      ),
     );
   }, [markets, page, marketsPerPage]);
 
@@ -81,7 +81,7 @@ export default function TableBody({
           <Loader />
         </LoaderWrapper>
       ) : infoStatus === ApiState.OK ? (
-        visibleMarkets.map((market) => (
+        visibleMarkets.map(market => (
           <MarketRow
             key={market.id}
             market={market}

@@ -1,40 +1,40 @@
-import React, { useState, useEffect } from "react";
-import { useTheme } from "styled-components";
+import {useEffect, useState} from "react";
+import {useTheme} from "styled-components";
 
-import { Quote } from "@symmio/frontend-sdk/types/quote";
-import { PositionType } from "@symmio/frontend-sdk/types/trade";
-import { formatTimestamp } from "@symmio/frontend-sdk/utils/time";
+import {Quote} from "@symmio/frontend-sdk/types/quote";
+import {PositionType} from "@symmio/frontend-sdk/types/trade";
+import {formatTimestamp} from "@symmio/frontend-sdk/utils/time";
 
 import {
   formatAmount,
-  toBN,
   formatCurrency,
+  toBN,
 } from "@symmio/frontend-sdk/utils/numbers";
 
-import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
+import {useMarket} from "@symmio/frontend-sdk/hooks/useMarkets";
 import {
   useQuoteLeverage,
   useQuoteSize,
 } from "@symmio/frontend-sdk/hooks/useQuotes";
 
-import { LongArrow, ShortArrow } from "components/Icons";
 import {
+  Chevron,
   ContentWrapper,
   DataWrap,
-  Label,
-  Value,
-  Row,
-  TopWrap,
-  PositionInfoBox,
-  MarketName,
-  Wrapper,
-  Leverage,
-  QuoteData,
-  Chevron,
   FlexColumn,
+  Label,
+  Leverage,
+  MarketName,
+  PositionInfoBox,
+  QuoteData,
+  Row,
   RowPnl,
+  TopWrap,
+  Value,
+  Wrapper,
 } from "components/App/AccountData/PositionDetails/styles";
-import { Row as RowComponent } from "components/Row";
+import {LongArrow, ShortArrow} from "components/Icons";
+import {Row as RowComponent} from "components/Row";
 import PositionDetailsNavigator from "./PositionDetailsNavigator";
 
 export default function CanceledQuoteDetails({
@@ -54,7 +54,7 @@ export default function CanceledQuoteDetails({
     orderType,
     statusModifyTimestamp,
   } = quote;
-  const { symbol, asset } = useMarket(marketId) || {};
+  const {symbol, asset} = useMarket(marketId) || {};
   const quoteSize = useQuoteSize(quote);
   const leverage = useQuoteLeverage(quote);
   const notionalValue = toBN(quoteSize).times(requestedOpenPrice);
@@ -143,7 +143,7 @@ export default function CanceledQuoteDetails({
               <Value>{`${formatAmount(
                 requestedOpenPrice,
                 6,
-                true
+                true,
               )} ${asset}`}</Value>
             </Row>
             <Row>

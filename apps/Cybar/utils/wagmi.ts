@@ -1,18 +1,18 @@
-import { createConfig, http } from "wagmi";
-import { Chain } from "wagmi/chains";
-import { connectorsForWallets } from "@rainbow-me/rainbowkit";
+import {connectorsForWallets} from "@rainbow-me/rainbowkit";
 import {
+  coinbaseWallet,
   injectedWallet,
+  metaMaskWallet,
   rabbyWallet,
   rainbowWallet,
-  metaMaskWallet,
-  coinbaseWallet,
-  walletConnectWallet,
   safeWallet,
+  walletConnectWallet,
 } from "@rainbow-me/rainbowkit/wallets";
+import {createConfig, http} from "wagmi";
+import {Chain} from "wagmi/chains";
 
-import { ALL_CHAINS } from "constants/chains/chains";
-import { APP_NAME } from "constants/chains/misc";
+import {ALL_CHAINS} from "constants/chains/chains";
+import {APP_NAME} from "constants/chains/misc";
 
 export const getWagmiConfig = () => {
   if (!process.env.NEXT_PUBLIC_INFURA_KEY) {
@@ -52,14 +52,14 @@ export const getWagmiConfig = () => {
     {
       appName: APP_NAME,
       projectId,
-    }
+    },
   );
 
   const config = createConfig({
     chains,
     transports,
     connectors,
-    batch: { multicall: true },
+    batch: {multicall: true},
     cacheTime: 2000,
     pollingInterval: 2000,
   });

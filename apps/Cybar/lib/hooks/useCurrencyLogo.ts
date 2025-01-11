@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import {useEffect, useMemo, useState} from "react";
 
-import DefaultToken from "/public/static/images/tokens/default-token.svg";
-import { SupportedChainId } from "@symmio/frontend-sdk/constants/chains";
+import {SupportedChainId} from "@symmio/frontend-sdk/constants/chains";
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
+import DefaultToken from "/public/static/images/tokens/default-token.svg";
 
 const tokenNames = [
   "BTC",
@@ -55,9 +55,9 @@ const tokenNames = [
   "AAVE",
 ];
 
-const LogoMap: { [token: string]: any } = {};
+const LogoMap: {[token: string]: any} = {};
 
-tokenNames.forEach((token) => {
+tokenNames.forEach(token => {
   LogoMap[token] = require(`/public/static/images/tokens/${token}.svg`);
 });
 
@@ -76,7 +76,7 @@ export default function useCurrencyLogo(contractOrSymbol?: string): string {
 }
 
 export function useCollateralLogo(): string {
-  const { chainId } = useActiveWagmi();
+  const {chainId} = useActiveWagmi();
   const [collateralLogo, setCollateralLogo] = useState(DefaultToken);
 
   useEffect(() => {

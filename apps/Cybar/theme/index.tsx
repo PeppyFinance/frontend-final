@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, {useMemo} from "react";
 import {
   createGlobalStyle,
   css,
@@ -6,9 +6,9 @@ import {
   ThemeProvider as StyledComponentsThemeProvider,
 } from "styled-components";
 
-import { useIsDarkMode } from "@symmio/frontend-sdk/state/user/hooks";
-import { Colors, Shadows } from "./styled";
-import { useRouter } from "next/router";
+import {useIsDarkMode} from "@symmio/frontend-sdk/state/user/hooks";
+import {useRouter} from "next/router";
+import {Colors, Shadows} from "./styled";
 
 export const MEDIA_WIDTHS = {
   upToExtraSmall: 500,
@@ -192,11 +192,7 @@ function theme(themeName: SupportedThemes): DefaultTheme {
   };
 }
 
-export default function ThemeProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function ThemeProvider({children}: {children: React.ReactNode}) {
   // get theme name from url if any
   const router = useRouter();
   const parsed = router.query?.theme;
@@ -208,7 +204,7 @@ export default function ThemeProvider({
   if (
     parsedTheme &&
     Object.values(SupportedThemes).some(
-      (theme: string) => theme === parsedTheme
+      (theme: string) => theme === parsedTheme,
     )
   ) {
     themeName = parsedTheme as SupportedThemes;
@@ -227,14 +223,14 @@ export default function ThemeProvider({
 
 export const ThemedGlobalStyle = createGlobalStyle`
   html {
-    color: ${({ theme }) => theme.text0};
-    background-color: ${({ theme }) => theme.bg6};
+    color: ${({theme}) => theme.text0};
+    background-color: ${({theme}) => theme.bg6};
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
   }
   a {
-    color: ${({ theme }) => theme.text0}; 
+    color: ${({theme}) => theme.text0}; 
   }
 
   * {
@@ -243,7 +239,7 @@ export const ThemedGlobalStyle = createGlobalStyle`
   }
 
   body {
-    font-family: ${({ theme }) => theme.fontPrimary};
+    font-family: ${({theme}) => theme.fontPrimary};
     font-size: 16px;
     font-weight:500;
   }
@@ -255,7 +251,7 @@ export const ThemedGlobalStyle = createGlobalStyle`
   }
 
   input {
-    font-family: ${({ theme }) => theme.fontPrimary} !important;
+    font-family: ${({theme}) => theme.fontPrimary} !important;
   }
 
   *, *:before, *:after {

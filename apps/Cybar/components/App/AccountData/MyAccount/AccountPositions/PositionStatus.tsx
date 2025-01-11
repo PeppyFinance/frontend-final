@@ -1,20 +1,20 @@
-import React, { useContext } from "react";
-import styled, { useTheme } from "styled-components";
+import {useContext} from "react";
+import styled, {useTheme} from "styled-components";
 
-import { formatPrice } from "@symmio/frontend-sdk/utils/numbers";
-import { PositionType } from "@symmio/frontend-sdk/types/trade";
-import { ConnectionStatus } from "@symmio/frontend-sdk/types/api";
+import {ConnectionStatus} from "@symmio/frontend-sdk/types/api";
+import {PositionType} from "@symmio/frontend-sdk/types/trade";
+import {formatPrice} from "@symmio/frontend-sdk/utils/numbers";
 
-import { DefaultHeader } from "../styles";
-import { Row } from "components/Row";
+import {useTotalNotionalValue} from "@symmio/frontend-sdk/hooks/usePositionOverview";
+import {IQuotesInfo} from "@symmio/frontend-sdk/types/quotesOverview";
 import Column from "components/Column";
-import { LongArrow, ShortArrow } from "components/Icons";
-import { IQuotesInfo } from "@symmio/frontend-sdk/types/quotesOverview";
-import { useTotalNotionalValue } from "@symmio/frontend-sdk/hooks/usePositionOverview";
+import {LongArrow, ShortArrow} from "components/Icons";
+import {Row} from "components/Row";
 import ShimmerAnimation from "components/ShimmerAnimation";
-import { AccountPositionsContext } from "./context";
+import {DefaultHeader} from "../styles";
+import {AccountPositionsContext} from "./context";
 
-import { useUpnlWebSocketStatus } from "@symmio/frontend-sdk/state/user/hooks";
+import {useUpnlWebSocketStatus} from "@symmio/frontend-sdk/state/user/hooks";
 
 const Container = styled.div`
   display: grid;
@@ -22,11 +22,11 @@ const Container = styled.div`
   column-gap: 60px;
   row-gap: 24px;
 
-  background-color: ${({ theme }) => theme.bg1};
+  background-color: ${({theme}) => theme.bg1};
   padding: 16px 24px;
   border-radius: 4px;
 
-  ${({ theme }) => theme.mediaWidth.upToLarge`
+  ${({theme}) => theme.mediaWidth.upToLarge`
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
   `}
@@ -38,7 +38,7 @@ const PositionInfo = styled(Column)`
 
 const PositionTotalValue = styled(PositionInfo)`
   justify-self: end;
-  ${({ theme }) => theme.mediaWidth.upToLarge`
+  ${({theme}) => theme.mediaWidth.upToLarge`
     justify-self: initial;
     grid-column: 2;
     grid-row: 1;
@@ -53,20 +53,20 @@ const PositionNumber = styled(DefaultHeader)`
 const PositionText = styled(Row)`
   font-size: 12px;
   font-weight: 400;
-  color: ${({ theme }) => theme.text2};
+  color: ${({theme}) => theme.text2};
 `;
 
 function getPositionNumbers(quotesInfo: IQuotesInfo) {
   const calcArraySum = (inQuotesInfo: IQuotesInfo) =>
     inQuotesInfo
-      .map((quoteInfo) => quoteInfo.positionQuantity)
+      .map(quoteInfo => quoteInfo.positionQuantity)
       .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
   const shortPositions = quotesInfo.filter(
-    (quoteInfo) => quoteInfo.positionType === PositionType.SHORT
+    quoteInfo => quoteInfo.positionType === PositionType.SHORT,
   );
   const longPositions = quotesInfo.filter(
-    (quoteInfo) => quoteInfo.positionType === PositionType.LONG
+    quoteInfo => quoteInfo.positionType === PositionType.LONG,
   );
 
   const totalPositionNumber = calcArraySum(quotesInfo);
@@ -105,9 +105,9 @@ function EmptyPositionStatusBody() {
 
 function PositionStatusBody() {
   const theme = useTheme();
-  const { marketQuotesInfo } = useContext(AccountPositionsContext);
+  const {marketQuotesInfo} = useContext(AccountPositionsContext);
 
-  const { totalPositionNumber, longPositionNumber, shortPositionNumber } =
+  const {totalPositionNumber, longPositionNumber, shortPositionNumber} =
     getPositionNumbers(marketQuotesInfo);
   const totalPositionValue = useTotalNotionalValue(marketQuotesInfo);
 

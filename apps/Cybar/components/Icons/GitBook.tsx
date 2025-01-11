@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function GitBook({
   width = 22,
   height = 16,

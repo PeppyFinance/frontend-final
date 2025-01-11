@@ -1,14 +1,25 @@
-import { useEffect, useMemo, useRef } from "react";
-import { useAppDispatch } from "../declaration";
+import differenceWith from "lodash/differenceWith.js";
 import find from "lodash/find.js";
 import isEqual from "lodash/isEqual.js";
-import differenceWith from "lodash/differenceWith.js";
+import {useEffect, useMemo, useRef} from "react";
+import {useAppDispatch} from "../declaration";
 
+import {TIME_TO_WAIT_POSITION_RECEIVE} from "../../constants";
 import {
   useGetPendingIds,
   useGetPositions,
   useGetQuoteByIds,
 } from "../../hooks/useQuotes";
+import usePrevious from "../../lib/hooks/usePrevious";
+import useWagmi from "../../lib/hooks/useWagmi";
+import {QuoteStatus} from "../../types/quote";
+import {makeHttpRequestV2} from "../../utils/http";
+import {autoRefresh} from "../../utils/retry";
+import {useAppName} from "../chains";
+import {useHedgerInfo} from "../hedger/hooks";
+import {useSetTpSl, useTradeTpSl} from "../trade/hooks";
+import {TpSlProcessState} from "../trade/types";
+import {useActiveAccountAddress} from "../user/hooks";
 import {
   addQuoteToHistory,
   removeQuote,
@@ -26,28 +37,17 @@ import {
   useSetTpSlDataCallback,
   useUpdateInstantCloseDataCallback,
 } from "./hooks";
-import { QuoteStatus } from "../../types/quote";
-import usePrevious from "../../lib/hooks/usePrevious";
-import { autoRefresh } from "../../utils/retry";
-import { useActiveAccountAddress } from "../user/hooks";
-import useWagmi from "../../lib/hooks/useWagmi";
-import { InstantCloseStatus, TpSlDataState, TpSlDataStateParam } from "./types";
-import { useSetTpSl, useTradeTpSl } from "../trade/hooks";
-import { TpSlProcessState } from "../trade/types";
-import { TIME_TO_WAIT_POSITION_RECEIVE } from "../../constants";
-import { makeHttpRequestV2 } from "../../utils/http";
-import { useAppName } from "../chains";
-import { useHedgerInfo } from "../hedger/hooks";
+import {InstantCloseStatus, TpSlDataState, TpSlDataStateParam} from "./types";
 
 export function QuotesUpdater(): null {
   const dispatch = useAppDispatch();
   const account = useActiveAccountAddress();
-  const { chainId } = useWagmi();
+  const {chainId} = useWagmi();
 
-  const { pendingIds } = useGetPendingIds();
+  const {pendingIds} = useGetPendingIds();
 
-  const { quotes: pendings } = useGetQuoteByIds(pendingIds);
-  const { positions } = useGetPositions();
+  const {quotes: pendings} = useGetQuoteByIds(pendingIds);
+  const {positions} = useGetPositions();
   const getHistory = useGetOrderHistoryCallback();
   const prevPendings = usePendingsQuotes();
   const prevPositions = usePositionsQuotes();
@@ -64,7 +64,7 @@ export function QuotesUpdater(): null {
 
   useEffect(() => {
     if (!isEqual(prevPositions.quotes, positions ?? [])) {
-      dispatch(setPositions({ quotes: positions ?? [] }));
+      dispatch(setPositions({quotes: positions ?? []}));
       if (positions === undefined) return;
       for (const position_i of positions) {
         const tpSl_i = tpSlQuoteData[position_i.id];
@@ -78,11 +78,11 @@ export function QuotesUpdater(): null {
               tpSlState: TpSlDataState.LOADING,
               quoteId: position_i.id,
             },
-            position_i.id
+            position_i.id,
           );
         }
       }
-      const recentPositionsFlag = positions.filter((positionQuote) => {
+      const recentPositionsFlag = positions.filter(positionQuote => {
         const intervalTime =
           positionQuote.statusModifyTimestamp - tpSlContent.lastTimeUpdated;
         return intervalTime > 0 && intervalTime < TIME_TO_WAIT_POSITION_RECEIVE;
@@ -127,11 +127,11 @@ export function QuotesUpdater(): null {
               tpSlState: TpSlDataState.LOADING,
               quoteId: position_i.id,
             },
-            position_i.id
+            position_i.id,
           );
         }
       }
-      const recentPendingFlag = pendings.filter((pendingQuote) => {
+      const recentPendingFlag = pendings.filter(pendingQuote => {
         const intervalTime =
           pendingQuote.statusModifyTimestamp - tpSlContent.lastTimeUpdated;
         return intervalTime > 0 && intervalTime < TIME_TO_WAIT_POSITION_RECEIVE;
@@ -149,7 +149,7 @@ export function QuotesUpdater(): null {
           state: TpSlProcessState.WAIT_FOR_SEND_TP_SL_REQUEST,
         });
       }
-      dispatch(setPendings({ quotes: pendings }));
+      dispatch(setPendings({quotes: pendings}));
     }
   }, [
     pendings,
@@ -168,12 +168,9 @@ export function QuotesUpdater(): null {
 async function getTpSlRequest(
   quoteId: number,
   AppName: string,
-  tpslBaseUrl: string
+  tpslBaseUrl: string,
 ) {
-  const { href: tpSlUrl } = new URL(
-    `conditional-order/${quoteId}/`,
-    tpslBaseUrl
-  );
+  const {href: tpSlUrl} = new URL(`conditional-order/${quoteId}/`, tpslBaseUrl);
   const options = {
     headers: [
       ["App-Name", AppName],
@@ -183,7 +180,7 @@ async function getTpSlRequest(
     ],
   };
   try {
-    const { result, status }: { result: any; status: number } =
+    const {result, status}: {result: any; status: number} =
       await makeHttpRequestV2(tpSlUrl, options);
     if (status !== 200 && result?.error_message) {
       return null;
@@ -198,9 +195,9 @@ async function getTpSlRequest(
 export function TpSlUpdater(): null {
   const tpSlQuoteData = useQuotesTpSlData();
   const setTpSlFunc = useSetTpSlDataCallback();
-  const intervalFunctions = useRef<{ [quoteId: number]: () => void }>({});
+  const intervalFunctions = useRef<{[quoteId: number]: () => void}>({});
   const AppName = useAppName();
-  const { tpslUrl } = useHedgerInfo() || {};
+  const {tpslUrl} = useHedgerInfo() || {};
   useEffect(() => {
     async function getData(
       quoteId: number,
@@ -209,7 +206,7 @@ export function TpSlUpdater(): null {
       stateParam: TpSlDataStateParam,
       tpOpenPrice: string,
       slOpenPrice: string,
-      state: TpSlDataState
+      state: TpSlDataState,
     ) {
       const receiveTp = await getTpSlRequest(quoteId, AppName, tpslUrl);
       if (!receiveTp) {
@@ -223,7 +220,7 @@ export function TpSlUpdater(): null {
               quoteId,
               tpSlState: TpSlDataState.NOT_FOUND,
             },
-            quoteId
+            quoteId,
           );
         }
         return;
@@ -272,7 +269,7 @@ export function TpSlUpdater(): null {
             quoteId,
             tpSlState: TpSlDataState.VALID,
           },
-          quoteId
+          quoteId,
         );
         if (intervalFunctions.current[quoteId]) {
           const targetFunc = intervalFunctions.current[quoteId];
@@ -291,7 +288,7 @@ export function TpSlUpdater(): null {
             TpSlDataStateParam.NONE,
             tpSlQuoteData[data_i].tpOpenPrice,
             tpSlQuoteData[data_i].slOpenPrice,
-            tpSlQuoteData[data_i].tpSlState
+            tpSlQuoteData[data_i].tpSlState,
           );
         } else if (
           tpSlQuoteData[data_i].tpSlState === TpSlDataState.FORCE_CHECKING
@@ -306,9 +303,9 @@ export function TpSlUpdater(): null {
                   TpSlDataStateParam.CHECK_ANY_TP_SL,
                 tpSlQuoteData[data_i].tpOpenPrice,
                 tpSlQuoteData[data_i].slOpenPrice,
-                tpSlQuoteData[data_i].tpSlState
+                tpSlQuoteData[data_i].tpSlState,
               ),
-            5
+            5,
           );
           intervalFunctions.current = {
             [tpSlQuoteData[data_i].quoteId]: intervalFunc,
@@ -328,21 +325,21 @@ export function TpSlUpdater(): null {
 */
 export function UpdaterListeners(): null {
   const dispatch = useAppDispatch();
-  const { chainId } = useWagmi();
+  const {chainId} = useWagmi();
   const addQuoteToListenerCallback = useAddQuotesToListenerCallback();
 
-  const { quotes: pendings } = usePendingsQuotes();
-  const { quotes: positions } = usePositionsQuotes();
+  const {quotes: pendings} = usePendingsQuotes();
+  const {quotes: positions} = usePositionsQuotes();
 
   const pendingIds = useMemo(() => {
-    return pendings.map((q) => q.id);
+    return pendings.map(q => q.id);
   }, [pendings]);
 
   const prevPendingIds = usePrevious(pendingIds);
   const prevPositions = usePrevious(positions);
 
   const listeners = useListenersQuotes();
-  const { quotes: listenersQuotes } = useGetQuoteByIds(listeners);
+  const {quotes: listenersQuotes} = useGetQuoteByIds(listeners);
   const instantClosesData = useInstantClosesData();
   const updateInstantCloseData = useUpdateInstantCloseDataCallback();
 
@@ -354,10 +351,10 @@ export function UpdaterListeners(): null {
     const diff = differenceWith(positions, prevPositions, isEqual);
 
     if (diff.length > 0) {
-      diff.forEach((d) => {
+      diff.forEach(d => {
         const instantCloseData = instantClosesData[d.id];
-        const prevQuote = prevPositions.find((element) => element.id === d.id);
-        const newQuote = positions.find((element) => element.id === d.id);
+        const prevQuote = prevPositions.find(element => element.id === d.id);
+        const newQuote = positions.find(element => element.id === d.id);
         const partialClose =
           prevQuote?.quoteStatus === newQuote?.quoteStatus &&
           prevQuote?.closedAmount !== newQuote?.closedAmount;
@@ -377,7 +374,7 @@ export function UpdaterListeners(): null {
     for (let i = 0; i < listenersQuotes.length; i++) {
       const quote = listenersQuotes[i];
       if (quote.quoteStatus === QuoteStatus.OPENED) {
-        dispatch(removeQuote({ id: quote.id }));
+        dispatch(removeQuote({id: quote.id}));
       }
       if (
         (quote.quoteStatus === QuoteStatus.CANCELED ||
@@ -386,8 +383,8 @@ export function UpdaterListeners(): null {
           quote.quoteStatus === QuoteStatus.CLOSED) &&
         chainId
       ) {
-        dispatch(addQuoteToHistory({ quote, chainId }));
-        dispatch(removeQuote({ id: quote.id }));
+        dispatch(addQuoteToHistory({quote, chainId}));
+        dispatch(removeQuote({id: quote.id}));
       }
     }
   }, [listenersQuotes, dispatch, chainId]);
@@ -395,7 +392,7 @@ export function UpdaterListeners(): null {
   useEffect(() => {
     if (!isEqual(prevPendingIds, pendingIds)) {
       const unpendingIds = prevPendingIds?.filter(
-        (id) => !pendingIds.includes(id)
+        id => !pendingIds.includes(id),
       );
       if (!unpendingIds?.length) return;
       for (let i = 0; i < unpendingIds?.length; i++) {
@@ -407,8 +404,8 @@ export function UpdaterListeners(): null {
   useEffect(() => {
     if (!isEqual(prevPositions, positions)) {
       const unPositionsId = prevPositions
-        ?.filter((id) => !find(positions, { id }))
-        .map((p) => p.id);
+        ?.filter(id => !find(positions, {id}))
+        .map(p => p.id);
       if (!unPositionsId?.length) return;
       for (let i = 0; i < unPositionsId?.length; i++) {
         addQuoteToListenerCallback(unPositionsId[i]);

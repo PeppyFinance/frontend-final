@@ -1,5 +1,5 @@
-import { Address } from "viem";
-import { SupportedChainId } from "./chains";
+import {Address} from "viem";
+import {SupportedChainId} from "./chains";
 
 interface Info {
   chainId: string;
@@ -15,7 +15,7 @@ interface Info {
   WRAPPED_NATIVE_ADDRESS: Address;
 }
 
-export const ChainInfo: { [chainId: number]: Info } = {
+export const ChainInfo: {[chainId: number]: Info} = {
   [SupportedChainId.MAINNET]: {
     chainId: "0x1",
     chainName: "Ethereum Mainnet",

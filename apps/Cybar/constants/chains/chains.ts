@@ -1,16 +1,16 @@
-import { SupportedChainId } from "@symmio/frontend-sdk/constants/chains";
+import {SupportedChainId} from "@symmio/frontend-sdk/constants/chains";
 import {
+  Chain,
+  arbitrum,
+  base,
+  blast,
   bsc,
   fantom,
-  base,
-  polygon,
-  arbitrum,
   mainnet,
   mantle,
-  blast,
-  Chain,
+  polygon,
 } from "wagmi/chains";
-import { FrontEndsName } from "./addresses";
+import {FrontEndsName} from "./addresses";
 
 const supportedWagmiChain = {
   [SupportedChainId.FANTOM]: fantom,
@@ -24,7 +24,7 @@ const supportedWagmiChain = {
 };
 
 function getWagmiChain(supportChainList: number[]): Chain[] {
-  return supportChainList.map((chainId) => supportedWagmiChain[chainId]);
+  return supportChainList.map(chainId => supportedWagmiChain[chainId]);
 }
 
 export const ClientChain = [SupportedChainId.BASE];

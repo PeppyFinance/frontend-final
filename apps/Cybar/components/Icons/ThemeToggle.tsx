@@ -1,11 +1,10 @@
-import React from "react";
-import { useTheme } from "styled-components";
-import { Moon, Sun } from "react-feather";
+import {Moon, Sun} from "react-feather";
+import {useTheme} from "styled-components";
 
-import { useIsDarkMode } from "@symmio/frontend-sdk/state/user/hooks";
-import { IconWrapper } from "./index";
+import {useIsDarkMode} from "@symmio/frontend-sdk/state/user/hooks";
+import {IconWrapper} from "./index";
 
-export default function ThemeToggle({ size }: { size?: number }) {
+export default function ThemeToggle({size}: {size?: number}) {
   const darkMode = useIsDarkMode();
   const theme = useTheme();
 

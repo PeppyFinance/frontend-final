@@ -1,34 +1,34 @@
-import { useCallback, useMemo } from "react";
+import {useCallback, useMemo} from "react";
 
 import {
   createTransactionCallback,
   TransactionCallbackState,
 } from "../utils/web3";
 
-import { useWalletClient } from "wagmi";
+import {useWalletClient} from "wagmi";
 import useActiveWagmi from "../lib/hooks/useActiveWagmi";
-import { useTransactionAdder } from "../state/transactions/hooks";
+import {useTransactionAdder} from "../state/transactions/hooks";
 
-import { useSupportedChainId } from "../lib/hooks/useSupportedChainId";
+import {useSupportedChainId} from "../lib/hooks/useSupportedChainId";
 
 import {
   SignMessageTransactionInfo,
   TransactionType,
 } from "../state/transactions/types";
 
-import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
-import { Abi, Address, encodeFunctionData } from "viem";
-import { ConstructCallReturnType } from "../types/web3";
-import { useSignatureStoreAddress, useWagmiConfig } from "../state/chains";
-import { SIGNATURE_STORE_ABI } from "../constants";
+import {useAddRecentTransaction} from "@rainbow-me/rainbowkit";
+import {Abi, Address, encodeFunctionData} from "viem";
+import {SIGNATURE_STORE_ABI} from "../constants";
+import {useSignatureStoreAddress, useWagmiConfig} from "../state/chains";
+import {ConstructCallReturnType} from "../types/web3";
 
 export function useWriteSign(): {
   state: TransactionCallbackState;
   callback: null | ((sign: string) => Promise<any>);
   error: string | null;
 } {
-  const { account, chainId } = useActiveWagmi();
-  const { data: provider } = useWalletClient();
+  const {account, chainId} = useActiveWagmi();
+  const {data: provider} = useWalletClient();
   const addTransaction = useTransactionAdder();
   const addRecentTransaction = useAddRecentTransaction();
   const wagmiConfig = useWagmiConfig();
@@ -71,7 +71,7 @@ export function useWriteSign(): {
         throw new Error("error3");
       }
     },
-    [SIGNATURE_STORE_ADDRESS, account, chainId, isSupportedChainId]
+    [SIGNATURE_STORE_ADDRESS, account, chainId, isSupportedChainId],
   );
 
   return useMemo(() => {
@@ -106,7 +106,7 @@ export function useWriteSign(): {
           addRecentTransaction,
           txInfo,
           wagmiConfig,
-          summary
+          summary,
         ),
     };
   }, [

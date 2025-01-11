@@ -1,5 +1,5 @@
-import { SupportedChainId } from "@symmio/frontend-sdk/constants/chains";
-import { ChainType } from "@symmio/frontend-sdk/state/chains/reducer";
+import {SupportedChainId} from "@symmio/frontend-sdk/constants/chains";
+import {ChainType} from "@symmio/frontend-sdk/state/chains/reducer";
 
 export enum FrontEndsName {
   ALPHA = "Alpha",
@@ -284,9 +284,9 @@ export const ArbitrumChainCybarFE: ChainType = {
 };
 
 export const contractInfo: {
-  [chainId: number]: { [name: string]: ChainType };
+  [chainId: number]: {[name: string]: ChainType};
 } = {
-  [SupportedChainId.FANTOM]: { [FrontEndsName.CYBAR]: FantomChain },
+  [SupportedChainId.FANTOM]: {[FrontEndsName.CYBAR]: FantomChain},
   [SupportedChainId.BSC]: {
     [FrontEndsName.CYBAR]: BSCChainCybarFE,
   },

@@ -1,10 +1,10 @@
-import { Character } from "components/BackAlley/Characters/character";
-import { BackAlleyChars } from "components/BackAlley/Characters/characterConfig";
-import { CharacterId } from "components/BackAlley/Characters/characterIds.type";
-import { CharacterModal } from "components/BackAlley/Characters/Modal";
+import {CharacterModal} from "components/BackAlley/Characters/Modal";
+import {Character} from "components/BackAlley/Characters/character";
+import {BackAlleyChars} from "components/BackAlley/Characters/characterConfig";
+import {CharacterId} from "components/BackAlley/Characters/characterIds.type";
 import styled from "styled-components";
-import { NavigationArrow } from "./Arrow";
-import { useCharacterContext } from "./characterContext";
+import {NavigationArrow} from "./Arrow";
+import {useCharacterContext} from "./characterContext";
 
 const BackAlleyContainer = styled.div`
   position: relative;
@@ -18,7 +18,7 @@ const BackAlleyContainer = styled.div`
 `;
 
 export const BackAlley = () => {
-  const { characterState, characterDispatch } = useCharacterContext();
+  const {characterState, characterDispatch} = useCharacterContext();
   const onClickCharacter = (characterId: CharacterId) => {
     characterDispatch({
       type: "SET_ACTIVE",
@@ -29,7 +29,7 @@ export const BackAlley = () => {
   return (
     <BackAlleyContainer>
       <CharacterModal />
-      {BackAlleyChars.map((props) => (
+      {BackAlleyChars.map(props => (
         <Character
           key={props.id}
           onClick={onClickCharacter}
