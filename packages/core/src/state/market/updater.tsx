@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { makeHttpRequestV2 } from "../../utils/http"
 import { setCoinCategories } from "./actions";
+import { CoinCategories } from "./types";
 
 
 export function MarketUpdater(): null {
@@ -14,7 +15,6 @@ export function MarketUpdater(): null {
 async function loadCoinCategories() {
   const res = await getCoinCategories();
   if (res) {
-    setCoinCategories(res)
     setCoinCategories(res);
   }
 }
@@ -22,7 +22,9 @@ async function loadCoinCategories() {
 async function getCoinCategories() {
   const url = process.env.NEXT_PUBLIC_COIN_CATEGORIES_URL
   if (!url) {
-    return null
+    //TODO: Undo before submitting
+    // return null
+    return TESTDATA;
   }
   // no-cache is the default option for makeHttpRequestV2 
   // const options: RequestInit = { cache: 'no-cache' }
@@ -38,4 +40,10 @@ async function getCoinCategories() {
     console.error(e.message)
     return null
   }
+}
+
+//TODO: Delete before submitting
+export const TESTDATA: CoinCategories = {
+  'MEME': [1, 2, 3, 4],
+  'Hype': [2, 4, 6, 8]
 }
