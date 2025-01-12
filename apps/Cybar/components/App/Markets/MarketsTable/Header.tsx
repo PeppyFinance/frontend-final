@@ -1,10 +1,13 @@
 import styled from "styled-components";
 
-import {Direction, OrderMarktes} from "@symmio/frontend-sdk/state/hedger/hooks";
-import {Chevron} from "components/App/MarketBar/MarketInfo";
-import {MarketsHeaderButton} from "components/Button";
-import {RowBetween} from "components/Row";
-import {useRouter} from "next/router";
+import {
+  Direction,
+  OrderMarktes,
+} from "@symmio/frontend-sdk/state/hedger/hooks";
+import { Chevron } from "components/App/MarketBar/MarketInfo";
+import { MarketsHeaderButton } from "components/Button";
+import { RowBetween } from "components/Row";
+import { useRouter } from "next/router";
 
 const TableStructure = styled(RowBetween)`
   font-size: 12px;
@@ -25,7 +28,7 @@ const TableStructure = styled(RowBetween)`
       width: 12%;
     }
 
-    ${({theme}) => theme.mediaWidth.upToSmall`
+    ${({ theme }) => theme.mediaWidth.upToSmall`
       &:nth-child(1) {
         width: 14px;
         margin-right: 0;
@@ -43,7 +46,7 @@ const TableStructure = styled(RowBetween)`
         display: none;
       }
     `}
-    ${({theme}) => theme.mediaWidth.upToExtraSmall`
+    ${({ theme }) => theme.mediaWidth.upToExtraSmall`
       &:nth-child(2) {
         width: 27%;
       }
@@ -55,10 +58,10 @@ const TableStructure = styled(RowBetween)`
 `;
 
 const HeaderWrap = styled(TableStructure)`
-  color: ${({theme}) => theme.text4};
-  background-color: ${({theme}) => theme.bg0};
+  color: ${({ theme }) => theme.text4};
+  background-color: ${({ theme }) => theme.bg0};
   padding: 24px 24px 15px 12px;
-  border-bottom: 1px solid ${({theme}) => theme.border3};
+  border-bottom: 1px solid ${({ theme }) => theme.border3};
 
   & > * {
     &:last-child {
@@ -94,7 +97,7 @@ export default function TableHeader({
 
   return (
     <HeaderWrap>
-      {HEADERS.map(header => {
+      {HEADERS.map((header) => {
         const isActive = header.orderBy === orderedBy;
         return (
           <MarketsHeaderButton

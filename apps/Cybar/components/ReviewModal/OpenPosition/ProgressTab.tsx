@@ -1,10 +1,10 @@
-import {useContext} from "react";
+import { useContext } from "react";
 import styled from "styled-components";
 
-import {ModalState, StateContext} from "./ModalData";
+import { ModalState, StateContext } from "./ModalData";
 
 import Column from "components/Column";
-import {Row, RowCenter} from "components/Row";
+import { Row, RowCenter } from "components/Row";
 
 const GeneralStateBox = styled(RowCenter)`
   height: 28px;
@@ -13,16 +13,16 @@ const GeneralStateBox = styled(RowCenter)`
   border-radius: 4px;
 `;
 
-const StateBox1 = styled(GeneralStateBox)<{disabled?: boolean}>`
-  color: ${({disabled, theme}) =>
+const StateBox1 = styled(GeneralStateBox)<{ disabled?: boolean }>`
+  color: ${({ disabled, theme }) =>
     disabled ? theme.primaryDisable : theme.text0};
-  background: ${({disabled, theme}) =>
+  background: ${({ disabled, theme }) =>
     disabled ? theme.primaryDarkBg : theme.bg7};
 `;
 
-const StateBox2 = styled(GeneralStateBox)<{disabled?: boolean}>`
-  color: ${({disabled, theme}) => (disabled ? theme.text4 : theme.text0)};
-  background: ${({disabled, theme}) => (disabled ? theme.bg2 : theme.bg7)};
+const StateBox2 = styled(GeneralStateBox)<{ disabled?: boolean }>`
+  color: ${({ disabled, theme }) => (disabled ? theme.text4 : theme.text0)};
+  background: ${({ disabled, theme }) => (disabled ? theme.bg2 : theme.bg7)};
 `;
 
 const Container = styled(Column)`
@@ -32,18 +32,18 @@ const Container = styled(Column)`
 const Separator = styled.div`
   height: 2px;
   border-radius: 4px;
-  background: ${({theme}) => theme.border2};
+  background: ${({ theme }) => theme.border2};
 `;
 
-const GeneralStateSeparator = styled(Row)<{state: ModalState}>`
+const GeneralStateSeparator = styled(Row)<{ state: ModalState }>`
   width: 10%;
   height: 2px;
   margin: auto 0px;
   max-width: 10px;
 `;
 
-const StateSeparator1 = styled(GeneralStateSeparator)<{state?: ModalState}>`
-  background: ${({state, theme}) =>
+const StateSeparator1 = styled(GeneralStateSeparator)<{ state?: ModalState }>`
+  background: ${({ state, theme }) =>
     state === ModalState.START
       ? theme.bg2
       : state === ModalState.LOADING
@@ -51,13 +51,13 @@ const StateSeparator1 = styled(GeneralStateSeparator)<{state?: ModalState}>`
         : theme.primaryDarkBg};
 `;
 
-const StateSeparator2 = styled(GeneralStateSeparator)<{state?: ModalState}>`
-  background: ${({state, theme}) =>
+const StateSeparator2 = styled(GeneralStateSeparator)<{ state?: ModalState }>`
+  background: ${({ state, theme }) =>
     state === ModalState.END ? theme.primaryDarkBg : theme.bg2};
 `;
 
 export default function ProgressTab() {
-  const {state} = useContext(StateContext);
+  const { state } = useContext(StateContext);
   return (
     <Container>
       <Row>

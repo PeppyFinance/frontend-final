@@ -6,8 +6,8 @@ import {
   finalizeTransaction,
   updateTransaction,
 } from "./actions";
-import {TransactionDetails} from "./types";
-const {createReducer} = ((toolkitRaw as any).default ??
+import { TransactionDetails } from "./types";
+const { createReducer } = ((toolkitRaw as any).default ??
   toolkitRaw) as typeof toolkitRaw;
 
 const now = () => new Date().getTime();
@@ -20,11 +20,11 @@ export interface TransactionState {
 
 export const initialState: TransactionState = {};
 
-export default createReducer(initialState, builder =>
+export default createReducer(initialState, (builder) =>
   builder
     .addCase(
       addTransaction,
-      (state, {payload: {chainId, from, info, hash, summary}}) => {
+      (state, { payload: { chainId, from, info, hash, summary } }) => {
         if (state[chainId]?.[hash]) {
           throw new Error("Attempted to add existing transaction.");
         }
@@ -36,13 +36,13 @@ export default createReducer(initialState, builder =>
           summary,
           addedTime: now(),
         };
-        txs[hash] = {hash, info, from, summary, addedTime: now()};
+        txs[hash] = { hash, info, from, summary, addedTime: now() };
         state[chainId] = txs;
       },
     )
     .addCase(
       updateTransaction,
-      (state, {payload: {chainId, ...restParameter}}) => {
+      (state, { payload: { chainId, ...restParameter } }) => {
         if (!chainId) return;
 
         const txs = state[chainId];
@@ -50,13 +50,13 @@ export default createReducer(initialState, builder =>
         txs[hash] = restParameter;
       },
     )
-    .addCase(clearAllTransactions, (transactions, {payload: {chainId}}) => {
+    .addCase(clearAllTransactions, (transactions, { payload: { chainId } }) => {
       if (!transactions[chainId]) return;
       transactions[chainId] = {};
     })
     .addCase(
       checkedTransaction,
-      (transactions, {payload: {chainId, hash, blockNumber}}) => {
+      (transactions, { payload: { chainId, hash, blockNumber } }) => {
         const tx = transactions[chainId]?.[hash];
         if (!tx) {
           return;
@@ -73,7 +73,7 @@ export default createReducer(initialState, builder =>
     )
     .addCase(
       finalizeTransaction,
-      (transactions, {payload: {hash, chainId, receipt}}) => {
+      (transactions, { payload: { hash, chainId, receipt } }) => {
         const tx = transactions[chainId]?.[hash];
         if (!tx) {
           return;

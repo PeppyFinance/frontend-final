@@ -1,15 +1,15 @@
-import {Currency, Token} from "@uniswap/sdk-core";
-import {useMemo} from "react";
+import { Currency, Token } from "@uniswap/sdk-core";
+import { useMemo } from "react";
 
-import {useCollateralToken, useUSDCToken} from "../../constants/tokens";
-import {useFallbackChainId} from "../../state/chains/hooks";
-import {AddressMap} from "../../utils/address";
-import {getCombinedTokens} from "../../utils/token";
+import { useCollateralToken, useUSDCToken } from "../../constants/tokens";
+import { useFallbackChainId } from "../../state/chains/hooks";
+import { AddressMap } from "../../utils/address";
+import { getCombinedTokens } from "../../utils/token";
 import useActiveWagmi from "./useActiveWagmi";
-import {useCurrencyFromMap, useTokenFromMapOrNetwork} from "./useCurrency";
+import { useCurrencyFromMap, useTokenFromMapOrNetwork } from "./useCurrency";
 
-export function useAllTokens(): {[address: string]: Token} {
-  const {chainId} = useActiveWagmi();
+export function useAllTokens(): { [address: string]: Token } {
+  const { chainId } = useActiveWagmi();
   const COLLATERAL_TOKEN = useCollateralToken();
   const USDC_TOKEN = useUSDCToken();
   return useMemo(() => {
@@ -28,7 +28,7 @@ export function useAllTokens(): {[address: string]: Token} {
 export function useToken(
   addressOrAddressMap?: AddressMap | string | null,
 ): Token | null | undefined {
-  const {chainId} = useActiveWagmi();
+  const { chainId } = useActiveWagmi();
   const FALLBACK_CHAIN_ID = useFallbackChainId();
   const tokenAddress = useMemo(() => {
     if (!addressOrAddressMap) {
@@ -53,7 +53,7 @@ export function useTokenByAddress(
 export function useCurrency(
   addressOrAddressMap?: AddressMap | string | null,
 ): Currency | null | undefined {
-  const {chainId} = useActiveWagmi();
+  const { chainId } = useActiveWagmi();
   const FALLBACK_CHAIN_ID = useFallbackChainId();
   const tokenAddress = useMemo(() => {
     if (!addressOrAddressMap) {

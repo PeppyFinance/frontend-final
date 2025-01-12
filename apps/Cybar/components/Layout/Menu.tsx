@@ -1,9 +1,9 @@
 import NextLink from "next/link";
-import {useRouter} from "next/router";
-import {useRef} from "react";
+import { useRouter } from "next/router";
+import { useRef } from "react";
 import styled from "styled-components";
 
-import {RowBetween, RowCenter} from "components/Row";
+import { RowBetween, RowCenter } from "components/Row";
 
 const Container = styled(RowCenter)`
   padding-left: 36px;
@@ -17,16 +17,16 @@ const Container = styled(RowCenter)`
   }
 `;
 
-const Row = styled(RowBetween)<{active?: boolean}>`
+const Row = styled(RowBetween)<{ active?: boolean }>`
   width: unset;
   height: 40px;
-  color: ${({theme}) => theme.text0};
+  color: ${({ theme }) => theme.text0};
   &:hover {
     cursor: pointer;
-    color: ${({theme}) => theme.text1};
+    color: ${({ theme }) => theme.text1};
   }
 
-  ${({active, theme}) =>
+  ${({ active, theme }) =>
     active &&
     ` color: ${theme.primary0};
       pointer-events: none;

@@ -1,10 +1,10 @@
-import {Currency, Ether, NativeCurrency, Token} from "@uniswap/sdk-core";
+import { Currency, Ether, NativeCurrency, Token } from "@uniswap/sdk-core";
 import invariant from "tiny-invariant";
 
-import {SupportedChainId} from "../constants/chains";
-import {WRAPPED_NATIVE_CURRENCY} from "../constants/tokens";
-import {useFallbackChainId, useV3Ids} from "../state/chains/hooks";
-import {AddressMap, DecimalMap, SymbolMap} from "./address";
+import { SupportedChainId } from "../constants/chains";
+import { WRAPPED_NATIVE_CURRENCY } from "../constants/tokens";
+import { useFallbackChainId, useV3Ids } from "../state/chains/hooks";
+import { AddressMap, DecimalMap, SymbolMap } from "./address";
 
 export const NATIVE_CHAIN_ID = "NATIVE";
 export const DEFAULT_ERC20_DECIMALS = 18;
@@ -14,7 +14,7 @@ export type TokenMap = {
 };
 
 export type TokenAddressMap = {
-  [chainId: number]: {[address: string]: Token};
+  [chainId: number]: { [address: string]: Token };
 };
 
 //generate same tokens by given AddressMap
@@ -26,7 +26,7 @@ export function duplicateTokenByAddressMap(
   decimalMap: DecimalMap = {},
 ): TokenMap {
   return Object.keys(addressMap)
-    .map(chainId => Number(chainId)) //convert string to number because of the object.keys() always returns string
+    .map((chainId) => Number(chainId)) //convert string to number because of the object.keys() always returns string
     .reduce((acc: TokenMap, chainId: number) => {
       acc[chainId] = new Token(
         chainId,
@@ -193,7 +193,7 @@ class ExtendedEther extends Ether {
   }
 }
 
-const cachedNativeCurrency: {[chainId: number]: NativeCurrency | Token} = {};
+const cachedNativeCurrency: { [chainId: number]: NativeCurrency | Token } = {};
 
 export function nativeOnChain(chainId: number): NativeCurrency | Token {
   if (cachedNativeCurrency[chainId]) {
@@ -223,7 +223,7 @@ export function getCombinedTokens(tokenList): TokenAddressMap {
   const combinedToken: TokenAddressMap = {};
   for (let i = 0; i < tokenList.length; i++) {
     const token = tokenList[i];
-    const chains = Object.keys(token).map(c => Number(c));
+    const chains = Object.keys(token).map((c) => Number(c));
     for (let j = 0; j < chains.length; j++) {
       if (!combinedToken[chains[j]]) {
         combinedToken[chains[j]] = {};

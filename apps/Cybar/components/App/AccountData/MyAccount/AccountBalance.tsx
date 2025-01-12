@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-import {useCollateralToken} from "@symmio/frontend-sdk/constants/tokens";
-import {formatAmount} from "@symmio/frontend-sdk/utils/numbers";
-import {useGetTokenWithFallbackChainId} from "@symmio/frontend-sdk/utils/token";
+import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
+import { formatAmount } from "@symmio/frontend-sdk/utils/numbers";
+import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
 
 import useAccountData from "@symmio/frontend-sdk/hooks/useAccountData";
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
@@ -12,7 +12,7 @@ import {
   useModalOpen,
   useWithdrawModalToggle,
 } from "@symmio/frontend-sdk/state/application/hooks";
-import {ApplicationModal} from "@symmio/frontend-sdk/state/application/reducer";
+import { ApplicationModal } from "@symmio/frontend-sdk/state/application/reducer";
 import {
   useAccountPartyAStat,
   useActiveAccountAddress,
@@ -23,8 +23,8 @@ import GradientButton from "components/Button/GradientButton";
 import Column from "components/Column";
 import DepositModal from "components/ReviewModal/DepositModal";
 import WithdrawModal from "components/ReviewModal/WithdrawModal";
-import {RowBetween} from "components/Row";
-import {DefaultContainer, DefaultHeader} from "./styles";
+import { RowBetween } from "components/Row";
+import { DefaultContainer, DefaultHeader } from "./styles";
 
 const Container = styled(DefaultContainer)`
   overflow: hidden;
@@ -33,7 +33,7 @@ const Container = styled(DefaultContainer)`
 const TopContainer = styled(Column)`
   min-height: 150px;
   padding-bottom: 16px;
-  background-color: ${({theme}) => theme.bg1};
+  background-color: ${({ theme }) => theme.bg1};
 `;
 
 const ContentWrapper = styled(Column)`
@@ -44,10 +44,10 @@ const ContentWrapper = styled(Column)`
 `;
 
 export default function AccountBalance() {
-  const {chainId} = useActiveWagmi();
-  const {availableForOrder, loading} = useAccountData();
+  const { chainId } = useActiveWagmi();
+  const { availableForOrder, loading } = useAccountData();
   const activeAccountAddress = useActiveAccountAddress();
-  const {allocatedBalance, lockedPartyAMM} =
+  const { allocatedBalance, lockedPartyAMM } =
     useAccountPartyAStat(activeAccountAddress);
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(

@@ -1,5 +1,5 @@
 export default [
-  {inputs: [], stateMutability: "nonpayable", type: "constructor"},
+  { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   {
     anonymous: false,
     inputs: [
@@ -35,7 +35,7 @@ export default [
   {
     anonymous: false,
     inputs: [
-      {indexed: true, internalType: "bytes32", name: "role", type: "bytes32"},
+      { indexed: true, internalType: "bytes32", name: "role", type: "bytes32" },
       {
         indexed: true,
         internalType: "bytes32",
@@ -55,7 +55,7 @@ export default [
   {
     anonymous: false,
     inputs: [
-      {indexed: true, internalType: "bytes32", name: "role", type: "bytes32"},
+      { indexed: true, internalType: "bytes32", name: "role", type: "bytes32" },
       {
         indexed: true,
         internalType: "address",
@@ -75,7 +75,7 @@ export default [
   {
     anonymous: false,
     inputs: [
-      {indexed: true, internalType: "bytes32", name: "role", type: "bytes32"},
+      { indexed: true, internalType: "bytes32", name: "role", type: "bytes32" },
       {
         indexed: true,
         internalType: "address",
@@ -120,69 +120,69 @@ export default [
   {
     inputs: [],
     name: "DEFAULT_ADMIN_ROLE",
-    outputs: [{internalType: "bytes32", name: "", type: "bytes32"}],
+    outputs: [{ internalType: "bytes32", name: "", type: "bytes32" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
     name: "SETTER_ROLE",
-    outputs: [{internalType: "bytes32", name: "", type: "bytes32"}],
+    outputs: [{ internalType: "bytes32", name: "", type: "bytes32" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
     name: "currentVersion",
-    outputs: [{internalType: "uint256", name: "", type: "uint256"}],
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
     name: "getCurrentVersionMessage",
-    outputs: [{internalType: "string", name: "", type: "string"}],
+    outputs: [{ internalType: "string", name: "", type: "string" }],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [{internalType: "bytes32", name: "role", type: "bytes32"}],
+    inputs: [{ internalType: "bytes32", name: "role", type: "bytes32" }],
     name: "getRoleAdmin",
-    outputs: [{internalType: "bytes32", name: "", type: "bytes32"}],
+    outputs: [{ internalType: "bytes32", name: "", type: "bytes32" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
-      {internalType: "bytes32", name: "role", type: "bytes32"},
-      {internalType: "uint256", name: "index", type: "uint256"},
+      { internalType: "bytes32", name: "role", type: "bytes32" },
+      { internalType: "uint256", name: "index", type: "uint256" },
     ],
     name: "getRoleMember",
-    outputs: [{internalType: "address", name: "", type: "address"}],
+    outputs: [{ internalType: "address", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [{internalType: "bytes32", name: "role", type: "bytes32"}],
+    inputs: [{ internalType: "bytes32", name: "role", type: "bytes32" }],
     name: "getRoleMemberCount",
-    outputs: [{internalType: "uint256", name: "", type: "uint256"}],
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
-      {internalType: "uint256", name: "version", type: "uint256"},
-      {internalType: "address", name: "user", type: "address"},
+      { internalType: "uint256", name: "version", type: "uint256" },
+      { internalType: "address", name: "user", type: "address" },
     ],
     name: "getSignature",
-    outputs: [{internalType: "bytes", name: "", type: "bytes"}],
+    outputs: [{ internalType: "bytes", name: "", type: "bytes" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
-      {internalType: "bytes32", name: "role", type: "bytes32"},
-      {internalType: "address", name: "account", type: "address"},
+      { internalType: "bytes32", name: "role", type: "bytes32" },
+      { internalType: "address", name: "account", type: "address" },
     ],
     name: "grantRole",
     outputs: [],
@@ -190,36 +190,36 @@ export default [
     type: "function",
   },
   {
-    inputs: [{internalType: "address", name: "user", type: "address"}],
+    inputs: [{ internalType: "address", name: "user", type: "address" }],
     name: "hasCurrentVersionSignature",
-    outputs: [{internalType: "bool", name: "", type: "bool"}],
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
-      {internalType: "bytes32", name: "role", type: "bytes32"},
-      {internalType: "address", name: "account", type: "address"},
+      { internalType: "bytes32", name: "role", type: "bytes32" },
+      { internalType: "address", name: "account", type: "address" },
     ],
     name: "hasRole",
-    outputs: [{internalType: "bool", name: "", type: "bool"}],
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
-      {internalType: "uint256", name: "version", type: "uint256"},
-      {internalType: "address", name: "user", type: "address"},
+      { internalType: "uint256", name: "version", type: "uint256" },
+      { internalType: "address", name: "user", type: "address" },
     ],
     name: "hasSignature",
-    outputs: [{internalType: "bool", name: "", type: "bool"}],
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
-      {internalType: "bytes32", name: "role", type: "bytes32"},
-      {internalType: "address", name: "account", type: "address"},
+      { internalType: "bytes32", name: "role", type: "bytes32" },
+      { internalType: "address", name: "account", type: "address" },
     ],
     name: "renounceRole",
     outputs: [],
@@ -228,8 +228,8 @@ export default [
   },
   {
     inputs: [
-      {internalType: "bytes32", name: "role", type: "bytes32"},
-      {internalType: "address", name: "account", type: "address"},
+      { internalType: "bytes32", name: "role", type: "bytes32" },
+      { internalType: "address", name: "account", type: "address" },
     ],
     name: "revokeRole",
     outputs: [],
@@ -237,7 +237,7 @@ export default [
     type: "function",
   },
   {
-    inputs: [{internalType: "uint256", name: "_version", type: "uint256"}],
+    inputs: [{ internalType: "uint256", name: "_version", type: "uint256" }],
     name: "setCurrentVersion",
     outputs: [],
     stateMutability: "nonpayable",
@@ -245,8 +245,8 @@ export default [
   },
   {
     inputs: [
-      {internalType: "uint256", name: "version", type: "uint256"},
-      {internalType: "string", name: "message", type: "string"},
+      { internalType: "uint256", name: "version", type: "uint256" },
+      { internalType: "string", name: "message", type: "string" },
     ],
     name: "setMessage",
     outputs: [],
@@ -255,8 +255,8 @@ export default [
   },
   {
     inputs: [
-      {internalType: "uint256", name: "version", type: "uint256"},
-      {internalType: "bytes", name: "signature", type: "bytes"},
+      { internalType: "uint256", name: "version", type: "uint256" },
+      { internalType: "bytes", name: "signature", type: "bytes" },
     ],
     name: "storeSignature",
     outputs: [],
@@ -264,33 +264,33 @@ export default [
     type: "function",
   },
   {
-    inputs: [{internalType: "bytes", name: "signature", type: "bytes"}],
+    inputs: [{ internalType: "bytes", name: "signature", type: "bytes" }],
     name: "storeSignatureForCurrentVersion",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
   {
-    inputs: [{internalType: "bytes4", name: "interfaceId", type: "bytes4"}],
+    inputs: [{ internalType: "bytes4", name: "interfaceId", type: "bytes4" }],
     name: "supportsInterface",
-    outputs: [{internalType: "bool", name: "", type: "bool"}],
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
-      {internalType: "uint256", name: "", type: "uint256"},
-      {internalType: "address", name: "", type: "address"},
+      { internalType: "uint256", name: "", type: "uint256" },
+      { internalType: "address", name: "", type: "address" },
     ],
     name: "userSignatures",
-    outputs: [{internalType: "bytes", name: "", type: "bytes"}],
+    outputs: [{ internalType: "bytes", name: "", type: "bytes" }],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [{internalType: "uint256", name: "", type: "uint256"}],
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     name: "versionToMessage",
-    outputs: [{internalType: "string", name: "", type: "string"}],
+    outputs: [{ internalType: "string", name: "", type: "string" }],
     stateMutability: "view",
     type: "function",
   },

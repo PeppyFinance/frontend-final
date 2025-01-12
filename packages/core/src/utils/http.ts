@@ -30,12 +30,12 @@ export const makeHttpRequestV2 = async function <T>(
   } = {
     cache: "no-cache",
   },
-): Promise<{result: T | null; status: number}> {
+): Promise<{ result: T | null; status: number }> {
   try {
     const response = await fetch(url, options);
-    return {result: await response.json(), status: response.status};
+    return { result: await response.json(), status: response.status };
   } catch (err) {
     console.error(`Error fetching ${url}: `, err);
-    return {result: null, status: 500};
+    return { result: null, status: 500 };
   }
 };

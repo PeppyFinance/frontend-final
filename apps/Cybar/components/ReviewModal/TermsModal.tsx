@@ -1,20 +1,20 @@
 import Image from "next/image";
-import {useCallback, useState} from "react";
+import { useCallback, useState } from "react";
 import styled from "styled-components";
 
 import GRADIENT_CLOVERFIELD_LOGO from "/public/static/images/etc/GradientCloverfield.svg";
 
-import {DotFlashing, Wallet} from "components/Icons";
-import {Modal} from "components/Modal";
+import { DotFlashing, Wallet } from "components/Icons";
+import { Modal } from "components/Modal";
 
-import {useSignMessage} from "@symmio/frontend-sdk/callbacks/useMultiAccount";
-import {useWriteSign} from "@symmio/frontend-sdk/callbacks/useWriteSign";
-import {useGetMessage} from "@symmio/frontend-sdk/hooks/useCheckSign";
+import { useSignMessage } from "@symmio/frontend-sdk/callbacks/useMultiAccount";
+import { useWriteSign } from "@symmio/frontend-sdk/callbacks/useWriteSign";
+import { useGetMessage } from "@symmio/frontend-sdk/hooks/useCheckSign";
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
-import {truncateAddress} from "@symmio/frontend-sdk/utils/address";
+import { truncateAddress } from "@symmio/frontend-sdk/utils/address";
 import GradientButton from "components/Button/GradientButton";
 import Checkbox from "components/CheckBox";
-import {Row, RowCenter, RowEnd, RowStart} from "components/Row";
+import { Row, RowCenter, RowEnd, RowStart } from "components/Row";
 
 const Wrapper = styled.div`
   display: flex;
@@ -26,14 +26,14 @@ const Wrapper = styled.div`
 
 const AccountWrapper = styled(Row)`
   height: 40px;
-  background: ${({theme}) => theme.bg2};
+  background: ${({ theme }) => theme.bg2};
   border-radius: 6px;
   margin-bottom: 16px;
   padding: 10px 12px;
   font-weight: 500;
   font-size: 12px;
 
-  color: ${({theme}) => theme.primary0};
+  color: ${({ theme }) => theme.primary0};
 `;
 
 const ImageWrapper = styled(RowCenter)`
@@ -52,7 +52,7 @@ export default function TermsModal({
   isOpen?: boolean;
   onDismiss: () => void;
 }) {
-  const {account} = useActiveWagmi();
+  const { account } = useActiveWagmi();
   const [isTermsAccepted, setIsTermsAccepted] = useState(false);
 
   return (
@@ -83,7 +83,7 @@ export default function TermsModal({
             id={"user-accept-risk"}
             label={"I Accept Terms of Service"}
             checked={isTermsAccepted}
-            onChange={() => setIsTermsAccepted(prevValue => !prevValue)}
+            onChange={() => setIsTermsAccepted((prevValue) => !prevValue)}
           />
         </AcceptRiskWrapper>
         <ActionButton isTermsAccepted={isTermsAccepted} />
@@ -92,13 +92,13 @@ export default function TermsModal({
   );
 }
 
-function ActionButton({isTermsAccepted}: {isTermsAccepted: boolean}) {
+function ActionButton({ isTermsAccepted }: { isTermsAccepted: boolean }) {
   const [signature, setSignature] = useState("");
   const [awaitingConfirmation, setAwaitingConfirmation] = useState(false);
 
   const message = useGetMessage();
-  const {callback: signMessageCallback} = useSignMessage();
-  const {callback: writeSignCallback} = useWriteSign();
+  const { callback: signMessageCallback } = useSignMessage();
+  const { callback: writeSignCallback } = useWriteSign();
 
   const onSignMessage = useCallback(async () => {
     if (!signMessageCallback) return;
@@ -138,7 +138,7 @@ function ActionButton({isTermsAccepted}: {isTermsAccepted: boolean}) {
 
       if (!signature) {
         onSignMessage()
-          .then(sign => {
+          .then((sign) => {
             if (sign) {
               setSignature(sign);
               onWriteSignCb(sign);

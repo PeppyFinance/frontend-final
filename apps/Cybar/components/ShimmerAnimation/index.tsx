@@ -1,4 +1,4 @@
-import styled, {css, keyframes} from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 const keyframesShimmer = keyframes`
   0% {
@@ -20,9 +20,9 @@ const Comment = styled.div<{
   width?: string;
   borderRadius?: string;
 }>`
-  border-radius: ${({borderRadius}) => borderRadius ?? "4px"};
-  height: ${({height}) => height ?? "10px"};
-  width: ${({width}) => width ?? "50px"};
+  border-radius: ${({ borderRadius }) => borderRadius ?? "4px"};
+  height: ${({ height }) => height ?? "10px"};
+  width: ${({ width }) => width ?? "50px"};
   ${shimmerAnimation}
 `;
 

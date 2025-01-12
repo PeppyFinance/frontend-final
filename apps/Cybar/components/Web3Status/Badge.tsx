@@ -1,5 +1,5 @@
 import Image from "next/legacy/image";
-import {useMemo, useState} from "react";
+import { useMemo, useState } from "react";
 import styled from "styled-components";
 
 import Medic from "/public/static/images/doctor.svg";
@@ -12,7 +12,7 @@ import {
   useQuotesPnl,
 } from "@symmio/frontend-sdk/hooks/useBadgesData";
 import Column from "components/Column";
-import {ToolTipBottom} from "components/ToolTip";
+import { ToolTipBottom } from "components/ToolTip";
 
 const CustomTooltipBottom = styled(ToolTipBottom)`
   font-size: 12px !important;
@@ -35,7 +35,7 @@ const useIsArcher = () => {
     if (marketIdList.length >= 5) break;
 
     if (Number(pnl) > 0) {
-      const {marketId} = closed[i];
+      const { marketId } = closed[i];
       if (!marketIdList.includes(marketId)) marketIdList.push(marketId);
     }
   }
@@ -50,7 +50,7 @@ const useIsSniper = () => {
   const showSniper = useMemo(() => {
     let winPositionNumber = 0;
 
-    pnlList.forEach(pnl => {
+    pnlList.forEach((pnl) => {
       if (Number(pnl) > 0) {
         winPositionNumber += 1;
       }
@@ -64,7 +64,7 @@ const useIsSniper = () => {
 
 export default function Badge() {
   const {
-    accountHealthData: {health: accountHealth},
+    accountHealthData: { health: accountHealth },
   } = useAccountData();
 
   const isArcher = useIsArcher();

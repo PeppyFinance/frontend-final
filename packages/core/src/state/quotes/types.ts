@@ -1,8 +1,8 @@
-import {ApiState} from "../../types/api";
-import {Quote} from "../../types/quote";
+import { ApiState } from "../../types/api";
+import { Quote } from "../../types/quote";
 
 export interface QuotesState {
-  history: {[chainId: number]: Quote[]};
+  history: { [chainId: number]: Quote[] };
   pendings: Quote[];
   positions: Quote[];
   listeners: number[];
@@ -11,7 +11,7 @@ export interface QuotesState {
   hasMoreHistory?: boolean;
   instantClosesStates: InstantCloseObject;
   openInstantClosesState: ApiState;
-  tpSlQuoteData: {[quoteId: number]: TpSlContent};
+  tpSlQuoteData: { [quoteId: number]: TpSlContent };
 }
 
 export interface SubGraphData {

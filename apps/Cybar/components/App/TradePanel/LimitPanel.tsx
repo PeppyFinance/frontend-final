@@ -1,7 +1,7 @@
-import {useCollateralToken} from "@symmio/frontend-sdk/constants/tokens";
-import {PositionType} from "@symmio/frontend-sdk/types/trade";
-import {toBN} from "@symmio/frontend-sdk/utils/numbers";
-import {useGetTokenWithFallbackChainId} from "@symmio/frontend-sdk/utils/token";
+import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
+import { PositionType } from "@symmio/frontend-sdk/types/trade";
+import { toBN } from "@symmio/frontend-sdk/utils/numbers";
+import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
 
 import useBidAskPrice from "@symmio/frontend-sdk/hooks/useBidAskPrice";
 import useTradePage from "@symmio/frontend-sdk/hooks/useTradePage";
@@ -13,13 +13,13 @@ import {
   useSetLimitPrice,
 } from "@symmio/frontend-sdk/state/trade/hooks";
 
-import {useExpertMode} from "@symmio/frontend-sdk/state/user/hooks";
-import {CustomInputBox2} from "components/InputBox";
-import {useMemo} from "react";
+import { useExpertMode } from "@symmio/frontend-sdk/state/user/hooks";
+import { CustomInputBox2 } from "components/InputBox";
+import { useMemo } from "react";
 
 export default function LimitPricePanel(): JSX.Element | null {
-  const {chainId} = useActiveWagmi();
-  const {price} = useTradePage();
+  const { chainId } = useActiveWagmi();
+  const { price } = useTradePage();
   const market = useActiveMarket();
   const userExpertMode = useExpertMode();
   const positionType = usePositionType();
@@ -29,7 +29,7 @@ export default function LimitPricePanel(): JSX.Element | null {
     COLLATERAL_TOKEN,
     chainId,
   );
-  const {ask, bid} = useBidAskPrice(market);
+  const { ask, bid } = useBidAskPrice(market);
 
   const lastMarketPrice = (() => {
     if (positionType === PositionType.LONG) {

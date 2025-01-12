@@ -1,12 +1,12 @@
-import {useTheme} from "styled-components";
+import { useTheme } from "styled-components";
 
 import LIQUIDATION_ALERT_ICON from "/public/static/images/etc/RedErrorTriangle.svg";
 
-import {Account} from "@symmio/frontend-sdk/types/user";
+import { Account } from "@symmio/frontend-sdk/types/user";
 
-import {NotificationDetails} from "@symmio/frontend-sdk/state/notifications/types";
+import { NotificationDetails } from "@symmio/frontend-sdk/state/notifications/types";
 import BaseItem from "components/Notifications/Cards/BaseCard";
-import {LiquidationText} from "./styles";
+import { LiquidationText } from "./styles";
 
 export default function LiquidationAlertCard({
   notification,
@@ -18,7 +18,7 @@ export default function LiquidationAlertCard({
   loading?: boolean;
 }): JSX.Element {
   const theme = useTheme();
-  const {modifyTime} = notification;
+  const { modifyTime } = notification;
 
   return (
     <BaseItem

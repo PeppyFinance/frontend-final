@@ -1,10 +1,10 @@
-import {useEffect, useMemo, useState} from "react";
+import { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 
-import {Market} from "@symmio/frontend-sdk/types/market";
-import {formatAmount, toBN} from "@symmio/frontend-sdk/utils/numbers";
+import { Market } from "@symmio/frontend-sdk/types/market";
+import { formatAmount, toBN } from "@symmio/frontend-sdk/utils/numbers";
 
-import {useMarketData} from "@symmio/frontend-sdk/state/hedger/hooks";
+import { useMarketData } from "@symmio/frontend-sdk/state/hedger/hooks";
 
 export const Price = styled.div<{
   positive: boolean;
@@ -15,8 +15,8 @@ export const Price = styled.div<{
 }>`
   font-style: normal;
   font-weight: 500;
-  font-size: ${({size}) => (size ? size : "12px")};
-  text-align: ${({textAlign}) => textAlign ?? "left"};
+  font-size: ${({ size }) => (size ? size : "12px")};
+  text-align: ${({ textAlign }) => textAlign ?? "left"};
 
   @keyframes blink {
     25% {
@@ -30,10 +30,11 @@ export const Price = styled.div<{
     }
   }
 
-  color: ${({theme, positive}) => (positive ? theme.positive : theme.negative)};
-  animation: ${({visible}) => (visible ? "blink 0.5s linear 1" : "none")};
+  color: ${({ theme, positive }) =>
+    positive ? theme.positive : theme.negative};
+  animation: ${({ visible }) => (visible ? "blink 0.5s linear 1" : "none")};
 
-  ${({width}) =>
+  ${({ width }) =>
     width &&
     `
   width: ${width}px;
@@ -53,7 +54,7 @@ export default function BlinkingPrice({
   textSize?: string;
   textAlign?: string;
 }) {
-  const {name, pricePrecision} = market || {};
+  const { name, pricePrecision } = market || {};
   const marketData = useMarketData(name);
   const mark = useMemo(
     () =>

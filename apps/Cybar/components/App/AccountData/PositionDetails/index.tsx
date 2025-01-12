@@ -1,10 +1,10 @@
-import {Quote, QuoteStatus} from "@symmio/frontend-sdk/types/quote";
-import {OrderType} from "@symmio/frontend-sdk/types/trade";
-import {toBN} from "@symmio/frontend-sdk/utils/numbers";
+import { Quote, QuoteStatus } from "@symmio/frontend-sdk/types/quote";
+import { OrderType } from "@symmio/frontend-sdk/types/trade";
+import { toBN } from "@symmio/frontend-sdk/utils/numbers";
 import React from "react";
 
-import {useMarket} from "@symmio/frontend-sdk/hooks/useMarkets";
-import {useIsMobile} from "lib/hooks/useWindowSize";
+import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
+import { useIsMobile } from "lib/hooks/useWindowSize";
 
 import CanceledQuoteDetails from "./CanceledQuoteDetails";
 import EmptyDetails from "./EmptyDetails";
@@ -23,9 +23,9 @@ export default function PositionDetails({
   disableButton?: boolean;
   onClickButton?: (event: React.MouseEvent<HTMLDivElement>) => void;
 }): JSX.Element {
-  const {quantity, marketPrice, requestedOpenPrice, orderType, quoteStatus} =
+  const { quantity, marketPrice, requestedOpenPrice, orderType, quoteStatus } =
     quote || {};
-  const {tradingFee} = useMarket(quote?.marketId) || {};
+  const { tradingFee } = useMarket(quote?.marketId) || {};
   const mobileVersion = useIsMobile();
 
   const platformFee = (() => {

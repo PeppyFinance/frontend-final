@@ -1,12 +1,12 @@
 import React from "react";
-import styled, {useTheme} from "styled-components";
+import styled, { useTheme } from "styled-components";
 
-import {CloseGuides, OrderType} from "@symmio/frontend-sdk/types/trade";
-import {toBN} from "@symmio/frontend-sdk/utils/numbers";
+import { CloseGuides, OrderType } from "@symmio/frontend-sdk/types/trade";
+import { toBN } from "@symmio/frontend-sdk/utils/numbers";
 
 import Item from "components/App/UserPanel/CloseModal/Item";
 import Column from "components/Column";
-import {Amount, Child, ColoredBox, Full, Label} from "./styles";
+import { Amount, Child, ColoredBox, Full, Label } from "./styles";
 
 const Wrapper = styled(Column)`
   gap: 12px;
@@ -30,7 +30,7 @@ export default function GuideTwo({
   setActiveTab: (orderType: OrderType) => void;
 }) {
   const theme = useTheme();
-  const {maxClose, maxPartiallyClose, minPositionSize} = values;
+  const { maxClose, maxPartiallyClose, minPositionSize } = values;
 
   const partialCloseText = !toBN(maxPartiallyClose).isEqualTo(0)
     ? "Available"

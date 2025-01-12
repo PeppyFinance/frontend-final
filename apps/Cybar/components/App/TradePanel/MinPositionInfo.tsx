@@ -1,11 +1,15 @@
 import BigNumber from "bignumber.js";
-import {useMemo} from "react";
+import { useMemo } from "react";
 
-import {DEFAULT_PRECISION} from "@symmio/frontend-sdk/constants/misc";
-import {useCollateralToken} from "@symmio/frontend-sdk/constants/tokens";
-import {InputField} from "@symmio/frontend-sdk/types/trade";
-import {RoundMode, formatPrice, toBN} from "@symmio/frontend-sdk/utils/numbers";
-import {useGetTokenWithFallbackChainId} from "@symmio/frontend-sdk/utils/token";
+import { DEFAULT_PRECISION } from "@symmio/frontend-sdk/constants/misc";
+import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
+import { InputField } from "@symmio/frontend-sdk/types/trade";
+import {
+  RoundMode,
+  formatPrice,
+  toBN,
+} from "@symmio/frontend-sdk/utils/numbers";
+import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
 
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 import {
@@ -13,12 +17,12 @@ import {
   useActiveMarketPrice,
   useSetTypedValue,
 } from "@symmio/frontend-sdk/state/trade/hooks";
-import {useLeverage} from "@symmio/frontend-sdk/state/user/hooks";
+import { useLeverage } from "@symmio/frontend-sdk/state/user/hooks";
 
 import InfoItem from "components/InfoItem";
 
 export default function MinPositionInfo() {
-  const {chainId} = useActiveWagmi();
+  const { chainId } = useActiveWagmi();
   const setTypedValue = useSetTypedValue();
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(
@@ -85,7 +89,7 @@ export default function MinPositionInfo() {
       amount={`${minPositionValue} ${collateralCurrency?.symbol} (${
         toBN(minPositionQuantity).eq(0) ? "-" : minPositionQuantity
       } ${outputTicker})`}
-      onClick={value => setTypedValue(value, InputField.PRICE)}
+      onClick={(value) => setTypedValue(value, InputField.PRICE)}
     />
   );
 }

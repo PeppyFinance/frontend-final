@@ -1,4 +1,4 @@
-import {useCallback, useMemo} from "react";
+import { useCallback, useMemo } from "react";
 
 import {
   DEFAULT_PRECISION,
@@ -7,23 +7,23 @@ import {
   MARKET_PRICE_COEFFICIENT,
 } from "../constants/misc";
 import useActiveWagmi from "../lib/hooks/useActiveWagmi";
-import {useSupportedChainId} from "../lib/hooks/useSupportedChainId";
-import {useCurrency} from "../lib/hooks/useTokens";
+import { useSupportedChainId } from "../lib/hooks/useSupportedChainId";
+import { useCurrency } from "../lib/hooks/useTokens";
 import {
   useAppName,
   useDiamondAddress,
   useMuonData,
   useWagmiConfig,
 } from "../state/chains/hooks";
-import {useHedgerInfo, useSetNotionalCap} from "../state/hedger/hooks";
-import {getAppNameHeader, getNotionalCapUrl} from "../state/hedger/thunks";
+import { useHedgerInfo, useSetNotionalCap } from "../state/hedger/hooks";
+import { getAppNameHeader, getNotionalCapUrl } from "../state/hedger/thunks";
 import {
   useActiveMarketId,
   useLockedPercentages,
   useOrderType,
   usePositionType,
 } from "../state/trade/hooks";
-import {useTransactionAdder} from "../state/transactions/hooks";
+import { useTransactionAdder } from "../state/transactions/hooks";
 import {
   TradeTransactionInfo,
   TransactionType,
@@ -34,21 +34,26 @@ import {
   usePartyBsWhiteList,
   useSlippageTolerance,
 } from "../state/user/hooks";
-import {OrderType, PositionType, TradeState} from "../types/trade";
-import {ConstructCallReturnType} from "../types/web3";
-import {makeHttpRequest} from "../utils/http";
+import { OrderType, PositionType, TradeState } from "../types/trade";
+import { ConstructCallReturnType } from "../types/web3";
+import { makeHttpRequest } from "../utils/http";
 
-import {formatPrice, removeTrailingZeros, toBN, toWei} from "../utils/numbers";
+import {
+  formatPrice,
+  removeTrailingZeros,
+  toBN,
+  toWei,
+} from "../utils/numbers";
 import {
   TransactionCallbackState,
   createTransactionCallback,
 } from "../utils/web3";
 
-import {useAddRecentTransaction} from "@rainbow-me/rainbowkit";
-import {Abi, Address, encodeFunctionData} from "viem";
-import {DIAMOND_ABI} from "../constants";
-import {useMarket} from "../hooks/useMarkets";
-import {useMultiAccountable} from "../hooks/useMultiAccountable";
+import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
+import { Abi, Address, encodeFunctionData } from "viem";
+import { DIAMOND_ABI } from "../constants";
+import { useMarket } from "../hooks/useMarkets";
+import { useMultiAccountable } from "../hooks/useMultiAccountable";
 import useTradePage, {
   useLockedCVA,
   useLockedLF,
@@ -57,15 +62,15 @@ import useTradePage, {
   usePartyALockedMM,
   usePartyBLockedMM,
 } from "../hooks/useTradePage";
-import {SendQuoteClient} from "../lib/muon";
-import {useCollateralAddress} from "../state/chains/hooks";
+import { SendQuoteClient } from "../lib/muon";
+import { useCollateralAddress } from "../state/chains/hooks";
 
 export function useSentQuoteCallback(): {
   state: TransactionCallbackState;
   callback: null | (() => Promise<any>);
   error: string | null;
 } {
-  const {account, chainId} = useActiveWagmi();
+  const { account, chainId } = useActiveWagmi();
   const addTransaction = useTransactionAdder();
   const userExpertMode = useExpertMode();
   const addRecentTransaction = useAddRecentTransaction();
@@ -83,7 +88,7 @@ export function useSentQuoteCallback(): {
   );
   const orderType = useOrderType();
   const positionType = usePositionType();
-  const {price, formattedAmounts} = useTradePage();
+  const { price, formattedAmounts } = useTradePage();
   const appName = useAppName();
 
   const marketId = useActiveMarketId();
@@ -135,11 +140,11 @@ export function useSentQuoteCallback(): {
   const lockedLF = useLockedLF(notionalValue);
   const lockedPartyAMM = usePartyALockedMM(notionalValue);
   const lockedPartyBMM = usePartyBLockedMM(notionalValue);
-  const {cva, partyAmm, partyBmm, lf} = useLockedPercentages();
+  const { cva, partyAmm, partyBmm, lf } = useLockedPercentages();
   const updateNotionalCap = useSetNotionalCap();
 
   const maxFundingRate = useMaxFundingRate();
-  const {baseUrl} = useHedgerInfo() || {};
+  const { baseUrl } = useHedgerInfo() || {};
   const partyBWhiteList = usePartyBsWhiteList();
 
   const getSignature = useCallback(async () => {
@@ -154,8 +159,8 @@ export function useSentQuoteCallback(): {
       throw new Error("Missing muon params");
     }
 
-    const {AppName, Urls} = MuonData[chainId];
-    const {success, signature, error} = await SendQuoteClient.getMuonSig(
+    const { AppName, Urls } = MuonData[chainId];
+    const { success, signature, error } = await SendQuoteClient.getMuonSig(
       activeAccountAddress,
       AppName,
       Urls,
@@ -167,7 +172,7 @@ export function useSentQuoteCallback(): {
     if (success === false || !signature) {
       throw new Error(`Unable to fetch Muon signature: ${error}`);
     }
-    return {signature};
+    return { signature };
   }, [DIAMOND_ADDRESS, MuonData, activeAccountAddress, chainId, marketId]);
 
   const getNotionalCap = useCallback(async () => {
@@ -182,11 +187,12 @@ export function useSentQuoteCallback(): {
       used: number;
     }>(notionalCapUrl, getAppNameHeader(appName));
     if (!tempResponse) return;
-    const {total_cap, used}: {total_cap: number; used: number} = tempResponse;
+    const { total_cap, used }: { total_cap: number; used: number } =
+      tempResponse;
 
     const freeCap = toBN(total_cap).minus(used);
     const notionalValue = toBN(openPrice).times(quantityAsset);
-    updateNotionalCap({name: market.name, used, totalCap: total_cap});
+    updateNotionalCap({ name: market.name, used, totalCap: total_cap });
 
     if (freeCap.minus(notionalValue).lte(0)) throw new Error("Cap is reached.");
   }, [appName, baseUrl, market, openPrice, quantityAsset, updateNotionalCap]);
@@ -210,7 +216,7 @@ export function useSentQuoteCallback(): {
       }
 
       await getNotionalCap();
-      const {signature} = await getSignature();
+      const { signature } = await getSignature();
 
       if (!signature) {
         throw new Error("Missing signature for constructCall.");

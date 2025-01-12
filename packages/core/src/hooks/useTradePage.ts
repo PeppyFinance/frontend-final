@@ -1,5 +1,5 @@
 import BigNumber from "bignumber.js";
-import {useMemo} from "react";
+import { useMemo } from "react";
 
 import {
   DEFAULT_PRECISION,
@@ -26,10 +26,15 @@ import {
   useLeverage,
   useSlippageTolerance,
 } from "../state/user/hooks";
-import {ErrorState, InputField, OrderType, PositionType} from "../types/trade";
-import {RoundMode, removeTrailingZeros, toBN} from "../utils/numbers";
+import {
+  ErrorState,
+  InputField,
+  OrderType,
+  PositionType,
+} from "../types/trade";
+import { RoundMode, removeTrailingZeros, toBN } from "../utils/numbers";
 
-import {usePendingsQuotes} from "../state/quotes/hooks";
+import { usePendingsQuotes } from "../state/quotes/hooks";
 import useAccountData from "./useAccountData";
 
 export default function useTradePage(): {
@@ -44,18 +49,18 @@ export default function useTradePage(): {
   const orderType = useOrderType();
   const positionType = usePositionType();
   const market = useActiveMarket();
-  const {quotes: pendingQuotes} = usePendingsQuotes();
+  const { quotes: pendingQuotes } = usePendingsQuotes();
   const marketPrice = useActiveMarketPrice();
   const priceRange = useMarketPriceRange();
   const openInterest = useMarketOpenInterest();
-  const {availableForOrder} = useAccountData();
-  const {marketNotionalCap} = useMarketNotionalCap();
+  const { availableForOrder } = useAccountData();
+  const { marketNotionalCap } = useMarketNotionalCap();
   const {
     name: notionalCapName,
     used: notionalCapUsedValue,
     totalCap: totalNotionalCap,
   } = marketNotionalCap;
-  const {used: usedOpenInterest, total: totalOpenInterest} = openInterest;
+  const { used: usedOpenInterest, total: totalOpenInterest } = openInterest;
   const leverage = useLeverage();
   const slippage = useSlippageTolerance();
   const autoSlippage = market ? market.autoSlippage : MARKET_PRICE_COEFFICIENT;
@@ -136,7 +141,7 @@ export default function useTradePage(): {
 
   const outOfRangePrice = useMemo(() => {
     // check limit price range)
-    const {name, maxPrice, minPrice} = priceRange;
+    const { name, maxPrice, minPrice } = priceRange;
 
     if (orderType === OrderType.LIMIT && market && market.name === name) {
       if (positionType === PositionType.LONG) {
@@ -215,7 +220,7 @@ export default function useTradePage(): {
   ]);
 
   return useMemo(
-    () => ({price, formattedAmounts, state, balance}),
+    () => ({ price, formattedAmounts, state, balance }),
     [price, formattedAmounts, state, balance],
   );
 }
@@ -234,7 +239,7 @@ export function useNotionalValue(
 //Credit Valuation Adjustment
 export function useLockedCVA(notionalValue: string): string {
   const leverage = useLeverage();
-  const {cva} = useLockedPercentages();
+  const { cva } = useLockedPercentages();
 
   return useMemo(
     () =>
@@ -249,7 +254,7 @@ export function useLockedCVA(notionalValue: string): string {
 
 // partyB mm => percent of notional value
 export function usePartyBLockedMM(notionalValue: string): string {
-  const {partyBmm} = useLockedPercentages();
+  const { partyBmm } = useLockedPercentages();
 
   return useMemo(
     () =>
@@ -264,7 +269,7 @@ export function usePartyBLockedMM(notionalValue: string): string {
 //Maintenance Margin
 export function usePartyALockedMM(notionalValue: string): string {
   const leverage = useLeverage();
-  const {partyAmm} = useLockedPercentages();
+  const { partyAmm } = useLockedPercentages();
 
   return useMemo(
     () =>
@@ -280,7 +285,7 @@ export function usePartyALockedMM(notionalValue: string): string {
 //Liquidation Fee
 export function useLockedLF(notionalValue: string): string {
   const leverage = useLeverage();
-  const {lf} = useLockedPercentages();
+  const { lf } = useLockedPercentages();
 
   return useMemo(
     () =>

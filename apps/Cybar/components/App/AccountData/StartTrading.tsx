@@ -1,16 +1,16 @@
 import Image from "next/legacy/image";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import {SupportedChainId} from "@symmio/frontend-sdk/constants/chains";
-import {formatAmount} from "@symmio/frontend-sdk/utils/numbers";
+import { SupportedChainId } from "@symmio/frontend-sdk/constants/chains";
+import { formatAmount } from "@symmio/frontend-sdk/utils/numbers";
 
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 import {
   useDepositModalToggle,
   useModalOpen,
 } from "@symmio/frontend-sdk/state/application/hooks";
-import {ApplicationModal} from "@symmio/frontend-sdk/state/application/reducer";
+import { ApplicationModal } from "@symmio/frontend-sdk/state/application/reducer";
 import {
   useAccountPartyAStat,
   useActiveAccountAddress,
@@ -18,15 +18,15 @@ import {
 
 import GradientButton from "components/Button/GradientButton";
 import DepositModal from "components/ReviewModal/DepositModal";
-import {Row, RowBetween, RowCenter, RowEnd, RowStart} from "components/Row";
+import { Row, RowBetween, RowCenter, RowEnd, RowStart } from "components/Row";
 
 const Wrapper = styled.div`
   border: none;
   width: 100%;
   min-height: 379px;
-  border-radius: ${({theme}) => theme.borderRadius0};
-  background: ${({theme}) => theme.bg0};
-  ${({theme}) => theme.mediaWidth.upToLarge`
+  border-radius: ${({ theme }) => theme.borderRadius0};
+  background: ${({ theme }) => theme.bg0};
+  ${({ theme }) => theme.mediaWidth.upToLarge`
     width: 100%;
   `};
 `;
@@ -36,7 +36,7 @@ const Title = styled(RowStart)`
   font-weight: 500;
   font-size: 16px;
   line-height: 19px;
-  color: ${({theme}) => theme.text0};
+  color: ${({ theme }) => theme.text0};
 `;
 
 const ContentWrapper = styled.div`
@@ -54,7 +54,7 @@ const ImageWrapper = styled(RowCenter)`
 
 const Label = styled.div`
   justify-self: start;
-  color: ${({theme}) => theme.text3};
+  color: ${({ theme }) => theme.text3};
 `;
 
 const Value = styled.div`
@@ -66,14 +66,14 @@ const DepositText = styled.div`
   text-align: center;
   margin-bottom: 37px;
 
-  background: ${({theme}) => theme.hoverGrad};
+  background: ${({ theme }) => theme.hoverGrad};
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 `;
 
-export default function StartTrading({symbol}: {symbol?: string}) {
+export default function StartTrading({ symbol }: { symbol?: string }) {
   const account = useActiveAccountAddress();
-  const {collateralBalance} = useAccountPartyAStat(account);
+  const { collateralBalance } = useAccountPartyAStat(account);
   const showDepositModal = useModalOpen(ApplicationModal.DEPOSIT);
   const toggleDepositModal = useDepositModalToggle();
   const imgSrc = useAssetSrc();
@@ -82,7 +82,7 @@ export default function StartTrading({symbol}: {symbol?: string}) {
     <Wrapper>
       <Row>
         <Title>Deposit {symbol}</Title>
-        <RowEnd style={{marginRight: "12px"}}>
+        <RowEnd style={{ marginRight: "12px" }}>
           <Image src={imgSrc} alt="Asset" width={103} height={36} />
         </RowEnd>
       </Row>
@@ -97,7 +97,7 @@ export default function StartTrading({symbol}: {symbol?: string}) {
           />
         </ImageWrapper>
         <DepositText>Deposit {symbol} and start trading</DepositText>
-        <RowBetween style={{marginBottom: "24px"}}>
+        <RowBetween style={{ marginBottom: "24px" }}>
           <Label>Account Balance:</Label>
           <Value>
             {formatAmount(collateralBalance)} {symbol}
@@ -114,7 +114,7 @@ export default function StartTrading({symbol}: {symbol?: string}) {
 }
 
 function useAssetSrc(): string {
-  const {chainId} = useActiveWagmi();
+  const { chainId } = useActiveWagmi();
   const [imgSrc, setImgSrc] = useState("/static/images/etc/USDCAsset.svg");
 
   useEffect(() => {

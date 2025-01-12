@@ -1,6 +1,6 @@
 import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
-import {DEFAULT_SLIPPAGE} from "../../constants";
-import {InputField, OrderType, PositionType} from "../../types/trade";
+import { DEFAULT_SLIPPAGE } from "../../constants";
+import { InputField, OrderType, PositionType } from "../../types/trade";
 import {
   setTpSlConfig,
   setTpSlOpened,
@@ -18,8 +18,8 @@ import {
   updateTpSlState,
   updateTypedValue,
 } from "./actions";
-import {TpSlConfigState, TpSlProcessState, TradeState} from "./types";
-const {createReducer} = ((toolkitRaw as any).default ??
+import { TpSlConfigState, TpSlProcessState, TradeState } from "./types";
+const { createReducer } = ((toolkitRaw as any).default ??
   toolkitRaw) as typeof toolkitRaw;
 
 export const initialState: TradeState = {
@@ -57,12 +57,12 @@ export const initialState: TradeState = {
   },
 };
 
-export default createReducer(initialState, builder =>
+export default createReducer(initialState, (builder) =>
   builder
     .addCase(setTradeState, (state, action) => {
       return action.payload;
     })
-    .addCase(updateMarketId, (state, {payload}) => {
+    .addCase(updateMarketId, (state, { payload }) => {
       state.marketId = payload.id;
     })
     .addCase(updateOrderType, (state, action) => {
@@ -81,7 +81,7 @@ export default createReducer(initialState, builder =>
       state.positionType = action.payload;
     })
     .addCase(updateTpSl, (state, action) => {
-      state.tpSl = {...state.tpSl, ...action.payload};
+      state.tpSl = { ...state.tpSl, ...action.payload };
     })
     .addCase(setTpSlOpened, (state, action) => {
       state.tpSlOpened = action.payload;
@@ -108,7 +108,7 @@ export default createReducer(initialState, builder =>
     })
     .addCase(
       updateLockedPercentages,
-      (state, {payload: {cva, partyAmm, partyBmm, lf}}) => {
+      (state, { payload: { cva, partyAmm, partyBmm, lf } }) => {
         state.cva = cva;
         state.partyAmm = partyAmm;
         state.partyBmm = partyBmm;

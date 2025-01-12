@@ -2,15 +2,15 @@ import {
   NotificationDetails,
   NotificationMessages,
 } from "@symmio/frontend-sdk/state/notifications/types";
-import {Quote} from "@symmio/frontend-sdk/types/quote";
-import {Account} from "@symmio/frontend-sdk/types/user";
+import { Quote } from "@symmio/frontend-sdk/types/quote";
+import { Account } from "@symmio/frontend-sdk/types/user";
 
-import {useMarket} from "@symmio/frontend-sdk/hooks/useMarkets";
-import useCurrencyLogo, {useCollateralLogo} from "lib/hooks/useCurrencyLogo";
+import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
+import useCurrencyLogo, { useCollateralLogo } from "lib/hooks/useCurrencyLogo";
 
 import BaseItem from "components/Notifications/Cards/BaseCard";
 import ShimmerAnimation from "components/ShimmerAnimation";
-import {PartiallyFillText, PartiallyFillTitle} from "./styles";
+import { PartiallyFillText, PartiallyFillTitle } from "./styles";
 
 export default function SuccessQuoteCard({
   notification,
@@ -23,9 +23,9 @@ export default function SuccessQuoteCard({
   quote?: Quote;
   loading?: boolean;
 }): JSX.Element {
-  const {marketId, orderType} = quote || {};
-  const {modifyTime, lastSeenAction, quoteId} = notification;
-  const {symbol, asset} = useMarket(marketId) || {};
+  const { marketId, orderType } = quote || {};
+  const { modifyTime, lastSeenAction, quoteId } = notification;
+  const { symbol, asset } = useMarket(marketId) || {};
   const token1 = useCurrencyLogo(symbol);
   const token2 = useCollateralLogo();
 

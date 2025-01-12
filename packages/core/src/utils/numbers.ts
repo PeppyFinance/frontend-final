@@ -1,6 +1,6 @@
 import BigNumber from "bignumber.js";
 
-BigNumber.config({EXPONENTIAL_AT: 30});
+BigNumber.config({ EXPONENTIAL_AT: 30 });
 
 export function toBN(number: BigNumber.Value): BigNumber {
   return new BigNumber(number);

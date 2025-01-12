@@ -1,23 +1,23 @@
-import {RowCenter, RowStart} from "components/Row";
-import {lighten} from "polished";
+import { RowCenter, RowStart } from "components/Row";
+import { lighten } from "polished";
 import styled from "styled-components";
 
 export const TabWrapper = styled(RowCenter)`
   width: unset;
   font-size: 16px;
   font-weight: 400;
-  color: ${({theme}) => theme.text0};
-  border-radius: ${({theme}) => theme.borderRadius0};
+  color: ${({ theme }) => theme.text0};
+  border-radius: ${({ theme }) => theme.borderRadius0};
   overflow: hidden;
   gap: 0px;
 
   & > * {
     &:first-child {
-      border-radius: ${({theme: {borderRadius0}}) =>
+      border-radius: ${({ theme: { borderRadius0 } }) =>
         borderRadius0 + " 0px 0px " + borderRadius0};
     }
     &:last-child {
-      border-radius: ${({theme: {borderRadius0}}) =>
+      border-radius: ${({ theme: { borderRadius0 } }) =>
         "0px " + borderRadius0 + " " + borderRadius0 + " 0px"};
     }
   }
@@ -47,15 +47,15 @@ export const TabButton = styled(RowCenter)<TabButtonProps>`
   position: relative;
   text-align: center;
   overflow: hidden;
-  font-weight: ${({active}) => (active ? 500 : 400)};
-  color: ${({active, color, theme, activeProps}) =>
+  font-weight: ${({ active }) => (active ? 500 : 400)};
+  color: ${({ active, color, theme, activeProps }) =>
     active ? activeProps?.color || theme.text0 : color || theme.text4};
-  background: ${({backgroundColor, active, theme, activeProps}) =>
+  background: ${({ backgroundColor, active, theme, activeProps }) =>
     active
       ? activeProps?.backgroundColor || theme.bg3
       : backgroundColor || theme.bg1};
   border: 1px solid
-    ${({borderColor, theme, active, activeProps, hideOuterBorder}) =>
+    ${({ borderColor, theme, active, activeProps, hideOuterBorder }) =>
       hideOuterBorder
         ? "transparent"
         : active
@@ -63,24 +63,24 @@ export const TabButton = styled(RowCenter)<TabButtonProps>`
           : borderColor || theme.text4};
 
   &:hover {
-    cursor: ${({active}) => (active ? "default" : "pointer")};
-    background: ${({hoverProps, backgroundColor, active, theme}) =>
+    cursor: ${({ active }) => (active ? "default" : "pointer")};
+    background: ${({ hoverProps, backgroundColor, active, theme }) =>
       active
         ? hoverProps?.backgroundColor || theme.bg3
         : lighten(0.02, backgroundColor || theme.bg1)};
   }
 `;
 
-export const Option = styled.div<{active?: boolean}>`
+export const Option = styled.div<{ active?: boolean }>`
   width: fit-content;
-  color: ${({theme}) => theme.text1};
-  border-radius: ${({theme}) => theme.borderRadius0};
+  color: ${({ theme }) => theme.text1};
+  border-radius: ${({ theme }) => theme.borderRadius0};
   font-size: 16px;
   font-weight: 500;
   line-height: 19px;
   padding: 4px 0px 8px 0px;
 
-  ${({active, theme}) =>
+  ${({ active, theme }) =>
     active &&
     `
     background: ${theme.gradLight};
@@ -89,7 +89,7 @@ export const Option = styled.div<{active?: boolean}>`
   `}
   &:hover {
     cursor: pointer;
-    color: ${({theme, active}) => (active ? theme.gradLight : theme.text1)};
+    color: ${({ theme, active }) => (active ? theme.gradLight : theme.text1)};
   }
 `;
 
@@ -159,7 +159,7 @@ export function GradientTabs({
   onChange: (tab: string) => void;
 }) {
   return (
-    <RowStart style={{gap: "16px"}}>
+    <RowStart style={{ gap: "16px" }}>
       {tabOptions.map((option, index) => (
         <Option
           key={index}

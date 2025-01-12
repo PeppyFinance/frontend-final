@@ -1,12 +1,12 @@
-import {Token} from "@uniswap/sdk-core";
-import {useCallback, useMemo} from "react";
+import { Token } from "@uniswap/sdk-core";
+import { useCallback, useMemo } from "react";
 
 import useActiveWagmi from "../../lib/hooks/useActiveWagmi";
 
 import useWagmi from "../../lib/hooks/useWagmi";
-import {useAppDispatch, useAppSelector} from "../declaration";
-import {addTransaction} from "./actions";
-import {TransactionDetails, TransactionInfo, TransactionType} from "./types";
+import { useAppDispatch, useAppSelector } from "../declaration";
+import { addTransaction } from "./actions";
+import { TransactionDetails, TransactionInfo, TransactionType } from "./types";
 
 export interface TransactionResponseLight {
   hash: string;
@@ -18,7 +18,7 @@ export function useTransactionAdder(): (
   info: TransactionInfo,
   summary?: string,
 ) => void {
-  const {chainId, account} = useWagmi();
+  const { chainId, account } = useWagmi();
   const dispatch = useAppDispatch();
 
   return useCallback(
@@ -29,17 +29,17 @@ export function useTransactionAdder(): (
       if (!hash) {
         throw Error("No transaction hash found.");
       }
-      dispatch(addTransaction({hash, from: account, info, chainId, summary}));
+      dispatch(addTransaction({ hash, from: account, info, chainId, summary }));
     },
     [account, chainId, dispatch],
   );
 }
 
 // returns all the transactions for the current chain
-export function useAllTransactions(): {[txHash: string]: TransactionDetails} {
-  const {chainId} = useActiveWagmi();
+export function useAllTransactions(): { [txHash: string]: TransactionDetails } {
+  const { chainId } = useActiveWagmi();
 
-  const state = useAppSelector(state => state.transactions);
+  const state = useAppSelector((state) => state.transactions);
 
   return chainId ? (state[chainId] ?? {}) : {};
 }
@@ -90,7 +90,7 @@ export function useHasPendingApproval(
     () =>
       typeof token?.address === "string" &&
       typeof spender === "string" &&
-      Object.keys(allTransactions).some(hash => {
+      Object.keys(allTransactions).some((hash) => {
         const tx = allTransactions[hash];
         if (!tx) return false;
         if (tx.receipt) {
@@ -110,7 +110,7 @@ export function useHasPendingApproval(
 
 // return whether has a pending transaction
 export function useIsHavePendingTransaction(transactionType?: TransactionType) {
-  const {account} = useActiveWagmi();
+  const { account } = useActiveWagmi();
   const allTransactions = useAllTransactions();
   const sortedRecentTransactions = useMemo(() => {
     const txs = Object.values(allTransactions);
@@ -120,14 +120,14 @@ export function useIsHavePendingTransaction(transactionType?: TransactionType) {
         (a: TransactionDetails, b: TransactionDetails) =>
           b.addedTime - a.addedTime,
       )
-      .filter(tx => tx.from == account);
+      .filter((tx) => tx.from == account);
   }, [allTransactions, account]);
 
   const pending = sortedRecentTransactions
-    .filter(tx => {
+    .filter((tx) => {
       if (!transactionType) return !tx.receipt;
       else return !tx.receipt && tx.info.type === transactionType;
     })
-    .map(tx => tx.hash);
+    .map((tx) => tx.hash);
   return useMemo(() => pending.length > 0, [pending.length]);
 }

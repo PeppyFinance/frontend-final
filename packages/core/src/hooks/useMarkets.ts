@@ -1,5 +1,5 @@
-import {useMemo} from "react";
-import {SelectSearchOption} from "react-select-search";
+import { useMemo } from "react";
+import { SelectSearchOption } from "react-select-search";
 let useSelect = ({}) => [
   {
     search: "",
@@ -16,7 +16,7 @@ let useSelect = ({}) => [
     readOnly: false,
     value: "",
     ref: {
-      current: {value: null},
+      current: { value: null },
     },
   },
   {
@@ -40,7 +40,7 @@ async function loadSelect() {
 }
 
 // Usage
-loadSelect().then(useSelectTemp => {
+loadSelect().then((useSelectTemp) => {
   useSelect = useSelectTemp;
 });
 
@@ -52,15 +52,15 @@ import {
   useErrorMessages,
   useMarkets,
 } from "../state/hedger/hooks";
-import {useFavorites} from "../state/user/hooks";
-import {Market} from "../types/market";
+import { useFavorites } from "../state/user/hooks";
+import { Market } from "../types/market";
 
 export function useMarket(id: number | undefined): Market | undefined {
   const markets = useMarkets();
 
   return useMemo(() => {
     if (!id) return undefined;
-    return find(markets, {id});
+    return find(markets, { id });
   }, [id, markets]);
 }
 
@@ -86,7 +86,7 @@ export function useMarketsSearch(orderProps: OrderMarktesProps = {}) {
   const markets = useMarkets(orderProps);
 
   const options: SelectSearchOption[] = useMemo(() => {
-    return markets.map((market: Market) => ({...market, value: market.name}));
+    return markets.map((market: Market) => ({ ...market, value: market.name }));
   }, [markets]);
 
   const [snapshot, searchProps, optionProps] = useSelect({

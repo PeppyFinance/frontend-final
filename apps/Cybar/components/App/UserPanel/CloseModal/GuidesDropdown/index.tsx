@@ -1,13 +1,13 @@
-import {memo, useState} from "react";
+import { memo, useState } from "react";
 import styled from "styled-components";
 
-import {CloseGuides, OrderType} from "@symmio/frontend-sdk/types/trade";
-import {BN_ZERO, toBN} from "@symmio/frontend-sdk/utils/numbers";
+import { CloseGuides, OrderType } from "@symmio/frontend-sdk/types/trade";
+import { BN_ZERO, toBN } from "@symmio/frontend-sdk/utils/numbers";
 
-import {Card} from "components/Card";
+import { Card } from "components/Card";
 import Column from "components/Column";
-import {ChevronDown} from "components/Icons";
-import {Row, RowEnd} from "components/Row";
+import { ChevronDown } from "components/Icons";
+import { Row, RowEnd } from "components/Row";
 import GuideOne from "./GuideOne";
 import GuideThree from "./GuideThree";
 import GuideTwo from "./GuideTwo";
@@ -15,28 +15,28 @@ import GuideTwo from "./GuideTwo";
 const ContentContainer = styled(Column)`
   gap: 12px;
   border-radius: 4px;
-  background: ${({theme}) => theme.bg2};
+  background: ${({ theme }) => theme.bg2};
 `;
 
-const DropdownHeader = styled(Row)<{borderBottom?: boolean}>`
+const DropdownHeader = styled(Row)<{ borderBottom?: boolean }>`
   height: 40px;
   cursor: pointer;
   padding: 0px 12px;
-  background: ${({theme}) => theme.bg2};
-  border-radius: ${({borderBottom}) =>
+  background: ${({ theme }) => theme.bg2};
+  border-radius: ${({ borderBottom }) =>
     borderBottom ? "4px" : "4px 4px 0px 0px"};
 `;
 
-const DropdownContent = styled(Card)<{isOpen: boolean}>`
+const DropdownContent = styled(Card)<{ isOpen: boolean }>`
   gap: 12px;
   padding: 0px 10px 10px 10px;
   max-height: 120px;
-  display: ${props => (props.isOpen ? "flex" : "none")};
-  background: ${({theme}) => theme.bg2};
+  display: ${(props) => (props.isOpen ? "flex" : "none")};
+  background: ${({ theme }) => theme.bg2};
 `;
 
-const Chevron = styled(ChevronDown)<{open: boolean}>`
-  transform: rotateX(${({open}) => (open ? "180deg" : "0deg")});
+const Chevron = styled(ChevronDown)<{ open: boolean }>`
+  transform: rotateX(${({ open }) => (open ? "180deg" : "0deg")});
   margin-right: 4px;
   transition: 0.5s;
 `;
@@ -47,7 +47,7 @@ const Text = styled.div`
   font-size: 12px;
   white-space: nowrap;
 
-  color: ${({theme}) => theme.text0};
+  color: ${({ theme }) => theme.text0};
 `;
 
 export default memo(function GuidesDropDown({
@@ -110,7 +110,7 @@ export default memo(function GuidesDropDown({
   })();
 
   function getTriggers(): React.ReactElement<any> | string {
-    const {state, maxPartiallyClose} = values;
+    const { state, maxPartiallyClose } = values;
     const text =
       state === CloseGuides.ONE
         ? toBN(maxPartiallyClose).isEqualTo(0)
@@ -136,7 +136,7 @@ export default memo(function GuidesDropDown({
   }
 
   function GetContent(): JSX.Element {
-    const {state} = values;
+    const { state } = values;
 
     switch (state) {
       case CloseGuides.ONE:

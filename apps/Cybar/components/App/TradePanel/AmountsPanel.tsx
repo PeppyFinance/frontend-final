@@ -1,20 +1,20 @@
-import {mix} from "polished";
-import {useCallback, useEffect, useMemo, useState} from "react";
-import styled, {useTheme} from "styled-components";
+import { mix } from "polished";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import styled, { useTheme } from "styled-components";
 
-import {WEB_SETTING} from "@symmio/frontend-sdk/config";
+import { WEB_SETTING } from "@symmio/frontend-sdk/config";
 
 import {
   DEFAULT_PRECISION,
   MAX_LEVERAGE_VALUE,
   MIN_LEVERAGE_VALUE,
 } from "@symmio/frontend-sdk/constants/misc";
-import {useCollateralToken} from "@symmio/frontend-sdk/constants/tokens";
-import {InputField, OrderType} from "@symmio/frontend-sdk/types/trade";
-import {formatPrice, toBN} from "@symmio/frontend-sdk/utils/numbers";
-import {useGetTokenWithFallbackChainId} from "@symmio/frontend-sdk/utils/token";
-import {APP_NAME} from "constants/chains/misc";
-import {calculateString, calculationPattern} from "utils/calculationalString";
+import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
+import { InputField, OrderType } from "@symmio/frontend-sdk/types/trade";
+import { formatPrice, toBN } from "@symmio/frontend-sdk/utils/numbers";
+import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
+import { APP_NAME } from "constants/chains/misc";
+import { calculateString, calculationPattern } from "utils/calculationalString";
 
 import {
   useActiveMarket,
@@ -32,15 +32,15 @@ import useTradePage from "@symmio/frontend-sdk/hooks/useTradePage";
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 import useDebounce from "@symmio/frontend-sdk/lib/hooks/useDebounce";
 
-import {LeverageSlider} from "components/App/TradePanel/LeverageSlider";
+import { LeverageSlider } from "components/App/TradePanel/LeverageSlider";
 import LimitPriceBox from "components/App/TradePanel/LimitPanel";
 import MarketPriceBox from "components/App/TradePanel/MarketPanel";
-import {LeverageIcon} from "components/Icons";
-import {CustomInputBox2 as CollateralInput} from "components/InputBox";
-import {InputLabel as ReceiveLabel} from "components/InputLabel";
-import {InputAmount} from "components/ReviewModal";
-import {RowStart} from "components/Row";
-import {TPSL} from "../TPSL";
+import { LeverageIcon } from "components/Icons";
+import { CustomInputBox2 as CollateralInput } from "components/InputBox";
+import { InputLabel as ReceiveLabel } from "components/InputLabel";
+import { InputAmount } from "components/ReviewModal";
+import { RowStart } from "components/Row";
+import { TPSL } from "../TPSL";
 
 const CollateralWrap = styled.div`
   & > * {
@@ -61,11 +61,11 @@ const CollateralWrap = styled.div`
 const LeverageWrap = styled.div`
   font-weight: 400;
   font-size: 12px;
-  border-radius: ${({theme}) => theme.borderRadius0};
+  border-radius: ${({ theme }) => theme.borderRadius0};
   padding: 8px 10px;
   height: 70px;
-  background: ${({theme}) => theme.bg4};
-  color: ${({theme}) => theme.text0};
+  background: ${({ theme }) => theme.bg4};
+  color: ${({ theme }) => theme.text0};
 `;
 
 const LeverageValue = styled(RowStart)`
@@ -74,9 +74,9 @@ const LeverageValue = styled(RowStart)`
   font-size: 12px;
   padding: 8px;
   padding-left: 12px;
-  border-radius: ${({theme}) => theme.borderRadius0};
-  background: ${({theme}) => theme.bg5};
-  border: 2px solid ${({theme}) => theme.bg0};
+  border-radius: ${({ theme }) => theme.borderRadius0};
+  background: ${({ theme }) => theme.bg5};
+  border: 2px solid ${({ theme }) => theme.bg0};
 `;
 
 const LeverageInput = styled(InputAmount)`
@@ -84,10 +84,10 @@ const LeverageInput = styled(InputAmount)`
   font-size: 14px;
   text-align: left;
   background: "transparent";
-  color: ${({theme}) => theme.text0};
+  color: ${({ theme }) => theme.text0};
 `;
 export default function AmountsPanel() {
-  const {chainId} = useActiveWagmi();
+  const { chainId } = useActiveWagmi();
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(
     COLLATERAL_TOKEN,
@@ -127,12 +127,13 @@ export default function AmountsPanel() {
     };
   }, [market, lockedParamsLeverage, getLockedPercentages]);
 
-  const {formattedAmounts, balance} = useTradePage();
+  const { formattedAmounts, balance } = useTradePage();
 
   const [outputTicker, pricePrecision, quantityPrecision, maxLeverage] =
     useMemo(() => {
       if (market) {
-        const {symbol, pricePrecision, quantityPrecision, maxLeverage} = market;
+        const { symbol, pricePrecision, quantityPrecision, maxLeverage } =
+          market;
         if (userExpertMode) return [symbol, undefined, undefined, maxLeverage];
         return [symbol, pricePrecision, quantityPrecision, maxLeverage];
       }
@@ -226,7 +227,7 @@ export default function AmountsPanel() {
                 ? ""
                 : customLeverage
             }
-            onChange={e => handleCustomLeverage(e)}
+            onChange={(e) => handleCustomLeverage(e)}
             placeholder={customLeverage ? customLeverage.toString() : "1"}
             onBlur={() => {
               if (!customLeverage) setCustomLeverage(MIN_LEVERAGE_VALUE);
@@ -249,7 +250,7 @@ export default function AmountsPanel() {
       <ReceiveLabel
         label="Receive"
         value={formattedAmounts[1]}
-        onChange={value => setTypedValue(value, InputField.QUANTITY)}
+        onChange={(value) => setTypedValue(value, InputField.QUANTITY)}
         symbol={outputTicker}
         precision={quantityPrecision}
       />

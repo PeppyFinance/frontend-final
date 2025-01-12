@@ -1,13 +1,13 @@
-import {Currency} from "@uniswap/sdk-core";
+import { Currency } from "@uniswap/sdk-core";
 import BigNumber from "bignumber.js";
-import {useCallback} from "react";
-import {ApprovalState, useApproval} from "./useApproval";
+import { useCallback } from "react";
+import { ApprovalState, useApproval } from "./useApproval";
 
 import {
   useHasPendingApproval,
   useTransactionAdder,
 } from "../../state/transactions/hooks";
-import {TransactionType} from "../../state/transactions/types";
+import { TransactionType } from "../../state/transactions/types";
 import useWagmi from "./useWagmi";
 
 function useGetAndTrackApproval(
@@ -15,9 +15,9 @@ function useGetAndTrackApproval(
 ) {
   const addTransaction = useTransactionAdder();
   return useCallback(() => {
-    return getApproval().then(pending => {
+    return getApproval().then((pending) => {
       if (pending) {
-        const {response, tokenAddress, spenderAddress: spender} = pending;
+        const { response, tokenAddress, spenderAddress: spender } = pending;
         addTransaction(response, {
           type: TransactionType.APPROVAL,
           tokenAddress,
@@ -34,7 +34,7 @@ export function useApproveCallback(
   amountToApprove?: BigNumber.Value,
   spender?: string,
 ): [ApprovalState, () => Promise<void>] {
-  const {account} = useWagmi();
+  const { account } = useWagmi();
   const [approval, getApproval] = useApproval(
     currency,
     amountToApprove,

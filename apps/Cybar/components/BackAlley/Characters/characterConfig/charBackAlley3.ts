@@ -1,4 +1,4 @@
-import {CharacterProps} from ".";
+import { CharacterProps } from ".";
 
 export const charBackAlley3: CharacterProps = {
   name: "discloomer",

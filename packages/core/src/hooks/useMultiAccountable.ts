@@ -1,5 +1,5 @@
-import {simulateContract} from "@wagmi/core";
-import {useCallback} from "react";
+import { simulateContract } from "@wagmi/core";
+import { useCallback } from "react";
 import {
   Abi,
   Address,
@@ -7,23 +7,23 @@ import {
   ContractFunctionRevertedError,
   encodeFunctionData,
 } from "viem";
-import {DIAMOND_ABI, MULTI_ACCOUNT_ABI} from "../constants";
-import {GLOBAL_MULTI_ACCOUNTABLE_PAUSED} from "../constants/misc";
+import { DIAMOND_ABI, MULTI_ACCOUNT_ABI } from "../constants";
+import { GLOBAL_MULTI_ACCOUNTABLE_PAUSED } from "../constants/misc";
 import useWagmi from "../lib/hooks/useWagmi";
 import {
   useDiamondAddress,
   useMultiAccountAddress,
   useWagmiConfig,
 } from "../state/chains";
-import {useActiveAccountAddress} from "../state/user/hooks";
-import {ConstructCallReturnType} from "../types/web3";
+import { useActiveAccountAddress } from "../state/user/hooks";
+import { ConstructCallReturnType } from "../types/web3";
 
 export function useMultiAccountable(
   constructCall: () => ConstructCallReturnType,
   disable?: boolean,
 ) {
   const activeAccountAddress = useActiveAccountAddress();
-  const {account, chainId} = useWagmi();
+  const { account, chainId } = useWagmi();
 
   const MULTI_ACCOUNT_ADDRESS = useMultiAccountAddress();
   const DIAMOND_ADDRESS = useDiamondAddress();
@@ -49,8 +49,8 @@ export function useMultiAccountable(
 
       const call = await constructCall();
       if ("error" in call) throw call;
-      const {config, args: preArgs, functionName} = call;
-      callData = {config, args: preArgs, functionName}; // Store the call data
+      const { config, args: preArgs, functionName } = call;
+      callData = { config, args: preArgs, functionName }; // Store the call data
 
       if (functionName) {
         // @ts-ignore
@@ -82,7 +82,7 @@ export function useMultiAccountable(
     } catch (error) {
       if (error instanceof BaseError) {
         const revertError = error.walk(
-          err => err instanceof ContractFunctionRevertedError,
+          (err) => err instanceof ContractFunctionRevertedError,
         );
         if (revertError instanceof ContractFunctionRevertedError) {
           console.log(revertError.reason?.toString() || "");
@@ -91,7 +91,7 @@ export function useMultiAccountable(
       }
       if (error && typeof error === "string") throw new Error(error);
 
-      if (callData) return {...callData, error};
+      if (callData) return { ...callData, error };
 
       throw new Error("error3");
     }

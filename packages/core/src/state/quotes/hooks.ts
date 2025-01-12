@@ -1,15 +1,19 @@
 import uniqWith from "lodash/uniqWith.js";
-import {useCallback, useMemo} from "react";
-import {AppThunkDispatch, useAppDispatch, useAppSelector} from "../declaration";
+import { useCallback, useMemo } from "react";
+import {
+  AppThunkDispatch,
+  useAppDispatch,
+  useAppSelector,
+} from "../declaration";
 
-import {useOrderHistoryApolloClient} from "../../apollo/client/orderHistory";
-import {sortQuotesByModifyTimestamp} from "../../hooks/useQuotes";
+import { useOrderHistoryApolloClient } from "../../apollo/client/orderHistory";
+import { sortQuotesByModifyTimestamp } from "../../hooks/useQuotes";
 import useActiveWagmi from "../../lib/hooks/useActiveWagmi";
-import {ApiState} from "../../types/api";
-import {Quote} from "../../types/quote";
-import {useAppName, useOrderHistorySubgraphAddress} from "../chains";
-import {useHedgerInfo} from "../hedger/hooks";
-import {useActiveAccountAddress} from "../user/hooks";
+import { ApiState } from "../../types/api";
+import { Quote } from "../../types/quote";
+import { useAppName, useOrderHistorySubgraphAddress } from "../chains";
+import { useHedgerInfo } from "../hedger/hooks";
+import { useActiveAccountAddress } from "../user/hooks";
 import {
   addQuote,
   addQuoteInstantCloseData,
@@ -21,7 +25,7 @@ import {
   setTpSlData,
   updateQuoteInstantCloseStatus,
 } from "./actions";
-import {getHistory, getInstantCloses} from "./thunks";
+import { getHistory, getInstantCloses } from "./thunks";
 import {
   InstantCloseItem,
   InstantCloseObject,
@@ -35,11 +39,11 @@ export function useHistoryQuotes(): {
   state: ApiState;
   hasMoreHistory: boolean | undefined;
 } {
-  const {chainId} = useActiveWagmi();
+  const { chainId } = useActiveWagmi();
   const account = useActiveAccountAddress();
-  const history = useAppSelector(state => state.quotes.history);
-  const historyState = useAppSelector(state => state.quotes.historyState);
-  const hasMoreHistory = useAppSelector(state => state.quotes.hasMoreHistory);
+  const history = useAppSelector((state) => state.quotes.history);
+  const historyState = useAppSelector((state) => state.quotes.historyState);
+  const hasMoreHistory = useAppSelector((state) => state.quotes.hasMoreHistory);
   return useMemo(() => {
     const histories = chainId ? (history[chainId] ?? []) : [];
     return {
@@ -60,21 +64,21 @@ export function useHistoryQuotes(): {
   }, [chainId, history, historyState, hasMoreHistory, account]);
 }
 
-export function usePendingsQuotes(): {quotes: Quote[]; state: ApiState} {
-  const pendings = useAppSelector(state => state.quotes.pendings);
-  return {quotes: pendings, state: ApiState.OK};
+export function usePendingsQuotes(): { quotes: Quote[]; state: ApiState } {
+  const pendings = useAppSelector((state) => state.quotes.pendings);
+  return { quotes: pendings, state: ApiState.OK };
 }
 
-export function usePositionsQuotes(): {quotes: Quote[]; state: ApiState} {
-  const positions = useAppSelector(state => state.quotes.positions);
-  return {quotes: positions, state: ApiState.OK};
+export function usePositionsQuotes(): { quotes: Quote[]; state: ApiState } {
+  const positions = useAppSelector((state) => state.quotes.positions);
+  return { quotes: positions, state: ApiState.OK };
 }
 
-export function useAllQuotes(): {quotes: Quote[]; state: ApiState} {
-  const positions = useAppSelector(state => state.quotes.positions);
-  const pendings = useAppSelector(state => state.quotes.pendings);
-  const {quotes: history} = useHistoryQuotes();
-  const historyState = useAppSelector(state => state.quotes.historyState);
+export function useAllQuotes(): { quotes: Quote[]; state: ApiState } {
+  const positions = useAppSelector((state) => state.quotes.positions);
+  const pendings = useAppSelector((state) => state.quotes.pendings);
+  const { quotes: history } = useHistoryQuotes();
+  const historyState = useAppSelector((state) => state.quotes.historyState);
   return useMemo(() => {
     const allQuotes = [...pendings, ...positions, ...history];
     return {
@@ -85,23 +89,23 @@ export function useAllQuotes(): {quotes: Quote[]; state: ApiState} {
 }
 
 export function useQuoteDetail(): Quote | null {
-  const quoteDetail = useAppSelector(state => state.quotes.quoteDetail);
+  const quoteDetail = useAppSelector((state) => state.quotes.quoteDetail);
   return quoteDetail;
 }
 
 export function useListenersQuotes(): number[] {
-  const listeners = useAppSelector(state => state.quotes.listeners);
+  const listeners = useAppSelector((state) => state.quotes.listeners);
   return listeners;
 }
 
 export function useInstantClosesData(): InstantCloseObject {
-  const data = useAppSelector(state => state.quotes.instantClosesStates);
+  const data = useAppSelector((state) => state.quotes.instantClosesStates);
   return data;
 }
 
 export function useQuoteInstantCloseData(id: number): InstantCloseItem {
   const data: InstantCloseObject = useAppSelector(
-    state => state.quotes.instantClosesStates,
+    (state) => state.quotes.instantClosesStates,
   );
   return data[id] ?? null;
 }
@@ -110,7 +114,7 @@ export function useAddQuotesToListenerCallback() {
   const dispatch = useAppDispatch();
   return useCallback(
     (id: number) => {
-      dispatch(addQuote({id}));
+      dispatch(addQuote({ id }));
     },
     [dispatch],
   );
@@ -120,18 +124,18 @@ export function useSetQuoteDetailCallback() {
   const dispatch = useAppDispatch();
   return useCallback(
     (quote: Quote | null) => {
-      dispatch(setQuoteDetail({quote}));
+      dispatch(setQuoteDetail({ quote }));
     },
     [dispatch],
   );
 }
 export function useSetHistoryCallback() {
   const dispatch = useAppDispatch();
-  const {chainId} = useActiveWagmi();
+  const { chainId } = useActiveWagmi();
 
   return useCallback(
     (quotes: Quote[]) => {
-      if (chainId) dispatch(setHistory({quotes, chainId}));
+      if (chainId) dispatch(setHistory({ quotes, chainId }));
     },
     [dispatch, chainId],
   );
@@ -141,7 +145,7 @@ export function useSetPendingsCallback() {
   const dispatch = useAppDispatch();
   return useCallback(
     (quotes: Quote[]) => {
-      dispatch(setPendings({quotes}));
+      dispatch(setPendings({ quotes }));
     },
     [dispatch],
   );
@@ -151,7 +155,7 @@ export function useRemoveQuotesFromListenerCallback() {
   const dispatch = useAppDispatch();
   return useCallback(
     (id: number) => {
-      dispatch(removeQuote({id}));
+      dispatch(removeQuote({ id }));
     },
     [dispatch],
   );
@@ -159,10 +163,10 @@ export function useRemoveQuotesFromListenerCallback() {
 
 export function useAddQuoteToHistoryCallback() {
   const dispatch = useAppDispatch();
-  const {chainId} = useActiveWagmi();
+  const { chainId } = useActiveWagmi();
   return useCallback(
     (quote: Quote) => {
-      if (chainId) dispatch(addQuoteToHistory({quote, chainId}));
+      if (chainId) dispatch(addQuoteToHistory({ quote, chainId }));
     },
     [dispatch, chainId],
   );
@@ -183,7 +187,7 @@ export function useInstantCloseDataCallback() {
       timestamp: number;
       status: InstantCloseStatus;
     }) => {
-      dispatch(addQuoteInstantCloseData({id, amount, timestamp, status}));
+      dispatch(addQuoteInstantCloseData({ id, amount, timestamp, status }));
     },
     [dispatch],
   );
@@ -193,21 +197,21 @@ export function useUpdateInstantCloseDataCallback() {
   const dispatch = useAppDispatch();
 
   return useCallback(
-    ({id, status}: {id: number; status: InstantCloseStatus}) => {
-      dispatch(updateQuoteInstantCloseStatus({id, newStatus: status}));
+    ({ id, status }: { id: number; status: InstantCloseStatus }) => {
+      dispatch(updateQuoteInstantCloseStatus({ id, newStatus: status }));
     },
     [dispatch],
   );
 }
 
 export function useGetExistedQuoteByIdsCallback() {
-  const {quotes} = useAllQuotes();
+  const { quotes } = useAllQuotes();
 
   return useCallback(
     (id: string | null) => {
       if (!id) return null;
 
-      const existedQuote = quotes.find(quote => quote.id.toString() === id);
+      const existedQuote = quotes.find((quote) => quote.id.toString() === id);
       if (existedQuote) return existedQuote;
       return null;
     },
@@ -230,7 +234,7 @@ export function useGetOrderHistoryCallback() {
     ) => {
       if (!chainId || !account) return;
       thunkDispatch(
-        getHistory({account, chainId, client, first, skip, ItemsPerPage}),
+        getHistory({ account, chainId, client, first, skip, ItemsPerPage }),
       );
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -240,7 +244,7 @@ export function useGetOrderHistoryCallback() {
 
 export function useGetOpenInstantClosesCallback() {
   const thunkDispatch: AppThunkDispatch = useAppDispatch();
-  const {baseUrl} = useHedgerInfo() || {};
+  const { baseUrl } = useHedgerInfo() || {};
   const account = useActiveAccountAddress();
   const appName = useAppName();
 
@@ -256,8 +260,8 @@ export function useGetOpenInstantClosesCallback() {
   }, [account, appName, baseUrl, thunkDispatch]);
 }
 
-export function useQuotesTpSlData(): {[quoteId: number]: TpSlContent} {
-  const tpSlDataDetail = useAppSelector(state => state.quotes.tpSlQuoteData);
+export function useQuotesTpSlData(): { [quoteId: number]: TpSlContent } {
+  const tpSlDataDetail = useAppSelector((state) => state.quotes.tpSlQuoteData);
   return tpSlDataDetail;
 }
 
@@ -265,7 +269,7 @@ export function useSetTpSlDataCallback() {
   const dispatch = useAppDispatch();
   return useCallback(
     (value: TpSlContent, quoteId: number) => {
-      dispatch(setTpSlData({value, quoteId}));
+      dispatch(setTpSlData({ value, quoteId }));
     },
     [dispatch],
   );

@@ -1,16 +1,20 @@
-import {useMemo} from "react";
-import {Abi, Address, getContract} from "viem";
-import {usePublicClient, useWalletClient} from "wagmi";
-import {AddressZero} from "../../constants/misc";
+import { useMemo } from "react";
+import { Abi, Address, getContract } from "viem";
+import { usePublicClient, useWalletClient } from "wagmi";
+import { AddressZero } from "../../constants/misc";
 import useWagmi from "./useWagmi";
 
 export function useContract<T extends Abi>(
-  addressOrAddressMap: string | {[chainId: number]: string} | null | undefined,
+  addressOrAddressMap:
+    | string
+    | { [chainId: number]: string }
+    | null
+    | undefined,
   ABI?: T,
 ): any {
-  const {chainId} = useWagmi();
+  const { chainId } = useWagmi();
   const publicClient = usePublicClient();
-  const {data: walletClient} = useWalletClient();
+  const { data: walletClient } = useWalletClient();
 
   return useMemo(() => {
     if (!addressOrAddressMap || !ABI || !chainId) return null;

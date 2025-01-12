@@ -1,15 +1,19 @@
-import styled, {useTheme} from "styled-components";
+import styled, { useTheme } from "styled-components";
 
-import {useFundingRateData} from "@symmio/frontend-sdk/state/hedger/hooks";
-import {useActiveMarket} from "@symmio/frontend-sdk/state/trade/hooks";
-import {BN_ZERO, formatAmount, toBN} from "@symmio/frontend-sdk/utils/numbers";
-import {getRemainingTime} from "@symmio/frontend-sdk/utils/time";
+import { useFundingRateData } from "@symmio/frontend-sdk/state/hedger/hooks";
+import { useActiveMarket } from "@symmio/frontend-sdk/state/trade/hooks";
+import {
+  BN_ZERO,
+  formatAmount,
+  toBN,
+} from "@symmio/frontend-sdk/utils/numbers";
+import { getRemainingTime } from "@symmio/frontend-sdk/utils/time";
 
-import {ColumnCenter} from "components/Column";
-import {Info as InfoIcon} from "components/Icons";
-import {Row} from "components/Row";
-import {ToolTip} from "components/ToolTip";
-import {Name, Separator} from ".";
+import { ColumnCenter } from "components/Column";
+import { Info as InfoIcon } from "components/Icons";
+import { Row } from "components/Row";
+import { ToolTip } from "components/ToolTip";
+import { Name, Separator } from ".";
 
 const DataRow = styled(Row)`
   gap: 4px;
@@ -20,20 +24,20 @@ const Value = styled.div<{
   color?: string;
   size?: string;
 }>`
-  color: ${({theme, color}) => color ?? theme.text0};
-  ${({size}) =>
+  color: ${({ theme, color }) => color ?? theme.text0};
+  ${({ size }) =>
     size &&
     `
   font-size: ${size};
 `}
 
-  ${({theme}) => theme.mediaWidth.upToMedium`
+  ${({ theme }) => theme.mediaWidth.upToMedium`
     font-size: 10px;
   `};
 `;
 
 const StyledInfoIcon = styled(InfoIcon)`
-  color: ${({theme}) => theme.text2};
+  color: ${({ theme }) => theme.text2};
   width: 12px;
   height: 12px;
   margin: 4px 4px 0px 4px;
@@ -42,9 +46,9 @@ const StyledInfoIcon = styled(InfoIcon)`
 
 export default function MarketFundingRate() {
   const activeMarket = useActiveMarket();
-  const {name} = activeMarket || {};
+  const { name } = activeMarket || {};
   const fundingRate = useFundingRateData(name);
-  const {diff, hours, minutes, seconds} = getRemainingTime(
+  const { diff, hours, minutes, seconds } = getRemainingTime(
     fundingRate?.next_funding_time || 0,
   );
 

@@ -1,5 +1,5 @@
 import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
-import {ConnectionStatus} from "../../types/api";
+import { ConnectionStatus } from "../../types/api";
 import {
   FundingRateMap,
   MarketDataMap,
@@ -7,19 +7,19 @@ import {
   MarketDepthMap,
   MarketNotionalCap,
 } from "./types";
-const {createAction} = ((toolkitRaw as any).default ??
+const { createAction } = ((toolkitRaw as any).default ??
   toolkitRaw) as typeof toolkitRaw;
 
-export const updateWebSocketStatus = createAction<{status: ConnectionStatus}>(
+export const updateWebSocketStatus = createAction<{ status: ConnectionStatus }>(
   "hedger/updateWebSocketStatus",
 );
-export const updateHedgerId = createAction<{id: string}>(
+export const updateHedgerId = createAction<{ id: string }>(
   "hedger/updateHedgerId",
 );
-export const updatePrices = createAction<{prices: MarketDataMap}>(
+export const updatePrices = createAction<{ prices: MarketDataMap }>(
   "hedger/updatePrices",
 );
-export const updateDepths = createAction<{depths: MarketDepthMap}>(
+export const updateDepths = createAction<{ depths: MarketDepthMap }>(
   "hedger/updateDepths",
 );
 export const updateDepth = createAction<{

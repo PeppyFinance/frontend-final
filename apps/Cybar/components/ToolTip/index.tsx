@@ -7,9 +7,9 @@ export const ToolTip = styled(ReactTooltip).attrs({
   effect: "solid",
   multiline: true,
 })`
-  color: ${({theme}) => theme.white} !important;
-  background: ${({theme}) => theme.bg6} !important;
-  /* border: 1px solid ${({theme}) => theme.text2} !important; */
+  color: ${({ theme }) => theme.white} !important;
+  background: ${({ theme }) => theme.bg6} !important;
+  /* border: 1px solid ${({ theme }) => theme.text2} !important; */
   opacity: 1 !important;
   padding: 3px 7px !important;
   font-size: 0.6rem !important;
@@ -30,8 +30,8 @@ export const ToolTipLeft = styled(ReactTooltip).attrs({
   effect: "solid",
   multiline: true,
 })`
-  color: ${({theme}) => theme.white} !important;
-  background: ${({theme}) => theme.bg6} !important;
+  color: ${({ theme }) => theme.white} !important;
+  background: ${({ theme }) => theme.bg6} !important;
   opacity: 1 !important;
   padding: 3px 7px !important;
   font-size: 0.6rem !important;
@@ -49,8 +49,8 @@ export const ToolTipBottom = styled(ReactTooltip).attrs({
   effect: "solid",
   multiline: true,
 })`
-  color: ${({theme}) => theme.white} !important;
-  background: ${({theme}) => theme.bg6} !important;
+  color: ${({ theme }) => theme.white} !important;
+  background: ${({ theme }) => theme.bg6} !important;
   opacity: 1 !important;
   padding: 3px 7px !important;
   font-size: 0.6rem !important;

@@ -1,22 +1,22 @@
 import axios from "axios";
-import {useCallback, useMemo} from "react";
-import {SiweMessage} from "siwe";
-import {Address} from "viem";
+import { useCallback, useMemo } from "react";
+import { SiweMessage } from "siwe";
+import { Address } from "viem";
 
 import useActiveWagmi from "../lib/hooks/useActiveWagmi";
-import {makeHttpRequest} from "../utils/http";
+import { makeHttpRequest } from "../utils/http";
 
-import {useFallbackChainId, usePartyBWhitelistAddress} from "../state/chains";
-import {useHedgerInfo} from "../state/hedger/hooks";
-import {useActiveAccountAddress} from "../state/user/hooks";
+import { useFallbackChainId, usePartyBWhitelistAddress } from "../state/chains";
+import { useHedgerInfo } from "../state/hedger/hooks";
+import { useActiveAccountAddress } from "../state/user/hooks";
 
-import {useSignMessage} from "../callbacks/useMultiAccount";
+import { useSignMessage } from "../callbacks/useMultiAccount";
 import {
   useGetOpenInstantClosesCallback,
   useUpdateInstantCloseDataCallback,
 } from "../state/quotes/hooks";
-import {InstantCloseStatus} from "../state/quotes/types";
-import {useIsAccessDelegated} from "./useIsAccessDelegated";
+import { InstantCloseStatus } from "../state/quotes/types";
+import { useIsAccessDelegated } from "./useIsAccessDelegated";
 
 type NonceResponseType = {
   nonce: string;
@@ -46,10 +46,10 @@ export default function useInstantClose(
   closePrice: string | undefined,
   quoteId: number | undefined,
 ) {
-  const {account, chainId} = useActiveWagmi();
+  const { account, chainId } = useActiveWagmi();
   const activeAddress = useActiveAccountAddress();
-  const {baseUrl} = useHedgerInfo() || {};
-  const {callback: signMessageCallback} = useSignMessage();
+  const { baseUrl } = useHedgerInfo() || {};
+  const { callback: signMessageCallback } = useSignMessage();
   const GetOpenInstantCloses = useGetOpenInstantClosesCallback();
   const updateInstantCloseData = useUpdateInstantCloseDataCallback();
 
@@ -160,7 +160,7 @@ export default function useInstantClose(
     } else {
       const nonceRes = await getNonce();
       const host = window.location.hostname;
-      const {expirationTime, issuedAt, message} = createSiweMessage(
+      const { expirationTime, issuedAt, message } = createSiweMessage(
         account,
         `msg: ${activeAddress}`,
         chainId,
@@ -268,7 +268,7 @@ export default function useInstantClose(
     quoteId,
   ]);
 
-  return {instantClose, cancelClose, isAccessDelegated};
+  return { instantClose, cancelClose, isAccessDelegated };
 }
 
 function createSiweMessage(
@@ -293,5 +293,5 @@ function createSiweMessage(
     issuedAt,
     expirationTime,
   });
-  return {message: message.prepareMessage(), issuedAt, expirationTime};
+  return { message: message.prepareMessage(), issuedAt, expirationTime };
 }

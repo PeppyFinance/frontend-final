@@ -1,27 +1,27 @@
-import {useCallback, useEffect, useMemo, useState} from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import styled from "styled-components";
 
-import {useTransferCollateral} from "@symmio/frontend-sdk/callbacks/useTransferCollateral";
-import {useCollateralToken} from "@symmio/frontend-sdk/constants/tokens";
+import { useTransferCollateral } from "@symmio/frontend-sdk/callbacks/useTransferCollateral";
+import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 import {
   useModalOpen,
   useWithdrawBarModalToggle,
 } from "@symmio/frontend-sdk/state/application/hooks";
-import {ApplicationModal} from "@symmio/frontend-sdk/state/application/reducer";
+import { ApplicationModal } from "@symmio/frontend-sdk/state/application/reducer";
 import {
   useAccountPartyAStat,
   useActiveAccountAddress,
 } from "@symmio/frontend-sdk/state/user/hooks";
-import {TransferTab} from "@symmio/frontend-sdk/types/transfer";
-import {formatPrice, toBN} from "@symmio/frontend-sdk/utils/numbers";
-import {useGetTokenWithFallbackChainId} from "@symmio/frontend-sdk/utils/token";
+import { TransferTab } from "@symmio/frontend-sdk/types/transfer";
+import { formatPrice, toBN } from "@symmio/frontend-sdk/utils/numbers";
+import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
 import WithdrawCooldown from "components/App/AccountData/WithdrawCooldown";
-import {Close as CloseIcon, DotFlashing} from "components/Icons";
-import {Modal} from "components/Modal";
-import {Row, RowBetween, RowStart} from "components/Row";
-import {Option} from "components/Tab";
+import { Close as CloseIcon, DotFlashing } from "components/Icons";
+import { Modal } from "components/Modal";
+import { Row, RowBetween, RowStart } from "components/Row";
+import { Option } from "components/Tab";
 
 const Wrapper = styled.div`
   display: flex;
@@ -31,7 +31,7 @@ const Wrapper = styled.div`
   padding: 8px 12px 20px;
   gap: 0.8rem;
 
-  ${({theme}) => theme.mediaWidth.upToMedium`
+  ${({ theme }) => theme.mediaWidth.upToMedium`
     padding: 0.5rem;
   `};
 `;
@@ -43,11 +43,11 @@ const Close = styled.div`
   cursor: pointer;
   border-radius: 4px;
   margin: 2px 2px 1px 0px;
-  background: ${({theme}) => theme.bg6};
+  background: ${({ theme }) => theme.bg6};
 `;
 
-const WithdrawRow = styled(Row)<{withdrawBar?: boolean}>`
-  padding-bottom: ${({withdrawBar}) => (withdrawBar ? "16px" : "8px")};
+const WithdrawRow = styled(Row)<{ withdrawBar?: boolean }>`
+  padding-bottom: ${({ withdrawBar }) => (withdrawBar ? "16px" : "8px")};
   gap: 8px;
   align-items: stretch;
   & > * {
@@ -57,7 +57,7 @@ const WithdrawRow = styled(Row)<{withdrawBar?: boolean}>`
   }
 `;
 
-const CancelBtn = styled.button<{disabled?: boolean}>`
+const CancelBtn = styled.button<{ disabled?: boolean }>`
   width: 115px;
   padding: 10px;
   font-size: 12px;
@@ -65,9 +65,9 @@ const CancelBtn = styled.button<{disabled?: boolean}>`
   justify-content: center;
   align-items: center;
   border-radius: 4px;
-  color: ${({theme}) => theme.warning0};
-  background-color: ${({theme}) => theme.bgWarning};
-  border: 1px solid ${({theme}) => theme.warning0};
+  color: ${({ theme }) => theme.warning0};
+  background-color: ${({ theme }) => theme.bgWarning};
+  border: 1px solid ${({ theme }) => theme.warning0};
 
   &:disabled {
     opacity: 50%;
@@ -78,7 +78,7 @@ const CancelBtn = styled.button<{disabled?: boolean}>`
 
 const CancelWithdrawInfo = styled.div`
   /* TODO: test text color, should be change in respect to design */
-  color: ${({theme}) => theme.text4};
+  color: ${({ theme }) => theme.text4};
   font-size: 10px;
   font-weight: 400;
 `;
@@ -88,9 +88,9 @@ export function WithdrawBarModalContent({
 }: {
   withdrawBar?: boolean;
 }) {
-  const {chainId} = useActiveWagmi();
+  const { chainId } = useActiveWagmi();
   const activeAccountAddress = useActiveAccountAddress();
-  const {accountBalance} = useAccountPartyAStat(activeAccountAddress);
+  const { accountBalance } = useAccountPartyAStat(activeAccountAddress);
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(
     COLLATERAL_TOKEN,
@@ -122,7 +122,7 @@ export default function WithdrawBarModal() {
   const showWithdrawBarModal = useModalOpen(ApplicationModal.WITHDRAW_BAR);
   const toggleWithdrawBarModal = useWithdrawBarModalToggle();
   const activeAccountAddress = useActiveAccountAddress();
-  const {accountBalance} = useAccountPartyAStat(activeAccountAddress);
+  const { accountBalance } = useAccountPartyAStat(activeAccountAddress);
 
   useEffect(() => {
     if (toBN(accountBalance).isZero()) {
@@ -152,10 +152,10 @@ export default function WithdrawBarModal() {
 }
 
 function CancelWithdraw() {
-  const {chainId} = useActiveWagmi();
+  const { chainId } = useActiveWagmi();
   const [awaitingConfirmation, setAwaitingConfirmation] = useState(false);
   const activeAccountAddress = useActiveAccountAddress();
-  const {accountBalance, accountBalanceLimit, allocatedBalance} =
+  const { accountBalance, accountBalanceLimit, allocatedBalance } =
     useAccountPartyAStat(activeAccountAddress);
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(
@@ -179,7 +179,7 @@ function CancelWithdraw() {
     }
   }, [accountBalance, accountBalanceLimit, allocatedBalance]);
 
-  const {callback: transferBalanceCallback, error: transferBalanceError} =
+  const { callback: transferBalanceCallback, error: transferBalanceError } =
     useTransferCollateral(
       formatPrice(cancelAmount, collateralCurrency?.decimals),
       TransferTab.ALLOCATE,

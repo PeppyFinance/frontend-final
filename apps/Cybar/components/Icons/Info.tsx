@@ -1,4 +1,4 @@
-import {Info as InfoIcon} from "react-feather";
+import { Info as InfoIcon } from "react-feather";
 import styled from "styled-components";
 
 const Icon = styled(InfoIcon)<{

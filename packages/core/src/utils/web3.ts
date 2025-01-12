@@ -1,4 +1,4 @@
-import {useAddRecentTransaction} from "@rainbow-me/rainbowkit";
+import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import {
   Config,
   estimateGas,
@@ -12,12 +12,12 @@ import {
   parseEther,
 } from "viem";
 
-import {WEB_SETTING} from "../config";
-import {useTransactionAdder} from "../state/transactions/hooks";
-import {TransactionInfo} from "../state/transactions/types";
-import {useExpertMode} from "../state/user/hooks";
-import {ConstructCallReturnType} from "../types/web3";
-import {toBN} from "./numbers";
+import { WEB_SETTING } from "../config";
+import { useTransactionAdder } from "../state/transactions/hooks";
+import { TransactionInfo } from "../state/transactions/types";
+import { useExpertMode } from "../state/user/hooks";
+import { ConstructCallReturnType } from "../types/web3";
+import { toBN } from "./numbers";
 
 export function calculateGasMargin(value: bigint): bigint {
   return BigInt(toBN(value.toString()).times(12_000).div(10_000).toFixed(0));
@@ -54,7 +54,7 @@ export async function createTransactionCallback(
     });
     await waitForTransactionReceipt(wagmiConfig, {
       hash,
-      onReplaced: replace => {
+      onReplaced: (replace) => {
         hash = replace.transaction.hash;
       },
     });
@@ -66,7 +66,7 @@ export async function createTransactionCallback(
     return hash;
   } catch (error) {
     if (error instanceof Error) {
-      console.log("Error", {error});
+      console.log("Error", { error });
 
       if (expertMode && !error.message.includes("User rejected the request")) {
         console.log(
@@ -75,7 +75,7 @@ export async function createTransactionCallback(
 
         const config = call.config;
         const tx = !config.value
-          ? {from: config.account, to: config.to, data: config.data}
+          ? { from: config.account, to: config.to, data: config.data }
           : {
               from: config.account,
               to: config.to,
@@ -94,14 +94,14 @@ export async function createTransactionCallback(
       if (error instanceof BaseError) {
         if (error instanceof UserRejectedRequestError) {
           // TODO: error.cause
-          console.log("UserRejectedRequestError", {error});
+          console.log("UserRejectedRequestError", { error });
           // TODO: handle error in client
         } else if (error instanceof ContractFunctionRevertedError) {
           // TODO: error.cause
-          console.log("ContractFunctionRevertedError", {error});
+          console.log("ContractFunctionRevertedError", { error });
           // TODO: handle error in client
         } else {
-          console.log("Error Else", {error});
+          console.log("Error Else", { error });
           // TODO: handle error in client
         }
       } else {

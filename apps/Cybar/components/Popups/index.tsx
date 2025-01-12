@@ -1,17 +1,17 @@
 import styled from "styled-components";
 
-import {useActivePopups} from "@symmio/frontend-sdk/state/application/hooks";
+import { useActivePopups } from "@symmio/frontend-sdk/state/application/hooks";
 import useWindowSize from "lib/hooks/useWindowSize";
 
-import {PopupList} from "@symmio/frontend-sdk/state/application/reducer";
-import {useNotificationAdderCallback} from "@symmio/frontend-sdk/state/notifications/hooks";
+import { PopupList } from "@symmio/frontend-sdk/state/application/reducer";
+import { useNotificationAdderCallback } from "@symmio/frontend-sdk/state/notifications/hooks";
 import {
   NotificationDetails,
   NotificationType,
 } from "@symmio/frontend-sdk/state/notifications/types";
-import {useActiveAccountAddress} from "@symmio/frontend-sdk/state/user/hooks";
-import {useEffect} from "react";
-import {MEDIA_WIDTHS, Z_INDEX} from "theme";
+import { useActiveAccountAddress } from "@symmio/frontend-sdk/state/user/hooks";
+import { useEffect } from "react";
+import { MEDIA_WIDTHS, Z_INDEX } from "theme";
 import PopupItem from "./PopupItem";
 
 const Container = styled.div`
@@ -39,13 +39,13 @@ const ContainerSmall = styled(Container)`
 export default function Popups() {
   const activePopups = useActivePopups();
   useCreateNotificationFromTx(activePopups);
-  const {width} = useWindowSize();
+  const { width } = useWindowSize();
 
   return (
     <>
       {typeof width == "number" && width >= MEDIA_WIDTHS.upToExtraSmall ? (
         <ContainerLarge>
-          {activePopups.map(item => {
+          {activePopups.map((item) => {
             return (
               <PopupItem
                 key={item.key}
@@ -61,7 +61,7 @@ export default function Popups() {
           {activePopups // reverse so new items up front
             .slice(0)
             .reverse()
-            .map(item => (
+            .map((item) => (
               <PopupItem
                 key={item.key}
                 content={item.content}
@@ -80,7 +80,7 @@ function useCreateNotificationFromTx(activePopups: PopupList) {
   const activeAccount = useActiveAccountAddress();
 
   useEffect(() => {
-    activePopups.forEach(popup => {
+    activePopups.forEach((popup) => {
       if ("txn" in popup.content) {
         const info = popup.content.txn.info;
         if (info && "transferType" in info && popup.content.txn.success) {

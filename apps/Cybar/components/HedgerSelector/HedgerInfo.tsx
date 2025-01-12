@@ -1,16 +1,16 @@
 import styled from "styled-components";
-import {Z_INDEX} from "theme";
+import { Z_INDEX } from "theme";
 
-import {RowBetween, RowCenter, RowStart} from "components/Row";
+import { RowBetween, RowCenter, RowStart } from "components/Row";
 
-const HedgerInfoWrapper = styled.div<{active?: boolean}>`
+const HedgerInfoWrapper = styled.div<{ active?: boolean }>`
   position: relative;
   padding: 12px;
   margin: 8px 0px;
   border-radius: 3px;
   cursor: pointer;
-  background: ${({theme, active}) => (active ? theme.bg6 : theme.bg3)};
-  border: 1px solid ${({theme, active}) => (active ? theme.text0 : theme.bg7)};
+  background: ${({ theme, active }) => (active ? theme.bg6 : theme.bg3)};
+  border: 1px solid ${({ theme, active }) => (active ? theme.text0 : theme.bg7)};
   z-index: ${Z_INDEX.tooltip};
 `;
 
@@ -22,16 +22,16 @@ const Row = styled(RowBetween)`
 
 const Value = styled(RowStart)`
   font-size: 12px;
-  color: ${({theme}) => theme.text0};
+  color: ${({ theme }) => theme.text0};
 `;
 
 const Button = styled(RowCenter)`
   width: 20%;
   font-size: 12px;
   border-radius: 4px;
-  color: ${({theme}) => theme.text0};
-  background: ${({theme}) => theme.bg3};
-  border: 1px solid ${({theme}) => theme.text0};
+  color: ${({ theme }) => theme.text0};
+  background: ${({ theme }) => theme.bg3};
+  border: 1px solid ${({ theme }) => theme.text0};
 `;
 
 export default function HedgerInfo({
@@ -40,7 +40,7 @@ export default function HedgerInfo({
   onClick,
   onRemoveClick,
 }: {
-  data: {address: string; name: string};
+  data: { address: string; name: string };
   active: boolean;
   onClick: () => void;
   onRemoveClick?: () => void;

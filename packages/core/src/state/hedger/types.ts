@@ -1,6 +1,6 @@
-import {ApiState, ConnectionStatus} from "../../types/api";
-import {OpenInterest} from "../../types/hedger";
-import {Market} from "../../types/market";
+import { ApiState, ConnectionStatus } from "../../types/api";
+import { OpenInterest } from "../../types/hedger";
+import { Market } from "../../types/market";
 
 export interface MarketData {
   fundingRate: string;
@@ -95,9 +95,9 @@ export interface MarketInfoValue {
   notional_cap: number;
 }
 
-export type MarketsInfoRes = {[key: string]: MarketInfoValue};
+export type MarketsInfoRes = { [key: string]: MarketInfoValue };
 
-export type FundingRateRes = {[key: string]: FundingRateData};
+export type FundingRateRes = { [key: string]: FundingRateData };
 
 export interface HedgerState {
   hedgerId: string | number | undefined;

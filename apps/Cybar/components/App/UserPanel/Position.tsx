@@ -1,19 +1,19 @@
-import {lighten} from "polished";
-import React, {useEffect, useMemo, useState} from "react";
-import styled, {useTheme} from "styled-components";
+import { lighten } from "polished";
+import React, { useEffect, useMemo, useState } from "react";
+import styled, { useTheme } from "styled-components";
 
-import {useMarket} from "@symmio/frontend-sdk/hooks/useMarkets";
+import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
-import {ApiState} from "@symmio/frontend-sdk/types/api";
-import {Quote, QuoteStatus} from "@symmio/frontend-sdk/types/quote";
-import {OrderType, PositionType} from "@symmio/frontend-sdk/types/trade";
+import { ApiState } from "@symmio/frontend-sdk/types/api";
+import { Quote, QuoteStatus } from "@symmio/frontend-sdk/types/quote";
+import { OrderType, PositionType } from "@symmio/frontend-sdk/types/trade";
 import {
   formatAmount,
   formatDollarAmount,
   formatPrice,
   toBN,
 } from "@symmio/frontend-sdk/utils/numbers";
-import {titleCase} from "@symmio/frontend-sdk/utils/string";
+import { titleCase } from "@symmio/frontend-sdk/utils/string";
 
 import {
   useClosingLastMarketPrice,
@@ -24,7 +24,7 @@ import {
   useQuoteSize,
   useQuoteUpnlAndPnl,
 } from "@symmio/frontend-sdk/hooks/useQuotes";
-import {useNotionalValue} from "@symmio/frontend-sdk/hooks/useTradePage";
+import { useNotionalValue } from "@symmio/frontend-sdk/hooks/useTradePage";
 import {
   useMarketData,
   useMarketsStatus,
@@ -39,16 +39,16 @@ import {
   useAccountPartyAStat,
   useActiveAccountAddress,
 } from "@symmio/frontend-sdk/state/user/hooks";
-import {useIsMobile} from "lib/hooks/useWindowSize";
+import { useIsMobile } from "lib/hooks/useWindowSize";
 
-import {useTpSlAvailable} from "@symmio/frontend-sdk/state/chains";
+import { useTpSlAvailable } from "@symmio/frontend-sdk/state/chains";
 import {
   InstantCloseStatus,
   TpSlDataState,
 } from "@symmio/frontend-sdk/state/quotes/types";
-import {getRemainingTime} from "@symmio/frontend-sdk/utils/time";
+import { getRemainingTime } from "@symmio/frontend-sdk/utils/time";
 import PositionDetails from "components/App/AccountData/PositionDetails";
-import {PositionActionButton} from "components/Button";
+import { PositionActionButton } from "components/Button";
 import Column from "components/Column";
 import {
   EmptyPosition,
@@ -60,11 +60,11 @@ import {
   ShortArrow,
 } from "components/Icons";
 import EditPencil from "components/Icons/EditPencil";
-import {Row, RowBetween, RowCenter, RowStart} from "components/Row";
-import {useCheckQuoteIsExpired} from "lib/hooks/useCheckQuoteIsExpired";
+import { Row, RowBetween, RowCenter, RowStart } from "components/Row";
+import { useCheckQuoteIsExpired } from "lib/hooks/useCheckQuoteIsExpired";
 import ManageTpSlModal from "../TPSL/manage";
 import CancelModal from "./CancelModal/index";
-import CloseModal, {useInstantClosePosition} from "./CloseModal/index";
+import CloseModal, { useInstantClosePosition } from "./CloseModal/index";
 import {
   BodyWrap,
   EmptyRow,
@@ -76,9 +76,9 @@ import {
   Wrapper,
 } from "./Common";
 
-const TableStructure = styled(RowBetween)<{active?: boolean}>`
+const TableStructure = styled(RowBetween)<{ active?: boolean }>`
   width: 100%;
-  color: ${({theme}) => theme.text2};
+  color: ${({ theme }) => theme.text2};
   font-size: 12px;
   font-weight: 400;
 
@@ -91,7 +91,7 @@ const TableStructure = styled(RowBetween)<{active?: boolean}>`
 `;
 
 const HeaderWrap = styled(TableStructure)`
-  color: ${({theme}) => theme.text2};
+  color: ${({ theme }) => theme.text2};
   font-weight: 500;
   margin-bottom: 12px;
 
@@ -122,19 +122,19 @@ const QuoteWrap = styled(TableStructure)<{
     }
   }
   height: 40px;
-  opacity: ${({canceled}) => (canceled ? 0.5 : 1)};
-  color: ${({theme, liquidatePending}) =>
+  opacity: ${({ canceled }) => (canceled ? 0.5 : 1)};
+  color: ${({ theme, liquidatePending }) =>
     liquidatePending ? theme.negative : theme.text0};
-  background: ${({theme, custom, liquidatePending}) =>
+  background: ${({ theme, custom, liquidatePending }) =>
     liquidatePending ? theme.red5 : custom ? custom : theme.bg2};
   font-weight: 500;
   cursor: pointer;
-  animation: ${({pending, liquidatePending}) =>
+  animation: ${({ pending, liquidatePending }) =>
     pending && !liquidatePending ? "blinking 1.2s linear infinite" : "none"};
 
   &:hover {
     animation: none;
-    background: ${({theme, custom}) =>
+    background: ${({ theme, custom }) =>
       custom ? lighten(0.05, custom) : theme.bg6};
   }
 `;
@@ -147,24 +147,24 @@ const TwoColumn = styled(Column)`
 
   & > * {
     &:first-child {
-      color: ${({theme}) => theme.text0};
+      color: ${({ theme }) => theme.text0};
     }
     &:nth-child(2) {
-      color: ${({theme}) => theme.text1};
+      color: ${({ theme }) => theme.text1};
     }
   }
 `;
 
-const TwoColumnPnl = styled(Column)<{color?: string}>`
+const TwoColumnPnl = styled(Column)<{ color?: string }>`
   gap: 4px;
   font-weight: 500;
   font-size: 10px;
   font-style: normal;
-  color: ${({theme}) => theme.text1};
+  color: ${({ theme }) => theme.text1};
 
   & > * {
     &:first-child {
-      color: ${({theme, color}) => color ?? theme.text0};
+      color: ${({ theme, color }) => color ?? theme.text0};
     }
   }
 `;
@@ -176,11 +176,11 @@ export const SlIconWrapper = styled.div`
 `;
 
 const ExpiredStatusValue = styled.div`
-  color: ${({theme}) => theme.warning0};
+  color: ${({ theme }) => theme.warning0};
 `;
 
 const LiquidatedStatusValue = styled.div`
-  color: ${({theme}) => theme.negative};
+  color: ${({ theme }) => theme.negative};
   font-size: 10px;
 `;
 
@@ -234,7 +234,7 @@ function TableHeader({
       {HEADERS.map((item, key) => {
         if (item === "Status/uPNL") {
           return (
-            <div style={{width: "15%"}} key={key}>
+            <div style={{ width: "15%" }} key={key}>
               {item}
             </div>
           );
@@ -242,7 +242,7 @@ function TableHeader({
           return <div key={key}>{item}</div>;
         }
       })}
-      <div style={{width: "16px", height: "100%", paddingTop: "10px"}}></div>
+      <div style={{ width: "16px", height: "100%", paddingTop: "10px" }}></div>
     </HeaderWrap>
   );
 }
@@ -262,12 +262,12 @@ function TableRow({
   mobileVersion: boolean;
 }) {
   const theme = useTheme();
-  const {quoteStatus} = quote;
+  const { quoteStatus } = quote;
   const activeAccountAddress = useActiveAccountAddress();
-  const {liquidationStatus, forceCancelCooldown, forceCancelCloseCooldown} =
+  const { liquidationStatus, forceCancelCooldown, forceCancelCloseCooldown } =
     useAccountPartyAStat(activeAccountAddress);
-  const {expired, expiredColor} = useCheckQuoteIsExpired(quote);
-  const {handleCancelClose} = useInstantClosePosition("0", "0", quote.id);
+  const { expired, expiredColor } = useCheckQuoteIsExpired(quote);
+  const { handleCancelClose } = useInstantClosePosition("0", "0", quote.id);
 
   const instantCloseData = useQuoteInstantCloseData(quote.id);
   useInstantCloseNotifications(quote);
@@ -286,10 +286,10 @@ function TableRow({
             text: "An error occurred in the solver. Please cancel the instant close request.",
           };
         default:
-          return {isInstantClose: false, text: ""};
+          return { isInstantClose: false, text: "" };
       }
     } else {
-      return {isInstantClose: false, text: ""};
+      return { isInstantClose: false, text: "" };
     }
   }, [instantCloseData]);
 
@@ -407,7 +407,7 @@ function TableBody({
   toggleCancelModal: () => void;
   mobileVersion: boolean;
 }): JSX.Element | null {
-  const {account} = useActiveWagmi();
+  const { account } = useActiveWagmi();
   const loading = useMarketsStatus();
 
   return useMemo(
@@ -415,11 +415,11 @@ function TableBody({
       <BodyWrap>
         {!account ? (
           <EmptyRow>
-            <NotConnectedWallet style={{margin: "40px auto 16px auto"}} />
+            <NotConnectedWallet style={{ margin: "40px auto 16px auto" }} />
             Wallet is not connected
           </EmptyRow>
         ) : loading === ApiState.LOADING ? (
-          <EmptyRow style={{padding: "60px 0px"}}>
+          <EmptyRow style={{ padding: "60px 0px" }}>
             <LottieCloverfield width={72} height={78} />
           </EmptyRow>
         ) : quotes.length ? (
@@ -436,7 +436,7 @@ function TableBody({
           ))
         ) : (
           <EmptyRow>
-            <EmptyPosition style={{margin: "40px auto 16px auto"}} />
+            <EmptyPosition style={{ margin: "40px auto 16px auto" }} />
             You have no positions!
           </EmptyRow>
         )}
@@ -470,7 +470,7 @@ function QuoteRow({
   expired: boolean;
   customColor: string | undefined;
   liquidatePending: boolean;
-  instantCloseStatusInfo: {text: string; isInstantClose: boolean};
+  instantCloseStatusInfo: { text: string; isInstantClose: boolean };
   onClickButton: (event: React.MouseEvent<HTMLDivElement>) => void;
 }): JSX.Element | null {
   const theme = useTheme();
@@ -487,7 +487,7 @@ function QuoteRow({
     orderType,
   } = quote;
   const market = useMarket(quote.marketId);
-  const {name, pricePrecision} = market || {};
+  const { name, pricePrecision } = market || {};
   const marketData = useMarketData(name);
   const leverage = useQuoteLeverage(quote);
   const quoteAvailableAmount = useQuoteSize(quote);
@@ -499,7 +499,7 @@ function QuoteRow({
   const closeLastMarketPrice = useClosingLastMarketPrice(quote, market);
   const [showTpSlModal, setShowTpSlModal] = useState(false);
   const tpSlQuoteData = useQuotesTpSlData();
-  const {tpSlState, tp, sl, tpOpenPrice, slOpenPrice} = tpSlQuoteData[id] || {
+  const { tpSlState, tp, sl, tpOpenPrice, slOpenPrice } = tpSlQuoteData[id] || {
     tp: "",
     sl: "",
     tpOpenPrice: "",
@@ -704,7 +704,7 @@ function QuoteRow({
             liquidatePending ? (
               <LiquidatedStatusValue>Liquidation...</LiquidatedStatusValue>
             ) : quoteStatus === QuoteStatus.OPENED ? (
-              <PnlValue color={color} style={{width: "15%"}}>
+              <PnlValue color={color} style={{ width: "15%" }}>
                 {value === "-"
                   ? value
                   : `${value} (${Math.abs(Number(upnlPercent))})%`}
@@ -754,7 +754,7 @@ function QuoteRow({
                     <div>{tp} /</div>
                     <div>{sl}</div>
                   </Row>
-                  <Row style={{width: "unset", gap: "5px"}}>
+                  <Row style={{ width: "unset", gap: "5px" }}>
                     <SlIconWrapper
                       onClick={() => {
                         setShowTpSlModal(true);
@@ -800,8 +800,8 @@ function QuoteRow({
         </QuoteWrap>
         {showTpSlModal && (
           <ManageTpSlModal
-            quote={{...quote}}
-            tpSlMoreData={{tp, sl, tpOpenPrice, slOpenPrice}}
+            quote={{ ...quote }}
+            tpSlMoreData={{ tp, sl, tpOpenPrice, slOpenPrice }}
             modalOpen={showTpSlModal}
             toggleModal={() => setShowTpSlModal(false)}
           />
@@ -856,7 +856,7 @@ function QuoteRow({
   );
 }
 
-export default function Positions({quotes}: {quotes: Quote[]}) {
+export default function Positions({ quotes }: { quotes: Quote[] }) {
   const [showCloseModal, setShowCloseModal] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
   const isMobile = useIsMobile();

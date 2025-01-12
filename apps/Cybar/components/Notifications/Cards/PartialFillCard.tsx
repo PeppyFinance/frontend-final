@@ -1,20 +1,20 @@
-import {useMemo} from "react";
+import { useMemo } from "react";
 
-import {Quote, QuoteStatus} from "@symmio/frontend-sdk/types/quote";
-import {Account} from "@symmio/frontend-sdk/types/user";
-import {toBN} from "@symmio/frontend-sdk/utils/numbers";
+import { Quote, QuoteStatus } from "@symmio/frontend-sdk/types/quote";
+import { Account } from "@symmio/frontend-sdk/types/user";
+import { toBN } from "@symmio/frontend-sdk/utils/numbers";
 
 import {
   LastSeenAction,
   NotificationDetails,
 } from "@symmio/frontend-sdk/state/notifications/types";
 
-import {useMarket} from "@symmio/frontend-sdk/hooks/useMarkets";
-import useCurrencyLogo, {useCollateralLogo} from "lib/hooks/useCurrencyLogo";
+import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
+import useCurrencyLogo, { useCollateralLogo } from "lib/hooks/useCurrencyLogo";
 
 import BaseItem from "components/Notifications/Cards/BaseCard";
 import ShimmerAnimation from "components/ShimmerAnimation";
-import {PartiallyFillText, PartiallyFillTitle} from "./styles";
+import { PartiallyFillText, PartiallyFillTitle } from "./styles";
 
 export default function PartiallyFillCard({
   notification,
@@ -34,8 +34,8 @@ export default function PartiallyFillCard({
     filledAmountClose,
     filledAmountOpen,
   } = notification;
-  const {marketId, quoteStatus, quantity, quantityToClose} = quote || {};
-  const {symbol, asset} = useMarket(marketId) || {};
+  const { marketId, quoteStatus, quantity, quantityToClose } = quote || {};
+  const { symbol, asset } = useMarket(marketId) || {};
   const amount = useMemo(() => {
     if (
       quoteStatus === QuoteStatus.CLOSE_PENDING ||

@@ -1,9 +1,9 @@
 import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
-import {Config} from "@wagmi/core";
-import {SupportedChainId} from "../../constants/chains";
-import {HedgerInfoMap} from "../../types/hedger";
-import {setChains} from "./actions";
-const {createReducer} = ((toolkitRaw as any).default ??
+import { Config } from "@wagmi/core";
+import { SupportedChainId } from "../../constants/chains";
+import { HedgerInfoMap } from "../../types/hedger";
+import { setChains } from "./actions";
+const { createReducer } = ((toolkitRaw as any).default ??
   toolkitRaw) as typeof toolkitRaw;
 
 export interface ChainType {
@@ -29,12 +29,12 @@ export interface MuonDataType {
 }
 
 export interface ChainsState {
-  readonly chains: {[chainId: number]: {[name: string]: ChainType}};
+  readonly chains: { [chainId: number]: { [name: string]: ChainType } };
   readonly V3_CHAIN_IDS: number[];
   readonly FALLBACK_CHAIN_ID: number;
   readonly hedgers: HedgerInfoMap;
   readonly appName: string;
-  readonly MuonData: {[chainId: number]: MuonDataType};
+  readonly MuonData: { [chainId: number]: MuonDataType };
   readonly wagmiConfig: Config;
 }
 
@@ -42,14 +42,14 @@ const initialState: ChainsState = {
   chains: {},
   V3_CHAIN_IDS: [],
   FALLBACK_CHAIN_ID: 1,
-  hedgers: {[SupportedChainId.NOT_SET]: []},
+  hedgers: { [SupportedChainId.NOT_SET]: [] },
   appName: "",
   MuonData: {},
   wagmiConfig: {} as Config,
 };
 
-export default createReducer(initialState, builder =>
-  builder.addCase(setChains, (state, {payload}) => {
+export default createReducer(initialState, (builder) =>
+  builder.addCase(setChains, (state, { payload }) => {
     const {
       chains,
       V3_CHAIN_IDS,

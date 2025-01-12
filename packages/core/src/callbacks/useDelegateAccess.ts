@@ -1,20 +1,20 @@
-import {useCallback, useMemo} from "react";
+import { useCallback, useMemo } from "react";
 
-import {useSupportedChainId} from "../lib/hooks/useSupportedChainId";
+import { useSupportedChainId } from "../lib/hooks/useSupportedChainId";
 import {
   createTransactionCallback,
   TransactionCallbackState,
 } from "../utils/web3";
 
-import {useTransactionAdder} from "../state/transactions/hooks";
+import { useTransactionAdder } from "../state/transactions/hooks";
 import {
   SignMessageTransactionInfo,
   TransactionType,
 } from "../state/transactions/types";
 
-import {useAddRecentTransaction} from "@rainbow-me/rainbowkit";
-import {Address, encodeFunctionData} from "viem";
-import {MULTI_ACCOUNT_ABI} from "../constants";
+import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
+import { Address, encodeFunctionData } from "viem";
+import { MULTI_ACCOUNT_ABI } from "../constants";
 import useActiveWagmi from "../lib/hooks/useActiveWagmi";
 import {
   useFallbackChainId,
@@ -22,15 +22,15 @@ import {
   usePartyBWhitelistAddress,
   useWagmiConfig,
 } from "../state/chains";
-import {useActiveAccountAddress} from "../state/user/hooks";
-import {ConstructCallReturnType} from "../types/web3";
+import { useActiveAccountAddress } from "../state/user/hooks";
+import { ConstructCallReturnType } from "../types/web3";
 
 export function useDelegateAccess(): {
   state: TransactionCallbackState;
   callback: null | (() => Promise<any>);
   error: string | null;
 } {
-  const {account, chainId} = useActiveWagmi();
+  const { account, chainId } = useActiveWagmi();
   const addTransaction = useTransactionAdder();
   const addRecentTransaction = useAddRecentTransaction();
   const isSupportedChainId = useSupportedChainId();

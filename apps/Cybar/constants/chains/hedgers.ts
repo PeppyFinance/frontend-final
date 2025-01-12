@@ -1,5 +1,5 @@
-import {SupportedChainId} from "@symmio/frontend-sdk/constants/chains";
-import {Hedger, OpenInterest} from "@symmio/frontend-sdk/types/hedger";
+import { SupportedChainId } from "@symmio/frontend-sdk/constants/chains";
+import { Hedger, OpenInterest } from "@symmio/frontend-sdk/types/hedger";
 
 export const DEFAULT_HEDGER = {
   apiUrl: "https://fapi.binance.com/",
@@ -11,7 +11,7 @@ export const DEFAULT_HEDGER = {
   webSocketFundingRateUrl: `wss://${process.env.NEXT_PUBLIC_BASE_HEDGER_URL}/ws/funding-rate-ws`,
   defaultMarketId: 1,
   markets: [],
-  openInterest: {total: 0, used: 0} as OpenInterest,
+  openInterest: { total: 0, used: 0 } as OpenInterest,
   id: "mantle-hedger",
   fetchData: true,
   clientName: "BASE",
@@ -29,7 +29,7 @@ export const HedgerInfo = {
       webSocketFundingRateUrl: `wss://${process.env.NEXT_PUBLIC_FANTOM_HEDGER_URL}/ws/funding-rate-ws`,
       defaultMarketId: 1,
       markets: [],
-      openInterest: {total: 0, used: 0} as OpenInterest,
+      openInterest: { total: 0, used: 0 } as OpenInterest,
       id: "symmio",
       fetchData: true,
       clientName: "THENA",
@@ -46,7 +46,7 @@ export const HedgerInfo = {
       webSocketFundingRateUrl: `wss://${process.env.NEXT_PUBLIC_BSC_HEDGER_URL}/ws/funding-rate-ws`,
       defaultMarketId: 1,
       markets: [],
-      openInterest: {total: 0, used: 0} as OpenInterest,
+      openInterest: { total: 0, used: 0 } as OpenInterest,
       id: "alpha-hedger2",
       fetchData: true,
       clientName: "THENA",
@@ -64,7 +64,7 @@ export const HedgerInfo = {
       webSocketFundingRateUrl: `wss://${process.env.NEXT_PUBLIC_POLYGON_HEDGER_URL}/ws/funding-rate-ws`,
       defaultMarketId: 1,
       markets: [],
-      openInterest: {total: 0, used: 0} as OpenInterest,
+      openInterest: { total: 0, used: 0 } as OpenInterest,
       id: "alpha-hedger2",
       fetchData: true,
       clientName: "CYBAR_TEST",
@@ -81,7 +81,7 @@ export const HedgerInfo = {
       webSocketFundingRateUrl: `wss://${process.env.NEXT_PUBLIC_MANTLE_HEDGER_URL}/ws/funding-rate-ws`,
       defaultMarketId: 1,
       markets: [],
-      openInterest: {total: 0, used: 0} as OpenInterest,
+      openInterest: { total: 0, used: 0 } as OpenInterest,
       id: "mantle-hedger",
       fetchData: true,
       clientName: "MANTLE",
@@ -99,7 +99,7 @@ export const HedgerInfo = {
       webSocketFundingRateUrl: `wss://${process.env.NEXT_PUBLIC_BLAST_HEDGER_URL}/ws/funding-rate-ws`,
       defaultMarketId: 1,
       markets: [],
-      openInterest: {total: 0, used: 0} as OpenInterest,
+      openInterest: { total: 0, used: 0 } as OpenInterest,
       id: "blast-hedger",
       fetchData: true,
       clientName: "BLAST",
@@ -116,7 +116,7 @@ export const HedgerInfo = {
       webSocketFundingRateUrl: `wss://${process.env.NEXT_PUBLIC_ARBITRUM_HEDGER_URL}/ws/funding-rate-ws`,
       defaultMarketId: 1,
       markets: [],
-      openInterest: {total: 0, used: 0} as OpenInterest,
+      openInterest: { total: 0, used: 0 } as OpenInterest,
       id: "arbitrum-hedger",
       fetchData: true,
       clientName: "ARBITRUM",

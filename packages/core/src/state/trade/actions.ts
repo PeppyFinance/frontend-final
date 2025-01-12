@@ -1,16 +1,16 @@
 import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
-import {InputField, OrderType, PositionType} from "../../types/trade";
+import { InputField, OrderType, PositionType } from "../../types/trade";
 import {
   TpSlConfigParams,
   TpSlState,
   TpSlUpdateProcessState,
   TradeState,
 } from "./types";
-const {createAction} = ((toolkitRaw as any).default ??
+const { createAction } = ((toolkitRaw as any).default ??
   toolkitRaw) as typeof toolkitRaw;
 
 export const setTradeState = createAction<TradeState>("trade/setTradeState");
-export const updateMarketId = createAction<{id: number}>(
+export const updateMarketId = createAction<{ id: number }>(
   "hedger/updateMarketId",
 );
 export const updateOrderType = createAction<OrderType>("trade/updateOrderType");

@@ -1,11 +1,11 @@
-import {useCallback, useMemo} from "react";
-import {useMarket} from "../../hooks/useMarkets";
-import {Market} from "../../types/market";
-import {InputField, OrderType, PositionType} from "../../types/trade";
-import {makeHttpRequest} from "../../utils/http";
-import {BN_ZERO, formatPrice} from "../../utils/numbers";
-import {useAppDispatch, useAppSelector} from "../declaration";
-import {useHedgerInfo, useMarketData} from "../hedger/hooks";
+import { useCallback, useMemo } from "react";
+import { useMarket } from "../../hooks/useMarkets";
+import { Market } from "../../types/market";
+import { InputField, OrderType, PositionType } from "../../types/trade";
+import { makeHttpRequest } from "../../utils/http";
+import { BN_ZERO, formatPrice } from "../../utils/numbers";
+import { useAppDispatch, useAppSelector } from "../declaration";
+import { useHedgerInfo, useMarketData } from "../hedger/hooks";
 import {
   setTpSlConfig,
   setTpSlOpened,
@@ -30,7 +30,7 @@ import {
 } from "./types";
 
 export function useActiveMarketId(): number | undefined {
-  const marketId = useAppSelector(state => state.trade.marketId);
+  const marketId = useAppSelector((state) => state.trade.marketId);
   return marketId;
 }
 
@@ -52,48 +52,48 @@ export function useActiveMarketPrice(): string {
 }
 
 export function usePositionType() {
-  const positionType = useAppSelector(state => state.trade.positionType);
+  const positionType = useAppSelector((state) => state.trade.positionType);
   return positionType;
 }
 
 export function useOrderType() {
-  const orderType = useAppSelector(state => state.trade.orderType);
+  const orderType = useAppSelector((state) => state.trade.orderType);
   return orderType;
 }
 export function useTypedValue() {
-  const typedValue = useAppSelector(state => state.trade.typedValue);
+  const typedValue = useAppSelector((state) => state.trade.typedValue);
   return typedValue;
 }
 export function useInputField() {
-  const inputField = useAppSelector(state => state.trade.inputField);
+  const inputField = useAppSelector((state) => state.trade.inputField);
   return inputField;
 }
 
 export function useLimitPrice(): string {
-  const limitPrice = useAppSelector(state => state.trade.limitPrice);
+  const limitPrice = useAppSelector((state) => state.trade.limitPrice);
   return limitPrice;
 }
 export function useTradeTpSl(): TpSlState {
-  const tpSlValue = useAppSelector(state => state.trade.tpSl);
+  const tpSlValue = useAppSelector((state) => state.trade.tpSl);
   return tpSlValue;
 }
 export function useTradeTpSlError() {
-  const tpSlErrorValue = useAppSelector(state => state.trade.tpSlError);
+  const tpSlErrorValue = useAppSelector((state) => state.trade.tpSlError);
   return tpSlErrorValue;
 }
 export function useTpSlDelegate(): boolean {
   const delegateStatus = useAppSelector(
-    state => state.trade.tpSlDelegateChecker,
+    (state) => state.trade.tpSlDelegateChecker,
   );
   return delegateStatus;
 }
 
 export function useTpSlOpened(): boolean {
-  const tpSlOpenedStatus = useAppSelector(state => state.trade.tpSlOpened);
+  const tpSlOpenedStatus = useAppSelector((state) => state.trade.tpSlOpened);
   return tpSlOpenedStatus;
 }
 export function useTpSlConfigParams(): TpSlConfigParams {
-  const tpSlConfig = useAppSelector(state => state.trade.tpSlConfig);
+  const tpSlConfig = useAppSelector((state) => state.trade.tpSlConfig);
   return tpSlConfig;
 }
 export function useSetTpSlConfig(): (tpSlValue: TpSlConfigParams) => void {
@@ -170,10 +170,10 @@ export function useLockedPercentages(): {
   partyBmm: string | undefined;
   lf: string | undefined;
 } {
-  const cva = useAppSelector(state => state.trade.cva);
-  const partyAmm = useAppSelector(state => state.trade.partyAmm);
-  const partyBmm = useAppSelector(state => state.trade.partyBmm);
-  const lf = useAppSelector(state => state.trade.lf);
+  const cva = useAppSelector((state) => state.trade.cva);
+  const partyAmm = useAppSelector((state) => state.trade.partyAmm);
+  const partyBmm = useAppSelector((state) => state.trade.partyBmm);
+  const lf = useAppSelector((state) => state.trade.lf);
   return useMemo(
     () => ({
       cva,
@@ -237,12 +237,12 @@ export function useSetTypedValue() {
 
 export function useSetMarketId(): (id: number) => void {
   const dispatch = useAppDispatch();
-  const marketId = useAppSelector(state => state.trade.marketId);
+  const marketId = useAppSelector((state) => state.trade.marketId);
 
   return useCallback(
     (id: number) => {
       if (marketId !== id) {
-        dispatch(updateMarketId({id}));
+        dispatch(updateMarketId({ id }));
       }
     },
     [dispatch, marketId],
@@ -257,13 +257,13 @@ export function useGetLockedPercentages(
 }) => Promise<undefined> {
   const market = useActiveMarket();
   const dispatch = useAppDispatch();
-  const {baseUrl} = useHedgerInfo() || {};
+  const { baseUrl } = useHedgerInfo() || {};
 
   return useCallback(
-    async (options: {signal: AbortSignal; headers: [string, string][]}) => {
+    async (options: { signal: AbortSignal; headers: [string, string][] }) => {
       try {
         if (!baseUrl || !market) throw new Error("missing parameters");
-        const {href: url} = new URL(
+        const { href: url } = new URL(
           `/get_locked_params/${market.name}?leverage=${leverage}`,
           baseUrl,
         );
@@ -273,7 +273,7 @@ export function useGetLockedPercentages(
           options,
         );
 
-        if (response) dispatch(updateLockedPercentages({...response}));
+        if (response) dispatch(updateLockedPercentages({ ...response }));
       } catch (error: unknown) {
         if (error instanceof Error && error.name === "AbortError") {
           console.log("AbortError getLockedParam", error.message);

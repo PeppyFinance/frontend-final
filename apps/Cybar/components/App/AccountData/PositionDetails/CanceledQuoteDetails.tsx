@@ -1,9 +1,9 @@
-import {useEffect, useState} from "react";
-import {useTheme} from "styled-components";
+import { useEffect, useState } from "react";
+import { useTheme } from "styled-components";
 
-import {Quote} from "@symmio/frontend-sdk/types/quote";
-import {PositionType} from "@symmio/frontend-sdk/types/trade";
-import {formatTimestamp} from "@symmio/frontend-sdk/utils/time";
+import { Quote } from "@symmio/frontend-sdk/types/quote";
+import { PositionType } from "@symmio/frontend-sdk/types/trade";
+import { formatTimestamp } from "@symmio/frontend-sdk/utils/time";
 
 import {
   formatAmount,
@@ -11,7 +11,7 @@ import {
   toBN,
 } from "@symmio/frontend-sdk/utils/numbers";
 
-import {useMarket} from "@symmio/frontend-sdk/hooks/useMarkets";
+import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
 import {
   useQuoteLeverage,
   useQuoteSize,
@@ -33,8 +33,8 @@ import {
   Value,
   Wrapper,
 } from "components/App/AccountData/PositionDetails/styles";
-import {LongArrow, ShortArrow} from "components/Icons";
-import {Row as RowComponent} from "components/Row";
+import { LongArrow, ShortArrow } from "components/Icons";
+import { Row as RowComponent } from "components/Row";
 import PositionDetailsNavigator from "./PositionDetailsNavigator";
 
 export default function CanceledQuoteDetails({
@@ -54,7 +54,7 @@ export default function CanceledQuoteDetails({
     orderType,
     statusModifyTimestamp,
   } = quote;
-  const {symbol, asset} = useMarket(marketId) || {};
+  const { symbol, asset } = useMarket(marketId) || {};
   const quoteSize = useQuoteSize(quote);
   const leverage = useQuoteLeverage(quote);
   const notionalValue = toBN(quoteSize).times(requestedOpenPrice);

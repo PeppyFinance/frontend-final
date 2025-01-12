@@ -1,9 +1,9 @@
 import Image from "next/legacy/image";
 import styled from "styled-components";
 
-import {PrimaryButton} from "components/Button";
-import {Modal, ModalHeader} from "components/Modal";
-import {RowCenter} from "components/Row";
+import { PrimaryButton } from "components/Button";
+import { Modal, ModalHeader } from "components/Modal";
+import { RowCenter } from "components/Row";
 
 import WARNING from "/public/static/images/etc/warning.svg";
 
@@ -12,10 +12,10 @@ const MainModal = styled(Modal)`
   width: 440px;
   justify-content: center;
   flex-direction: column;
-  border: 1px solid ${({theme}) => theme.border2};
+  border: 1px solid ${({ theme }) => theme.border2};
   border-radius: 24px;
 
-  ${({theme}) => theme.mediaWidth.upToExtraSmall`
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
     width: 90%;
     max-height: 560px;
   `};
@@ -34,7 +34,7 @@ const ImageWrap = styled.div`
 
 const SummaryWrap = styled.div`
   font-size: 13px;
-  color: ${({theme}) => theme.text3};
+  color: ${({ theme }) => theme.text3};
   margin: 20px auto;
   max-width: 350px;
   text-align: center;
@@ -49,7 +49,7 @@ const ConfirmButton = styled(PrimaryButton)`
 
 const WarningText = styled.span`
   font-weight: 500;
-  color: ${({theme}) => theme.warning0};
+  color: ${({ theme }) => theme.warning0};
 `;
 
 export default function WarningModal({

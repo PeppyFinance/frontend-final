@@ -1,8 +1,8 @@
-import {useSignMessage} from "@symmio/frontend-sdk/callbacks/useMultiAccount";
-import {DEFAULT_PRECISION} from "@symmio/frontend-sdk/constants";
-import {useMarket} from "@symmio/frontend-sdk/hooks/useMarkets";
-import {useAppName} from "@symmio/frontend-sdk/state/chains";
-import {useHedgerInfo} from "@symmio/frontend-sdk/state/hedger/hooks";
+import { useSignMessage } from "@symmio/frontend-sdk/callbacks/useMultiAccount";
+import { DEFAULT_PRECISION } from "@symmio/frontend-sdk/constants";
+import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
+import { useAppName } from "@symmio/frontend-sdk/state/chains";
+import { useHedgerInfo } from "@symmio/frontend-sdk/state/hedger/hooks";
 import {
   usePendingsQuotes,
   useSetTpSlDataCallback,
@@ -15,20 +15,20 @@ import {
   useSetTpSlState,
   useTradeTpSl,
 } from "@symmio/frontend-sdk/state/trade/hooks";
-import {TpSlProcessState} from "@symmio/frontend-sdk/state/trade/types";
-import {Quote} from "@symmio/frontend-sdk/types/quote";
-import {getCurrentTimeInSecond} from "@symmio/frontend-sdk/utils/time";
-import {useEffect} from "react";
+import { TpSlProcessState } from "@symmio/frontend-sdk/state/trade/types";
+import { Quote } from "@symmio/frontend-sdk/types/quote";
+import { getCurrentTimeInSecond } from "@symmio/frontend-sdk/utils/time";
+import { useEffect } from "react";
 import {
   handleSignManageAndTpSlRequest,
   priceSlippageCalculation,
 } from "./manage";
 
 export function TpSlChecker() {
-  const {quotes: pendings} = usePendingsQuotes();
+  const { quotes: pendings } = usePendingsQuotes();
   const setTradePanelState = useSetTpSlState();
 
-  const {callback: signMessageCallback} = useSignMessage();
+  const { callback: signMessageCallback } = useSignMessage();
   const {
     state: tradePanelTpState,
     quoteId: tradePanelQuoteId,
@@ -38,12 +38,12 @@ export function TpSlChecker() {
     slSlippage,
   } = useTradeTpSl();
 
-  const tempQuote = pendings.filter(item => item.id === tradePanelQuoteId);
+  const tempQuote = pendings.filter((item) => item.id === tradePanelQuoteId);
 
   const targetQuote = tempQuote.length > 0 ? tempQuote[0] : ({} as Quote);
   const setTpSlFunc = useSetTpSlDataCallback();
   const market = useMarket(targetQuote?.marketId);
-  const {tpslUrl} = useHedgerInfo() || {};
+  const { tpslUrl } = useHedgerInfo() || {};
   const appName = useAppName();
   useEffect(() => {
     if (

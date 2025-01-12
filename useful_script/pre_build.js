@@ -27,7 +27,7 @@ function updateTsConfig(folderPath) {
       tsconfigPath,
       JSON.stringify(tsconfig, null, 2),
       "utf8",
-      err => {
+      (err) => {
         if (err) {
           console.error("Error writing file:", err);
         } else {
@@ -39,13 +39,13 @@ function updateTsConfig(folderPath) {
 }
 
 // Read all folders in 'apps' directory
-fs.readdir(appsDir, {withFileTypes: true}, (err, files) => {
+fs.readdir(appsDir, { withFileTypes: true }, (err, files) => {
   if (err) {
     console.error("Error reading apps directory:", err);
     return;
   }
 
-  files.forEach(dirent => {
+  files.forEach((dirent) => {
     if (dirent.isDirectory()) {
       const folderPath = path.join(appsDir, dirent.name);
       updateTsConfig(folderPath);

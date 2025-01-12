@@ -1,18 +1,18 @@
 import styled from "styled-components";
 
-import {formatAmount} from "@symmio/frontend-sdk/utils/numbers";
+import { formatAmount } from "@symmio/frontend-sdk/utils/numbers";
 
 import useAccountData from "@symmio/frontend-sdk/hooks/useAccountData";
 
-import {AccountHealthText} from "components/App/AccountData/AccountOverview";
+import { AccountHealthText } from "components/App/AccountData/AccountOverview";
 import Emoji from "components/App/AccountData/Emoji";
-import {Row, RowBetween, RowEnd} from "components/Row";
+import { Row, RowBetween, RowEnd } from "components/Row";
 import ShimmerAnimation from "components/ShimmerAnimation";
 
 const Title = styled(Row)`
   font-weight: 500;
   font-size: 16px;
-  color: ${({theme}) => theme.text0};
+  color: ${({ theme }) => theme.text0};
 `;
 
 const DataRow = styled(RowBetween)`
@@ -20,15 +20,15 @@ const DataRow = styled(RowBetween)`
   margin: 8px 0;
 `;
 
-const AccountHealth = styled(RowEnd)<{color?: string}>`
+const AccountHealth = styled(RowEnd)<{ color?: string }>`
   font-weight: 500;
   font-size: 16px;
-  color: ${({theme, color}) => color ?? theme.text1};
+  color: ${({ theme, color }) => color ?? theme.text1};
 `;
 
 export default function AccountHealthSection() {
   const {
-    accountHealthData: {health: accountHealth, healthColor, healthEmoji},
+    accountHealthData: { health: accountHealth, healthColor, healthEmoji },
   } = useAccountData();
   const isAccountHealthNotReady =
     !accountHealth ||
@@ -50,7 +50,7 @@ export default function AccountHealthSection() {
                 <Emoji
                   symbol={healthEmoji.symbol}
                   label={healthEmoji.label}
-                  style={{width: "22px", marginLeft: "4px"}}
+                  style={{ width: "22px", marginLeft: "4px" }}
                 />
               </>
             )}

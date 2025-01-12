@@ -1,19 +1,19 @@
-import {Currency, CurrencyAmount, Token} from "@uniswap/sdk-core";
+import { Currency, CurrencyAmount, Token } from "@uniswap/sdk-core";
 import JSBI from "jsbi";
-import {useMemo} from "react";
+import { useMemo } from "react";
 
 import {
   useMultipleContractSingleData,
   useSingleContractMultipleData,
 } from "./multicall";
 
-import {erc20Abi} from "viem";
-import {isAddress} from "../../utils/validate";
+import { erc20Abi } from "viem";
+import { isAddress } from "../../utils/validate";
 
-import {MULTICALL3_ABI} from "../../constants";
-import {useMultiCallAddress} from "../../state/chains";
-import {getSingleWagmiResult} from "../../utils/multicall";
-import {nativeOnChain} from "../../utils/token";
+import { MULTICALL3_ABI } from "../../constants";
+import { useMultiCallAddress } from "../../state/chains";
+import { getSingleWagmiResult } from "../../utils/multicall";
+import { nativeOnChain } from "../../utils/token";
 import useWagmi from "./useWagmi";
 
 /**
@@ -24,7 +24,7 @@ export function useNativeCurrencyBalances(
 ): {
   [address: string]: CurrencyAmount<Currency> | undefined;
 } {
-  const {chainId} = useWagmi();
+  const { chainId } = useWagmi();
 
   const MULTICALL3_ADDRESS = useMultiCallAddress();
 
@@ -36,12 +36,12 @@ export function useNativeCurrencyBalances(
             .map(isAddress)
             .filter((a): a is string => a !== undefined)
             .sort()
-            .map(addr => [addr])
+            .map((addr) => [addr])
         : [],
     [uncheckedAddresses],
   );
 
-  const {data: results} = useSingleContractMultipleData(
+  const { data: results } = useSingleContractMultipleData(
     chainId ? MULTICALL3_ADDRESS[chainId] : "",
     MULTICALL3_ABI,
     "getEthBalance",
@@ -71,8 +71,8 @@ export function useNativeCurrencyBalances(
 export function useTokenBalancesWithLoadingIndicator(
   address?: string,
   tokens?: (Token | undefined)[],
-): [{[tokenAddress: string]: CurrencyAmount<Token> | undefined}, boolean] {
-  const {chainId} = useWagmi(); // we cannot fetch balances cross-chain
+): [{ [tokenAddress: string]: CurrencyAmount<Token> | undefined }, boolean] {
+  const { chainId } = useWagmi(); // we cannot fetch balances cross-chain
   const validatedTokens: Token[] = useMemo(
     () =>
       tokens?.filter(
@@ -82,16 +82,17 @@ export function useTokenBalancesWithLoadingIndicator(
     [chainId, tokens],
   );
   const validatedTokenAddresses = useMemo(
-    () => validatedTokens.map(vt => vt.address),
+    () => validatedTokens.map((vt) => vt.address),
     [validatedTokens],
   );
 
-  const {data: balances, isLoading: anyLoading} = useMultipleContractSingleData(
-    validatedTokenAddresses,
-    erc20Abi,
-    "balanceOf",
-    useMemo(() => (address ? [address] : []), [address]),
-  );
+  const { data: balances, isLoading: anyLoading } =
+    useMultipleContractSingleData(
+      validatedTokenAddresses,
+      erc20Abi,
+      "balanceOf",
+      useMemo(() => (address ? [address] : []), [address]),
+    );
 
   return useMemo(
     () => [
@@ -116,7 +117,7 @@ export function useTokenBalancesWithLoadingIndicator(
 export function useTokenBalances(
   address?: string,
   tokens?: (Token | undefined)[],
-): {[tokenAddress: string]: CurrencyAmount<Token> | undefined} {
+): { [tokenAddress: string]: CurrencyAmount<Token> | undefined } {
   return useTokenBalancesWithLoadingIndicator(address, tokens)[0];
 }
 
@@ -144,7 +145,7 @@ export function useCurrencyBalances(
 
   const tokenBalances = useTokenBalances(account, tokens);
   const containsETH: boolean = useMemo(
-    () => currencies?.some(currency => currency?.isNative) ?? false,
+    () => currencies?.some((currency) => currency?.isNative) ?? false,
     [currencies],
   );
   const ethBalance = useNativeCurrencyBalances(
@@ -153,7 +154,7 @@ export function useCurrencyBalances(
 
   return useMemo(
     () =>
-      currencies?.map(currency => {
+      currencies?.map((currency) => {
         if (!account || !currency) return undefined;
         if (currency.isToken) return tokenBalances[currency.address];
         if (currency.isNative) return ethBalance[account];

@@ -1,9 +1,9 @@
-import {Text} from "rebass";
-import styled, {useTheme} from "styled-components";
+import { Text } from "rebass";
+import styled, { useTheme } from "styled-components";
 import StyledModal from "styled-react-modal";
-import {Z_INDEX} from "theme";
+import { Z_INDEX } from "theme";
 
-import {PositionType} from "@symmio/frontend-sdk/types/trade";
+import { PositionType } from "@symmio/frontend-sdk/types/trade";
 
 import {
   ChevronDown,
@@ -11,12 +11,12 @@ import {
   LongArrow,
   ShortArrow,
 } from "components/Icons";
-import {RowBetween} from "components/Row";
+import { RowBetween } from "components/Row";
 
 const BaseModal = StyledModal.styled`
   display: flex;
   flex-flow: column nowrap;
-  background: ${({theme}: {theme: any}) => theme.bg0};
+  background: ${({ theme }: { theme: any }) => theme.bg0};
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -34,9 +34,9 @@ export const MobileModal = styled(BaseModal)`
 export const Modal = styled(BaseModal)<{
   width?: string;
 }>`
-  background: ${({theme}) => theme.bg0};
-  width: ${({width}: {width?: string}) => width ?? "404px"};
-  ${({theme}) => theme.mediaWidth.upToMedium`
+  background: ${({ theme }) => theme.bg0};
+  width: ${({ width }: { width?: string }) => width ?? "404px"};
+  ${({ theme }) => theme.mediaWidth.upToMedium`
     max-height: 350px;
     width: 350px;
     overflow: scroll;
@@ -57,12 +57,12 @@ export const ModalBackground = styled.div`
 `;
 
 const HeaderWrapper = styled(RowBetween)`
-  color: ${({theme}) => theme.text0};
+  color: ${({ theme }) => theme.text0};
   padding: 12px 12px 0 12px;
   padding-bottom: 0;
-  background-color: ${({theme}) => theme.bg0};
+  background-color: ${({ theme }) => theme.bg0};
   margin-bottom: 20px;
-  ${({theme}) => theme.mediaWidth.upToMedium`
+  ${({ theme }) => theme.mediaWidth.upToMedium`
     padding: 10px;
     padding-bottom: 0;
     font-size:12px;
@@ -76,9 +76,9 @@ const Close = styled.div`
   cursor: pointer;
   border-radius: 4px;
   margin: 2px 2px 1px 0px;
-  background: ${({theme}) => theme.bg6};
+  background: ${({ theme }) => theme.bg6};
 
-  ${({theme}) => theme.mediaWidth.upToMedium`
+  ${({ theme }) => theme.mediaWidth.upToMedium`
     padding: 6px;
   `};
 `;
@@ -114,14 +114,14 @@ export const ModalHeader = ({
               width={15}
               height={12}
               color={theme.positive}
-              style={{marginLeft: "10px"}}
+              style={{ marginLeft: "10px" }}
             />
           ) : (
             <ShortArrow
               width={15}
               height={12}
               color={theme.negative}
-              style={{marginLeft: "10px"}}
+              style={{ marginLeft: "10px" }}
             />
           )}
         </Text>

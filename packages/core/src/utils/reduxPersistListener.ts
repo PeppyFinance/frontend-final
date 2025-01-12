@@ -1,6 +1,6 @@
-import {Store} from "redux";
-import {getStoredState, PersistConfig, REHYDRATE} from "redux-persist";
-import {RootState} from "../state/declaration";
+import { Store } from "redux";
+import { getStoredState, PersistConfig, REHYDRATE } from "redux-persist";
+import { RootState } from "../state/declaration";
 
 export default function crossBrowserListener(
   store: Store<RootState>,

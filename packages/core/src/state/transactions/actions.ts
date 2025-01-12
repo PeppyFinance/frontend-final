@@ -4,7 +4,7 @@ import {
   TransactionDetails,
   TransactionInfo,
 } from "./types";
-const {createAction} = ((toolkitRaw as any).default ??
+const { createAction } = ((toolkitRaw as any).default ??
   toolkitRaw) as typeof toolkitRaw;
 
 export const addTransaction = createAction<{
@@ -14,7 +14,7 @@ export const addTransaction = createAction<{
   info: TransactionInfo;
   summary?: string;
 }>("transactions/addTransaction");
-export const clearAllTransactions = createAction<{chainId: number}>(
+export const clearAllTransactions = createAction<{ chainId: number }>(
   "transactions/clearAllTransactions",
 );
 export const finalizeTransaction = createAction<{
@@ -29,5 +29,5 @@ export const checkedTransaction = createAction<{
 }>("transactions/checkedTransaction");
 
 export const updateTransaction = createAction<
-  TransactionDetails & {chainId: number}
+  TransactionDetails & { chainId: number }
 >("transactions/updateTransaction");

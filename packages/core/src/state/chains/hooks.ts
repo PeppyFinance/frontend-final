@@ -1,18 +1,18 @@
-import {useCallback, useMemo} from "react";
+import { useCallback, useMemo } from "react";
 import useActiveWagmi from "../../lib/hooks/useActiveWagmi";
-import {AppState, useAppDispatch, useAppSelector} from "../declaration";
-import {useHedgerInfo} from "../hedger/hooks";
-import {useFEName} from "../user/hooks";
-import {setChains} from "./actions";
-import {ChainsState, MuonDataType} from "./reducer";
+import { AppState, useAppDispatch, useAppSelector } from "../declaration";
+import { useHedgerInfo } from "../hedger/hooks";
+import { useFEName } from "../user/hooks";
+import { setChains } from "./actions";
+import { ChainsState, MuonDataType } from "./reducer";
 
 type InputObject = {
-  [chainId: number]: {[name: string]: any};
+  [chainId: number]: { [name: string]: any };
 };
 
 function compatibleWithLegacyStructure(chains, v3_ids, parameter_name) {
   return Object.keys(chains)
-    .filter(key => v3_ids.includes(parseInt(key)))
+    .filter((key) => v3_ids.includes(parseInt(key)))
     .reduce((obj, key) => {
       obj[key] = Object.keys(chains[key]).reduce((obj, FeName) => {
         obj[FeName] = chains[key][FeName][parameter_name];
@@ -25,8 +25,8 @@ function compatibleWithLegacyStructure(chains, v3_ids, parameter_name) {
 function getValuesByName(
   inputObj: InputObject,
   name: string,
-): {[chainId: number]: any} {
-  const result: {[chainId: number]: any} = {};
+): { [chainId: number]: any } {
+  const result: { [chainId: number]: any } = {};
 
   for (const chainId in inputObj) {
     if (inputObj[chainId].hasOwnProperty(name)) {
@@ -137,8 +137,8 @@ export function useTpSlWalletAddress() {
 export function useTpSlAvailable() {
   const FE_NAME = useFEName();
   const chains = useAppSelector((state: AppState) => state.chains.chains);
-  const {chainId} = useActiveWagmi();
-  const {tpslUrl} = useHedgerInfo() || {};
+  const { chainId } = useActiveWagmi();
+  const { tpslUrl } = useHedgerInfo() || {};
   const isEnableTpSl = chains?.[chainId ?? 1]?.[FE_NAME]?.TP_SL_WALLET_ADDRESS;
 
   return (
@@ -238,7 +238,7 @@ export function useAppName() {
 }
 
 export function useOrderHistorySubgraphAddress() {
-  const {chainId} = useActiveWagmi();
+  const { chainId } = useActiveWagmi();
   const frontEndName = useFEName();
   const chainsData = useAppSelector((state: AppState) => state.chains.chains);
 
@@ -253,7 +253,7 @@ export function useOrderHistorySubgraphAddress() {
 }
 
 export function useAnalyticsSubgraphAddress() {
-  const {chainId} = useActiveWagmi();
+  const { chainId } = useActiveWagmi();
   const frontEndName = useFEName();
   const chainsData = useAppSelector((state: AppState) => state.chains.chains);
 
@@ -269,7 +269,7 @@ export function useAnalyticsSubgraphAddress() {
 }
 
 export function useFundingRateSubgraphAddress() {
-  const {chainId} = useActiveWagmi();
+  const { chainId } = useActiveWagmi();
   const frontEndName = useFEName();
   const chainsData = useAppSelector((state: AppState) => state.chains.chains);
 
@@ -284,7 +284,7 @@ export function useFundingRateSubgraphAddress() {
   return address;
 }
 
-export function useMuonData(): {[chainId: number]: MuonDataType} {
+export function useMuonData(): { [chainId: number]: MuonDataType } {
   const MuonData = useAppSelector((state: AppState) => state.chains.MuonData);
   return MuonData;
 }

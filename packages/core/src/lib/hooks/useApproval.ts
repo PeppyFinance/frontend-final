@@ -1,13 +1,13 @@
-import {Currency, Token} from "@uniswap/sdk-core";
-import {simulateContract, writeContract} from "@wagmi/core";
-import {useCallback, useMemo} from "react";
-import {Address, erc20Abi} from "viem";
-import {useReadContract} from "wagmi";
+import { Currency, Token } from "@uniswap/sdk-core";
+import { simulateContract, writeContract } from "@wagmi/core";
+import { useCallback, useMemo } from "react";
+import { Address, erc20Abi } from "viem";
+import { useReadContract } from "wagmi";
 
 import BigNumber from "bignumber.js";
-import {useWagmiConfig} from "../../state/chains";
-import {BN_TEN} from "../../utils/numbers";
-import {useERC20Allowance} from "./useERC20Allowance";
+import { useWagmiConfig } from "../../state/chains";
+import { BN_TEN } from "../../utils/numbers";
+import { useERC20Allowance } from "./useERC20Allowance";
 import useWagmi from "./useWagmi";
 
 export enum ApprovalState {
@@ -26,7 +26,7 @@ export function useApprovalStateForSpender(
 ): [ApprovalState, ReturnType<typeof useReadContract>["refetch"]] {
   const token = currency?.isToken ? currency.wrapped : undefined;
 
-  const {tokenAllowance, refetch} = useERC20Allowance({
+  const { tokenAllowance, refetch } = useERC20Allowance({
     token,
     owner,
     spender,
@@ -69,10 +69,11 @@ export function useApproval(
 ): [
   ApprovalState,
   () => Promise<
-    {response: string; tokenAddress: string; spenderAddress: string} | undefined
+    | { response: string; tokenAddress: string; spenderAddress: string }
+    | undefined
   >,
 ] {
-  const {chainId} = useWagmi();
+  const { chainId } = useWagmi();
   const config = useWagmiConfig();
 
   const token = currency?.isToken ? currency.wrapped : undefined;
@@ -109,7 +110,7 @@ export function useApproval(
       .times(amountToApprove || 0)
       .toString();
 
-    const {request} = await simulateContract(config, {
+    const { request } = await simulateContract(config, {
       abi: erc20Abi,
       address: token.address as Address,
       functionName: "approve",

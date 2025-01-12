@@ -1,6 +1,6 @@
 import fs from "fs-extra";
-import path, {dirname} from "path";
-import {fileURLToPath} from "url";
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
 
 // Replace 'currentPath' with your current directory path
 const __filename = fileURLToPath(import.meta.url);
@@ -13,18 +13,18 @@ function listFiles(dirPath, depth = 0) {
   let arrayOfFiles = [];
   let subDirFiles = [];
 
-  fs.readdirSync(dirPath).forEach(file => {
+  fs.readdirSync(dirPath).forEach((file) => {
     const filePath = path.join(dirPath, file);
     if (fs.statSync(filePath).isDirectory()) {
       subDirFiles = subDirFiles.concat(listFiles(filePath, depth + 1));
     } else {
       const tempAddress = "src/" + filePath.split("src/")[1];
-      arrayOfFiles.push({path: tempAddress, depth});
+      arrayOfFiles.push({ path: tempAddress, depth });
     }
   });
 
   return depth === 0
-    ? arrayOfFiles.concat(subDirFiles).map(file => file.path)
+    ? arrayOfFiles.concat(subDirFiles).map((file) => file.path)
     : arrayOfFiles.concat(subDirFiles);
 }
 

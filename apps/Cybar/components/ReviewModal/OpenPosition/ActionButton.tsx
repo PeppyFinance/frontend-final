@@ -1,19 +1,19 @@
-import {useSentQuoteCallback} from "@symmio/frontend-sdk/callbacks/useSendQuote";
+import { useSentQuoteCallback } from "@symmio/frontend-sdk/callbacks/useSendQuote";
 import useTradePage from "@symmio/frontend-sdk/hooks/useTradePage";
-import {useSetTpSlState} from "@symmio/frontend-sdk/state/trade/hooks";
-import {TpSlProcessState} from "@symmio/frontend-sdk/state/trade/types";
-import {getCurrentTimeInSecond} from "@symmio/frontend-sdk/utils/time";
+import { useSetTpSlState } from "@symmio/frontend-sdk/state/trade/hooks";
+import { TpSlProcessState } from "@symmio/frontend-sdk/state/trade/types";
+import { getCurrentTimeInSecond } from "@symmio/frontend-sdk/utils/time";
 import ErrorButton from "components/Button/ErrorButton";
 import OpenPositionButton from "components/Button/OpenPositionButton";
-import {useCallback, useContext} from "react";
+import { useCallback, useContext } from "react";
 import toast from "react-hot-toast";
-import {ModalState, StateContext} from "./ModalData";
+import { ModalState, StateContext } from "./ModalData";
 
 export default function ActionButton() {
-  const {state} = useTradePage();
-  const {setState, state: modalState, setTxHash} = useContext(StateContext);
+  const { state } = useTradePage();
+  const { setState, state: modalState, setTxHash } = useContext(StateContext);
   const setTradeTpSl = useSetTpSlState();
-  const {callback: tradeCallback, error: tradeCallbackError} =
+  const { callback: tradeCallback, error: tradeCallbackError } =
     useSentQuoteCallback();
 
   const onTrade = useCallback(async () => {

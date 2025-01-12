@@ -1,13 +1,13 @@
-import {Quote} from "@symmio/frontend-sdk/types/quote";
-import {Account} from "@symmio/frontend-sdk/types/user";
+import { Quote } from "@symmio/frontend-sdk/types/quote";
+import { Account } from "@symmio/frontend-sdk/types/user";
 
-import {useMarket} from "@symmio/frontend-sdk/hooks/useMarkets";
-import {NotificationDetails} from "@symmio/frontend-sdk/state/notifications/types";
-import useCurrencyLogo, {useCollateralLogo} from "lib/hooks/useCurrencyLogo";
+import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
+import { NotificationDetails } from "@symmio/frontend-sdk/state/notifications/types";
+import useCurrencyLogo, { useCollateralLogo } from "lib/hooks/useCurrencyLogo";
 
 import BaseItem from "components/Notifications/Cards/BaseCard";
 import ShimmerAnimation from "components/ShimmerAnimation";
-import {PartiallyFillTitle} from "./styles";
+import { PartiallyFillTitle } from "./styles";
 
 export default function Default({
   notification,
@@ -20,9 +20,9 @@ export default function Default({
   quote?: Quote;
   loading?: boolean;
 }): JSX.Element {
-  const {modifyTime, actionStatus, failureMessage, lastSeenAction, quoteId} =
+  const { modifyTime, actionStatus, failureMessage, lastSeenAction, quoteId } =
     notification;
-  const {symbol, asset} = useMarket(quote?.marketId) || {};
+  const { symbol, asset } = useMarket(quote?.marketId) || {};
   const token1 = useCurrencyLogo(symbol);
   const token2 = useCollateralLogo();
 

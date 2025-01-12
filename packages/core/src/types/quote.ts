@@ -1,4 +1,4 @@
-import {OrderType, PositionType} from "./trade";
+import { OrderType, PositionType } from "./trade";
 
 export enum QuoteStatus {
   PENDING = "PENDING",

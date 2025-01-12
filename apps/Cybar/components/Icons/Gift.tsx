@@ -1,4 +1,4 @@
-import {Gift as GiftIcon} from "react-feather";
+import { Gift as GiftIcon } from "react-feather";
 import styled from "styled-components";
 
 const Icon = styled(GiftIcon)<{
@@ -6,7 +6,7 @@ const Icon = styled(GiftIcon)<{
   [x: string]: any;
 }>`
   stroke-width: 1;
-  color: ${({theme}) => theme.text1};
+  color: ${({ theme }) => theme.text1};
   &:hover {
     cursor: pointer;
   }

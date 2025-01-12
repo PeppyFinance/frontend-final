@@ -1,19 +1,19 @@
-import Image, {StaticImageData} from "next/legacy/image";
+import Image, { StaticImageData } from "next/legacy/image";
 import styled from "styled-components";
 
 import DEFAULT_TOKEN from "/public/static/images/tokens/default-token.svg";
 
-import {RowBetween} from "components/Row";
+import { RowBetween } from "components/Row";
 import ShimmerAnimation from "components/ShimmerAnimation";
 
-const Wrapper = styled(RowBetween)<{bg?: string; border?: string}>`
-  width: ${({width}) => width ?? "46px"};
+const Wrapper = styled(RowBetween)<{ bg?: string; border?: string }>`
+  width: ${({ width }) => width ?? "46px"};
   height: 24px;
   padding: 2px;
   border-radius: 12px;
-  background: ${({theme, bg}) => (bg ? bg : theme.bg6)};
+  background: ${({ theme, bg }) => (bg ? bg : theme.bg6)};
 
-  ${({border}) =>
+  ${({ border }) =>
     border &&
     `
     border: 1px dashed ${border};

@@ -1,42 +1,42 @@
-import {useCallback, useMemo, useState} from "react";
-import {toast} from "react-hot-toast";
-import styled, {useTheme} from "styled-components";
+import { useCallback, useMemo, useState } from "react";
+import { toast } from "react-hot-toast";
+import styled, { useTheme } from "styled-components";
 
-import {useCollateralToken} from "@symmio/frontend-sdk/constants/tokens";
+import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
 import {
   BN_ZERO,
   formatAmount,
   formatPrice,
   toBN,
 } from "@symmio/frontend-sdk/utils/numbers";
-import {useGetTokenWithFallbackChainId} from "@symmio/frontend-sdk/utils/token";
-import {FALLBACK_CHAIN_ID} from "constants/chains/chains";
+import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
+import { FALLBACK_CHAIN_ID } from "constants/chains/chains";
 
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
-import {ApprovalState} from "@symmio/frontend-sdk/lib/hooks/useApproval";
-import {useApproveCallback} from "@symmio/frontend-sdk/lib/hooks/useApproveCallback";
+import { ApprovalState } from "@symmio/frontend-sdk/lib/hooks/useApproval";
+import { useApproveCallback } from "@symmio/frontend-sdk/lib/hooks/useApproveCallback";
 import {
   useDepositModalToggle,
   useModalOpen,
 } from "@symmio/frontend-sdk/state/application/hooks";
-import {ApplicationModal} from "@symmio/frontend-sdk/state/application/reducer";
-import {useIsHavePendingTransaction} from "@symmio/frontend-sdk/state/transactions/hooks";
+import { ApplicationModal } from "@symmio/frontend-sdk/state/application/reducer";
+import { useIsHavePendingTransaction } from "@symmio/frontend-sdk/state/transactions/hooks";
 import {
   useAccountPartyAStat,
   useActiveAccountAddress,
 } from "@symmio/frontend-sdk/state/user/hooks";
-import {TransferTab} from "@symmio/frontend-sdk/types/transfer";
+import { TransferTab } from "@symmio/frontend-sdk/types/transfer";
 
-import {useMintCollateral} from "@symmio/frontend-sdk/callbacks/useMintTestCollateral";
-import {useTransferCollateral} from "@symmio/frontend-sdk/callbacks/useTransferCollateral";
-import {useMultiAccountAddress} from "@symmio/frontend-sdk/state/chains/hooks";
-import {PrimaryButton} from "components/Button";
-import {Close as CloseIcon, DotFlashing} from "components/Icons";
+import { useMintCollateral } from "@symmio/frontend-sdk/callbacks/useMintTestCollateral";
+import { useTransferCollateral } from "@symmio/frontend-sdk/callbacks/useTransferCollateral";
+import { useMultiAccountAddress } from "@symmio/frontend-sdk/state/chains/hooks";
+import { PrimaryButton } from "components/Button";
+import { Close as CloseIcon, DotFlashing } from "components/Icons";
 import InfoItem from "components/InfoItem";
-import {CustomInputBox2} from "components/InputBox";
-import {Modal} from "components/Modal";
-import {Row, RowBetween, RowStart} from "components/Row";
-import {Option} from "components/Tab";
+import { CustomInputBox2 } from "components/InputBox";
+import { Modal } from "components/Modal";
+import { Row, RowBetween, RowStart } from "components/Row";
+import { Option } from "components/Tab";
 
 const Wrapper = styled.div`
   display: flex;
@@ -46,7 +46,7 @@ const Wrapper = styled.div`
   padding: 1rem;
   gap: 0.8rem;
 
-  ${({theme}) => theme.mediaWidth.upToMedium`
+  ${({ theme }) => theme.mediaWidth.upToMedium`
     padding: 0.5rem;
   `};
 `;
@@ -70,12 +70,12 @@ const Close = styled.div`
   cursor: pointer;
   border-radius: 4px;
   margin: 2px 2px 1px 0px;
-  background: ${({theme}) => theme.bg6};
+  background: ${({ theme }) => theme.bg6};
 `;
 
 export default function DepositModal() {
   const theme = useTheme();
-  const {chainId, account} = useActiveWagmi();
+  const { chainId, account } = useActiveWagmi();
   const activeAccountAddress = useActiveAccountAddress();
   const [typedAmount, setTypedAmount] = useState("");
   const isPendingTxs = useIsHavePendingTransaction();
@@ -83,10 +83,10 @@ export default function DepositModal() {
   const showDepositModal = useModalOpen(ApplicationModal.DEPOSIT);
   const toggleDepositModal = useDepositModalToggle();
 
-  const {accountBalanceLimit, allocatedBalance: subAccountAllocatedBalance} =
+  const { accountBalanceLimit, allocatedBalance: subAccountAllocatedBalance } =
     useAccountPartyAStat(activeAccountAddress);
 
-  const {collateralBalance} = useAccountPartyAStat(account);
+  const { collateralBalance } = useAccountPartyAStat(account);
 
   const allowedDepositAmount = useMemo(() => {
     const amount = toBN(accountBalanceLimit).minus(subAccountAllocatedBalance);
@@ -97,9 +97,9 @@ export default function DepositModal() {
     return toBN(collateralBalance).isLessThan(typedAmount);
   }, [collateralBalance, typedAmount]);
 
-  const {callback: transferBalanceCallback, error: transferBalanceError} =
+  const { callback: transferBalanceCallback, error: transferBalanceError } =
     useTransferCollateral(typedAmount, TransferTab.DEPOSIT);
-  const {callback: mintCallback, error: mintCallbackError} =
+  const { callback: mintCallback, error: mintCallbackError } =
     useMintCollateral();
 
   const MULTI_ACCOUNT_ADDRESS = useMultiAccountAddress();
@@ -294,7 +294,7 @@ export default function DepositModal() {
         <RowBetween>
           {getTabs()}
           <Close onClick={toggleDepositModal}>
-            <CloseIcon size={12} style={{cursor: "pointer"}} />
+            <CloseIcon size={12} style={{ cursor: "pointer" }} />
           </Close>
         </RowBetween>
 

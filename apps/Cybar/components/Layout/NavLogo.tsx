@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-import {ExternalLink} from "components/Link";
-import {RowCenter, RowStart} from "components/Row";
-import {APP_URL} from "constants/chains/misc";
+import { ExternalLink } from "components/Link";
+import { RowCenter, RowStart } from "components/Row";
+import { APP_URL } from "constants/chains/misc";
 import Image from "next/legacy/image";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 import CYBAR_HEADER_LOGO from "/public/static/images/cybar-long.svg";
 
 const Wrapper = styled(RowCenter)`
@@ -22,7 +22,7 @@ const Wrapper = styled(RowCenter)`
 `;
 
 const TextWrapper = styled(RowStart)`
-  ${({theme}) => theme.mediaWidth.upToMedium`
+  ${({ theme }) => theme.mediaWidth.upToMedium`
   flex-direction: column;
   align-items: flex-start;
 `};

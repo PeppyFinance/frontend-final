@@ -7,7 +7,7 @@ import quotes from "./quotes/reducer";
 import trade from "./trade/reducer";
 import transactions from "./transactions/reducer";
 import user from "./user/reducer";
-const {combineReducers} = ((toolkitRaw as any).default ??
+const { combineReducers } = ((toolkitRaw as any).default ??
   toolkitRaw) as typeof toolkitRaw;
 
 const reducer = combineReducers({

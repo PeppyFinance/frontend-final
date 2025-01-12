@@ -1,48 +1,48 @@
-import {ChangeEvent, useRef} from "react";
+import { ChangeEvent, useRef } from "react";
 import styled from "styled-components";
 
-import {Row} from "components/Row";
+import { Row } from "components/Row";
 import Switch from "components/Switch";
 
 const TRANSITION_TIME = "0.3s";
 
-const Container = styled(Row)<{height: string}>`
-  height: ${({height}) => height};
+const Container = styled(Row)<{ height: string }>`
+  height: ${({ height }) => height};
   padding: 2px 12px 2px 2px;
   gap: 12px;
   border-radius: 4px;
-  background-color: ${({theme}) => theme.bg4};
+  background-color: ${({ theme }) => theme.bg4};
 `;
 
-const InputBox = styled.div<{active?: boolean}>`
+const InputBox = styled.div<{ active?: boolean }>`
   position: relative;
   width: 100%;
   height: 100%;
-  border: 1px solid ${({theme}) => theme.bg2};
+  border: 1px solid ${({ theme }) => theme.bg2};
   border-radius: 4px;
   padding: 6px 8px;
-  background-color: ${({active, theme}) => (active ? theme.bg2 : theme.bg4)};
+  background-color: ${({ active, theme }) => (active ? theme.bg2 : theme.bg4)};
   font-weight: 400;
   transition: all ${TRANSITION_TIME};
 `;
 
-const Label = styled.label<{active?: boolean; fontSize: string}>`
+const Label = styled.label<{ active?: boolean; fontSize: string }>`
   position: absolute;
-  top: ${({active}) => (active ? "12px" : "50%")};
-  font-size: ${({active, fontSize}) =>
+  top: ${({ active }) => (active ? "12px" : "50%")};
+  font-size: ${({ active, fontSize }) =>
     active ? fontSize : `${parseInt(fontSize) + 2}px`};
   transform: translateY(-50%);
   transition: all ${TRANSITION_TIME};
 `;
 
-const Input = styled.input<{active?: boolean; fontSize: string}>`
+const Input = styled.input<{ active?: boolean; fontSize: string }>`
   position: absolute;
   bottom: 6px;
   border: none;
   width: 100%;
   background-color: transparent;
-  color: ${({theme}) => theme.text0};
-  font-size: ${({fontSize}) => fontSize};
+  color: ${({ theme }) => theme.text0};
+  font-size: ${({ fontSize }) => fontSize};
   transition: all ${TRANSITION_TIME};
 
   /* outline is none for now. But later could add better outline (like ring in tailwind) */
@@ -51,7 +51,7 @@ const Input = styled.input<{active?: boolean; fontSize: string}>`
   }
 
   &::placeholder {
-    color: ${({theme, active}) => (active ? theme.text2 : "transparent")};
+    color: ${({ theme, active }) => (active ? theme.text2 : "transparent")};
     font-weight: 400;
     transition: color ${TRANSITION_TIME};
   }

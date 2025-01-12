@@ -1,21 +1,21 @@
-import {ApolloClient, NormalizedCacheObject} from "@apollo/client";
+import { ApolloClient, NormalizedCacheObject } from "@apollo/client";
 import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
-import {Address} from "viem";
+import { Address } from "viem";
 import {
   BALANCE_CHANGES_DATA,
   TOTAL_DEPOSITS_AND_WITHDRAWALS,
 } from "../../apollo/queries";
-import {WEB_SETTING} from "../../config/index";
-import {BALANCE_HISTORY_ITEMS_NUMBER} from "../../constants/misc";
-import {makeHttpRequest} from "../../utils/http";
-import {getAppNameHeader} from "../hedger/thunks";
+import { WEB_SETTING } from "../../config/index";
+import { BALANCE_HISTORY_ITEMS_NUMBER } from "../../constants/misc";
+import { makeHttpRequest } from "../../utils/http";
+import { getAppNameHeader } from "../hedger/thunks";
 import {
   BalanceHistoryData,
   BalanceInfo,
   BalanceInfosType,
   DepositWithdrawalsData,
 } from "./types";
-const {createAsyncThunk} = ((toolkitRaw as any).default ??
+const { createAsyncThunk } = ((toolkitRaw as any).default ??
   toolkitRaw) as typeof toolkitRaw;
 
 export const getIsWhiteList = createAsyncThunk(
@@ -26,7 +26,12 @@ export const getIsWhiteList = createAsyncThunk(
     multiAccountAddress: string | undefined;
     appName: string;
   }) => {
-    const {baseUrl: hedgerUrl, account, multiAccountAddress, appName} = payload;
+    const {
+      baseUrl: hedgerUrl,
+      account,
+      multiAccountAddress,
+      appName,
+    } = payload;
 
     if (!hedgerUrl) {
       throw new Error("hedgerUrl is empty");
@@ -38,14 +43,14 @@ export const getIsWhiteList = createAsyncThunk(
       throw new Error("multiAccountAddress is empty");
     }
 
-    const {href: isWhiteListUrl} = new URL(
+    const { href: isWhiteListUrl } = new URL(
       `/check_in-whitelist/${account}/${multiAccountAddress}`,
       hedgerUrl,
     );
 
     let isWhiteList: null | boolean = null;
     try {
-      if (!WEB_SETTING.checkWhiteList) return {isWhiteList: true};
+      if (!WEB_SETTING.checkWhiteList) return { isWhiteList: true };
 
       const [whiteListRes] = await Promise.allSettled([
         makeHttpRequest<boolean>(isWhiteListUrl, getAppNameHeader(appName)),
@@ -58,7 +63,7 @@ export const getIsWhiteList = createAsyncThunk(
       console.error(error, " happened in check-in-whitelist");
     }
 
-    return {isWhiteList};
+    return { isWhiteList };
   },
 );
 
@@ -91,12 +96,12 @@ export const getBalanceHistory = createAsyncThunk(
       let hasMore = true;
 
       const {
-        data: {balanceChanges},
+        data: { balanceChanges },
       } = await client.query<{
         balanceChanges: BalanceHistoryData[];
       }>({
         query: BALANCE_CHANGES_DATA,
-        variables: {account: account.toLowerCase(), first, skip},
+        variables: { account: account.toLowerCase(), first, skip },
         fetchPolicy: "no-cache",
       });
 
@@ -104,7 +109,7 @@ export const getBalanceHistory = createAsyncThunk(
         hasMore = false;
       }
       hasMore = true;
-      return {result: balanceChanges, hasMore};
+      return { result: balanceChanges, hasMore };
     } catch (error) {
       console.error(error);
       throw new Error(`Unable to query balance history data from Client`);
@@ -135,15 +140,15 @@ export const getTotalDepositsAndWithdrawals = createAsyncThunk(
 
     try {
       const {
-        data: {accounts},
-      } = await client.query<{accounts: DepositWithdrawalsData[]}>({
+        data: { accounts },
+      } = await client.query<{ accounts: DepositWithdrawalsData[] }>({
         query: TOTAL_DEPOSITS_AND_WITHDRAWALS,
-        variables: {id: account.toLowerCase()},
+        variables: { id: account.toLowerCase() },
         fetchPolicy: "no-cache",
       });
 
-      if (accounts.length) return {result: accounts[0]};
-      return {result: null};
+      if (accounts.length) return { result: accounts[0] };
+      return { result: null };
     } catch (error) {
       console.error(error);
       throw new Error(`Unable to query Deposits And Withdrawals from Client`);
@@ -158,7 +163,7 @@ export const getBalanceInfo = createAsyncThunk(
     account: string | undefined;
     multiAccountAddress: string | undefined;
   }) => {
-    const {baseUrl: hedgerUrl, account, multiAccountAddress} = payload;
+    const { baseUrl: hedgerUrl, account, multiAccountAddress } = payload;
 
     if (!hedgerUrl) {
       throw new Error("hedgerUrl is empty");
@@ -167,7 +172,7 @@ export const getBalanceInfo = createAsyncThunk(
       throw new Error("account is empty");
     }
 
-    const {href: balanceInfoUrl} = new URL(
+    const { href: balanceInfoUrl } = new URL(
       `/get_balance_info/${account}/${multiAccountAddress}`,
       hedgerUrl,
     );
@@ -182,7 +187,7 @@ export const getBalanceInfo = createAsyncThunk(
         const value = balanceInfoRes.value as BalanceInfo;
         const keys = Object.keys(value);
 
-        keys.forEach(key => {
+        keys.forEach((key) => {
           const info = value[key]?.party_a;
           balanceInfos[key.toLowerCase()] = {
             allocatedBalance: info.allocated_balance,

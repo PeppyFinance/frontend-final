@@ -1,4 +1,4 @@
-import {RefObject} from "react";
+import { RefObject } from "react";
 
 import useEventListener from "./useEventListener";
 
@@ -9,7 +9,7 @@ export default function useOnOutsideClick<T extends HTMLElement = HTMLElement>(
   handler: Handler,
   mouseEvent: "mousedown" | "mouseup" = "mousedown",
 ): void {
-  useEventListener(mouseEvent, event => {
+  useEventListener(mouseEvent, (event) => {
     const el = ref?.current;
 
     // Do nothing if clicking ref's element or descendent elements

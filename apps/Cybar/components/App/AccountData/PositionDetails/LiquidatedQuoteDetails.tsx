@@ -1,14 +1,14 @@
-import {useEffect, useState} from "react";
-import styled, {useTheme} from "styled-components";
+import { useEffect, useState } from "react";
+import styled, { useTheme } from "styled-components";
 
-import {Quote} from "@symmio/frontend-sdk/types/quote";
-import {PositionType} from "@symmio/frontend-sdk/types/trade";
-import {formatAmount, toBN} from "@symmio/frontend-sdk/utils/numbers";
-import {formatTimestamp} from "@symmio/frontend-sdk/utils/time";
+import { Quote } from "@symmio/frontend-sdk/types/quote";
+import { PositionType } from "@symmio/frontend-sdk/types/trade";
+import { formatAmount, toBN } from "@symmio/frontend-sdk/utils/numbers";
+import { formatTimestamp } from "@symmio/frontend-sdk/utils/time";
 
-import {useMarketData} from "@symmio/frontend-sdk/state/hedger/hooks";
+import { useMarketData } from "@symmio/frontend-sdk/state/hedger/hooks";
 
-import {useMarket} from "@symmio/frontend-sdk/hooks/useMarkets";
+import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
 import {
   useLockedMargin,
   useQuoteLeverage,
@@ -16,9 +16,9 @@ import {
   useQuoteUpnlAndPnl,
 } from "@symmio/frontend-sdk/hooks/useQuotes";
 
-import {useCollateralToken} from "@symmio/frontend-sdk/constants/tokens";
+import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
-import {useGetTokenWithFallbackChainId} from "@symmio/frontend-sdk/utils/token";
+import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
 import {
   Chevron,
   ContentWrapper,
@@ -36,17 +36,17 @@ import {
   Value,
   Wrapper,
 } from "components/App/AccountData/PositionDetails/styles";
-import {LongArrow, ShortArrow} from "components/Icons";
-import {Row as RowComponent, RowEnd} from "components/Row";
+import { LongArrow, ShortArrow } from "components/Icons";
+import { Row as RowComponent, RowEnd } from "components/Row";
 import ClosedAmountDetails from "./ClosedSizeDetails/ClosedAmountDetails";
 import PositionDetailsNavigator from "./PositionDetailsNavigator";
 
 const LiquidateWrap = styled(DataWrap)`
-  background: ${({theme}) => theme.bgLoose};
+  background: ${({ theme }) => theme.bgLoose};
 `;
 
 const LiquidateLabel = styled(Label)`
-  color: ${({theme}) => theme.negative};
+  color: ${({ theme }) => theme.negative};
 `;
 
 export default function LiquidatedQuoteDetails({
@@ -59,7 +59,7 @@ export default function LiquidatedQuoteDetails({
   mobileVersion: boolean;
 }): JSX.Element {
   const theme = useTheme();
-  const {chainId} = useActiveWagmi();
+  const { chainId } = useActiveWagmi();
   const {
     id,
     positionType,
@@ -70,7 +70,7 @@ export default function LiquidatedQuoteDetails({
     liquidatePrice,
     openedPrice,
   } = quote;
-  const {symbol, name, asset} = useMarket(marketId) || {};
+  const { symbol, name, asset } = useMarket(marketId) || {};
   const marketData = useMarketData(name);
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(

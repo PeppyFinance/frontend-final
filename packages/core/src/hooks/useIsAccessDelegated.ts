@@ -1,17 +1,17 @@
-import {useMemo} from "react";
+import { useMemo } from "react";
 
-import {MULTI_ACCOUNT_ABI} from "../constants";
-import {useSingleContractMultipleMethods} from "../lib/hooks/multicall";
+import { MULTI_ACCOUNT_ABI } from "../constants";
+import { useSingleContractMultipleMethods } from "../lib/hooks/multicall";
 import useActiveWagmi from "../lib/hooks/useActiveWagmi";
-import {useSupportedChainId} from "../lib/hooks/useSupportedChainId";
-import {useMultiAccountAddress} from "../state/chains";
-import {useActiveAccountAddress} from "../state/user/hooks";
+import { useSupportedChainId } from "../lib/hooks/useSupportedChainId";
+import { useMultiAccountAddress } from "../state/chains";
+import { useActiveAccountAddress } from "../state/user/hooks";
 
 export function useIsAccessDelegated(
   target: string,
   selector: string,
 ): boolean {
-  const {chainId} = useActiveWagmi();
+  const { chainId } = useActiveWagmi();
   const account = useActiveAccountAddress();
   const isSupportedChainId = useSupportedChainId();
 
@@ -28,11 +28,11 @@ export function useIsAccessDelegated(
       : []
     : [];
 
-  const {data: accessResult} = useSingleContractMultipleMethods(
+  const { data: accessResult } = useSingleContractMultipleMethods(
     chainId ? MULTI_ACCOUNT_ADDRESS[chainId] : "",
     MULTI_ACCOUNT_ABI,
     calls,
-    {enabled: calls.length > 0},
+    { enabled: calls.length > 0 },
   );
 
   return useMemo(

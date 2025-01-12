@@ -1,14 +1,14 @@
-import {useCallback, useMemo} from "react";
+import { useCallback, useMemo } from "react";
 
-import {DEFAULT_TXN_DISMISS_MS} from "../../constants/misc";
-import {AppState, useAppDispatch, useAppSelector} from "../declaration";
+import { DEFAULT_TXN_DISMISS_MS } from "../../constants/misc";
+import { AppState, useAppDispatch, useAppSelector } from "../declaration";
 import {
   addPopup,
   removePopup,
   setInjectedAddress,
   setOpenModal,
 } from "./actions";
-import {ApplicationModal, Popup, PopupContent, PopupList} from "./reducer";
+import { ApplicationModal, Popup, PopupContent, PopupList } from "./reducer";
 
 export function useModalOpen(modal: ApplicationModal): boolean {
   const openModal = useAppSelector(
@@ -79,7 +79,7 @@ export function useRemovePopup(): (key: string) => void {
   const dispatch = useAppDispatch();
   return useCallback(
     (key: string) => {
-      dispatch(removePopup({key}));
+      dispatch(removePopup({ key }));
     },
     [dispatch],
   );
@@ -103,7 +103,7 @@ export function useSetInjectedAddressCallback() {
   const dispatch = useAppDispatch();
   return useCallback(
     (address: string) => {
-      dispatch(setInjectedAddress({address}));
+      dispatch(setInjectedAddress({ address }));
     },
     [dispatch],
   );

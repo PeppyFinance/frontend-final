@@ -1,5 +1,5 @@
-import {IQuotesInfo} from "@symmio/frontend-sdk/types/quotesOverview";
-import {createContext} from "react";
+import { IQuotesInfo } from "@symmio/frontend-sdk/types/quotesOverview";
+import { createContext } from "react";
 
 export const AccountPositionsContext = createContext<{
   marketQuotesInfo: IQuotesInfo;

@@ -1,5 +1,5 @@
-import {ApiState, ConnectionStatus} from "../../types/api";
-import {Account, AccountUpnl, UserPartyAStatType} from "../../types/user";
+import { ApiState, ConnectionStatus } from "../../types/api";
+import { Account, AccountUpnl, UserPartyAStatType } from "../../types/user";
 
 export interface UserState {
   matchesDarkMode: boolean; // whether the dark mode media query matches
@@ -15,9 +15,9 @@ export interface UserState {
   whiteListAccount: boolean | null;
   accountsPartyAStat: UserPartyAStatType;
   whiteListAccountState: ApiState;
-  allAccountsUpnl: {account: string; upnl: AccountUpnl}[];
+  allAccountsUpnl: { account: string; upnl: AccountUpnl }[];
 
-  balanceHistory?: {[txHash: string]: BalanceHistoryData};
+  balanceHistory?: { [txHash: string]: BalanceHistoryData };
   balanceHistoryState: ApiState;
   hasMoreHistory?: boolean;
 
@@ -39,7 +39,7 @@ export enum BalanceHistoryType {
   WITHDRAW_PARTY_A = "WITHDRAW",
 }
 
-export const BalanceHistoryName: {[status: string]: string} = {
+export const BalanceHistoryName: { [status: string]: string } = {
   [BalanceHistoryType.DEPOSIT_PARTY_A]: "DEPOSIT",
   [BalanceHistoryType.DEALLOCATE_PARTY_A]: "WITHDRAW REQUEST",
   [BalanceHistoryType.WITHDRAW_PARTY_A]: "WITHDRAW",

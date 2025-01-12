@@ -1,32 +1,32 @@
 import styled from "styled-components";
 
-import {Quote} from "@symmio/frontend-sdk/types/quote";
+import { Quote } from "@symmio/frontend-sdk/types/quote";
 
-import {useMarket} from "@symmio/frontend-sdk/hooks/useMarkets";
-import useCurrencyLogo, {useCollateralLogo} from "lib/hooks/useCurrencyLogo";
+import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
+import useCurrencyLogo, { useCollateralLogo } from "lib/hooks/useCurrencyLogo";
 
 import Logos from "components/Notifications/Logos";
-import {RowEnd, RowStart} from "components/Row";
+import { RowEnd, RowStart } from "components/Row";
 
-const Wrapper = styled(RowStart)<{bg?: string; border?: string}>`
-  width: ${({width}) => width ?? "98px"};
+const Wrapper = styled(RowStart)<{ bg?: string; border?: string }>`
+  width: ${({ width }) => width ?? "98px"};
   height: 24px;
   padding-left: 13px;
   font-size: 10px;
   font-style: normal;
   border-radius: 12px;
-  background: ${({theme, bg}) => (bg ? bg : theme.bg5)};
-  color: ${({theme}) => theme.text1};
+  background: ${({ theme, bg }) => (bg ? bg : theme.bg5)};
+  color: ${({ theme }) => theme.text1};
 
-  ${({border}) =>
+  ${({ border }) =>
     border &&
     `
     border: 1px dashed ${border};
   `}
 `;
-export default function NotificationPopupIcon({quote}: {quote?: Quote}) {
-  const {marketId, orderType} = quote || {};
-  const {symbol} = useMarket(marketId) || {};
+export default function NotificationPopupIcon({ quote }: { quote?: Quote }) {
+  const { marketId, orderType } = quote || {};
+  const { symbol } = useMarket(marketId) || {};
   const token1 = useCurrencyLogo(symbol);
   const token2 = useCollateralLogo();
 

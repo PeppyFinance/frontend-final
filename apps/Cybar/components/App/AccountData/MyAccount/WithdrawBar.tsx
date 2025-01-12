@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-import {useCollateralToken} from "@symmio/frontend-sdk/constants/tokens";
-import {formatAmount} from "@symmio/frontend-sdk/utils/numbers";
-import {useGetTokenWithFallbackChainId} from "@symmio/frontend-sdk/utils/token";
+import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
+import { formatAmount } from "@symmio/frontend-sdk/utils/numbers";
+import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
 
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 
@@ -12,18 +12,18 @@ import {
 } from "@symmio/frontend-sdk/state/user/hooks";
 
 import WithdrawCooldown from "components/App/AccountData/WithdrawCooldown";
-import {Row, RowBetween} from "components/Row";
+import { Row, RowBetween } from "components/Row";
 
 const Container = styled(RowBetween)`
   height: 59px;
   border-radius: 4px;
   padding: 0px 12px 0px 16px;
-  background-color: ${({theme}) => theme.bg1};
+  background-color: ${({ theme }) => theme.bg1};
 
   & > * {
     &:nth-child(2) {
       width: 228px;
-      ${({theme}) => theme.mediaWidth.upToSmall`
+      ${({ theme }) => theme.mediaWidth.upToSmall`
         width: auto;
         padding: 0 8px;
       `}
@@ -36,7 +36,7 @@ const WithdrawAmount = styled(Row)`
   width: unset;
   font-size: 16px;
   white-space: nowrap;
-  color: ${({theme}) => theme.text0};
+  color: ${({ theme }) => theme.text0};
 
   & > * {
     &:first-child {
@@ -50,9 +50,9 @@ const WithdrawAmount = styled(Row)`
 `;
 
 export default function Statusbar() {
-  const {chainId} = useActiveWagmi();
+  const { chainId } = useActiveWagmi();
   const activeAccountAddress = useActiveAccountAddress();
-  const {accountBalance} = useAccountPartyAStat(activeAccountAddress);
+  const { accountBalance } = useAccountPartyAStat(activeAccountAddress);
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(
     COLLATERAL_TOKEN,

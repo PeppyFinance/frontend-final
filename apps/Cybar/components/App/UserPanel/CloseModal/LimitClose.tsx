@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-import {toBN} from "@symmio/frontend-sdk/utils/numbers";
+import { toBN } from "@symmio/frontend-sdk/utils/numbers";
 
-import {useMarket} from "@symmio/frontend-sdk/hooks/useMarkets";
-import {useExpertMode} from "@symmio/frontend-sdk/state/user/hooks";
-import {Quote} from "@symmio/frontend-sdk/types/quote";
-import {CustomInputBox2} from "components/InputBox";
+import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
+import { useExpertMode } from "@symmio/frontend-sdk/state/user/hooks";
+import { Quote } from "@symmio/frontend-sdk/types/quote";
+import { CustomInputBox2 } from "components/InputBox";
 
-export const InputAmount = styled.input.attrs({type: "number"})<{
+export const InputAmount = styled.input.attrs({ type: "number" })<{
   active?: boolean;
 }>`
   border: 0;
@@ -17,7 +17,7 @@ export const InputAmount = styled.input.attrs({type: "number"})<{
   margin-left: 2px;
   font-size: 12px;
   background: transparent;
-  color: ${({theme}) => theme.text0};
+  color: ${({ theme }) => theme.text0};
 
   appearance: textfield;
 
@@ -29,7 +29,7 @@ export const InputAmount = styled.input.attrs({type: "number"})<{
     -webkit-appearance: none;
     margin: 0;
   }
-  ${({active, theme}) =>
+  ${({ active, theme }) =>
     active &&
     `
     color: ${theme.text0};
@@ -52,7 +52,7 @@ export default function LimitClose({
   balanceTitle?: string;
 }) {
   const userExpertMode = useExpertMode();
-  const {pricePrecision} = useMarket(quote?.marketId) || {};
+  const { pricePrecision } = useMarket(quote?.marketId) || {};
   const precision = userExpertMode ? undefined : pricePrecision;
 
   return (

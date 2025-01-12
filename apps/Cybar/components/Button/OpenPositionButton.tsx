@@ -4,11 +4,11 @@ import {
   useActiveMarket,
   usePositionType,
 } from "@symmio/frontend-sdk/state/trade/hooks";
-import {PositionType} from "@symmio/frontend-sdk/types/trade";
-import {titleCase} from "@symmio/frontend-sdk/utils/string";
-import {DotFlashing, LongArrow, ShortArrow} from "components/Icons";
-import {useCallback} from "react";
-import {PrimaryButton} from ".";
+import { PositionType } from "@symmio/frontend-sdk/types/trade";
+import { titleCase } from "@symmio/frontend-sdk/utils/string";
+import { DotFlashing, LongArrow, ShortArrow } from "components/Icons";
+import { useCallback } from "react";
+import { PrimaryButton } from ".";
 
 const IconWrap = styled.div`
   position: absolute;
@@ -21,11 +21,11 @@ const Button = styled(PrimaryButton)<{
 }>`
   &:focus,
   &:hover {
-    background: ${({longOrShort, theme}) =>
+    background: ${({ longOrShort, theme }) =>
       longOrShort ? theme.hoverLong : theme.hoverShort};
   }
 
-  ${({theme, disabled}) =>
+  ${({ theme, disabled }) =>
     disabled &&
     `
     background: ${theme.bg3};
@@ -66,14 +66,14 @@ export default function OpenPositionButton({
             width={19}
             height={11}
             color={!loading && !disabled ? "#0B0C0E" : "#8B8E9F"}
-            style={{marginLeft: "8px"}}
+            style={{ marginLeft: "8px" }}
           />
         ) : (
           <ShortArrow
             width={19}
             height={11}
             color={!loading && !disabled ? "#0B0C0E" : "#8B8E9F"}
-            style={{marginLeft: "8px"}}
+            style={{ marginLeft: "8px" }}
           />
         )}
       </IconWrap>

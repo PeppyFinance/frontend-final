@@ -1,16 +1,16 @@
-import {useMemo} from "react";
-import styled, {useTheme} from "styled-components";
+import { useMemo } from "react";
+import styled, { useTheme } from "styled-components";
 
-import {Quote, QuoteStatus} from "@symmio/frontend-sdk/types/quote";
+import { Quote, QuoteStatus } from "@symmio/frontend-sdk/types/quote";
 import {
   formatAmount,
   formatCurrency,
   toBN,
 } from "@symmio/frontend-sdk/utils/numbers";
 
-import {useMarketData} from "@symmio/frontend-sdk/state/hedger/hooks";
+import { useMarketData } from "@symmio/frontend-sdk/state/hedger/hooks";
 
-import {useMarket} from "@symmio/frontend-sdk/hooks/useMarkets";
+import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
 import {
   useQuoteLeverage,
   useQuoteUpnlAndPnl,
@@ -22,7 +22,7 @@ import {
   Row,
   Value,
 } from "components/App/AccountData/PositionDetails/styles";
-import {PnlValue} from "components/App/UserPanel/Common";
+import { PnlValue } from "components/App/UserPanel/Common";
 
 const Wrapper = styled(DataWrap)`
   margin-top: 4px;
@@ -31,15 +31,20 @@ const Wrapper = styled(DataWrap)`
 const PositionPnl = styled(PnlValue)`
   font-weight: 500;
   font-size: 14px;
-  ${({theme}) => theme.mediaWidth.upToMedium`
+  ${({ theme }) => theme.mediaWidth.upToMedium`
     font-size: 12px;
   `};
 `;
 
-export default function ClosedAmountDetails({quote}: {quote: Quote | null}) {
+export default function ClosedAmountDetails({
+  quote,
+}: {
+  quote: Quote | null;
+}) {
   const theme = useTheme();
-  const {quoteStatus, closedAmount, avgClosedPrice, openedPrice} = quote || {};
-  const {symbol, asset, name} = useMarket(quote?.marketId) || {};
+  const { quoteStatus, closedAmount, avgClosedPrice, openedPrice } =
+    quote || {};
+  const { symbol, asset, name } = useMarket(quote?.marketId) || {};
   const marketData = useMarketData(name);
   const leverage = useQuoteLeverage(quote || ({} as Quote));
 

@@ -1,7 +1,7 @@
-import {useSetInjectedAddressCallback} from "@symmio/frontend-sdk/state/application/hooks";
-import {useRouter} from "next/router";
-import {useEffect, useMemo} from "react";
-import {isAddress} from "viem";
+import { useSetInjectedAddressCallback } from "@symmio/frontend-sdk/state/application/hooks";
+import { useRouter } from "next/router";
+import { useEffect, useMemo } from "react";
+import { isAddress } from "viem";
 
 export function useInjectedAddress() {
   const router = useRouter();

@@ -1,4 +1,4 @@
-import {toBN} from "@symmio/frontend-sdk/utils/numbers";
+import { toBN } from "@symmio/frontend-sdk/utils/numbers";
 
 export function checkTpSlCriteria(
   targetValue: number,
@@ -6,11 +6,11 @@ export function checkTpSlCriteria(
   targetPrice: string,
 ) {
   if (targetValue < limitValue || targetValue < 0) {
-    return {error: true, message: `TP must be greater than ${limitValue}%`};
+    return { error: true, message: `TP must be greater than ${limitValue}%` };
   }
   if (toBN(targetPrice).isLessThan(0)) {
-    return {error: true, message: `Price must be greater than 0`};
+    return { error: true, message: `Price must be greater than 0` };
   }
 
-  return {error: false, message: ""};
+  return { error: false, message: "" };
 }

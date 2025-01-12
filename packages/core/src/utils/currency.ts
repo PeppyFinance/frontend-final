@@ -1,4 +1,4 @@
-import {Currency, CurrencyAmount} from "@uniswap/sdk-core";
+import { Currency, CurrencyAmount } from "@uniswap/sdk-core";
 import JSBI from "jsbi";
 
 const MIN_NATIVE_CURRENCY_FOR_GAS: JSBI = JSBI.exponentiate(

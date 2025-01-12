@@ -1,14 +1,18 @@
-import {Token} from "@uniswap/sdk-core";
-import styled, {useTheme} from "styled-components";
+import { Token } from "@uniswap/sdk-core";
+import styled, { useTheme } from "styled-components";
 
-import {useCollateralToken} from "@symmio/frontend-sdk/constants/tokens";
-import {ConnectionStatus} from "@symmio/frontend-sdk/types/api";
-import {formatAmount, fromWei, toBN} from "@symmio/frontend-sdk/utils/numbers";
-import {useGetTokenWithFallbackChainId} from "@symmio/frontend-sdk/utils/token";
+import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
+import { ConnectionStatus } from "@symmio/frontend-sdk/types/api";
+import {
+  formatAmount,
+  fromWei,
+  toBN,
+} from "@symmio/frontend-sdk/utils/numbers";
+import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
 
-import {useUpnlWebSocketStatus} from "@symmio/frontend-sdk/state/user/hooks";
+import { useUpnlWebSocketStatus } from "@symmio/frontend-sdk/state/user/hooks";
 
-import {ApiState} from "@symmio/frontend-sdk/types/api";
+import { ApiState } from "@symmio/frontend-sdk/types/api";
 
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 import {
@@ -17,29 +21,29 @@ import {
   useTotalDepositsAndWithdrawals,
 } from "@symmio/frontend-sdk/state/user/hooks";
 
-import {UpnlValue} from "components/App/AccountData/AccountUpnl";
-import {Row, RowBetween} from "components/Row";
+import { UpnlValue } from "components/App/AccountData/AccountUpnl";
+import { Row, RowBetween } from "components/Row";
 import ShimmerAnimation from "components/ShimmerAnimation";
 
-const Wrapper = styled(RowBetween)<{color?: string}>`
+const Wrapper = styled(RowBetween)<{ color?: string }>`
   margin-top: 5px;
-  background: ${({theme, color}) => color ?? theme.bg0};
+  background: ${({ theme, color }) => color ?? theme.bg0};
 `;
 
 const UPNLText = styled.p`
   font-size: 20px;
   font-weight: 400;
-  color: ${({theme}) => theme.text4};
+  color: ${({ theme }) => theme.text4};
 `;
 
 export default function UPNLBar() {
-  const {chainId} = useActiveWagmi();
+  const { chainId } = useActiveWagmi();
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(
     COLLATERAL_TOKEN,
     chainId,
   );
-  const {value, color, bgColor, isLoading} = usePnlValues(collateralCurrency);
+  const { value, color, bgColor, isLoading } = usePnlValues(collateralCurrency);
 
   return (
     <Wrapper padding={"12px 16px"} color={bgColor}>
@@ -60,9 +64,9 @@ export default function UPNLBar() {
 function usePnlValues(currency: Token) {
   const theme = useTheme();
   const activeAccountAddress = useActiveAccountAddress();
-  const {allocatedBalance, accountBalance} =
+  const { allocatedBalance, accountBalance } =
     useAccountPartyAStat(activeAccountAddress);
-  const {depositWithdrawalsData, depositWithdrawalsState} =
+  const { depositWithdrawalsData, depositWithdrawalsState } =
     useTotalDepositsAndWithdrawals();
   const upnlWebSocketStatus = useUpnlWebSocketStatus();
   const loading = upnlWebSocketStatus === ConnectionStatus.CLOSED;
@@ -79,7 +83,7 @@ function usePnlValues(currency: Token) {
       isLoading: true,
     };
 
-  const {deposit: totalDeposit, withdraw: totalWithdraw} =
+  const { deposit: totalDeposit, withdraw: totalWithdraw } =
     depositWithdrawalsData;
   const pnlBN = toBN(allocatedBalance)
     .plus(accountBalance)

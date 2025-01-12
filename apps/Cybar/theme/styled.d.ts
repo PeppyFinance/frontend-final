@@ -1,5 +1,5 @@
-import {ThemedCssFunction} from "styled-components/macro";
-import {SupportedThemes} from ".";
+import { ThemedCssFunction } from "styled-components/macro";
+import { SupportedThemes } from ".";
 
 export type Color = string;
 export interface Colors {

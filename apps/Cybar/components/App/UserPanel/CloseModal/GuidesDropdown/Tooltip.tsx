@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import {Info as InfoIcon} from "components/Icons";
+import { Info as InfoIcon } from "components/Icons";
 
 interface TooltipProps {
   text: string;
@@ -23,7 +23,7 @@ const Wrapper = styled.div`
 `;
 
 const StyledInfoIcon = styled(InfoIcon)`
-  color: ${({theme}) => theme.text2};
+  color: ${({ theme }) => theme.text2};
   width: 12px;
   height: 12px;
   margin: 0px 4px 0px 4px;
@@ -41,11 +41,11 @@ const Tooltip = styled.div`
   border-radius: 5px;
   padding: 10px;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
-  color: ${({theme}) => theme.white} !important;
-  background: ${({theme}) => theme.bg6} !important;
+  color: ${({ theme }) => theme.white} !important;
+  background: ${({ theme }) => theme.bg6} !important;
 `;
 
-const ToolTip: React.FC<TooltipProps> = ({text}) => {
+const ToolTip: React.FC<TooltipProps> = ({ text }) => {
   return (
     <>
       <Wrapper>

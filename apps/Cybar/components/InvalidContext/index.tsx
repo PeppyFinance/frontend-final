@@ -1,20 +1,20 @@
 import Image from "next/legacy/image";
-import {useMemo} from "react";
+import { useMemo } from "react";
 import styled from "styled-components";
 
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 
-import {ChainInfo} from "@symmio/frontend-sdk/constants/chainInfo";
-import {FALLBACK_CHAIN_ID} from "constants/chains/chains";
+import { ChainInfo } from "@symmio/frontend-sdk/constants/chainInfo";
+import { FALLBACK_CHAIN_ID } from "constants/chains/chains";
 
 import useRpcChangerCallback from "@symmio/frontend-sdk/lib/hooks/useRpcChangerCallback";
-import {useSupportedChainId} from "@symmio/frontend-sdk/lib/hooks/useSupportedChainId";
+import { useSupportedChainId } from "@symmio/frontend-sdk/lib/hooks/useSupportedChainId";
 
-import {useConnectModal} from "@rainbow-me/rainbowkit";
-import {MainButton} from "components/Button";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
+import { MainButton } from "components/Button";
 import GradientButton from "components/Button/GradientButton";
-import {SwitchWallet} from "components/Icons";
-import {getChainLogo} from "utils/chainLogo";
+import { SwitchWallet } from "components/Icons";
+import { getChainLogo } from "utils/chainLogo";
 
 const IconWrap = styled.div`
   position: absolute;
@@ -33,7 +33,7 @@ export enum ContextError {
 }
 
 export function useInvalidContext() {
-  const {chainId, account} = useActiveWagmi();
+  const { chainId, account } = useActiveWagmi();
   const isSupportedChainId = useSupportedChainId();
   return useMemo(
     () =>
@@ -50,7 +50,7 @@ export function InvalidContext() {
   const invalidContext = useInvalidContext();
   const rpcChangerCallback = useRpcChangerCallback();
   const fallbackChainInfo = ChainInfo[FALLBACK_CHAIN_ID];
-  const {openConnectModal} = useConnectModal();
+  const { openConnectModal } = useConnectModal();
 
   return useMemo(() => {
     if (invalidContext === ContextError.ACCOUNT) {

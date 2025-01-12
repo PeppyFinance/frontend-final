@@ -1,13 +1,13 @@
-import {useRef, useState} from "react";
-import {isMobile} from "react-device-detect";
+import { useRef, useState } from "react";
+import { isMobile } from "react-device-detect";
 import styled from "styled-components";
 
-import {useActiveMarket} from "@symmio/frontend-sdk/state/trade/hooks";
+import { useActiveMarket } from "@symmio/frontend-sdk/state/trade/hooks";
 import useOnOutsideClick from "lib/hooks/useOnOutsideClick";
 
-import {MarketsModal} from "components/App/MarketBar/MarketsModal";
-import {ChevronDown, Loader} from "components/Icons";
-import {Row, RowEnd, RowStart} from "components/Row";
+import { MarketsModal } from "components/App/MarketBar/MarketsModal";
+import { ChevronDown, Loader } from "components/Icons";
+import { Row, RowEnd, RowStart } from "components/Row";
 
 const Container = styled.div`
   display: inline-flex;
@@ -29,13 +29,13 @@ const InnerContentWrapper = styled(Row)`
   height: 38px;
   max-width: 175px;
   border-radius: 4px;
-  background: ${({theme}) => theme.bg3};
+  background: ${({ theme }) => theme.bg3};
 `;
 
 export const Chevron = styled(ChevronDown)<{
   open: boolean;
 }>`
-  transform: rotateX(${({open}) => (open ? "180deg" : "0deg")});
+  transform: rotateX(${({ open }) => (open ? "180deg" : "0deg")});
   transition: 0.5s;
 `;
 
@@ -45,7 +45,7 @@ const MarketText = styled(Row)`
   font-size: 16px;
   line-height: 19px;
   white-space: nowrap;
-  color: ${({theme}) => theme.text0};
+  color: ${({ theme }) => theme.text0};
 `;
 
 export default function MarketSelect() {
@@ -58,7 +58,7 @@ export default function MarketSelect() {
   function getInnerContent() {
     return (
       <InnerContentWrapper>
-        <RowStart style={{marginRight: "39px"}}>
+        <RowStart style={{ marginRight: "39px" }}>
           {market ? (
             <MarketText>
               {market.symbol} / {market.asset}

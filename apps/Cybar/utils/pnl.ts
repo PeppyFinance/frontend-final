@@ -1,4 +1,4 @@
-import {BN_ZERO, formatPrice, toBN} from "@symmio/frontend-sdk/utils/numbers";
+import { BN_ZERO, formatPrice, toBN } from "@symmio/frontend-sdk/utils/numbers";
 
 export function getTargetPnl(
   targetPrice: string,
@@ -20,5 +20,5 @@ export function getTargetPnl(
     .times(100)
     .toFixed(2);
 
-  return {pnl: pnl !== "NaN" ? formatPrice(pnl, 2) : pnl, pnlPercent};
+  return { pnl: pnl !== "NaN" ? formatPrice(pnl, 2) : pnl, pnlPercent };
 }

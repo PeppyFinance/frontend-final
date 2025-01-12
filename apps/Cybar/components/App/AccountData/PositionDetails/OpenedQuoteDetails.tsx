@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from "react";
-import {useTheme} from "styled-components";
+import React, { useEffect, useState } from "react";
+import { useTheme } from "styled-components";
 
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
-import {useCheckQuoteIsExpired} from "lib/hooks/useCheckQuoteIsExpired";
+import { useCheckQuoteIsExpired } from "lib/hooks/useCheckQuoteIsExpired";
 
-import {useCollateralToken} from "@symmio/frontend-sdk/constants/tokens";
-import {Quote, QuoteStatus} from "@symmio/frontend-sdk/types/quote";
-import {PositionType} from "@symmio/frontend-sdk/types/trade";
+import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
+import { Quote, QuoteStatus } from "@symmio/frontend-sdk/types/quote";
+import { PositionType } from "@symmio/frontend-sdk/types/trade";
 import {
   formatAmount,
   formatCurrency,
@@ -16,24 +16,24 @@ import {
   formatTimestamp,
   getRemainingTime,
 } from "@symmio/frontend-sdk/utils/time";
-import {useGetTokenWithFallbackChainId} from "@symmio/frontend-sdk/utils/token";
+import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
 
 import useBidAskPrice from "@symmio/frontend-sdk/hooks/useBidAskPrice";
 import useFetchFundingRate, {
   shouldPayFundingRate,
   useGetPaidAmount,
 } from "@symmio/frontend-sdk/hooks/useFundingRate";
-import {useMarket} from "@symmio/frontend-sdk/hooks/useMarkets";
+import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
 import {
   useLockedMargin,
   useQuoteLeverage,
   useQuoteSize,
   useQuoteUpnlAndPnl,
 } from "@symmio/frontend-sdk/hooks/useQuotes";
-import {useNotionalValue} from "@symmio/frontend-sdk/hooks/useTradePage";
-import {useMarketData} from "@symmio/frontend-sdk/state/hedger/hooks";
-import {FundingRateData} from "@symmio/frontend-sdk/state/hedger/types";
-import {ApiState} from "@symmio/frontend-sdk/types/api";
+import { useNotionalValue } from "@symmio/frontend-sdk/hooks/useTradePage";
+import { useMarketData } from "@symmio/frontend-sdk/state/hedger/hooks";
+import { FundingRateData } from "@symmio/frontend-sdk/state/hedger/types";
+import { ApiState } from "@symmio/frontend-sdk/types/api";
 
 import {
   Chevron,
@@ -53,9 +53,9 @@ import {
   Wrapper,
 } from "components/App/AccountData/PositionDetails/styles";
 import BlinkingPrice from "components/App/FavoriteBar/BlinkingPrice";
-import {PositionActionButton} from "components/Button";
-import {Loader, LongArrow, ShortArrow} from "components/Icons";
-import {Row as RowComponent, RowEnd} from "components/Row";
+import { PositionActionButton } from "components/Button";
+import { Loader, LongArrow, ShortArrow } from "components/Icons";
+import { Row as RowComponent, RowEnd } from "components/Row";
 import ClosePendingDetails from "./ClosedSizeDetails/ClosePendingDetails";
 import ClosedAmountDetails from "./ClosedSizeDetails/ClosedAmountDetails";
 import PositionDetailsNavigator from "./PositionDetailsNavigator";
@@ -76,7 +76,7 @@ export default function OpenedQuoteDetails({
   mobileVersion: boolean;
 }): JSX.Element {
   const theme = useTheme();
-  const {chainId} = useActiveWagmi();
+  const { chainId } = useActiveWagmi();
   const {
     id,
     positionType,
@@ -88,8 +88,8 @@ export default function OpenedQuoteDetails({
     statusModifyTimestamp,
   } = quote;
   const market = useMarket(marketId);
-  const {symbol, name, asset} = market || {};
-  const {ask: askPrice, bid: bidPrice} = useBidAskPrice(market);
+  const { symbol, name, asset } = market || {};
+  const { ask: askPrice, bid: bidPrice } = useBidAskPrice(market);
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(
     COLLATERAL_TOKEN,
@@ -108,7 +108,7 @@ export default function OpenedQuoteDetails({
     undefined,
   );
   const [expanded, setExpanded] = useState(!mobileVersion);
-  const {expired} = useCheckQuoteIsExpired(quote);
+  const { expired } = useCheckQuoteIsExpired(quote);
 
   useEffect(() => {
     if (!mobileVersion) {
@@ -384,11 +384,11 @@ function FundingRate({
           next_funding_rate_short: "",
         } as FundingRateData);
 
-  const {paidAmount, status} = useGetPaidAmount(quoteId);
+  const { paidAmount, status } = useGetPaidAmount(quoteId);
 
-  const {next_funding_rate_long, next_funding_rate_short, next_funding_time} =
+  const { next_funding_rate_long, next_funding_rate_short, next_funding_time } =
     fundingRate;
-  const {diff, hours, minutes, seconds} = getRemainingTime(next_funding_time);
+  const { diff, hours, minutes, seconds } = getRemainingTime(next_funding_time);
 
   const nextFunding =
     positionType === PositionType.LONG

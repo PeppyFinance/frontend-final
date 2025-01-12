@@ -1,5 +1,5 @@
-import {SupportedChainId} from "@symmio/frontend-sdk/constants/chains";
-import {MuonDataType} from "@symmio/frontend-sdk/state/chains/reducer";
+import { SupportedChainId } from "@symmio/frontend-sdk/constants/chains";
+import { MuonDataType } from "@symmio/frontend-sdk/state/chains/reducer";
 import {
   ARBITRUM_MUON_BASE_URL,
   BASE_MUON_BASE_URL,
@@ -40,7 +40,7 @@ export const ArbitrumChain: MuonDataType = {
   Urls: ARBITRUM_MUON_BASE_URL,
 };
 
-export const MuonInfo: {[chainId: number]: MuonDataType} = {
+export const MuonInfo: { [chainId: number]: MuonDataType } = {
   [SupportedChainId.BSC]: BSCChain,
   [SupportedChainId.POLYGON]: PolygonChain,
   [SupportedChainId.MANTLE]: MantleChain,

@@ -1,9 +1,9 @@
-import {useEffect, useMemo, useRef} from "react";
+import { useEffect, useMemo, useRef } from "react";
 import styled from "styled-components";
-import {Z_INDEX} from "theme";
+import { Z_INDEX } from "theme";
 
-import {ChainInfo} from "@symmio/frontend-sdk/constants/chainInfo";
-import {SupportedChainId} from "@symmio/frontend-sdk/constants/chains";
+import { ChainInfo } from "@symmio/frontend-sdk/constants/chainInfo";
+import { SupportedChainId } from "@symmio/frontend-sdk/constants/chains";
 
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 import useRpcChangerCallback from "@symmio/frontend-sdk/lib/hooks/useRpcChangerCallback";
@@ -12,12 +12,12 @@ import {
   useAllMultiAccountAddresses,
   useV3Ids,
 } from "@symmio/frontend-sdk/state/chains/hooks";
-import {useFEName, useSetFEName} from "@symmio/frontend-sdk/state/user/hooks";
-import {Card} from "components/Card";
+import { useFEName, useSetFEName } from "@symmio/frontend-sdk/state/user/hooks";
+import { Card } from "components/Card";
 import ImageWithFallback from "components/ImageWithFallback";
-import {Modal as ModalBody} from "components/Modal";
-import {Row} from "components/Row";
-import {getChainLogo} from "utils/chainLogo";
+import { Modal as ModalBody } from "components/Modal";
+import { Row } from "components/Row";
+import { getChainLogo } from "utils/chainLogo";
 
 const ModalWrapper = styled(Card)`
   padding: 0.6rem;
@@ -35,17 +35,17 @@ const ModalWrapper = styled(Card)`
   }
 `;
 
-const InlineModal = styled(Card)<{isOpen: boolean; height?: string}>`
+const InlineModal = styled(Card)<{ isOpen: boolean; height?: string }>`
   padding: 0px;
   border-radius: 4px;
   width: clamp(100px, 275px, 99%);
-  max-height: ${({height}) => height ?? "554px"};
+  max-height: ${({ height }) => height ?? "554px"};
   position: absolute;
   z-index: ${Z_INDEX.modal};
   transform: translate(-193px, 29px);
-  background: ${({theme}) => theme.bg1};
-  border: 2px solid ${({theme}) => theme.bg6};
-  display: ${props => (props.isOpen ? "flex" : "none")};
+  background: ${({ theme }) => theme.bg1};
+  border: 2px solid ${({ theme }) => theme.bg6};
+  display: ${(props) => (props.isOpen ? "flex" : "none")};
 
   & > * {
     &:last-child {
@@ -61,18 +61,18 @@ const Modal = styled(ModalBody)`
   border: none;
 `;
 
-const Network = styled(Row)<{active?: boolean}>`
+const Network = styled(Row)<{ active?: boolean }>`
   gap: 12px;
   height: 44px;
   padding: 8px;
   font-size: 14px;
   font-weight: 400;
   white-space: nowrap;
-  cursor: ${({active}) => (active ? "default" : "pointer")};
-  border: 2px solid ${({theme}) => theme.border3};
-  background: ${({theme, active}) => (active ? theme.bg4 : theme.bg)};
+  cursor: ${({ active }) => (active ? "default" : "pointer")};
+  border: 2px solid ${({ theme }) => theme.border3};
+  background: ${({ theme, active }) => (active ? theme.bg4 : theme.bg)};
 
-  ${({active}) =>
+  ${({ active }) =>
     active &&
     `
     opacity: 0.5;
@@ -98,7 +98,7 @@ export function NetworksModal({
   isOpen: boolean;
   onDismiss: () => void;
 }) {
-  const {chainId} = useActiveWagmi();
+  const { chainId } = useActiveWagmi();
   const rpcChangerCallback = useRpcChangerCallback();
   const callBackFlag = useRef(false);
   const v3_ids = useV3Ids();
@@ -123,8 +123,8 @@ export function NetworksModal({
     const values: IFrontEndsInfo[] = [];
     v3_ids.forEach((chainId: number) => {
       const multiAccounts = Object.keys(MULTI_ACCOUNT_ADDRESS[chainId]);
-      multiAccounts.forEach(m => {
-        values.push({chainId, name: m});
+      multiAccounts.forEach((m) => {
+        values.push({ chainId, name: m });
       });
     });
     return values;

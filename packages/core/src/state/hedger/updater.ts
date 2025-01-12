@@ -1,9 +1,9 @@
 import isEmpty from "lodash/isEmpty.js";
-import {useCallback, useEffect, useMemo} from "react";
-import {useWebSocket} from "react-use-websocket/dist/lib/use-websocket.js";
+import { useCallback, useEffect, useMemo } from "react";
+import { useWebSocket } from "react-use-websocket/dist/lib/use-websocket.js";
 import useIsWindowVisible from "../../lib/hooks/useIsWindowVisible";
-import {autoRefresh, retry} from "../../utils/retry";
-import {AppThunkDispatch, useAppDispatch} from "../declaration";
+import { autoRefresh, retry } from "../../utils/retry";
+import { AppThunkDispatch, useAppDispatch } from "../declaration";
 
 // const useWebSocket = useWebSocketRaw.useWebSocket;
 // TODO: fix this { ReadyState } from "react-use-websocket"
@@ -15,11 +15,11 @@ enum ReadyState {
   CLOSED = 3,
 }
 
-import {ApiState, ConnectionStatus} from "../../types/api";
-import {Hedger, HedgerWebsocketType} from "../../types/hedger";
-import {Market} from "../../types/market";
-import {useAppName} from "../chains/hooks";
-import {useActiveMarket} from "../trade/hooks";
+import { ApiState, ConnectionStatus } from "../../types/api";
+import { Hedger, HedgerWebsocketType } from "../../types/hedger";
+import { Market } from "../../types/market";
+import { useAppName } from "../chains/hooks";
+import { useActiveMarket } from "../trade/hooks";
 import {
   useHedgerInfo,
   useMarketNotionalCap,
@@ -39,12 +39,16 @@ import {
   getOpenInterest,
   getPriceRange,
 } from "./thunks";
-import {MarketData, PriceResponse, MarketDataMap as PricesType} from "./types";
+import {
+  MarketData,
+  PriceResponse,
+  MarketDataMap as PricesType,
+} from "./types";
 
 export function HedgerUpdater(): null {
   const thunkDispatch: AppThunkDispatch = useAppDispatch();
   const hedger = useHedgerInfo();
-  const {baseUrl, apiUrl, fetchData} = hedger || {};
+  const { baseUrl, apiUrl, fetchData } = hedger || {};
   const activeMarket = useActiveMarket();
   const markets = useMarkets();
   const appName = useAppName();
@@ -66,7 +70,11 @@ export function HedgerUpdater(): null {
       return autoRefresh(
         () =>
           thunkDispatch(
-            getPriceRange({hedgerUrl: baseUrl, market: activeMarket, appName}),
+            getPriceRange({
+              hedgerUrl: baseUrl,
+              market: activeMarket,
+              appName,
+            }),
           ),
         60 * 60,
       );
@@ -80,14 +88,14 @@ function useFetchMarkets(
   thunkDispatch: AppThunkDispatch,
 ) {
   const appName = useAppName();
-  const {baseUrl} = hedger || {};
+  const { baseUrl } = hedger || {};
   const marketsStatus = useMarketsStatus();
 
   const hedgerMarket = useCallback(
-    (options?: {[x: string]: any}) => {
-      const allOptions = {headers: [["App-Name", appName]], ...options};
+    (options?: { [x: string]: any }) => {
+      const allOptions = { headers: [["App-Name", appName]], ...options };
       return thunkDispatch(
-        getMarkets({hedgerUrl: baseUrl, options: allOptions}),
+        getMarkets({ hedgerUrl: baseUrl, options: allOptions }),
       );
     },
     [appName, baseUrl, thunkDispatch],
@@ -122,12 +130,12 @@ function useFetchOpenInterest(
   thunkDispatch: AppThunkDispatch,
 ) {
   const appName = useAppName();
-  const {baseUrl} = hedger || {};
+  const { baseUrl } = hedger || {};
   const marketsStatus = useOpenInterestStatus();
 
   const hedgerOpenInterest = useCallback(
-    (options?: {[x: string]: any}) => {
-      const allOptions = {headers: [["App-Name", appName]], ...options};
+    (options?: { [x: string]: any }) => {
+      const allOptions = { headers: [["App-Name", appName]], ...options };
       return thunkDispatch(
         getOpenInterest({
           hedgerUrl: baseUrl,
@@ -168,8 +176,8 @@ function useFetchNotionalCap(
   thunkDispatch: AppThunkDispatch,
   activeMarket?: Market,
 ) {
-  const {marketNotionalCap, marketNotionalCapStatus} = useMarketNotionalCap();
-  const {baseUrl} = hedger || {};
+  const { marketNotionalCap, marketNotionalCapStatus } = useMarketNotionalCap();
+  const { baseUrl } = hedger || {};
   const appName = useAppName();
 
   const notionalCaps = useCallback(
@@ -210,7 +218,7 @@ function usePriceWebSocket() {
   const updateWebSocketStatus = useSetWebSocketStatus();
   const markets = useMarkets();
 
-  const {sendJsonMessage, lastJsonMessage, readyState} = useWebSocket(
+  const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(
     webSocketUrl === "" ? null : webSocketUrl,
     {
       reconnectAttempts: 10,
@@ -219,7 +227,7 @@ function usePriceWebSocket() {
         console.log("WebSocket connection established.");
       },
       onClose: () => console.log("WebSocket connection closed"),
-      onError: e => console.log("WebSocket connection has error ", e),
+      onError: (e) => console.log("WebSocket connection has error ", e),
     },
   );
 
@@ -273,7 +281,7 @@ function usePriceWebSocket() {
       }
     } catch (err) {
       updatePrices({});
-      console.log("Error On updatePrices", {err});
+      console.log("Error On updatePrices", { err });
     }
   }, [
     lastJsonMessage,
@@ -285,7 +293,7 @@ function usePriceWebSocket() {
 }
 
 function useFundingRateWebSocket() {
-  const {webSocketFundingRateUrl} = useHedgerInfo() || {};
+  const { webSocketFundingRateUrl } = useHedgerInfo() || {};
   const windowVisible = useIsWindowVisible();
   const activeMarket = useActiveMarket();
   const updateFundingRates = useSetFundingRates();
@@ -294,14 +302,14 @@ function useFundingRateWebSocket() {
     !activeMarket || webSocketFundingRateUrl === "" || !webSocketFundingRateUrl
       ? null
       : webSocketFundingRateUrl;
-  const {sendJsonMessage, lastJsonMessage, readyState} = useWebSocket(url, {
+  const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(url, {
     reconnectAttempts: 10,
     shouldReconnect: () => true,
     onOpen: () => {
       console.log("Funding Rate established.");
     },
     onClose: () => console.log("Funding Rate closed"),
-    onError: e => console.log("Funding Rate has error ", e),
+    onError: (e) => console.log("Funding Rate has error ", e),
   });
 
   const connectionStatus = useMemo(() => {
@@ -337,7 +345,7 @@ function useFundingRateWebSocket() {
       }
       updateFundingRates(lastMessage);
     } catch (err) {
-      console.log({err});
+      console.log({ err });
     }
   }, [lastJsonMessage, connectionStatus, windowVisible, updateFundingRates]);
 }

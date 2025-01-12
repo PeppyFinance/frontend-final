@@ -1,4 +1,4 @@
-import {isAddress} from "./validate";
+import { isAddress } from "./validate";
 
 export interface AddressMap {
   [chainId: number]: string;

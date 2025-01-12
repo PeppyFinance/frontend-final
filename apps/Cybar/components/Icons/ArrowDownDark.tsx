@@ -1,4 +1,4 @@
-export default function ArrowDownDark({...rest}: {[x: string]: any}) {
+export default function ArrowDownDark({ ...rest }: { [x: string]: any }) {
   return (
     <svg
       width="16"

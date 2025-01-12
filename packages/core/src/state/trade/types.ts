@@ -1,4 +1,4 @@
-import {InputField, OrderType, PositionType} from "../../types/trade";
+import { InputField, OrderType, PositionType } from "../../types/trade";
 
 export interface TradeState {
   marketId: number | undefined;

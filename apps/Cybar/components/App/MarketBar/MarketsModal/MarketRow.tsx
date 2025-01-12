@@ -1,24 +1,24 @@
-import {useRouter} from "next/router";
-import {useCallback, useMemo} from "react";
+import { useRouter } from "next/router";
+import { useCallback, useMemo } from "react";
 import styled from "styled-components";
 
-import {Market} from "@symmio/frontend-sdk/types/market";
+import { Market } from "@symmio/frontend-sdk/types/market";
 
-import {useActiveMarket} from "@symmio/frontend-sdk/state/trade/hooks";
+import { useActiveMarket } from "@symmio/frontend-sdk/state/trade/hooks";
 import {
   useFavorites,
   useToggleUserFavoriteCallback,
 } from "@symmio/frontend-sdk/state/user/hooks";
 
-import {Star} from "components/Icons";
-import {RowEnd, RowStart} from "components/Row";
+import { Star } from "components/Icons";
+import { RowEnd, RowStart } from "components/Row";
 
-const Row = styled(RowStart)<{active: boolean}>`
+const Row = styled(RowStart)<{ active: boolean }>`
   z-index: 0;
-  background: ${({theme, active}) => (active ? theme.bg3 : "inherit")};
+  background: ${({ theme, active }) => (active ? theme.bg3 : "inherit")};
   &:hover {
     cursor: pointer;
-    background: ${({theme}) => theme.bg3};
+    background: ${({ theme }) => theme.bg3};
   }
 `;
 
@@ -27,19 +27,19 @@ const StarWrap = styled.div`
   height: 36px;
   padding: 10px;
   border-radius: 4px;
-  background: ${({theme}) => theme.black2};
+  background: ${({ theme }) => theme.black2};
 `;
 
-const Text = styled.div<{active?: boolean; width?: string}>`
+const Text = styled.div<{ active?: boolean; width?: string }>`
   font-weight: 500;
   font-size: 14px;
   height: 44px;
   padding: 14px;
 
-  width: ${({width}) => width ?? "100%"};
-  color: ${({theme, active}) => (active ? theme.primary0 : theme.text1)};
+  width: ${({ width }) => width ?? "100%"};
+  color: ${({ theme, active }) => (active ? theme.primary0 : theme.text1)};
 
-  ${({theme}) => theme.mediaWidth.upToSmall`
+  ${({ theme }) => theme.mediaWidth.upToSmall`
       font-size: 12px;
   
     `};
@@ -75,7 +75,7 @@ export default function MarketRow({
         {market.symbol} / {market.asset}
       </Text>
 
-      <RowEnd width={"10%"} style={{marginRight: "12px"}}>
+      <RowEnd width={"10%"} style={{ marginRight: "12px" }}>
         <StarWrap onClick={toggleFavorite}>
           <Star
             size={16}

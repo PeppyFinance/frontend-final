@@ -1,63 +1,63 @@
 import find from "lodash/find.js";
-import {useCallback} from "react";
+import { useCallback } from "react";
 
-import {useAppDispatch, useAppSelector} from "../declaration";
+import { useAppDispatch, useAppSelector } from "../declaration";
 import {
   addReadNotification,
   addUnreadNotification,
   readOneNotification,
   updateIsNewNotification,
 } from "./actions";
-import {NotificationDetails} from "./types";
+import { NotificationDetails } from "./types";
 
 export function useUnreadNotifications(): NotificationDetails[] {
   const unreadNotification: NotificationDetails[] = useAppSelector(
-    state => state.notifications.unreadNotification,
+    (state) => state.notifications.unreadNotification,
   );
-  return unreadNotification.filter(notification => notification.showInModal);
+  return unreadNotification.filter((notification) => notification.showInModal);
 }
 
 export function useReadNotifications(): NotificationDetails[] {
   const readNotification: NotificationDetails[] = useAppSelector(
-    state => state.notifications.readNotification,
+    (state) => state.notifications.readNotification,
   );
-  return readNotification.filter(notification => notification.showInModal);
+  return readNotification.filter((notification) => notification.showInModal);
 }
 
 export function usePartialFillNotifications() {
   const readNotification: NotificationDetails[] = useAppSelector(
-    state => state.notifications.readNotification,
+    (state) => state.notifications.readNotification,
   );
   const unreadNotification: NotificationDetails[] = useAppSelector(
-    state => state.notifications.unreadNotification,
+    (state) => state.notifications.unreadNotification,
   );
   return [...readNotification, ...unreadNotification].filter(
-    notification => !notification.showInModal,
+    (notification) => !notification.showInModal,
   );
 }
 
 export function useVisibleNotifications() {
   const readNotification: NotificationDetails[] = useAppSelector(
-    state => state.notifications.readNotification,
+    (state) => state.notifications.readNotification,
   );
   const unreadNotification: NotificationDetails[] = useAppSelector(
-    state => state.notifications.unreadNotification,
+    (state) => state.notifications.unreadNotification,
   );
   return [...readNotification, ...unreadNotification].filter(
-    notification => notification.showInModal,
+    (notification) => notification.showInModal,
   );
 }
 
 export function useLastUpdateTimestamp() {
   const lastUpdateTimestamp = useAppSelector(
-    state => state.notifications.lastUpdateTimestamp,
+    (state) => state.notifications.lastUpdateTimestamp,
   );
   return lastUpdateTimestamp;
 }
 
 export function useNewNotification() {
   const isNewNotification = useAppSelector(
-    state => state.notifications.isNewNotification,
+    (state) => state.notifications.isNewNotification,
   );
   return isNewNotification;
 }
@@ -65,8 +65,8 @@ export function useNewNotification() {
 export function useSetNewNotificationFlag() {
   const dispatch = useAppDispatch();
   return useCallback(() => {
-    dispatch(updateIsNewNotification({flag: true}));
-    setTimeout(() => dispatch(updateIsNewNotification({flag: false})), 1000);
+    dispatch(updateIsNewNotification({ flag: true }));
+    setTimeout(() => dispatch(updateIsNewNotification({ flag: false })), 1000);
   }, [dispatch]);
 }
 
@@ -77,11 +77,11 @@ export function useNotificationAdderCallback(): (
   const dispatch = useAppDispatch();
   return useCallback(
     (notification: NotificationDetails, readOrUnread: "read" | "unread") => {
-      const {notificationType} = notification;
+      const { notificationType } = notification;
       if (!notificationType) return;
       if (readOrUnread === "read")
-        dispatch(addReadNotification({notification}));
-      else dispatch(addUnreadNotification({notification}));
+        dispatch(addReadNotification({ notification }));
+      else dispatch(addUnreadNotification({ notification }));
     },
     [dispatch],
   );
@@ -94,7 +94,7 @@ export function useMarkAsReadNotificationCallback(): (
   const readNotifications = useReadNotifications();
   return useCallback(
     (notification: NotificationDetails) => {
-      const {quoteId, notificationType} = notification;
+      const { quoteId, notificationType } = notification;
       const existedNotification = find(readNotifications, {
         quoteId,
         notificationType,
@@ -103,7 +103,7 @@ export function useMarkAsReadNotificationCallback(): (
       if (existedNotification) {
         return;
       }
-      dispatch(readOneNotification({notification}));
+      dispatch(readOneNotification({ notification }));
     },
     [dispatch, readNotifications],
   );
@@ -114,8 +114,8 @@ export function useMarkAsReadAllNotificationsCallback(): () => void {
   const unReadNotifications = useUnreadNotifications();
 
   return useCallback(() => {
-    unReadNotifications.map(notification => {
-      return dispatch(readOneNotification({notification}));
+    unReadNotifications.map((notification) => {
+      return dispatch(readOneNotification({ notification }));
     });
   }, [dispatch, unReadNotifications]);
 }

@@ -1,16 +1,16 @@
-import {Currency, Token} from "@uniswap/sdk-core";
-import {useMemo} from "react";
+import { Currency, Token } from "@uniswap/sdk-core";
+import { useMemo } from "react";
 
-import {isSupportedChain} from "../../constants/chains";
-import {useTokenShorthand} from "../../constants/tokens";
-import {isAddress} from "../../utils/validate";
+import { isSupportedChain } from "../../constants/chains";
+import { useTokenShorthand } from "../../constants/tokens";
+import { isAddress } from "../../utils/validate";
 
 import useWagmi from "./useWagmi";
 
-import {useV3Ids} from "../../state/chains/hooks";
+import { useV3Ids } from "../../state/chains/hooks";
 import useNativeCurrency from "./useNativeCurrency";
 
-type TokenMap = {[address: string]: Token};
+type TokenMap = { [address: string]: Token };
 
 /**
  * Returns a Token from the tokenAddress.
@@ -36,7 +36,7 @@ export function useCurrencyFromMap(
   tokens: TokenMap,
   currencyId?: string | null,
 ): Currency | null | undefined {
-  const {chainId} = useWagmi();
+  const { chainId } = useWagmi();
   const nativeCurrency = useNativeCurrency();
   const isNative = Boolean(
     nativeCurrency &&

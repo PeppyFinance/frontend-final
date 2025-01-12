@@ -1,13 +1,13 @@
-import {Quote} from "@symmio/frontend-sdk/types/quote";
+import { Quote } from "@symmio/frontend-sdk/types/quote";
 
 import {
   NotificationDetails,
   NotificationType,
 } from "@symmio/frontend-sdk/state/notifications/types";
-import {useGetExistedQuoteByIdsCallback} from "@symmio/frontend-sdk/state/quotes/hooks";
+import { useGetExistedQuoteByIdsCallback } from "@symmio/frontend-sdk/state/quotes/hooks";
 
-import {useUserAccounts} from "@symmio/frontend-sdk/hooks/useAccounts";
-import {useGetQuoteByIds} from "@symmio/frontend-sdk/hooks/useQuotes";
+import { useUserAccounts } from "@symmio/frontend-sdk/hooks/useAccounts";
+import { useGetQuoteByIds } from "@symmio/frontend-sdk/hooks/useQuotes";
 
 import Default from "./DefaultCard";
 import HedgerError from "./ErrorCard";
@@ -23,16 +23,16 @@ export default function Cards({
   notification: NotificationDetails;
 }) {
   // TODO:handling state when user account didn't selected
-  const {quoteId, notificationType, counterpartyAddress} = notification;
-  const {accounts} = useUserAccounts();
+  const { quoteId, notificationType, counterpartyAddress } = notification;
+  const { accounts } = useUserAccounts();
   const subAccount = accounts.find(
-    account =>
+    (account) =>
       account.accountAddress.toLowerCase() ===
       counterpartyAddress?.toLowerCase(),
   );
   const existedQuoteCallback = useGetExistedQuoteByIdsCallback();
   const existedQuote = existedQuoteCallback(quoteId);
-  const {quotes, loading} = useGetQuoteByIds([Number(quoteId)]);
+  const { quotes, loading } = useGetQuoteByIds([Number(quoteId)]);
   const quoteData = existedQuote
     ? existedQuote
     : !loading

@@ -1,5 +1,5 @@
-import {NotificationDetails} from "@symmio/frontend-sdk/state/notifications/types";
-import {Account} from "@symmio/frontend-sdk/types/user";
+import { NotificationDetails } from "@symmio/frontend-sdk/state/notifications/types";
+import { Account } from "@symmio/frontend-sdk/types/user";
 
 import BaseItem from "components/Notifications/Cards/BaseCard";
 
@@ -10,7 +10,7 @@ export default function OrderExpiredCard({
   notification: NotificationDetails;
   account: Account;
 }): JSX.Element {
-  const {modifyTime} = notification;
+  const { modifyTime } = notification;
 
   return (
     <BaseItem
@@ -30,7 +30,7 @@ export function OrderAcceptedCard({
   notification: NotificationDetails;
   account: Account;
 }): JSX.Element {
-  const {modifyTime} = notification;
+  const { modifyTime } = notification;
 
   return (
     <BaseItem

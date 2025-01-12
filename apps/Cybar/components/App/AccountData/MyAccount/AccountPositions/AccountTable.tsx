@@ -1,19 +1,19 @@
-import {useContext, useMemo} from "react";
-import styled, {useTheme} from "styled-components";
+import { useContext, useMemo } from "react";
+import styled, { useTheme } from "styled-components";
 
-import {ConnectionStatus} from "@symmio/frontend-sdk/types/api";
-import {ISingleQuoteInfo} from "@symmio/frontend-sdk/types/quotesOverview";
-import {PositionType} from "@symmio/frontend-sdk/types/trade";
-import {formatPrice} from "@symmio/frontend-sdk/utils/numbers";
-import {AccountPositionsContext} from "./context";
+import { ConnectionStatus } from "@symmio/frontend-sdk/types/api";
+import { ISingleQuoteInfo } from "@symmio/frontend-sdk/types/quotesOverview";
+import { PositionType } from "@symmio/frontend-sdk/types/trade";
+import { formatPrice } from "@symmio/frontend-sdk/utils/numbers";
+import { AccountPositionsContext } from "./context";
 
-import {useMarket} from "@symmio/frontend-sdk/hooks/useMarkets";
-import {useTotalNotionalValue} from "@symmio/frontend-sdk/hooks/usePositionOverview";
-import {useUpnlWebSocketStatus} from "@symmio/frontend-sdk/state/user/hooks";
+import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
+import { useTotalNotionalValue } from "@symmio/frontend-sdk/hooks/usePositionOverview";
+import { useUpnlWebSocketStatus } from "@symmio/frontend-sdk/state/user/hooks";
 
 import Column from "components/Column";
-import {LongArrow, ShortArrow} from "components/Icons";
-import {Row, RowBetween} from "components/Row";
+import { LongArrow, ShortArrow } from "components/Icons";
+import { Row, RowBetween } from "components/Row";
 import ShimmerAnimation from "components/ShimmerAnimation";
 
 const TABLE_WIDTH = 377;
@@ -23,13 +23,13 @@ export const Container = styled.div`
   margin: 31px 0 0;
   min-width: ${TABLE_WIDTH}px;
 
-  ${({theme}) => theme.mediaWidth.upToLarge`
+  ${({ theme }) => theme.mediaWidth.upToLarge`
     min-width: 100%;
   `}
 `;
 
 const TableStructure = styled(RowBetween)`
-  color: ${({theme}) => theme.text2};
+  color: ${({ theme }) => theme.text2};
   font-size: 12px;
   font-weight: 400;
 
@@ -51,7 +51,7 @@ const TableStructure = styled(RowBetween)`
     }
   }
 
-  ${({theme}) => theme.mediaWidth.upToLarge`
+  ${({ theme }) => theme.mediaWidth.upToLarge`
     font-size: 10px;
 
     & > * {  
@@ -64,7 +64,7 @@ const TableStructure = styled(RowBetween)`
     }
   `}
 
-  ${({theme}) => theme.mediaWidth.upToMedium`
+  ${({ theme }) => theme.mediaWidth.upToMedium`
     font-size: 12px;
 
     & > * {  
@@ -76,7 +76,7 @@ const TableStructure = styled(RowBetween)`
       }
     }
   `}
-  ${({theme}) => theme.mediaWidth.upToSmall`
+  ${({ theme }) => theme.mediaWidth.upToSmall`
     font-size: 10px;
     & > * {  
       &:nth-child(4) {
@@ -92,21 +92,21 @@ const TableStructure = styled(RowBetween)`
 const RowWrap = styled(TableStructure)`
   font-weight: 500;
   font-size: 14px;
-  color: ${({theme}) => theme.text0};
+  color: ${({ theme }) => theme.text0};
 
-  ${({theme}) => theme.mediaWidth.upToLarge`
+  ${({ theme }) => theme.mediaWidth.upToLarge`
     font-size: 12px;
   `}
-  ${({theme}) => theme.mediaWidth.upToSmall`
+  ${({ theme }) => theme.mediaWidth.upToSmall`
     font-size: 10px;
   `}
 `;
 
-const Circle = styled.div<{color: string | undefined}>`
+const Circle = styled.div<{ color: string | undefined }>`
   width: 12px;
   height: 12px;
   border-radius: 100%;
-  background-color: ${({color}) => color};
+  background-color: ${({ color }) => color};
 `;
 
 const ImageWrapper = styled.div`
@@ -116,23 +116,23 @@ const ImageWrapper = styled.div`
 const PositionInfo = styled(Row)`
   gap: 12px;
 
-  ${({theme}) => theme.mediaWidth.upToLarge`
+  ${({ theme }) => theme.mediaWidth.upToLarge`
     gap: 8px;
   `}
 `;
 
 const PositionText = styled.span`
-  color: ${({theme}) => theme.text3};
+  color: ${({ theme }) => theme.text3};
   font-size: 10px;
   font-weight: 400;
 
-  ${({theme}) => theme.mediaWidth.upToSmall`
+  ${({ theme }) => theme.mediaWidth.upToSmall`
     font-size: 8px;
   `}
 `;
 
 const HeaderWrap = styled(TableStructure)`
-  color: ${({theme}) => theme.text2};
+  color: ${({ theme }) => theme.text2};
   font-weight: 400;
   margin-bottom: 24px;
 `;
@@ -174,7 +174,7 @@ function PositionRow({
   color: string;
 }): JSX.Element | null {
   const theme = useTheme();
-  const {marketId, positionType, value, positionQuantity} = marketQuoteInfo;
+  const { marketId, positionType, value, positionQuantity } = marketQuoteInfo;
   const valuePercent = useMemo(
     () => (value / totalValue) * 100 || 0,
     [value, totalValue],
@@ -217,7 +217,7 @@ function TableHeader(): JSX.Element | null {
 }
 
 function TableBody() {
-  const {marketQuotesInfo, colors} = useContext(AccountPositionsContext);
+  const { marketQuotesInfo, colors } = useContext(AccountPositionsContext);
   const upnlLoadingStatus = useUpnlWebSocketStatus();
   const loading = upnlLoadingStatus === ConnectionStatus.CLOSED;
   const totalNotionalValue = useTotalNotionalValue(marketQuotesInfo);

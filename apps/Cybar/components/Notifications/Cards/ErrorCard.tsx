@@ -1,10 +1,10 @@
-import styled, {useTheme} from "styled-components";
+import styled, { useTheme } from "styled-components";
 
-import {Quote} from "@symmio/frontend-sdk/types/quote";
-import {Account} from "@symmio/frontend-sdk/types/user";
+import { Quote } from "@symmio/frontend-sdk/types/quote";
+import { Account } from "@symmio/frontend-sdk/types/user";
 import HEDGER_ALERT_ICON from "/public/static/images/etc/ErrorTriangle.svg";
 
-import {NotificationDetails} from "@symmio/frontend-sdk/state/notifications/types";
+import { NotificationDetails } from "@symmio/frontend-sdk/state/notifications/types";
 
 import {
   useErrorMessage,
@@ -13,7 +13,7 @@ import {
 
 import BaseItem from "components/Notifications/Cards/BaseCard";
 import ShimmerAnimation from "components/ShimmerAnimation";
-import {PartiallyFillTitle} from "./styles";
+import { PartiallyFillTitle } from "./styles";
 
 const ErrorMessage = styled.div`
   font-size: 12px;
@@ -22,10 +22,10 @@ const ErrorMessage = styled.div`
   & > * {
     &:first-child {
       margin-bottom: 4px;
-      color: ${({theme}) => theme.primaryDark};
+      color: ${({ theme }) => theme.primaryDark};
     }
     &:last-child {
-      color: ${({theme}) => theme.text0};
+      color: ${({ theme }) => theme.text0};
     }
   }
 `;
@@ -42,8 +42,8 @@ export default function ErrorCard({
   loading?: boolean;
 }): JSX.Element {
   const theme = useTheme();
-  const {symbol, asset} = useMarket(quote?.marketId) || {};
-  const {modifyTime, quoteId, errorCode} = notification;
+  const { symbol, asset } = useMarket(quote?.marketId) || {};
+  const { modifyTime, quoteId, errorCode } = notification;
   const errorMessage = useErrorMessage(errorCode);
 
   return (

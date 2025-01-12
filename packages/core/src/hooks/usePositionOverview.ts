@@ -1,11 +1,11 @@
 import find from "lodash/find.js";
-import {useCallback, useMemo} from "react";
+import { useCallback, useMemo } from "react";
 
-import {useMarkets, usePrices} from "../state/hedger/hooks";
-import {Quote} from "../types/quote";
-import {IQuotesInfo} from "../types/quotesOverview";
-import {PositionType} from "../types/trade";
-import {BN_ZERO, toBN} from "../utils/numbers";
+import { useMarkets, usePrices } from "../state/hedger/hooks";
+import { Quote } from "../types/quote";
+import { IQuotesInfo } from "../types/quotesOverview";
+import { PositionType } from "../types/trade";
+import { BN_ZERO, toBN } from "../utils/numbers";
 
 export function usePositionValue(quotes: Quote[]): IQuotesInfo {
   const markets = useMarkets();
@@ -29,13 +29,14 @@ export function usePositionValue(quotes: Quote[]): IQuotesInfo {
     };
     const quoteByMarketValues: IQuotesInfo = [];
 
-    quotes.forEach(quote => {
+    quotes.forEach((quote) => {
       if (checkedMarkets[quote.positionType].includes(quote.marketId)) return;
       checkedMarkets[quote.positionType].push(quote.marketId);
 
-      const {name, symbol, asset} = find(markets, {id: quote.marketId}) || {};
+      const { name, symbol, asset } =
+        find(markets, { id: quote.marketId }) || {};
       const markPrice = getCurrentPrice(name);
-      const sameMarketQuotes = quotes.filter(marketQuote => {
+      const sameMarketQuotes = quotes.filter((marketQuote) => {
         return (
           marketQuote.marketId === quote.marketId &&
           marketQuote.positionType === quote.positionType
@@ -62,14 +63,14 @@ export function useTotalNotionalValue(quotesInfo: IQuotesInfo): number {
   return useMemo(
     () =>
       quotesInfo
-        .map(quoteInfo => quoteInfo.value)
+        .map((quoteInfo) => quoteInfo.value)
         .reduce((accumulator, currentValue) => accumulator + currentValue, 0),
     [quotesInfo],
   );
 }
 
 function calculateUpnl(quote: Quote, currentPrice: string): string {
-  const {quantity, closedAmount, openedPrice, positionType} = quote;
+  const { quantity, closedAmount, openedPrice, positionType } = quote;
   return (
     toBN(quantity)
       .minus(closedAmount)
@@ -84,7 +85,7 @@ function calculateTotalPositionsValue(
   currentPrice: string | undefined,
 ): number {
   let totalPositionValue = 0;
-  quotes.forEach(currentQuote => {
+  quotes.forEach((currentQuote) => {
     const lockedMargin = toBN(currentQuote.CVA)
       .plus(currentQuote.partyAMM)
       .plus(currentQuote.LF)

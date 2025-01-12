@@ -1,7 +1,7 @@
-import {useRouter} from "next/router";
-import {useEffect} from "react";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
-import {DEFAULT_HEDGER} from "constants/chains/hedgers";
+import { DEFAULT_HEDGER } from "constants/chains/hedgers";
 
 export default function Trade() {
   const router = useRouter();

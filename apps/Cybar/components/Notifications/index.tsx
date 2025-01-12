@@ -1,6 +1,6 @@
-import {useMemo, useRef, useState} from "react";
-import {isMobile} from "react-device-detect";
-import styled, {useTheme} from "styled-components";
+import { useMemo, useRef, useState } from "react";
+import { isMobile } from "react-device-detect";
+import styled, { useTheme } from "styled-components";
 
 import {
   useMarkAsReadAllNotificationsCallback,
@@ -8,8 +8,8 @@ import {
 } from "@symmio/frontend-sdk/state/notifications/hooks";
 import useOnOutsideClick from "lib/hooks/useOnOutsideClick";
 
-import {NavButton} from "components/Button";
-import {Bell} from "components/Icons";
+import { NavButton } from "components/Button";
+import { Bell } from "components/Icons";
 import NotificationsModal from "components/Notifications/NotificationsModal";
 
 const Container = styled.div`
@@ -30,11 +30,11 @@ const NotificationsCount = styled.div`
   font-size: 10px;
   text-align: center;
 
-  background: ${({theme}) => theme.gradLight};
-  border: 1px solid ${({theme}) => theme.bg1};
-  color: ${({theme}) => theme.primaryBlackNew};
+  background: ${({ theme }) => theme.gradLight};
+  border: 1px solid ${({ theme }) => theme.bg1};
+  color: ${({ theme }) => theme.primaryBlackNew};
 
-  ${({theme}) => theme.mediaWidth.upToMedium`
+  ${({ theme }) => theme.mediaWidth.upToMedium`
     width: 14px;
     height: 14px;
     left: 19px;

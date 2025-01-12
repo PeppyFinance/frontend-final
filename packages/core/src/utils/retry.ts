@@ -11,7 +11,7 @@ export function autoRefresh(
 }
 
 function wait(ms: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 function waitRandom(min: number, max: number): Promise<void> {
@@ -50,8 +50,8 @@ export interface RetryOptions {
  */
 export function retry<T>(
   fn: () => Promise<T>,
-  {n, minWait, maxWait}: RetryOptions,
-): {promise: Promise<T>; cancel: () => void} {
+  { n, minWait, maxWait }: RetryOptions,
+): { promise: Promise<T>; cancel: () => void } {
   let completed = false;
   let rejectCancelled: (error: Error) => void;
   const promise = new Promise<T>(async (resolve, reject) => {

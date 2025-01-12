@@ -1,11 +1,11 @@
-import React, {useMemo} from "react";
-import styled, {useTheme} from "styled-components";
+import React, { useMemo } from "react";
+import styled, { useTheme } from "styled-components";
 
 import {
   DEFAULT_PRECISION,
   MARKET_ORDER_DEADLINE,
 } from "@symmio/frontend-sdk/constants/misc";
-import {useCollateralToken} from "@symmio/frontend-sdk/constants/tokens";
+import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
 import useTradePage, {
   useLockedValues,
   useNotionalValue,
@@ -16,13 +16,13 @@ import {
   useOrderType,
   useTradeTpSl,
 } from "@symmio/frontend-sdk/state/trade/hooks";
-import {useLeverage} from "@symmio/frontend-sdk/state/user/hooks";
-import {OrderType} from "@symmio/frontend-sdk/types/trade";
-import {formatAmount, toBN} from "@symmio/frontend-sdk/utils/numbers";
-import {useGetTokenWithFallbackChainId} from "@symmio/frontend-sdk/utils/token";
+import { useLeverage } from "@symmio/frontend-sdk/state/user/hooks";
+import { OrderType } from "@symmio/frontend-sdk/types/trade";
+import { formatAmount, toBN } from "@symmio/frontend-sdk/utils/numbers";
+import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
 import Column from "components/Column";
 import InfoItem from "components/InfoItem";
-import {DisplayLabel} from "components/InputLabel";
+import { DisplayLabel } from "components/InputLabel";
 import ActionButton from "./ActionButton";
 
 const LabelsWrapper = styled(Column)`
@@ -31,7 +31,7 @@ const LabelsWrapper = styled(Column)`
 
 export default function OpenPositionData() {
   const theme = useTheme();
-  const {chainId} = useActiveWagmi();
+  const { chainId } = useActiveWagmi();
 
   const orderType = useOrderType();
   const market = useActiveMarket();
@@ -42,7 +42,7 @@ export default function OpenPositionData() {
     chainId,
   );
 
-  const {price, formattedAmounts} = useTradePage();
+  const { price, formattedAmounts } = useTradePage();
 
   const [symbol, pricePrecision] = useMemo(
     () =>
@@ -53,10 +53,10 @@ export default function OpenPositionData() {
     () => (toBN(formattedAmounts[1]).isNaN() ? "0" : formattedAmounts[1]),
     [formattedAmounts],
   );
-  const {tp, sl} = useTradeTpSl();
+  const { tp, sl } = useTradeTpSl();
   const notionalValue = useNotionalValue(quantityAsset, price);
 
-  const {total: lockedValue} = useLockedValues(notionalValue);
+  const { total: lockedValue } = useLockedValues(notionalValue);
 
   const tradingFee = useMemo(() => {
     const notionalValueBN = toBN(notionalValue);
@@ -75,7 +75,7 @@ export default function OpenPositionData() {
           lockedValueBN.isNaN() ? "0" : lockedValueBN.toFixed(pricePrecision)
         } ${collateralCurrency?.symbol}`,
       },
-      {title: "Leverage:", value: `${userLeverage} X`},
+      { title: "Leverage:", value: `${userLeverage} X` },
       {
         title: "Open Price:",
         value: `${
@@ -107,7 +107,7 @@ export default function OpenPositionData() {
       },
     ];
     if (tp || sl) {
-      basedInfo.push({title: "TP/SL:", value: `${tp}/${sl}`});
+      basedInfo.push({ title: "TP/SL:", value: `${tp}/${sl}` });
     }
     return basedInfo;
   }, [

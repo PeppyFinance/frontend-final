@@ -1,11 +1,11 @@
 import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
-import {ApiState, ConnectionStatus} from "../../types/api";
-import {AddedHedger, TermsStatus, UserState} from "./types";
-const {createReducer} = ((toolkitRaw as any).default ??
+import { ApiState, ConnectionStatus } from "../../types/api";
+import { AddedHedger, TermsStatus, UserState } from "./types";
+const { createReducer } = ((toolkitRaw as any).default ??
   toolkitRaw) as typeof toolkitRaw;
 
 import find from "lodash/find.js";
-import {AccountUpnl} from "../../types/user";
+import { AccountUpnl } from "../../types/user";
 import {
   addHedger,
   removeHedger,
@@ -69,7 +69,7 @@ export const initialState: UserState = {
   isDefaultHedgerSelected: true,
 };
 
-export default createReducer(initialState, builder =>
+export default createReducer(initialState, (builder) =>
   builder
     .addCase(updateUserDarkMode, (state, action) => {
       state.userDarkMode = action.payload.userDarkMode;
@@ -99,7 +99,7 @@ export default createReducer(initialState, builder =>
     .addCase(updateAccountUpnl, (state, action) => {
       state.activeAccountUpnl = action.payload;
     })
-    .addCase(updateUpnlWebSocketStatus, (state, {payload}) => {
+    .addCase(updateUpnlWebSocketStatus, (state, { payload }) => {
       state.upnlWebSocketStatus = payload.status;
     })
     .addCase(updateAllAccountsUpnl, (state, action) => {
@@ -107,7 +107,7 @@ export default createReducer(initialState, builder =>
         state.allAccountsUpnl = [];
       }
       const item = state.allAccountsUpnl.find(
-        x => x.account === action.payload.account,
+        (x) => x.account === action.payload.account,
       );
 
       if (item) {
@@ -123,27 +123,27 @@ export default createReducer(initialState, builder =>
       result[index] = action.payload.value;
       state.accountsPartyAStat = result;
     })
-    .addCase(getIsWhiteList.fulfilled, (state, {payload}) => {
+    .addCase(getIsWhiteList.fulfilled, (state, { payload }) => {
       state.whiteListAccount = payload.isWhiteList;
       state.whiteListAccountState = ApiState.OK;
     })
 
-    .addCase(getIsWhiteList.pending, state => {
+    .addCase(getIsWhiteList.pending, (state) => {
       state.whiteListAccountState = ApiState.LOADING;
     })
 
-    .addCase(getIsWhiteList.rejected, state => {
+    .addCase(getIsWhiteList.rejected, (state) => {
       state.whiteListAccount = false;
       state.whiteListAccountState = ApiState.ERROR;
     })
 
     .addCase(
       getBalanceHistory.fulfilled,
-      (state, {payload: {hasMore, result}}) => {
-        const history = {...state.balanceHistory};
+      (state, { payload: { hasMore, result } }) => {
+        const history = { ...state.balanceHistory };
         if (!result) return;
 
-        result.forEach(d => {
+        result.forEach((d) => {
           history[d.transaction] = d;
         });
         state.balanceHistory = history;
@@ -152,28 +152,28 @@ export default createReducer(initialState, builder =>
       },
     )
 
-    .addCase(getBalanceHistory.pending, state => {
+    .addCase(getBalanceHistory.pending, (state) => {
       state.balanceHistoryState = ApiState.LOADING;
     })
 
-    .addCase(getBalanceHistory.rejected, state => {
+    .addCase(getBalanceHistory.rejected, (state) => {
       state.hasMoreHistory = false;
       state.balanceHistoryState = ApiState.ERROR;
     })
 
     .addCase(
       getTotalDepositsAndWithdrawals.fulfilled,
-      (state, {payload: {result}}) => {
+      (state, { payload: { result } }) => {
         state.depositWithdrawalsData = result;
         state.depositWithdrawalsState = ApiState.OK;
       },
     )
 
-    .addCase(getTotalDepositsAndWithdrawals.pending, state => {
+    .addCase(getTotalDepositsAndWithdrawals.pending, (state) => {
       state.depositWithdrawalsState = ApiState.LOADING;
     })
 
-    .addCase(getTotalDepositsAndWithdrawals.rejected, state => {
+    .addCase(getTotalDepositsAndWithdrawals.rejected, (state) => {
       state.depositWithdrawalsData = null;
       state.depositWithdrawalsState = ApiState.ERROR;
     })
@@ -182,48 +182,52 @@ export default createReducer(initialState, builder =>
       state.isTermsAccepted = action.payload;
     })
 
-    .addCase(setFEName, (state, {payload}) => {
+    .addCase(setFEName, (state, { payload }) => {
       state.frontEndName = payload;
     })
 
-    .addCase(setAllHedgerData, (state, {payload: data}) => {
+    .addCase(setAllHedgerData, (state, { payload: data }) => {
       state.addedHedgers = data;
     })
 
-    .addCase(addHedger, (state, {payload: {name, address, chainId}}) => {
+    .addCase(addHedger, (state, { payload: { name, address, chainId } }) => {
       const hedgers: AddedHedger[] = state.addedHedgers[chainId] ?? [];
 
-      if (find(hedgers, {address})) {
+      if (find(hedgers, { address })) {
         return;
       }
-      hedgers.push({name, address, isSelected: true} as AddedHedger);
+      hedgers.push({ name, address, isSelected: true } as AddedHedger);
       state.addedHedgers[chainId] = hedgers;
     })
 
-    .addCase(removeHedger, (state, {payload: {address, chainId}}) => {
+    .addCase(removeHedger, (state, { payload: { address, chainId } }) => {
       const hedgers: AddedHedger[] = state.addedHedgers[chainId] ?? [];
-      const filteredItem = hedgers.filter(h => h.address !== address);
+      const filteredItem = hedgers.filter((h) => h.address !== address);
       state.addedHedgers[chainId] = filteredItem;
     })
 
-    .addCase(selectOrUnselectHedger, (state, {payload: {hedger, chainId}}) => {
-      const hedgers = state.addedHedgers[chainId] ?? [];
-      const index = hedgers.findIndex(
-        (h: AddedHedger) =>
-          h.address.toLocaleLowerCase() === hedger.address.toLocaleLowerCase(),
-      );
+    .addCase(
+      selectOrUnselectHedger,
+      (state, { payload: { hedger, chainId } }) => {
+        const hedgers = state.addedHedgers[chainId] ?? [];
+        const index = hedgers.findIndex(
+          (h: AddedHedger) =>
+            h.address.toLocaleLowerCase() ===
+            hedger.address.toLocaleLowerCase(),
+        );
 
-      if (index !== -1) {
-        const updatedHedgers = [...hedgers];
-        updatedHedgers[index] = {
-          ...updatedHedgers[index],
-          isSelected: !updatedHedgers[index].isSelected,
-        };
-        state.addedHedgers[chainId] = updatedHedgers;
-      }
-    })
+        if (index !== -1) {
+          const updatedHedgers = [...hedgers];
+          updatedHedgers[index] = {
+            ...updatedHedgers[index],
+            isSelected: !updatedHedgers[index].isSelected,
+          };
+          state.addedHedgers[chainId] = updatedHedgers;
+        }
+      },
+    )
 
-    .addCase(toggleDefaultHedger, state => {
+    .addCase(toggleDefaultHedger, (state) => {
       state.isDefaultHedgerSelected = !state.isDefaultHedgerSelected;
     }),
 );

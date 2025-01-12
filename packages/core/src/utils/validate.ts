@@ -1,4 +1,4 @@
-import {getAddress} from "viem";
+import { getAddress } from "viem";
 
 export function isAddress(value: string): string | undefined {
   try {

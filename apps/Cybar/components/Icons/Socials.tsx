@@ -1,4 +1,4 @@
-import styled, {useTheme} from "styled-components";
+import styled, { useTheme } from "styled-components";
 
 const Hover = styled.div`
   &:hover {

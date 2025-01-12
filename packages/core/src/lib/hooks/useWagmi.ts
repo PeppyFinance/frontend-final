@@ -1,6 +1,6 @@
-import {Chain} from "@rainbow-me/rainbowkit";
-import {Address} from "viem";
-import {useAccount} from "wagmi";
+import { Chain } from "@rainbow-me/rainbowkit";
+import { Address } from "viem";
+import { useAccount } from "wagmi";
 
 type useWagmiReturnType = {
   chainId: number | undefined;
@@ -15,7 +15,7 @@ type useWagmiReturnType = {
 };
 
 export default function useWagmi(): useWagmiReturnType {
-  const {address, isConnected, isConnecting, chain, chainId} = useAccount();
+  const { address, isConnected, isConnecting, chain, chainId } = useAccount();
   return {
     chainId: chain?.id ?? chainId,
     account: address,

@@ -1,17 +1,17 @@
-import {useMemo} from "react";
-import styled, {useTheme} from "styled-components";
+import { useMemo } from "react";
+import styled, { useTheme } from "styled-components";
 
-import {Quote, QuoteStatus} from "@symmio/frontend-sdk/types/quote";
-import {OrderType} from "@symmio/frontend-sdk/types/trade";
+import { Quote, QuoteStatus } from "@symmio/frontend-sdk/types/quote";
+import { OrderType } from "@symmio/frontend-sdk/types/trade";
 
-import {formatAmount, toBN} from "@symmio/frontend-sdk/utils/numbers";
+import { formatAmount, toBN } from "@symmio/frontend-sdk/utils/numbers";
 
-import {useMarket} from "@symmio/frontend-sdk/hooks/useMarkets";
+import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
 import {
   useQuoteLeverage,
   useQuoteUpnlAndPnl,
 } from "@symmio/frontend-sdk/hooks/useQuotes";
-import {useMarketData} from "@symmio/frontend-sdk/state/hedger/hooks";
+import { useMarketData } from "@symmio/frontend-sdk/state/hedger/hooks";
 
 import {
   DataWrap,
@@ -19,7 +19,7 @@ import {
   Row,
   Value,
 } from "components/App/AccountData/PositionDetails/styles";
-import {PnlValue} from "components/App/UserPanel/Common";
+import { PnlValue } from "components/App/UserPanel/Common";
 
 const Wrapper = styled(DataWrap)`
   margin-bottom: 4px;
@@ -38,12 +38,16 @@ const Wrapper = styled(DataWrap)`
 const PositionPnl = styled(PnlValue)`
   font-weight: 500;
   font-size: 14px;
-  ${({theme}) => theme.mediaWidth.upToMedium`
+  ${({ theme }) => theme.mediaWidth.upToMedium`
     font-size: 12px;
   `};
 `;
 
-export default function ClosePendingDetails({quote}: {quote: Quote | null}) {
+export default function ClosePendingDetails({
+  quote,
+}: {
+  quote: Quote | null;
+}) {
   const theme = useTheme();
   const {
     orderType,
@@ -52,7 +56,7 @@ export default function ClosePendingDetails({quote}: {quote: Quote | null}) {
     requestedCloseLimitPrice,
     openedPrice,
   } = quote || {};
-  const {symbol, asset, name} = useMarket(quote?.marketId) || {};
+  const { symbol, asset, name } = useMarket(quote?.marketId) || {};
   const leverage = useQuoteLeverage(quote || ({} as Quote));
 
   const marketData = useMarketData(name);

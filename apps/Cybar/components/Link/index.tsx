@@ -2,13 +2,13 @@ import {
   ExplorerDataType,
   getExplorerLink,
 } from "@symmio/frontend-sdk/utils/explorers";
-import {FALLBACK_CHAIN_ID} from "constants/chains/chains";
+import { FALLBACK_CHAIN_ID } from "constants/chains/chains";
 import React from "react";
-import {ExternalLink as LinkIconFeather} from "react-feather";
+import { ExternalLink as LinkIconFeather } from "react-feather";
 import styled from "styled-components";
 
 function handleClickExternalLink(event: React.MouseEvent<HTMLAnchorElement>) {
-  const {target} = event.currentTarget;
+  const { target } = event.currentTarget;
 
   // don't prevent default, don't redirect if it's a new tab
   if (target === "_blank" || event.ctrlKey || event.metaKey) {
@@ -19,12 +19,12 @@ function handleClickExternalLink(event: React.MouseEvent<HTMLAnchorElement>) {
 
 const StyledLink = styled.a`
   text-decoration: none;
-  /* color: ${({theme}) => theme.white}; */
+  /* color: ${({ theme }) => theme.white}; */
   /* font-weight: 500; */
 
   :hover {
     cursor: pointer;
-    /* color: ${({theme}) => theme.white}; */
+    /* color: ${({ theme }) => theme.white}; */
   }
   :focus {
     outline: none;
@@ -58,7 +58,7 @@ const LinkIcon = styled(LinkIconFeather)`
   height: 16px;
   width: 18px;
   margin-left: 4px;
-  stroke: ${({theme}) => theme.blue1};
+  stroke: ${({ theme }) => theme.blue1};
 `;
 
 export function ExternalLink({

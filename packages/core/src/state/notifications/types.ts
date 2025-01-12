@@ -1,4 +1,4 @@
-import {TransferTab} from "../../types/transfer";
+import { TransferTab } from "../../types/transfer";
 
 export enum LastSeenAction {
   SEND_QUOTE = "SendQuote",
@@ -14,7 +14,7 @@ export enum LastSeenAction {
   FILL_ORDER_INSTANT_CLOSE = "FillOrderInstantClose",
 }
 
-export const NotificationMessages: {[status: string]: string} = {
+export const NotificationMessages: { [status: string]: string } = {
   [LastSeenAction.SEND_QUOTE]: "Open Order",
   [LastSeenAction.FAILED_TO_PUT_ON_BINANCE]: "Failed To Put On Binance",
   [LastSeenAction.REQUEST_TO_CANCEL_QUOTE]: "Cancel Open Order",

@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-import {OptionButton} from "components/Button";
+import { OptionButton } from "components/Button";
 
 export const DefaultOptionButton = styled(OptionButton)`
   display: inline-flex;
   margin: 1px;
   margin-right: 10px;
 
-  ${({theme}) => theme.mediaWidth.upToSmall`
+  ${({ theme }) => theme.mediaWidth.upToSmall`
       margin-right: 5px;
       white-space: normal;
   `}
@@ -21,10 +21,10 @@ export const CustomOption = styled(DefaultOptionButton)`
   border-radius: 8px;
 `;
 
-export const InputAmount = styled.input.attrs({type: "number"})<{
+export const InputAmount = styled.input.attrs({ type: "number" })<{
   active?: boolean;
 }>`
-  color: ${({theme}) => theme.text1};
+  color: ${({ theme }) => theme.text1};
   border: 0;
   outline: none;
   width: 100%;
@@ -32,22 +32,22 @@ export const InputAmount = styled.input.attrs({type: "number"})<{
   margin-left: 2px;
   font-size: 0.95rem;
   background: transparent;
-  ${({active, theme}) =>
+  ${({ active, theme }) =>
     active &&
     `
     color: ${theme.text2};
   `}
 `;
 
-export const AmountsWrapper = styled.div<{hasCustom?: boolean}>`
+export const AmountsWrapper = styled.div<{ hasCustom?: boolean }>`
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
   margin-top: 16px;
 `;
 
-export const AmountsInnerWrapper = styled.div<{hasCustom?: boolean}>`
-  ${({hasCustom, theme}) =>
+export const AmountsInnerWrapper = styled.div<{ hasCustom?: boolean }>`
+  ${({ hasCustom, theme }) =>
     !hasCustom &&
     theme.mediaWidth.upToSmall`
       width: 100%;
@@ -65,12 +65,12 @@ export const QuestionMarkWrap = styled.div`
 
 export const Title = styled.div`
   font-weight: 400;
-  color: ${({theme}) => theme.text2};
+  color: ${({ theme }) => theme.text2};
   display: flex;
   direction: row;
   justify-content: space-between;
 
-  ${({theme}) => theme.mediaWidth.upToMedium`
+  ${({ theme }) => theme.mediaWidth.upToMedium`
     font-size: 12px;
   `}
 `;

@@ -1,10 +1,10 @@
-import {useSpring} from "@react-spring/web";
-import {useCallback, useEffect} from "react";
-import {animated} from "react-spring";
+import { useSpring } from "@react-spring/web";
+import { useCallback, useEffect } from "react";
+import { animated } from "react-spring";
 import styled from "styled-components";
 
-import {useRemovePopup} from "@symmio/frontend-sdk/state/application/hooks";
-import {PopupContent} from "@symmio/frontend-sdk/state/application/reducer";
+import { useRemovePopup } from "@symmio/frontend-sdk/state/application/hooks";
+import { PopupContent } from "@symmio/frontend-sdk/state/application/reducer";
 import NotificationPopup from "./NotificationPopup";
 import TransactionPopup from "./TransactionPopup";
 
@@ -14,9 +14,9 @@ const Wrapper = styled.div`
   flex-flow: column nowrap;
   width: 100%;
   margin-bottom: 10px;
-  background: ${({theme}) => theme.bg0};
+  background: ${({ theme }) => theme.bg0};
   border-radius: 10px;
-  border: 1px solid ${({theme}) => theme.border2};
+  border: 1px solid ${({ theme }) => theme.border2};
 `;
 
 const Fader = styled.div<{
@@ -27,7 +27,7 @@ const Fader = styled.div<{
   left: 0px;
   width: 100%;
   height: 1px;
-  background-color: ${({theme}) => theme.primary1};
+  background-color: ${({ theme }) => theme.primary1};
 `;
 
 const AnimatedFader = animated(Fader);
@@ -60,15 +60,15 @@ export default function PopupItem({
   }, [removeAfterMs, removeThisPopup]);
 
   const faderStyle = useSpring({
-    from: {width: "100%"},
-    to: {width: "0%"},
-    config: {duration: removeAfterMs ?? undefined},
+    from: { width: "100%" },
+    to: { width: "0%" },
+    config: { duration: removeAfterMs ?? undefined },
   });
 
   function getPopupContent(): JSX.Element | null {
     if ("txn" in content) {
       const {
-        txn: {hash, summary, success},
+        txn: { hash, summary, success },
       } = content;
       return (
         <TransactionPopup

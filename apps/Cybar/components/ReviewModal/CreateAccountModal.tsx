@@ -4,9 +4,9 @@ import {
   useCreateAccountModalToggle,
   useModalOpen,
 } from "@symmio/frontend-sdk/state/application/hooks";
-import {ApplicationModal} from "@symmio/frontend-sdk/state/application/reducer";
+import { ApplicationModal } from "@symmio/frontend-sdk/state/application/reducer";
 import CreateAccount from "components/App/AccountData/CreateAccount";
-import {Modal} from "components/Modal";
+import { Modal } from "components/Modal";
 
 const Wrapper = styled.div`
   display: flex;

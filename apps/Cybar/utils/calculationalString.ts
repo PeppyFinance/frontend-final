@@ -1,4 +1,4 @@
-import {formatPrice} from "@symmio/frontend-sdk/utils/numbers";
+import { formatPrice } from "@symmio/frontend-sdk/utils/numbers";
 
 const calculationSeparatePattern = RegExp(
   `([$%]?\\d+(?:\\.\\d+)?)(?:\\s*([-+])\\s*([$%]?\\d+(?:\\.\\d+)?))?`,

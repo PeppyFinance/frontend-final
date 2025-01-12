@@ -1,5 +1,5 @@
-import {PriceResponse} from "../state/hedger/types";
-import {Market} from "./market";
+import { PriceResponse } from "../state/hedger/types";
+import { Market } from "./market";
 
 export interface OpenInterest {
   total: number;

@@ -15,7 +15,7 @@ export enum SupportedChainId {
 
 export const SUPPORTED_CHAIN_IDS: SupportedChainId[] = Object.values(
   SupportedChainId,
-).filter(id => typeof id === "number") as SupportedChainId[];
+).filter((id) => typeof id === "number") as SupportedChainId[];
 
 export function isSupportedChain(
   chainId: number | null | undefined,

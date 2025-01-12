@@ -1,35 +1,35 @@
 import BigNumber from "bignumber.js";
-import {useCallback, useMemo} from "react";
+import { useCallback, useMemo } from "react";
 
-import {useCollateralToken} from "../constants/tokens";
-import {TransferTab} from "../types/transfer";
-import {formatPrice} from "../utils/numbers";
-import {useGetTokenWithFallbackChainId} from "../utils/token";
+import { useCollateralToken } from "../constants/tokens";
+import { TransferTab } from "../types/transfer";
+import { formatPrice } from "../utils/numbers";
+import { useGetTokenWithFallbackChainId } from "../utils/token";
 import {
   createTransactionCallback,
   TransactionCallbackState,
 } from "../utils/web3";
 
-import {useTransactionAdder} from "../state/transactions/hooks";
+import { useTransactionAdder } from "../state/transactions/hooks";
 import {
   TransactionType,
   TransferCollateralTransactionInfo,
 } from "../state/transactions/types";
-import {useActiveAccount, useExpertMode} from "../state/user/hooks";
+import { useActiveAccount, useExpertMode } from "../state/user/hooks";
 
-import {useAddRecentTransaction} from "@rainbow-me/rainbowkit";
-import {Abi, Address, encodeFunctionData} from "viem";
-import {DIAMOND_ABI, MULTI_ACCOUNT_ABI} from "../constants";
+import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
+import { Abi, Address, encodeFunctionData } from "viem";
+import { DIAMOND_ABI, MULTI_ACCOUNT_ABI } from "../constants";
 import useActiveWagmi from "../lib/hooks/useActiveWagmi";
-import {useSupportedChainId} from "../lib/hooks/useSupportedChainId";
-import {DeallocateCollateralClient} from "../lib/muon";
+import { useSupportedChainId } from "../lib/hooks/useSupportedChainId";
+import { DeallocateCollateralClient } from "../lib/muon";
 import {
   useDiamondAddress,
   useMultiAccountAddress,
   useMuonData,
   useWagmiConfig,
 } from "../state/chains";
-import {ConstructCallReturnType} from "../types/web3";
+import { ConstructCallReturnType } from "../types/web3";
 
 export function useTransferCollateral(
   typedAmount: string,
@@ -39,7 +39,7 @@ export function useTransferCollateral(
   callback: null | (() => Promise<any>);
   error: string | null;
 } {
-  const {account, chainId} = useActiveWagmi();
+  const { account, chainId } = useActiveWagmi();
 
   const DIAMOND_ADDRESS = useDiamondAddress();
   const MULTI_ACCOUNT_ADDRESS = useMultiAccountAddress();
@@ -69,7 +69,7 @@ export function useTransferCollateral(
       throw new Error("Missing muon params");
     }
 
-    const {AppName, Urls} = MuonData[chainId];
+    const { AppName, Urls } = MuonData[chainId];
     const result = await DeallocateCollateralClient.getMuonSig(
       activeAccount.accountAddress,
       AppName,
@@ -77,11 +77,11 @@ export function useTransferCollateral(
       chainId,
       DIAMOND_ADDRESS[chainId] as Address,
     );
-    const {success, signature, error} = result;
+    const { success, signature, error } = result;
     if (success === false || !signature) {
       throw new Error(`Unable to fetch Muon signature: ${error}`);
     }
-    return {signature};
+    return { signature };
   }, [DIAMOND_ADDRESS, MuonData, activeAccount, chainId]);
 
   const methodName = useMemo(() => {
@@ -140,7 +140,7 @@ export function useTransferCollateral(
         );
         const amount = new BigNumber(fixedAmount).times(1e18).toFixed();
 
-        const {signature} = await getSignature();
+        const { signature } = await getSignature();
 
         if (!signature) {
           throw new Error(`Unable to fetch Muon signature`);

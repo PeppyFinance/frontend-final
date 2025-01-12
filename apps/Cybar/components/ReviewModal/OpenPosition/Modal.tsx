@@ -1,23 +1,23 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import {
   useModalOpen,
   useToggleOpenPositionModal,
 } from "@symmio/frontend-sdk/state/application/hooks";
-import {ApplicationModal} from "@symmio/frontend-sdk/state/application/reducer";
+import { ApplicationModal } from "@symmio/frontend-sdk/state/application/reducer";
 import {
   useActiveMarket,
   usePositionType,
   useTradeTpSl,
 } from "@symmio/frontend-sdk/state/trade/hooks";
-import {useIsHavePendingTransaction} from "@symmio/frontend-sdk/state/transactions/hooks";
-import {TransactionType} from "@symmio/frontend-sdk/state/transactions/types";
+import { useIsHavePendingTransaction } from "@symmio/frontend-sdk/state/transactions/hooks";
+import { TransactionType } from "@symmio/frontend-sdk/state/transactions/types";
 
-import {ModalState, StateContext} from "./ModalData";
+import { ModalState, StateContext } from "./ModalData";
 
 import Column from "components/Column";
-import {Modal, ModalHeader} from "components/Modal";
+import { Modal, ModalHeader } from "components/Modal";
 import Loading from "./Loading";
 import OpenPositionData from "./OpenPositionData";
 
@@ -38,7 +38,7 @@ export default function OpenPositionModal() {
   const [state, setState] = useState<ModalState>(ModalState.START);
   const [txHash, setTxHash] = useState("");
   const isPendingTxs = useIsHavePendingTransaction(TransactionType.TRADE);
-  const {tp, sl} = useTradeTpSl();
+  const { tp, sl } = useTradeTpSl();
   const market = useActiveMarket();
   const positionType = usePositionType();
   const toggleModal = useToggleOpenPositionModal();
@@ -82,7 +82,7 @@ export default function OpenPositionModal() {
         title={`${positionType} ${market?.symbol}-${market?.asset}`}
         positionType={positionType}
       />
-      <StateContext.Provider value={{state, setState, setTxHash}}>
+      <StateContext.Provider value={{ state, setState, setTxHash }}>
         <Wrapper>{content}</Wrapper>
       </StateContext.Provider>
     </Modal>

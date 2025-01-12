@@ -1,10 +1,10 @@
-import {toast} from "react-hot-toast";
-import {Address} from "viem";
-import {MuonClient} from "./base";
+import { toast } from "react-hot-toast";
+import { Address } from "viem";
+import { MuonClient } from "./base";
 
 export class DeallocateClient extends MuonClient {
   constructor() {
-    super({APP_METHOD: "uPnl_A"});
+    super({ APP_METHOD: "uPnl_A" });
   }
 
   static createInstance(isEnabled: boolean): DeallocateClient | null {
@@ -88,15 +88,15 @@ export class DeallocateClient extends MuonClient {
         timestamp,
         upnl,
         gatewaySignature,
-        sigs: {signature, owner, nonce},
+        sigs: { signature, owner, nonce },
       };
 
-      return {success: true, signature: generatedSignature};
+      return { success: true, signature: generatedSignature };
     } catch (error) {
       console.error(error);
       toast.remove();
       toast.error("Unable to get response from Muon");
-      return {success: false, error};
+      return { success: false, error };
     }
   }
 }

@@ -1,11 +1,11 @@
-import styled, {useTheme} from "styled-components";
+import styled, { useTheme } from "styled-components";
 
-import {CloseGuides, OrderType} from "@symmio/frontend-sdk/types/trade";
-import {toBN} from "@symmio/frontend-sdk/utils/numbers";
+import { CloseGuides, OrderType } from "@symmio/frontend-sdk/types/trade";
+import { toBN } from "@symmio/frontend-sdk/utils/numbers";
 
 import Item from "components/App/UserPanel/CloseModal/Item";
 import Column from "components/Column";
-import {Amount, Child, ColoredBox, Full, Label} from "./styles";
+import { Amount, Child, ColoredBox, Full, Label } from "./styles";
 
 const Wrapper = styled(Column)`
   gap: 12px;
@@ -29,7 +29,7 @@ export default function GuideThree({
   setActiveTab: (orderType: OrderType) => void;
 }) {
   const theme = useTheme();
-  const {liquidationAfterClose, maxClose, minPositionSize} = values;
+  const { liquidationAfterClose, maxClose, minPositionSize } = values;
 
   const maxOrLiquidText = toBN(liquidationAfterClose).isEqualTo(0)
     ? "Available"

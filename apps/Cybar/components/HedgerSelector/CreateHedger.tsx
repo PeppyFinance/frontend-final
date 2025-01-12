@@ -1,6 +1,6 @@
-import {useState} from "react";
+import { useState } from "react";
 import styled from "styled-components";
-import {isAddress} from "viem";
+import { isAddress } from "viem";
 
 import {
   useAddHedgerCallback,
@@ -9,15 +9,15 @@ import {
 
 import GradientButton from "components/Button/GradientButton";
 import Column from "components/Column";
-import {Row, RowStart} from "components/Row";
+import { Row, RowStart } from "components/Row";
 
-const Wrapper = styled.div<{modal?: boolean}>`
+const Wrapper = styled.div<{ modal?: boolean }>`
   border: none;
   width: 100%;
   min-height: 220px;
-  border-radius: ${({modal}) => (modal ? "10px" : "4px")};
-  background: ${({theme}) => theme.bg0};
-  ${({theme}) => theme.mediaWidth.upToLarge`
+  border-radius: ${({ modal }) => (modal ? "10px" : "4px")};
+  background: ${({ theme }) => theme.bg0};
+  ${({ theme }) => theme.mediaWidth.upToLarge`
     width: 100%;
   `};
 `;
@@ -27,7 +27,7 @@ const Title = styled(RowStart)`
   font-weight: 500;
   font-size: 16px;
   line-height: 19px;
-  color: ${({theme}) => theme.text0};
+  color: ${({ theme }) => theme.text0};
 `;
 
 const ContentWrapper = styled(Column)`
@@ -37,19 +37,19 @@ const ContentWrapper = styled(Column)`
 
 const AccountWrapper = styled(Row)`
   height: 40px;
-  background: ${({theme}) => theme.bg2};
+  background: ${({ theme }) => theme.bg2};
   border-radius: 6px;
   margin-bottom: 16px;
   padding: 10px 12px;
   font-weight: 500;
   font-size: 12px;
 
-  color: ${({theme}) => theme.primary0};
+  color: ${({ theme }) => theme.primary0};
 `;
 
 const InputWrapper = styled(AccountWrapper)`
-  background: ${({theme}) => theme.bg3};
-  color: ${({theme}) => theme.text3};
+  background: ${({ theme }) => theme.bg3};
+  color: ${({ theme }) => theme.text3};
 `;
 
 const Input = styled.input<{
@@ -61,14 +61,14 @@ const Input = styled.input<{
   background: transparent;
   font-size: 12px;
   padding-left: 2px;
-  color: ${({theme}) => theme.text0};
+  color: ${({ theme }) => theme.text0};
 
   &:focus,
   &:hover {
-    color: ${({theme}) => theme.text0};
+    color: ${({ theme }) => theme.text0};
     outline: none;
   }
-  ${({theme}) => theme.mediaWidth.upToExtraSmall`
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
       font-size: 0.6rem;
     `}
 `;
@@ -119,7 +119,7 @@ export default function CreateHedger() {
   );
 }
 
-function ActionButton({name, address}: {name: string; address: string}) {
+function ActionButton({ name, address }: { name: string; address: string }) {
   const userWhitelisted = useUserWhitelist();
   const addHedger = useAddHedgerCallback();
 

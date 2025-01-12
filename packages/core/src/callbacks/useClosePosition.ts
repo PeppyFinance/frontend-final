@@ -1,4 +1,4 @@
-import {useCallback, useMemo} from "react";
+import { useCallback, useMemo } from "react";
 
 import {
   DEFAULT_PRECISION,
@@ -6,9 +6,9 @@ import {
   MARKET_ORDER_DEADLINE,
   MARKET_PRICE_COEFFICIENT,
 } from "../constants/misc";
-import {useSupportedChainId} from "../lib/hooks/useSupportedChainId";
-import {Quote} from "../types/quote";
-import {OrderType, PositionType, TradeState} from "../types/trade";
+import { useSupportedChainId } from "../lib/hooks/useSupportedChainId";
+import { Quote } from "../types/quote";
+import { OrderType, PositionType, TradeState } from "../types/trade";
 import {
   BN_ZERO,
   RoundMode,
@@ -24,22 +24,22 @@ import {
   createTransactionCallback,
 } from "../utils/web3";
 
-import {useMarketData} from "../state/hedger/hooks";
-import {useTransactionAdder} from "../state/transactions/hooks";
+import { useMarketData } from "../state/hedger/hooks";
+import { useTransactionAdder } from "../state/transactions/hooks";
 import {
   TradeTransactionInfo,
   TransactionType,
 } from "../state/transactions/types";
-import {useExpertMode, useSlippageTolerance} from "../state/user/hooks";
+import { useExpertMode, useSlippageTolerance } from "../state/user/hooks";
 
-import {useAddRecentTransaction} from "@rainbow-me/rainbowkit";
-import {Address, encodeFunctionData} from "viem";
-import {DIAMOND_ABI} from "../constants";
-import {useMarket} from "../hooks/useMarkets";
-import {useMultiAccountable} from "../hooks/useMultiAccountable";
+import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
+import { Address, encodeFunctionData } from "viem";
+import { DIAMOND_ABI } from "../constants";
+import { useMarket } from "../hooks/useMarkets";
+import { useMultiAccountable } from "../hooks/useMultiAccountable";
 import useActiveWagmi from "../lib/hooks/useActiveWagmi";
-import {useDiamondAddress, useWagmiConfig} from "../state/chains";
-import {ConstructCallReturnType} from "../types/web3";
+import { useDiamondAddress, useWagmiConfig } from "../state/chains";
+import { ConstructCallReturnType } from "../types/web3";
 
 export function useClosePosition(
   quote: Quote | null,
@@ -51,7 +51,7 @@ export function useClosePosition(
   callback: null | (() => Promise<any>);
   error: string | null;
 } {
-  const {account, chainId} = useActiveWagmi();
+  const { account, chainId } = useActiveWagmi();
   const addTransaction = useTransactionAdder();
   const addRecentTransaction = useAddRecentTransaction();
   const isSupportedChainId = useSupportedChainId();

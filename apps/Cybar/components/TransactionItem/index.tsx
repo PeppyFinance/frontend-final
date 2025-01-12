@@ -1,8 +1,8 @@
-import {useToken} from "@symmio/frontend-sdk/lib/hooks/useTokens";
-import {CloseQuoteMessages} from "@symmio/frontend-sdk/types/trade";
+import { useToken } from "@symmio/frontend-sdk/lib/hooks/useTokens";
+import { CloseQuoteMessages } from "@symmio/frontend-sdk/types/trade";
 import styled from "styled-components";
 
-import {useCollateralToken} from "@symmio/frontend-sdk/constants/tokens";
+import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 import {
   AddAccountTransactionInfo,
@@ -13,19 +13,19 @@ import {
   TradeTransactionInfo,
   TransferCollateralTransactionInfo,
 } from "@symmio/frontend-sdk/state/transactions/types";
-import {TradeState} from "@symmio/frontend-sdk/types/trade";
-import {TransferTab} from "@symmio/frontend-sdk/types/transfer";
-import {useGetTokenWithFallbackChainId} from "@symmio/frontend-sdk/utils/token";
-import {FALLBACK_CHAIN_ID} from "constants/chains/chains";
+import { TradeState } from "@symmio/frontend-sdk/types/trade";
+import { TransferTab } from "@symmio/frontend-sdk/types/transfer";
+import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
+import { FALLBACK_CHAIN_ID } from "constants/chains/chains";
 
 export const Summary = styled.div`
   font-size: 12px;
   font-weight: 500px;
-  color: ${({theme}) => theme.text0};
+  color: ${({ theme }) => theme.text0};
 `;
 
 export function TradeSummary({
-  info: {state, name, id},
+  info: { state, name, id },
   status,
 }: {
   info: TradeTransactionInfo;
@@ -41,7 +41,7 @@ export function TradeSummary({
 }
 
 export function ApproveSummary({
-  info: {tokenAddress},
+  info: { tokenAddress },
   status,
 }: {
   info: ApproveTransactionInfo;
@@ -56,7 +56,7 @@ export function ApproveSummary({
 }
 
 export function CancelQuoteSummary({
-  info: {name, id, closeQuote},
+  info: { name, id, closeQuote },
   status,
 }: {
   info: CancelQuoteTransactionInfo;
@@ -70,7 +70,7 @@ export function CancelQuoteSummary({
 }
 
 export function AddAccountSummary({
-  info: {name},
+  info: { name },
   status,
 }: {
   info: AddAccountTransactionInfo;
@@ -84,13 +84,13 @@ export function AddAccountSummary({
 }
 
 export function TransferBalanceSummary({
-  info: {amount, transferType},
+  info: { amount, transferType },
   status,
 }: {
   info: TransferCollateralTransactionInfo;
   status?: string;
 }): JSX.Element {
-  const {chainId} = useActiveWagmi();
+  const { chainId } = useActiveWagmi();
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(
     COLLATERAL_TOKEN,

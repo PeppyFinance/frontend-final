@@ -23,7 +23,7 @@ export function getRemainingTime(timeStamp: number): {
   const minutes = dayjs.utc(diff).minute();
   const seconds = dayjs.utc(diff).second();
 
-  return {diff, day, hours, minutes, seconds};
+  return { diff, day, hours, minutes, seconds };
 }
 
 export function formatTimestamp(timeLength: number, format?: string): string {

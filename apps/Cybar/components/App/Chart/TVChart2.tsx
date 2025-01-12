@@ -1,5 +1,5 @@
-import {useEffect, useRef} from "react";
-import {isMobile} from "react-device-detect";
+import { useEffect, useRef } from "react";
+import { isMobile } from "react-device-detect";
 import styled from "styled-components";
 
 let tvScriptLoadingPromise: any;
@@ -7,19 +7,19 @@ let tvScriptLoadingPromise: any;
 const WidgetContainer = styled.div`
   height: 100%;
 
-  ${({theme}) => theme.mediaWidth.upToMedium` 
+  ${({ theme }) => theme.mediaWidth.upToMedium` 
     height:280px;
   `};
 `;
 
-export default function TradingViewWidget({symbol}: {symbol: string}) {
+export default function TradingViewWidget({ symbol }: { symbol: string }) {
   const onLoadScriptRef = useRef<any>();
 
   useEffect(() => {
     onLoadScriptRef.current = createWidget;
 
     if (!tvScriptLoadingPromise) {
-      tvScriptLoadingPromise = new Promise(resolve => {
+      tvScriptLoadingPromise = new Promise((resolve) => {
         const script = document.createElement("script");
         script.id = "tradingview-widget-loading-script";
         script.src = "https://s3.tradingview.com/tv.js";
@@ -62,7 +62,7 @@ export default function TradingViewWidget({symbol}: {symbol: string}) {
 
   return (
     <WidgetContainer className="tradingview-widget-container">
-      <div id="tradingview_c6655" style={{height: "100%"}} />
+      <div id="tradingview_c6655" style={{ height: "100%" }} />
     </WidgetContainer>
   );
 }

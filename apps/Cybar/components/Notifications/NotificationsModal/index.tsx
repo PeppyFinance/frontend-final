@@ -1,25 +1,25 @@
-import {useMemo} from "react";
-import styled, {useTheme} from "styled-components";
-import {Z_INDEX} from "theme";
+import { useMemo } from "react";
+import styled, { useTheme } from "styled-components";
+import { Z_INDEX } from "theme";
 
 import {
   useReadNotifications,
   useUnreadNotifications,
 } from "@symmio/frontend-sdk/state/notifications/hooks";
-import {NotificationDetails} from "@symmio/frontend-sdk/state/notifications/types";
+import { NotificationDetails } from "@symmio/frontend-sdk/state/notifications/types";
 
-import {Card} from "components/Card";
-import Column, {ColumnCenter} from "components/Column";
-import {Bell} from "components/Icons";
-import {Modal} from "components/Modal";
+import { Card } from "components/Card";
+import Column, { ColumnCenter } from "components/Column";
+import { Bell } from "components/Icons";
+import { Modal } from "components/Modal";
 import NotificationCardsItems from "components/Notifications/Cards/index";
-import {RowCenter} from "components/Row";
+import { RowCenter } from "components/Row";
 import OldNotificationsDropdown from "./OldNotificationsDropdown";
 
 const ModalWrapper = styled(Card)`
   padding: 0.6rem;
   border: none;
-  background: ${({theme}) => theme.bg3};
+  background: ${({ theme }) => theme.bg3};
 
   & > * {
     &:last-child {
@@ -38,13 +38,13 @@ const InlineModal = styled(Card)<{
 }>`
   padding: 10px;
   width: 404px;
-  max-height: ${({height}) => height ?? "554px"};
-  display: ${props => (props.isOpen ? "flex" : "none")};
+  max-height: ${({ height }) => height ?? "554px"};
+  display: ${(props) => (props.isOpen ? "flex" : "none")};
   position: absolute;
   z-index: ${Z_INDEX.modal};
   transform: translate(-364px, 10px);
-  background: ${({theme}) => theme.bg3};
-  border: 2px solid ${({theme}) => theme.bg6};
+  background: ${({ theme }) => theme.bg3};
+  border: 2px solid ${({ theme }) => theme.bg6};
 
   & > * {
     &:last-child {
@@ -59,8 +59,8 @@ const EmptyRow = styled(ColumnCenter)`
   font-size: 14px;
   margin-bottom: 70px;
   font-weight: 400;
-  color: ${({theme}) => theme.text1};
-  background: ${({theme}) => theme.bg3};
+  color: ${({ theme }) => theme.text1};
+  background: ${({ theme }) => theme.bg3};
 `;
 
 const InfoBox = styled(RowCenter)`
@@ -68,8 +68,8 @@ const InfoBox = styled(RowCenter)`
   font-size: 12px;
   height: 30px;
   border-radius: 4px;
-  color: ${({theme}) => theme.text0};
-  background: ${({theme}) => theme.bg4};
+  color: ${({ theme }) => theme.text0};
+  background: ${({ theme }) => theme.bg4};
 `;
 
 const Title = styled.div`
@@ -78,7 +78,7 @@ const Title = styled.div`
   font-weight: 400;
   margin-top: 8px;
   height: 40px;
-  color: ${({theme}) => theme.text0};
+  color: ${({ theme }) => theme.text0};
 `;
 
 export function newNotificationsFirst(
@@ -116,14 +116,14 @@ export default function NotificationsModal({
               width={48}
               height={50}
               color={theme.bg5}
-              style={{margin: "10px auto 20px auto"}}
+              style={{ margin: "10px auto 20px auto" }}
             />
             you have no notifications!
           </EmptyRow>
         ) : (
-          <Column style={{gap: "10px"}}>
+          <Column style={{ gap: "10px" }}>
             {unreadNotifications.length > 0 && (
-              <Column style={{gap: "10px"}}>
+              <Column style={{ gap: "10px" }}>
                 <InfoBox>
                   {unreadNotifications.length} New Notifications
                 </InfoBox>

@@ -1,26 +1,26 @@
 import BigNumber from "bignumber.js";
-import {useMemo} from "react";
-import styled, {useTheme} from "styled-components";
+import { useMemo } from "react";
+import styled, { useTheme } from "styled-components";
 
-import {useMarket} from "@symmio/frontend-sdk/hooks/useMarkets";
+import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
-import {Quote, QuoteStatus} from "@symmio/frontend-sdk/types/quote";
-import {PositionType} from "@symmio/frontend-sdk/types/trade";
-import {formatAmount, toBN} from "@symmio/frontend-sdk/utils/numbers";
-import {titleCase} from "@symmio/frontend-sdk/utils/string";
-import {formatTimestamp} from "@symmio/frontend-sdk/utils/time";
+import { Quote, QuoteStatus } from "@symmio/frontend-sdk/types/quote";
+import { PositionType } from "@symmio/frontend-sdk/types/trade";
+import { formatAmount, toBN } from "@symmio/frontend-sdk/utils/numbers";
+import { titleCase } from "@symmio/frontend-sdk/utils/string";
+import { formatTimestamp } from "@symmio/frontend-sdk/utils/time";
 
 import {
   useQuoteLeverage,
   useQuoteUpnlAndPnl,
 } from "@symmio/frontend-sdk/hooks/useQuotes";
-import {useMarketsStatus} from "@symmio/frontend-sdk/state/hedger/hooks";
+import { useMarketsStatus } from "@symmio/frontend-sdk/state/hedger/hooks";
 import {
   useHistoryQuotes,
   useQuoteDetail,
   useSetQuoteDetailCallback,
 } from "@symmio/frontend-sdk/state/quotes/hooks";
-import {ApiState} from "@symmio/frontend-sdk/types/api";
+import { ApiState } from "@symmio/frontend-sdk/types/api";
 
 import PositionDetails from "components/App/AccountData/PositionDetails";
 import {
@@ -31,8 +31,8 @@ import {
   Rectangle,
   ShortArrow,
 } from "components/Icons";
-import {RowBetween, RowStart} from "components/Row";
-import {useIsMobile} from "lib/hooks/useWindowSize";
+import { RowBetween, RowStart } from "components/Row";
+import { useIsMobile } from "lib/hooks/useWindowSize";
 import {
   BodyWrap,
   EmptyRow,
@@ -46,7 +46,7 @@ import {
 
 const TableStructure = styled(RowBetween)`
   width: 100%;
-  color: ${({theme}) => theme.text2};
+  color: ${({ theme }) => theme.text2};
   font-size: 12px;
   font-weight: 400;
 
@@ -64,7 +64,7 @@ const TableStructure = styled(RowBetween)`
 `;
 
 const HeaderWrap = styled(TableStructure)`
-  color: ${({theme}) => theme.text2};
+  color: ${({ theme }) => theme.text2};
   font-weight: 500;
   margin-bottom: 12px;
 
@@ -79,16 +79,16 @@ const QuoteWrap = styled(TableStructure)<{
   canceled?: boolean;
 }>`
   height: 40px;
-  /* opacity: ${({canceled}) => (canceled ? 0.5 : 1)}; */
-  color: ${({theme}) => theme.text1};
-  background: ${({theme}) => theme.bg1};
+  /* opacity: ${({ canceled }) => (canceled ? 0.5 : 1)}; */
+  color: ${({ theme }) => theme.text1};
+  background: ${({ theme }) => theme.bg1};
   font-weight: 500;
   cursor: pointer;
   &:hover {
-    background: ${({theme}) => theme.bg6};
+    background: ${({ theme }) => theme.bg6};
   }
 
-  /* ${({canceled}) =>
+  /* ${({ canceled }) =>
     canceled &&
     `& > * {
       opacity: 0.5;
@@ -96,7 +96,7 @@ const QuoteWrap = styled(TableStructure)<{
   `} */
 
   & > * {
-    opacity: ${({canceled}) => (canceled ? 0.5 : 1)};
+    opacity: ${({ canceled }) => (canceled ? 0.5 : 1)};
 
     &:last-child {
       opacity: 1;
@@ -107,7 +107,7 @@ const QuoteWrap = styled(TableStructure)<{
 const Timestamp = styled.div`
   font-weight: 400;
   font-size: 10px;
-  color: ${({theme}) => theme.text1};
+  color: ${({ theme }) => theme.text1};
 `;
 
 const HEADERS = [
@@ -131,7 +131,7 @@ function TableHeader({
       {HEADERS.map((item, key) => (
         <div key={key}>{item}</div>
       ))}
-      <div style={{width: "16px", height: "100%", paddingTop: "10px"}}></div>
+      <div style={{ width: "16px", height: "100%", paddingTop: "10px" }}></div>
     </HeaderWrap>
   );
 }
@@ -143,21 +143,21 @@ function TableBody({
   quotes: Quote[];
   mobileVersion: boolean;
 }): JSX.Element | null {
-  const {account} = useActiveWagmi();
+  const { account } = useActiveWagmi();
   const loading = useMarketsStatus();
-  const {state: historyState} = useHistoryQuotes();
+  const { state: historyState } = useHistoryQuotes();
 
   return useMemo(
     () => (
       <BodyWrap>
         {!account ? (
           <EmptyRow>
-            <NotConnectedWallet style={{margin: "40px auto 16px auto"}} />
+            <NotConnectedWallet style={{ margin: "40px auto 16px auto" }} />
             Wallet is not connected
           </EmptyRow>
         ) : loading === ApiState.LOADING ||
           historyState === ApiState.LOADING ? (
-          <EmptyRow style={{padding: "60px 0px"}}>
+          <EmptyRow style={{ padding: "60px 0px" }}>
             <LottieCloverfield width={72} height={78} />
           </EmptyRow>
         ) : quotes.length ? (
@@ -170,7 +170,7 @@ function TableBody({
           )
         ) : (
           <EmptyRow>
-            <EmptyPosition style={{margin: "40px auto 16px auto"}} />
+            <EmptyPosition style={{ margin: "40px auto 16px auto" }} />
             You have no positions!
           </EmptyRow>
         )}
@@ -180,7 +180,7 @@ function TableBody({
   );
 }
 
-function QuoteRow({quote}: {quote: Quote}): JSX.Element | null {
+function QuoteRow({ quote }: { quote: Quote }): JSX.Element | null {
   const theme = useTheme();
   const {
     id,
@@ -194,7 +194,7 @@ function QuoteRow({quote}: {quote: Quote}): JSX.Element | null {
     liquidateAmount,
     closedAmount,
   } = quote;
-  const {name} = useMarket(quote.marketId) || {};
+  const { name } = useMarket(quote.marketId) || {};
 
   const [, pnl] = useQuoteUpnlAndPnl(quote, 0);
   const [value, color] = useMemo(() => {
@@ -311,7 +311,7 @@ function QuoteRow({quote}: {quote: Quote}): JSX.Element | null {
   );
 }
 
-export default function History({quotes}: {quotes: Quote[]}) {
+export default function History({ quotes }: { quotes: Quote[] }) {
   const mobileVersion = useIsMobile();
   return (
     <>

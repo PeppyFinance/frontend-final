@@ -1,13 +1,13 @@
-import {Address} from "viem";
+import { Address } from "viem";
 
-import {useSingleContractMultipleMethods} from "../lib/hooks/multicall";
+import { useSingleContractMultipleMethods } from "../lib/hooks/multicall";
 
-import {useSupportedChainId} from "../lib/hooks/useSupportedChainId";
+import { useSupportedChainId } from "../lib/hooks/useSupportedChainId";
 
-import {getMultipleBN, getSingleWagmiResult} from "../utils/multicall";
-import {fromWei} from "../utils/numbers";
+import { getMultipleBN, getSingleWagmiResult } from "../utils/multicall";
+import { fromWei } from "../utils/numbers";
 
-import {COLLATERAL_ABI, DIAMOND_ABI} from "../constants";
+import { COLLATERAL_ABI, DIAMOND_ABI } from "../constants";
 import useActiveWagmi from "../lib/hooks/useActiveWagmi";
 import {
   useCollateralAddress,
@@ -15,14 +15,14 @@ import {
   useDiamondAddress,
   useFallbackChainId,
 } from "../state/chains";
-import {UserPartyAStatDetail} from "../types/user";
+import { UserPartyAStatDetail } from "../types/user";
 
 //TODO why its not covered by useMemo
 //we converted all BigNumbers to string to avoid spurious rerenders
 export function usePartyAStats(
   account: string | null | undefined,
 ): UserPartyAStatDetail {
-  const {chainId} = useActiveWagmi();
+  const { chainId } = useActiveWagmi();
   const isSupportedChainId = useSupportedChainId();
 
   const DIAMOND_ADDRESS = useDiamondAddress();

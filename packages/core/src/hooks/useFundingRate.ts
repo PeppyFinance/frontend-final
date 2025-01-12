@@ -1,21 +1,21 @@
-import {useEffect, useMemo, useState} from "react";
-import useWebSocket, {ReadyState} from "react-use-websocket";
+import { useEffect, useMemo, useState } from "react";
+import useWebSocket, { ReadyState } from "react-use-websocket";
 
 import useIsWindowVisible from "../lib/hooks/useIsWindowVisible";
 
-import {ApiState, ConnectionStatus} from "../types/api";
-import {PositionType} from "../types/trade";
-import {toBN} from "../utils/numbers";
+import { ApiState, ConnectionStatus } from "../types/api";
+import { PositionType } from "../types/trade";
+import { toBN } from "../utils/numbers";
 
-import {useFundingRateApolloClient} from "../apollo/client/fundingRate";
-import {AppThunkDispatch, useAppDispatch} from "../state";
-import {useFundingRateData, useHedgerInfo} from "../state/hedger/hooks";
-import {getPaidAmount} from "../state/hedger/thunks";
-import {FundingRateData, FundingRateMap} from "../state/hedger/types";
-import {useActiveMarket} from "../state/trade/hooks";
+import { useFundingRateApolloClient } from "../apollo/client/fundingRate";
+import { AppThunkDispatch, useAppDispatch } from "../state";
+import { useFundingRateData, useHedgerInfo } from "../state/hedger/hooks";
+import { getPaidAmount } from "../state/hedger/thunks";
+import { FundingRateData, FundingRateMap } from "../state/hedger/types";
+import { useActiveMarket } from "../state/trade/hooks";
 
 export default function useFetchFundingRate(name?: string) {
-  const {webSocketFundingRateUrl} = useHedgerInfo() || {};
+  const { webSocketFundingRateUrl } = useHedgerInfo() || {};
   const windowVisible = useIsWindowVisible();
   const [fundingRate, setFundingRate] = useState({} as FundingRateData);
   const activeMarket = useActiveMarket();
@@ -29,14 +29,14 @@ export default function useFetchFundingRate(name?: string) {
       ? null
       : webSocketFundingRateUrl;
 
-  const {sendJsonMessage, lastJsonMessage, readyState} = useWebSocket(url, {
+  const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(url, {
     reconnectAttempts: 10,
     shouldReconnect: () => true,
     onOpen: () => {
       console.log("Funding Rate established.");
     },
     onClose: () => console.log("Funding Rate closed"),
-    onError: e => console.log("Funding Rate has error ", e),
+    onError: (e) => console.log("Funding Rate has error ", e),
   });
 
   const connectionStatus = useMemo(() => {
@@ -67,7 +67,7 @@ export default function useFetchFundingRate(name?: string) {
         setFundingRate(Object.values(response)[0]);
       }
     } catch (err) {
-      console.log({err});
+      console.log({ err });
     }
   }, [lastJsonMessage, connectionStatus, windowVisible]);
 
@@ -85,9 +85,9 @@ export function useGetPaidAmount(quoteId: number) {
 
   useEffect(() => {
     setStatus(ApiState.LOADING);
-    dispatch(getPaidAmount({quoteId, client}))
+    dispatch(getPaidAmount({ quoteId, client }))
       .unwrap()
-      .then(res => {
+      .then((res) => {
         setPaidAmount(res.fee);
         setStatus(ApiState.OK);
       })
@@ -97,7 +97,7 @@ export function useGetPaidAmount(quoteId: number) {
       });
   }, [client, dispatch, quoteId]);
 
-  return {paidAmount, status};
+  return { paidAmount, status };
 }
 
 export function shouldPayFundingRate(

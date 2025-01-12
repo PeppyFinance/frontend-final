@@ -1,10 +1,14 @@
-import {useMemo} from "react";
+import { useMemo } from "react";
 import styled from "styled-components";
 
-import {useCollateralToken} from "@symmio/frontend-sdk/constants/tokens";
-import {OrderType} from "@symmio/frontend-sdk/types/trade";
-import {BN_ZERO, formatAmount, toBN} from "@symmio/frontend-sdk/utils/numbers";
-import {useGetTokenWithFallbackChainId} from "@symmio/frontend-sdk/utils/token";
+import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
+import { OrderType } from "@symmio/frontend-sdk/types/trade";
+import {
+  BN_ZERO,
+  formatAmount,
+  toBN,
+} from "@symmio/frontend-sdk/utils/numbers";
+import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
 
 import useTradePage, {
   useLockedValues,
@@ -17,10 +21,10 @@ import {
   useOrderType,
 } from "@symmio/frontend-sdk/state/trade/hooks";
 
-import {useLeverage} from "@symmio/frontend-sdk/state/user/hooks";
-import {Column} from "components/Column";
+import { useLeverage } from "@symmio/frontend-sdk/state/user/hooks";
+import { Column } from "components/Column";
 import InfoItem from "components/InfoItem";
-import {RowBetween, RowEnd} from "components/Row";
+import { RowBetween, RowEnd } from "components/Row";
 
 const Wrapper = styled(Column)`
   padding: 0px;
@@ -32,8 +36,8 @@ const PositionWrap = styled(RowBetween)`
   font-weight: 400;
   padding: 0px 3px;
   white-space: nowrap;
-  color: ${({theme}) => theme.text3};
-  ${({theme}) => theme.mediaWidth.upToMedium`
+  color: ${({ theme }) => theme.text3};
+  ${({ theme }) => theme.mediaWidth.upToMedium`
     font-size: 10px;
   `};
 `;
@@ -41,20 +45,20 @@ const PositionWrap = styled(RowBetween)`
 const PositionValue = styled(RowEnd)`
   gap: 4px;
   font-size: 12px;
-  color: ${({theme}) => theme.text3};
+  color: ${({ theme }) => theme.text3};
   & > * {
     &:last-child {
       font-weight: 500;
-      color: ${({theme}) => theme.text0};
+      color: ${({ theme }) => theme.text0};
     }
   }
-  ${({theme}) => theme.mediaWidth.upToMedium`
+  ${({ theme }) => theme.mediaWidth.upToMedium`
     font-size: 10px;
   `};
 `;
 
 export default function TradeOverview() {
-  const {chainId} = useActiveWagmi();
+  const { chainId } = useActiveWagmi();
   const market = useActiveMarket();
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(
@@ -64,7 +68,7 @@ export default function TradeOverview() {
   const limitPrice = useLimitPrice();
   const orderType = useOrderType();
 
-  const {price: markPrice, formattedAmounts} = useTradePage();
+  const { price: markPrice, formattedAmounts } = useTradePage();
 
   const price = useMemo(
     () => (orderType === OrderType.MARKET ? markPrice : limitPrice),
@@ -77,7 +81,7 @@ export default function TradeOverview() {
     [formattedAmounts],
   );
   const notionalValue = useNotionalValue(quantityAsset.toString(), price);
-  const {cva, lf} = useLockedValues(notionalValue);
+  const { cva, lf } = useLockedValues(notionalValue);
 
   const tradingFee = useMemo(
     () =>

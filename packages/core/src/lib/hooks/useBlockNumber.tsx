@@ -8,8 +8,8 @@ import {
   useState,
 } from "react";
 
-import {watchBlockNumber} from "@wagmi/core";
-import {Config, usePublicClient} from "wagmi";
+import { watchBlockNumber } from "@wagmi/core";
+import { Config, usePublicClient } from "wagmi";
 import useActiveWagmi from "./useActiveWagmi";
 import useIsWindowVisible from "./useIsWindowVisible";
 
@@ -48,19 +48,19 @@ export function BlockNumberProvider({
   wagmiConfig: Config;
   children: ReactNode;
 }) {
-  const {chainId: activeChainId} = useActiveWagmi();
+  const { chainId: activeChainId } = useActiveWagmi();
   const provider = usePublicClient();
-  const [{chainId, block}, setChainBlock] = useState<{
+  const [{ chainId, block }, setChainBlock] = useState<{
     chainId?: number;
     block?: number;
-  }>({chainId: activeChainId});
+  }>({ chainId: activeChainId });
 
   const onBlock = useCallback(
     (block: number) => {
-      setChainBlock(chainBlock => {
+      setChainBlock((chainBlock) => {
         if (chainBlock.chainId === activeChainId) {
           if (!chainBlock.block || chainBlock.block < block) {
-            return {chainId: activeChainId, block};
+            return { chainId: activeChainId, block };
           }
         }
         return chainBlock;
@@ -83,10 +83,10 @@ export function BlockNumberProvider({
   useEffect(() => {
     if (activeChainId) {
       // If chainId hasn't changed, don't clear the block. This prevents re-fetching still valid data.
-      setChainBlock(chainBlock =>
+      setChainBlock((chainBlock) =>
         chainBlock.chainId === activeChainId
           ? chainBlock
-          : {chainId: activeChainId},
+          : { chainId: activeChainId },
       );
       return () => {
         unwatch();
@@ -100,7 +100,7 @@ export function BlockNumberProvider({
       value: chainId === activeChainId ? block : undefined,
       fastForward: (update: number) => {
         if (block && update > block) {
-          setChainBlock({chainId: activeChainId, block: update});
+          setChainBlock({ chainId: activeChainId, block: update });
         }
       },
     }),

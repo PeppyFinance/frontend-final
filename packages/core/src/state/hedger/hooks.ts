@@ -1,14 +1,14 @@
-import {useCallback, useMemo} from "react";
-import {useAppDispatch, useAppSelector} from "../declaration";
+import { useCallback, useMemo } from "react";
+import { useAppDispatch, useAppSelector } from "../declaration";
 
-import {SupportedChainId} from "../../constants/chains";
-import {useAllMarketsData} from "../../hooks/useAllMarketsData";
+import { SupportedChainId } from "../../constants/chains";
+import { useAllMarketsData } from "../../hooks/useAllMarketsData";
 import useActiveWagmi from "../../lib/hooks/useActiveWagmi";
 import useDebounce from "../../lib/hooks/useDebounce";
-import {useSupportedChainId} from "../../lib/hooks/useSupportedChainId";
-import {ApiState, ConnectionStatus} from "../../types/api";
-import {Market} from "../../types/market";
-import {useHedgerAddress} from "../chains/hooks";
+import { useSupportedChainId } from "../../lib/hooks/useSupportedChainId";
+import { ApiState, ConnectionStatus } from "../../types/api";
+import { Market } from "../../types/market";
+import { useHedgerAddress } from "../chains/hooks";
 import {
   updateDepth,
   updateFundingRates,
@@ -28,14 +28,14 @@ import {
 
 export function useMarketsStatus(): ApiState {
   const marketsStatus: ApiState = useAppSelector(
-    state => state.hedger.marketsStatus,
+    (state) => state.hedger.marketsStatus,
   );
   return marketsStatus;
 }
 
 export function useOpenInterestStatus(): ApiState {
   const openInterestStatus: ApiState = useAppSelector(
-    state => state.hedger.openInterestStatus,
+    (state) => state.hedger.openInterestStatus,
   );
   return openInterestStatus;
 }
@@ -44,7 +44,7 @@ export function useSetWebSocketStatus() {
   const dispatch = useAppDispatch();
   return useCallback(
     (status: ConnectionStatus) => {
-      dispatch(updateWebSocketStatus({status}));
+      dispatch(updateWebSocketStatus({ status }));
     },
     [dispatch],
   );
@@ -54,7 +54,7 @@ export function useActiveHedgerId() {
   return 0;
 }
 export function useHedgerInfo() {
-  const {chainId} = useActiveWagmi();
+  const { chainId } = useActiveWagmi();
   const isSupportedChainId = useSupportedChainId();
   const debouncedIsSupportedChainId = useDebounce(isSupportedChainId, 3000);
   const hedgerAddress = useHedgerAddress();
@@ -74,7 +74,9 @@ export function useWebSocketUrl() {
 }
 
 export function useWebSocketStatus() {
-  const webSocketStatus = useAppSelector(state => state.hedger.webSocketStatus);
+  const webSocketStatus = useAppSelector(
+    (state) => state.hedger.webSocketStatus,
+  );
   return webSocketStatus;
 }
 
@@ -84,9 +86,9 @@ export interface OrderMarktesProps {
   orderBy?: OrderMarktes;
   direction?: Direction;
 }
-export function useMarkets({orderBy, direction}: OrderMarktesProps = {}) {
-  const markets: Market[] = useAppSelector(state => state.hedger.markets);
-  const {marketsInfo, infoStatus} = useAllMarketsData();
+export function useMarkets({ orderBy, direction }: OrderMarktesProps = {}) {
+  const markets: Market[] = useAppSelector((state) => state.hedger.markets);
+  const { marketsInfo, infoStatus } = useAllMarketsData();
   // TODO: consider sorting library like fast-sort if too slow
   return useMemo(() => {
     if (infoStatus === ApiState.OK && orderBy) {
@@ -108,51 +110,51 @@ export function useMarkets({orderBy, direction}: OrderMarktesProps = {}) {
 }
 
 export function useErrorMessages() {
-  const errorMessages = useAppSelector(state => state.hedger.errorMessages);
+  const errorMessages = useAppSelector((state) => state.hedger.errorMessages);
   return errorMessages;
 }
 
 export function useMarketNotionalCap() {
   const marketNotionalCap = useAppSelector(
-    state => state.hedger.marketNotionalCap,
+    (state) => state.hedger.marketNotionalCap,
   );
   const marketNotionalCapStatus = useAppSelector(
-    state => state.hedger.marketNotionalCapStatus,
+    (state) => state.hedger.marketNotionalCapStatus,
   );
-  return {marketNotionalCap, marketNotionalCapStatus};
+  return { marketNotionalCap, marketNotionalCapStatus };
 }
 
 export function useMarketOpenInterest() {
-  const openInterest = useAppSelector(state => state.hedger.openInterest);
+  const openInterest = useAppSelector((state) => state.hedger.openInterest);
   return openInterest;
 }
 
 export function usePrices() {
-  const prices = useAppSelector(state => state.hedger.prices);
+  const prices = useAppSelector((state) => state.hedger.prices);
   return prices;
 }
 
 export function useMarketPriceRange() {
-  const priceRange = useAppSelector(state => state.hedger.priceRange);
+  const priceRange = useAppSelector((state) => state.hedger.priceRange);
   return priceRange;
 }
 
 export function useMarketData(name: string | undefined): MarketData | null {
-  const prices = useAppSelector(state => state.hedger.prices);
+  const prices = useAppSelector((state) => state.hedger.prices);
   return name ? prices[name] : null;
 }
 
 export function useFundingRateData(
   name: string | undefined,
 ): FundingRateData | null {
-  const fundingRates = useAppSelector(state => state.hedger.fundingRates);
+  const fundingRates = useAppSelector((state) => state.hedger.fundingRates);
   return name ? fundingRates[name] : null;
 }
 
 export function useMarketDepth(
   name: string | undefined,
 ): MarketDepthData | null {
-  const depths = useAppSelector(state => state.hedger.depths);
+  const depths = useAppSelector((state) => state.hedger.depths);
   return name ? depths[name] : null;
 }
 
@@ -160,7 +162,7 @@ export function useSetPrices() {
   const dispatch = useAppDispatch();
   return useCallback(
     (prices: MarketDataMap) => {
-      dispatch(updatePrices({prices}));
+      dispatch(updatePrices({ prices }));
     },
     [dispatch],
   );
@@ -170,7 +172,7 @@ export function useSetFundingRates() {
   const dispatch = useAppDispatch();
   return useCallback(
     (fundingRates: FundingRateMap) => {
-      dispatch(updateFundingRates({fundingRates}));
+      dispatch(updateFundingRates({ fundingRates }));
     },
     [dispatch],
   );
@@ -180,7 +182,7 @@ export function useSetDepth() {
   const dispatch = useAppDispatch();
   return useCallback(
     (depth: MarketDepthData, name: string) => {
-      dispatch(updateDepth({name, depth}));
+      dispatch(updateDepth({ name, depth }));
     },
     [dispatch],
   );
@@ -190,7 +192,7 @@ export function useSetNotionalCap() {
   const dispatch = useAppDispatch();
   return useCallback(
     (notionalCap: MarketNotionalCap) => {
-      dispatch(updateNotionalCap({notionalCap}));
+      dispatch(updateNotionalCap({ notionalCap }));
     },
     [dispatch],
   );

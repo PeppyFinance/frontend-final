@@ -1,6 +1,6 @@
 import BigNumber from "bignumber.js";
-import {ReadContractsData} from "wagmi/query";
-import {toBN} from "./numbers";
+import { ReadContractsData } from "wagmi/query";
+import { toBN } from "./numbers";
 
 export function getMultipleBN(result: unknown): BigNumber[] {
   if (!Array.isArray(result)) return [];

@@ -50,7 +50,7 @@ interface Props {
   onClose: () => void;
 }
 
-export const Header = ({characterName, onClose}: Props) => {
+export const Header = ({ characterName, onClose }: Props) => {
   return (
     <ModalHeader>
       <ModalHeaderText>{characterName}</ModalHeaderText>

@@ -1,4 +1,4 @@
-import {lighten} from "polished";
+import { lighten } from "polished";
 import ReactPaginate from "react-paginate";
 import styled from "styled-components";
 
@@ -25,13 +25,13 @@ const Wrapper = styled.div`
       :hover {
         cursor: pointer;
       }
-      ${({theme}) => theme.mediaWidth.upToSmall`
+      ${({ theme }) => theme.mediaWidth.upToSmall`
         padding: 1rem 0.8rem;
       `}
     }
     .active {
       a {
-        color: ${({theme}) => lighten(0.05, theme.text0)};
+        color: ${({ theme }) => lighten(0.05, theme.text0)};
         font-size: 16px;
         font-weight: 600;
       }
@@ -41,7 +41,7 @@ const Wrapper = styled.div`
     pointer-events: none;
   }
 
-  ${({theme}) => theme.mediaWidth.upToSmall`
+  ${({ theme }) => theme.mediaWidth.upToSmall`
     font-size: 0.7rem;
   `}
 `;
@@ -51,7 +51,7 @@ export default function Pagination({
   onPageChange,
 }: {
   pageCount: number;
-  onPageChange: ({selected}: {selected: number}) => void;
+  onPageChange: ({ selected }: { selected: number }) => void;
 }) {
   return (
     <Wrapper>
