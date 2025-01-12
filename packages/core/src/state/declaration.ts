@@ -22,6 +22,7 @@ import {
 } from "react-redux";
 import "symbol-observable";
 import reducer from "./reducer";
+import { ONE_DAY_IN_MILLISECOND } from "../constants";
 // import crossBrowserListener from "../utils/reduxPersistListener";
 
 const createExpirationTransform = (expiryTime) => {
@@ -48,7 +49,7 @@ const persistConfig = {
   key: "root",
   storage,
   whitelist: PERSISTED_KEYS,
-  transforms: [createExpirationTransform(24 * 60 * 60 * 1000)], // TODO constant
+  transforms: [createExpirationTransform(ONE_DAY_IN_MILLISECOND)],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);
