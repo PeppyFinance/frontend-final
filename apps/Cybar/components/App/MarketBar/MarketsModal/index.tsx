@@ -121,7 +121,7 @@ export function MarketsModal({
       <div>
         <Markets
           markets={filtered}
-          favoriteMarkets={favorites} // TODO favorites should be saved locally.
+          favoriteMarkets={favorites}
           onDismiss={onDismiss}
         />
       </div>
