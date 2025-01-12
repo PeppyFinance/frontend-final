@@ -9,8 +9,8 @@ import { InputField } from "components/App/MarketBar/InputField";
 import { RowBetween } from "components/Row";
 import { useMemo, useState } from "react";
 import TableBody from "./Body";
-import TableHeader from "./Header";
 import { CoinCategoriesHeader } from "./CoinCategoriesHeader";
+import TableHeader from "./Header";
 
 const TableWrapper = styled.div`
   border-radius: 4px;
@@ -68,8 +68,7 @@ export default function Table({ direction, orderBy }: MarketsTableProps) {
           <InputField setSearch={setSearch} placeholder={"Search Name"} />
         </InputWrapper>
       </Title>
-      <Title>
-      </Title>
+      <Title></Title>
       <CoinCategoriesHeader />
       <TableHeader
         HEADERS={[
