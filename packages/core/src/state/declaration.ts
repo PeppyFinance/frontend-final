@@ -8,7 +8,7 @@ import {
 import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
 const { configureStore } = ((toolkitRaw as any).default ??
   toolkitRaw) as typeof toolkitRaw;
-import { persistReducer, persistStore } from "redux-persist";
+import { createTransform, persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 // import { AsyncNodeStorage } from "redux-persist-node-storage";
 // import * as reduxPersisRaw from "redux-persist/lib/integration/react";
@@ -24,11 +24,31 @@ import "symbol-observable";
 import reducer from "./reducer";
 // import crossBrowserListener from "../utils/reduxPersistListener";
 
-// const PERSISTED_KEYS: string[] = ["user", "transactions"];
+const createExpirationTransform = (expiryTime) => {
+  return createTransform(
+    (inboundState) => {
+      return {
+        data: inboundState,
+        timestamp: Date.now(),
+      };
+    },
+    (outboundState) => {
+      if (!outboundState) return undefined;
 
+      const now = Date.now();
+      const expired = now - outboundState.timestamp > expiryTime;
+
+      return expired ? undefined : outboundState.data;
+    }
+  );
+};
+
+const PERSISTED_KEYS: string[] = ["user"];
 const persistConfig = {
   key: "root",
   storage,
+  whitelist: PERSISTED_KEYS,
+  transforms: [createExpirationTransform(24 * 60 * 60 * 1000)], // TODO constant
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);
@@ -41,7 +61,9 @@ function makeStore() {
       getDefaultMiddleware({
         thunk: true,
         immutableCheck: true,
-        serializableCheck: false,
+        serializableCheck: {
+          ignoredActions: ["persist/PERSIST"],
+        },
       }),
     devTools: process.env.NODE_ENV === "development",
   });
