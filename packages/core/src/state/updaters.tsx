@@ -4,9 +4,9 @@ import { NotificationUpdater } from "./notifications/updater";
 import { TransactionUpdater } from "./transactions/updater";
 import { UserUpdater } from "./user/updater";
 
+import { MarketUpdater } from "./market/updater";
 import { QuotesUpdater, TpSlUpdater, UpdaterListeners } from "./quotes/updater";
 import { UpdaterUserContract } from "./user/updaterUserContract";
-import { MarketUpdater } from "./market/updater";
 
 export default function Updaters() {
   return (

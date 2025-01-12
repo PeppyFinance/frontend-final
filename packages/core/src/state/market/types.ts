@@ -1,4 +1,3 @@
-
 export interface MarketState {
   coinCategories?: CoinCategories;
 }
