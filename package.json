@@ -13,7 +13,9 @@
     "build": "yarn workspaces run build",
     "test": "yarn workspaces run test",
     "build-and-integrate": ". ./useful_script/build-and-integrate.sh",
-    "lint": "eslint --ext js,ts,tsx ."
+    "lint": "eslint --ext js,ts,tsx .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "devDependencies": {
     "@nighttrax/eslint-config-tsx": "~12.0.0-alpha.2",
