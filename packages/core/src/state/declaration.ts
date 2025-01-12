@@ -6,10 +6,10 @@ import {
   ThunkAction,
   ThunkDispatch,
 } from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
-const { configureStore } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
 import { createTransform, persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+const { configureStore } = ((toolkitRaw as any).default ??
+  toolkitRaw) as typeof toolkitRaw;
 // import { AsyncNodeStorage } from "redux-persist-node-storage";
 // import * as reduxPersisRaw from "redux-persist/lib/integration/react";
 // const { PersistGate } = ((reduxPersisRaw as any).default ??
@@ -21,8 +21,8 @@ import {
   useSelector,
 } from "react-redux";
 import "symbol-observable";
-import reducer from "./reducer";
 import { ONE_DAY_IN_MILLISECOND } from "../constants";
+import reducer from "./reducer";
 // import crossBrowserListener from "../utils/reduxPersistListener";
 
 const createExpirationTransform = (expiryTime) => {
@@ -40,7 +40,7 @@ const createExpirationTransform = (expiryTime) => {
       const expired = now - outboundState.timestamp > expiryTime;
 
       return expired ? undefined : outboundState.data;
-    }
+    },
   );
 };
 
