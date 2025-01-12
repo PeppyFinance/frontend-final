@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { WagmiProvider } from "wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-// import dynamic from "next/dynamic";
 import type { AppProps } from "next/app";
-import store, { ReduxProvider } from "@symmio/frontend-sdk/state/declaration";
+import store, {
+  ReduxProvider,
+  persistor,
+} from "@symmio/frontend-sdk/state/declaration";
+import { PersistGate } from "redux-persist/integration/react";
 import { RainbowKitProvider, darkTheme } from "@rainbow-me/rainbowkit";
 import { getWagmiConfig } from "utils/wagmi";
 import ThemeProvider, { ThemedGlobalStyle } from "theme";
@@ -18,17 +21,13 @@ import { setUseWhatChange } from "@simbathesailor/use-what-changed";
 import Updaters from "@symmio/frontend-sdk/state/updaters";
 import ErrorBoundary from "components/App/ErrorBoundaries";
 
-// const Updaters = dynamic(() => import("@symmio/frontend-sdk/state/updaters"), {
-//   ssr: false,
-// });
-
 const { wagmiConfig, initialChain } = getWagmiConfig();
 export default function MyApp({ Component, pageProps }: AppProps) {
   if (process.env.NODE_ENV === "development") {
     setUseWhatChange(true);
   }
   const [showChild, setShowChild] = useState(false);
-  const queryClient = new QueryClient();
+
   useEffect(() => {
     setShowChild(true);
   }, []);
@@ -36,42 +35,48 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   if (!showChild) {
     return null;
   }
+
   if (typeof window === undefined) {
     return <></>;
   }
+
+  const queryClient = new QueryClient({});
+
   return (
     <ErrorBoundary>
       <ReduxProvider store={store}>
-        <WagmiProvider config={wagmiConfig}>
-          <QueryClientProvider client={queryClient}>
-            <RainbowKitProvider
-              initialChain={initialChain}
-              showRecentTransactions={true}
-              theme={darkTheme({
-                accentColor: "#AEE3FA",
-                accentColorForeground: "#151A1F",
-                borderRadius: "small",
-                fontStack: "system",
-                overlayBlur: "small",
-              })}
-            >
-              <ThemeProvider>
-                <ThemedGlobalStyle />
-                <ModalProvider backgroundComponent={ModalBackground}>
-                  <Toaster position="bottom-center" />
-                  <BlockNumberProvider wagmiConfig={wagmiConfig}>
-                    <Popups />
-                    <Updaters />
-                    <ConfigSDKComponent />
-                    <Layout>
-                      <Component {...pageProps} />
-                    </Layout>
-                  </BlockNumberProvider>
-                </ModalProvider>
-              </ThemeProvider>
-            </RainbowKitProvider>
-          </QueryClientProvider>
-        </WagmiProvider>
+        <PersistGate loading={null} persistor={persistor}>
+          <WagmiProvider config={wagmiConfig}>
+            <QueryClientProvider client={queryClient}>
+              <RainbowKitProvider
+                initialChain={initialChain}
+                showRecentTransactions={true}
+                theme={darkTheme({
+                  accentColor: "#AEE3FA",
+                  accentColorForeground: "#151A1F",
+                  borderRadius: "small",
+                  fontStack: "system",
+                  overlayBlur: "small",
+                })}
+              >
+                <ThemeProvider>
+                  <ThemedGlobalStyle />
+                  <ModalProvider backgroundComponent={ModalBackground}>
+                    <Toaster position="bottom-center" />
+                    <BlockNumberProvider wagmiConfig={wagmiConfig}>
+                      <Popups />
+                      <Updaters />
+                      <ConfigSDKComponent />
+                      <Layout>
+                        <Component {...pageProps} />
+                      </Layout>
+                    </BlockNumberProvider>
+                  </ModalProvider>
+                </ThemeProvider>
+              </RainbowKitProvider>
+            </QueryClientProvider>
+          </WagmiProvider>
+        </PersistGate>
       </ReduxProvider>
     </ErrorBoundary>
   );
