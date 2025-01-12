@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { makeHttpRequestV2 } from "../../utils/http";
+import { useAppDispatch } from "../declaration";
 import { setCoinCategories } from "./actions";
 import { CoinCategories } from "./types";
-import { useAppDispatch } from "../declaration";
 
 export function MarketUpdater(): null {
   const dispatch = useAppDispatch();
@@ -10,9 +10,9 @@ export function MarketUpdater(): null {
     const fetchCoinCategories = async () => {
       const res = await getCoinCategories();
       if (res) {
-        dispatch(setCoinCategories(res))
+        dispatch(setCoinCategories(res));
       }
-    }
+    };
     fetchCoinCategories();
   }, [dispatch]);
   return null;

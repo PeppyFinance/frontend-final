@@ -13,7 +13,7 @@ export const marketReducer = createReducer(initialState, (build) =>
       return action.payload;
     })
     .addCase(setCoinCategories, (market, { payload }) => {
-      market.coinCategories = payload
-      return market
+      market.coinCategories = payload;
+      return market;
     }),
 );
