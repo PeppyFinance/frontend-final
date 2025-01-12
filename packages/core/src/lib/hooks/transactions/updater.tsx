@@ -1,10 +1,10 @@
-import { useCallback, useEffect } from "react";
-import useBlockNumber from "../useBlockNumber";
-import useActiveWagmi from "../useActiveWagmi";
-import { usePublicClient } from "wagmi";
-import { Address, TransactionReceipt } from "viem";
 import { waitForTransactionReceipt } from "@wagmi/core";
+import { useCallback, useEffect } from "react";
+import { Address, TransactionReceipt } from "viem";
+import { usePublicClient } from "wagmi";
 import { useWagmiConfig } from "../../../state/chains";
+import useActiveWagmi from "../useActiveWagmi";
+import useBlockNumber from "../useBlockNumber";
 
 interface Transaction {
   addedTime: number;
@@ -64,7 +64,7 @@ export default function Updater({
         }
       }
     },
-    [chainId, provider, wagmiConfig]
+    [chainId, provider, wagmiConfig],
   );
 
   useEffect(() => {
@@ -86,7 +86,7 @@ export default function Updater({
             if (!error.isCancelledError) {
               console.warn(
                 `Failed to get transaction receipt for ${hash}`,
-                error
+                error,
               );
             }
           });

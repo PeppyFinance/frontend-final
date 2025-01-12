@@ -1,21 +1,26 @@
+import { simulateContract } from "@wagmi/core";
 import { useCallback } from "react";
-import { useActiveAccountAddress } from "../state/user/hooks";
+import {
+  Abi,
+  Address,
+  BaseError,
+  ContractFunctionRevertedError,
+  encodeFunctionData,
+} from "viem";
+import { DIAMOND_ABI, MULTI_ACCOUNT_ABI } from "../constants";
 import { GLOBAL_MULTI_ACCOUNTABLE_PAUSED } from "../constants/misc";
-import { Abi, Address, encodeFunctionData } from "viem";
-import { ConstructCallReturnType } from "../types/web3";
 import useWagmi from "../lib/hooks/useWagmi";
-import { ContractFunctionRevertedError, BaseError } from "viem";
 import {
   useDiamondAddress,
   useMultiAccountAddress,
   useWagmiConfig,
 } from "../state/chains";
-import { simulateContract } from "@wagmi/core";
-import { DIAMOND_ABI, MULTI_ACCOUNT_ABI } from "../constants";
+import { useActiveAccountAddress } from "../state/user/hooks";
+import { ConstructCallReturnType } from "../types/web3";
 
 export function useMultiAccountable(
   constructCall: () => ConstructCallReturnType,
-  disable?: boolean
+  disable?: boolean,
 ) {
   const activeAccountAddress = useActiveAccountAddress();
   const { account, chainId } = useWagmi();
@@ -77,7 +82,7 @@ export function useMultiAccountable(
     } catch (error) {
       if (error instanceof BaseError) {
         const revertError = error.walk(
-          (err) => err instanceof ContractFunctionRevertedError
+          (err) => err instanceof ContractFunctionRevertedError,
         );
         if (revertError instanceof ContractFunctionRevertedError) {
           console.log(revertError.reason?.toString() || "");

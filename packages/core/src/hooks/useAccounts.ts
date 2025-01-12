@@ -1,17 +1,17 @@
 import { useEffect, useMemo, useState } from "react";
-import { useReadContract } from "wagmi";
 import { Address } from "viem";
+import { useReadContract } from "wagmi";
 
-import { Account } from "../types/user";
+import { MULTI_ACCOUNT_ABI } from "../constants";
 import useActiveWagmi from "../lib/hooks/useActiveWagmi";
-import { BalanceInfosType } from "../state/user/types";
-import { ApiState } from "../types/api";
-import { useHedgerInfo } from "../state/hedger/hooks";
-import { useMultiAccountAddress } from "../state/chains";
 import { useSupportedChainId } from "../lib/hooks/useSupportedChainId";
 import { AppThunkDispatch, useAppDispatch } from "../state";
+import { useMultiAccountAddress } from "../state/chains";
+import { useHedgerInfo } from "../state/hedger/hooks";
 import { getBalanceInfo } from "../state/user/thunks";
-import { MULTI_ACCOUNT_ABI } from "../constants";
+import { BalanceInfosType } from "../state/user/types";
+import { ApiState } from "../types/api";
+import { Account } from "../types/user";
 
 export function useUserAccounts() {
   const { account, chainId } = useActiveWagmi();
@@ -48,7 +48,7 @@ export function useUserAccounts() {
         ({
           accountAddress: acc.accountAddress.toString(),
           name: acc.name,
-        } as Account)
+        }) as Account,
     );
   }, [accounts, isError, isSuccess]);
 
@@ -59,7 +59,7 @@ export function useUserAccounts() {
       isError,
       error,
     }),
-    [accountsUnsorted, error, isError, isLoading]
+    [accountsUnsorted, error, isError, isLoading],
   );
 }
 
@@ -88,14 +88,14 @@ export function useAccountsLength(): {
       loading: isLoading,
       isError,
     }),
-    [data, isError, isLoading, isSuccess]
+    [data, isError, isLoading, isSuccess],
   );
 }
 
 export function useBalanceInfos() {
   const [balanceInfo, setBalanceInfo] = useState<BalanceInfosType>({});
   const [balanceInfoStatus, setBalanceInfoStatus] = useState<ApiState>(
-    ApiState.OK
+    ApiState.OK,
   );
 
   const hedger = useHedgerInfo();

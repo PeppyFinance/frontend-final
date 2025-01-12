@@ -1,19 +1,19 @@
+import Image from "next/legacy/image";
 import { useMemo } from "react";
 import styled from "styled-components";
-import Image from "next/legacy/image";
 
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 
-import { FALLBACK_CHAIN_ID } from "constants/chains/chains";
 import { ChainInfo } from "@symmio/frontend-sdk/constants/chainInfo";
+import { FALLBACK_CHAIN_ID } from "constants/chains/chains";
 
-import { useSupportedChainId } from "@symmio/frontend-sdk/lib/hooks/useSupportedChainId";
 import useRpcChangerCallback from "@symmio/frontend-sdk/lib/hooks/useRpcChangerCallback";
+import { useSupportedChainId } from "@symmio/frontend-sdk/lib/hooks/useSupportedChainId";
 
-import { MainButton } from "components/Button";
-import { SwitchWallet } from "components/Icons";
-import GradientButton from "components/Button/GradientButton";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
+import { MainButton } from "components/Button";
+import GradientButton from "components/Button/GradientButton";
+import { SwitchWallet } from "components/Icons";
 import { getChainLogo } from "utils/chainLogo";
 
 const IconWrap = styled.div`
@@ -40,9 +40,9 @@ export function useInvalidContext() {
       !account || !chainId
         ? ContextError.ACCOUNT
         : !isSupportedChainId
-        ? ContextError.CHAIN_ID
-        : ContextError.VALID,
-    [account, chainId, isSupportedChainId]
+          ? ContextError.CHAIN_ID
+          : ContextError.VALID,
+    [account, chainId, isSupportedChainId],
   );
 }
 

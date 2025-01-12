@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-import { RowStart } from "components/Row";
 import { Search as SearchIcon } from "components/Icons";
+import { RowStart } from "components/Row";
 
 const SearchWrapper = styled(RowStart)`
   flex-flow: row nowrap;

@@ -1,22 +1,22 @@
+import axios from "axios";
 import { useCallback, useMemo } from "react";
 import { SiweMessage } from "siwe";
 import { Address } from "viem";
-import axios from "axios";
 
-import { makeHttpRequest } from "../utils/http";
 import useActiveWagmi from "../lib/hooks/useActiveWagmi";
+import { makeHttpRequest } from "../utils/http";
 
+import { useFallbackChainId, usePartyBWhitelistAddress } from "../state/chains";
 import { useHedgerInfo } from "../state/hedger/hooks";
 import { useActiveAccountAddress } from "../state/user/hooks";
-import { useFallbackChainId, usePartyBWhitelistAddress } from "../state/chains";
 
 import { useSignMessage } from "../callbacks/useMultiAccount";
-import { useIsAccessDelegated } from "./useIsAccessDelegated";
 import {
   useGetOpenInstantClosesCallback,
   useUpdateInstantCloseDataCallback,
 } from "../state/quotes/hooks";
 import { InstantCloseStatus } from "../state/quotes/types";
+import { useIsAccessDelegated } from "./useIsAccessDelegated";
 
 type NonceResponseType = {
   nonce: string;
@@ -44,7 +44,7 @@ type InstantCloseResponseType =
 export default function useInstantClose(
   quantityToClose: string,
   closePrice: string | undefined,
-  quoteId: number | undefined
+  quoteId: number | undefined,
 ) {
   const { account, chainId } = useActiveWagmi();
   const activeAddress = useActiveAccountAddress();
@@ -57,12 +57,12 @@ export default function useInstantClose(
   const FALLBACK_CHAIN_ID = useFallbackChainId();
   const partyBWhiteList = useMemo(
     () => [PARTY_B_WHITELIST[chainId ?? FALLBACK_CHAIN_ID]],
-    [FALLBACK_CHAIN_ID, PARTY_B_WHITELIST, chainId]
+    [FALLBACK_CHAIN_ID, PARTY_B_WHITELIST, chainId],
   );
 
   const isAccessDelegated = useIsAccessDelegated(
     partyBWhiteList[0],
-    "0x501e891f"
+    "0x501e891f",
   );
 
   const onSignMessage = useCallback(
@@ -82,7 +82,7 @@ export default function useInstantClose(
         throw e;
       }
     },
-    [signMessageCallback]
+    [signMessageCallback],
   );
 
   const getNonce = useCallback(async () => {
@@ -97,7 +97,7 @@ export default function useInstantClose(
       signature: string,
       expirationTime: string,
       issuedAt: string,
-      nonce: string
+      nonce: string,
     ) => {
       const loginUrl = new URL(`login`, baseUrl).href;
       const body = {
@@ -130,7 +130,7 @@ export default function useInstantClose(
         if (axios.isAxiosError(error)) {
           console.error("Axios error:", error.response?.data);
           throw new Error(
-            error.response?.data.error_message || "An unknown error occurred"
+            error.response?.data.error_message || "An unknown error occurred",
           );
         } else {
           console.error("Unexpected error:", error);
@@ -138,7 +138,7 @@ export default function useInstantClose(
         }
       }
     },
-    [activeAddress, baseUrl]
+    [activeAddress, baseUrl],
   );
 
   const checkAccessToken = useCallback(async () => {
@@ -148,7 +148,7 @@ export default function useInstantClose(
     const sub_account_address = localStorage.getItem("active_address");
     const currentDate = new Date();
     const expiration_date = new Date(
-      localStorage.getItem("expiration_time") ?? "0"
+      localStorage.getItem("expiration_time") ?? "0",
     );
 
     if (
@@ -166,7 +166,7 @@ export default function useInstantClose(
         chainId,
         nonceRes,
         host,
-        `${baseUrl}/login`
+        `${baseUrl}/login`,
       );
 
       const sign = await onSignMessage(message);
@@ -208,7 +208,7 @@ export default function useInstantClose(
       if (axios.isAxiosError(error)) {
         console.error("Axios error:", error.response?.data);
         throw new Error(
-          error.response?.data.error_message || "An unknown error occurred"
+          error.response?.data.error_message || "An unknown error occurred",
         );
       } else {
         console.error("Unexpected error:", error);
@@ -245,14 +245,14 @@ export default function useInstantClose(
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       if (res.status === 200) GetOpenInstantCloses();
     } catch (error: any) {
       if (axios.isAxiosError(error)) {
         console.error("Axios error:", error.response?.data);
         throw new Error(
-          error.response?.data.error_message || "An unknown error occurred"
+          error.response?.data.error_message || "An unknown error occurred",
         );
       } else {
         console.error("Unexpected error:", error);
@@ -278,7 +278,7 @@ function createSiweMessage(
   nonce: string,
   domain: string,
   uri: string,
-  version = "1"
+  version = "1",
 ) {
   const issuedAt = new Date().toISOString();
   const expirationTime = new Date(Date.now() + 60 * 60 * 1000).toISOString(); // 1 hour from now

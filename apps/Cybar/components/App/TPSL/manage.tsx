@@ -1,44 +1,44 @@
-import React, { useCallback, useEffect, useState } from "react";
-import styled, { useTheme } from "styled-components";
-import Image from "next/image";
-import ConnectWallet from "components/ConnectWallet";
-import { Modal, ModalHeader } from "components/Modal";
 import Column from "components/Column";
+import ConnectWallet from "components/ConnectWallet";
+import { LongArrow, ShortArrow } from "components/Icons";
 import InfoItem from "components/InfoItem";
+import { Modal, ModalHeader } from "components/Modal";
 import { Row, RowBetween, RowEnd } from "components/Row";
 import useCurrencyLogo from "lib/hooks/useCurrencyLogo";
-import { LongArrow, ShortArrow } from "components/Icons";
+import Image from "next/image";
+import { useCallback, useEffect, useState } from "react";
+import styled, { useTheme } from "styled-components";
 
-import { NumericalInput } from "components/Input";
 import { useSetTpSlDataCallback } from "@symmio/frontend-sdk/state/quotes/hooks";
+import { NumericalInput } from "components/Input";
 
-import { toast } from "react-hot-toast";
-import { OrderType, PositionType } from "@symmio/frontend-sdk/types/trade";
-import { formatPrice, toBN } from "@symmio/frontend-sdk/utils/numbers";
-import { Quote } from "@symmio/frontend-sdk/types/quote";
-import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
+import { useSignMessage } from "@symmio/frontend-sdk/callbacks/useMultiAccount";
 import {
   DEFAULT_PRECISION,
   DEFAULT_SLIPPAGE,
 } from "@symmio/frontend-sdk/constants";
 import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
 import { useQuoteLeverage } from "@symmio/frontend-sdk/hooks/useQuotes";
+import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
+import { useAppName } from "@symmio/frontend-sdk/state/chains";
 import {
   useHedgerInfo,
   useMarketData,
 } from "@symmio/frontend-sdk/state/hedger/hooks";
-import { useSignMessage } from "@symmio/frontend-sdk/callbacks/useMultiAccount";
-import { useTpSlConfigParams } from "@symmio/frontend-sdk/state/trade/hooks";
-import { makeHttpRequestV2 } from "@symmio/frontend-sdk/utils/http";
-import { getTargetPnl } from "utils/pnl";
-import { checkTpSlCriteria } from "utils/tpSl";
 import {
   TpSlDataState,
   TpSlDataStateParam,
 } from "@symmio/frontend-sdk/state/quotes/types";
+import { useTpSlConfigParams } from "@symmio/frontend-sdk/state/trade/hooks";
+import { Quote } from "@symmio/frontend-sdk/types/quote";
+import { OrderType, PositionType } from "@symmio/frontend-sdk/types/trade";
+import { makeHttpRequestV2 } from "@symmio/frontend-sdk/utils/http";
+import { formatPrice, toBN } from "@symmio/frontend-sdk/utils/numbers";
 import { PrimaryButton } from "components/Button";
 import { InfoStatementComponent } from "components/InfoItem/InfoStatement";
-import { useAppName } from "@symmio/frontend-sdk/state/chains";
+import { toast } from "react-hot-toast";
+import { getTargetPnl } from "utils/pnl";
+import { checkTpSlCriteria } from "utils/tpSl";
 
 const Wrapper = styled(Column)<{
   tpCancelButton: boolean;
@@ -174,7 +174,7 @@ export enum GAIN_MODE {
 
 function createDeleteRequestBody(
   conditional_order_type: string,
-  quoteId: number
+  quoteId: number,
 ) {
   return {
     quote_id: quoteId,
@@ -191,7 +191,7 @@ function createRequestBody(
   openedPriceSl: string,
   quantity: string,
   order_type: number,
-  quoteId: number
+  quoteId: number,
 ): TP_SLRequestBody {
   const conditional_orders: ConditionalOrder[] = [];
   if (tp !== "") {
@@ -223,7 +223,7 @@ function createRequestBody(
 async function handleDeleteTpSlRequest(
   body: string,
   appName: string,
-  tpslUrl: string
+  tpslUrl: string,
 ) {
   const { href: tpSlUrl } = new URL(`conditional-order/delete/`, tpslUrl);
   const options = {
@@ -257,7 +257,7 @@ export async function handleSignManageAndDeleteTpSlRequest(
   signMessageCallback: ((message: string) => Promise<string>) | null,
   setLoading: (targetState: boolean) => void,
   setFunction: (inputString: string) => void,
-  callBackFunction: (state: boolean) => void
+  callBackFunction: (state: boolean) => void,
 ) {
   if (conditional_order === "") {
     return;
@@ -271,7 +271,7 @@ export async function handleSignManageAndDeleteTpSlRequest(
     const requestResult = await handleDeleteTpSlRequest(
       JSON.stringify(message),
       appName,
-      tpslUrl
+      tpslUrl,
     );
     const tempMessage =
       conditional_order === "take_profit" ? "Take Profit" : "Stop Loss";
@@ -296,7 +296,7 @@ export async function handleSignManageAndDeleteTpSlRequest(
 async function handleSetTpSlRequest(
   body: string,
   AppName: string,
-  TpSlUrl: string
+  TpSlUrl: string,
 ) {
   const { href: tpSlUrl } = new URL(`conditional-order/`, TpSlUrl);
   const options = {
@@ -326,7 +326,7 @@ export function priceSlippageCalculation(
   price: string,
   slippage: number,
   positionType: PositionType,
-  precision: number
+  precision: number,
 ) {
   return positionType === PositionType.SHORT
     ? toBN(price)
@@ -362,7 +362,7 @@ export async function handleSignManageAndTpSlRequest(
   tpslUrl: string,
   signMessageCallback: ((message: string) => Promise<string>) | null,
   setLoading: (targetState: boolean) => void,
-  callBackFunction: (state: boolean) => void
+  callBackFunction: (state: boolean) => void,
 ) {
   if (targetTp === "" && targetSl === "") {
     return;
@@ -375,7 +375,7 @@ export async function handleSignManageAndTpSlRequest(
     openedPriceSl,
     quantity,
     orderType === OrderType.MARKET ? 1 : 0,
-    quoteId
+    quoteId,
   );
   try {
     setLoading(true);
@@ -384,7 +384,7 @@ export async function handleSignManageAndTpSlRequest(
     const { result: requestResult } = await handleSetTpSlRequest(
       JSON.stringify(message),
       appName,
-      tpslUrl
+      tpslUrl,
     );
     if (requestResult && requestResult.successful) {
       const arrayConditionalOrder: ConditionalOrderObject[] =
@@ -469,7 +469,7 @@ export default function ManageTpSlModal({
   const marketData = useMarketData(marketName);
   const targetPrice = pendingQuote
     ? requestedOpenPrice
-    : marketData?.markPrice ?? openedPrice;
+    : (marketData?.markPrice ?? openedPrice);
   const showTargetPrice = pendingQuote ? requestedOpenPrice : openedPrice;
 
   const tokenLogo = useCurrencyLogo(symbol);
@@ -496,12 +496,12 @@ export default function ManageTpSlModal({
       targetPrice,
       positionSize,
       positionType === PositionType.SHORT,
-      leverage
+      leverage,
     );
     const { error, message } = checkTpSlCriteria(
       parseFloat(percentOfChanges),
       tpSlConfig.MinPriceDistancePercent,
-      targetPrice
+      targetPrice,
     );
 
     if (error) {
@@ -518,12 +518,12 @@ export default function ManageTpSlModal({
       targetPrice,
       positionSize,
       positionType !== PositionType.SHORT,
-      leverage
+      leverage,
     );
     const { error, message } = checkTpSlCriteria(
       parseFloat(percentOfChanges),
       tpSlConfig.MinPriceDistancePercent,
-      targetPrice
+      targetPrice,
     );
 
     if (error) {
@@ -568,7 +568,7 @@ export default function ManageTpSlModal({
             tp,
             tpSlippage,
             positionType,
-            pricePrecision ?? DEFAULT_PRECISION
+            pricePrecision ?? DEFAULT_PRECISION,
           );
     const tempOpenPriceSl =
       sl === prevSl
@@ -577,7 +577,7 @@ export default function ManageTpSlModal({
             sl,
             slSlippage,
             positionType,
-            pricePrecision ?? DEFAULT_PRECISION
+            pricePrecision ?? DEFAULT_PRECISION,
           );
     handleSignManageAndTpSlRequest(
       tp === prevTp ? "" : tp,
@@ -616,10 +616,10 @@ export default function ManageTpSlModal({
               slOpenPrice: prevSlOpenPrice,
               quoteId,
             },
-            quoteId
+            quoteId,
           );
         }
-      }
+      },
     );
   }, [
     appName,
@@ -654,7 +654,7 @@ export default function ManageTpSlModal({
   }
 
   function getActionButtonCancel(
-    callBackButton: () => void
+    callBackButton: () => void,
   ): JSX.Element | null {
     if (!chainId || !account) return <ConnectWallet />;
     return <CancelButton onClick={callBackButton}>Cancel</CancelButton>;
@@ -742,11 +742,11 @@ export default function ManageTpSlModal({
                         tpSlState: TpSlDataState.VALID,
                         quoteId,
                       },
-                      quoteId
+                      quoteId,
                     );
                     setTpSlippage(0);
                   }
-                }
+                },
               );
             })}
         </Row>
@@ -794,11 +794,11 @@ export default function ManageTpSlModal({
                         tpSlState: TpSlDataState.VALID,
                         quoteId,
                       },
-                      quoteId
+                      quoteId,
                     );
                     setSlSlippage(0);
                   }
-                }
+                },
               );
             })}
         </Row>

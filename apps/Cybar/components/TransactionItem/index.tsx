@@ -1,22 +1,22 @@
-import styled from "styled-components";
 import { useToken } from "@symmio/frontend-sdk/lib/hooks/useTokens";
 import { CloseQuoteMessages } from "@symmio/frontend-sdk/types/trade";
+import styled from "styled-components";
 
+import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
+import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 import {
-  TradeTransactionInfo,
+  AddAccountTransactionInfo,
   ApproveTransactionInfo,
   CancelQuoteTransactionInfo,
-  AddAccountTransactionInfo,
-  TransferCollateralTransactionInfo,
   MintTransactionInfo,
   SignMessageTransactionInfo,
+  TradeTransactionInfo,
+  TransferCollateralTransactionInfo,
 } from "@symmio/frontend-sdk/state/transactions/types";
-import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
-import { FALLBACK_CHAIN_ID } from "constants/chains/chains";
-import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
 import { TradeState } from "@symmio/frontend-sdk/types/trade";
 import { TransferTab } from "@symmio/frontend-sdk/types/transfer";
-import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
+import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
+import { FALLBACK_CHAIN_ID } from "constants/chains/chains";
 
 export const Summary = styled.div`
   font-size: 12px;
@@ -94,7 +94,7 @@ export function TransferBalanceSummary({
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(
     COLLATERAL_TOKEN,
-    chainId
+    chainId,
   );
 
   const statusText =

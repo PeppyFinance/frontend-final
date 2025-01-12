@@ -1,30 +1,30 @@
 import { useMemo } from "react";
 import styled from "styled-components";
 
+import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
+import { OrderType } from "@symmio/frontend-sdk/types/trade";
 import {
   BN_ZERO,
   formatAmount,
   toBN,
 } from "@symmio/frontend-sdk/utils/numbers";
-import { OrderType } from "@symmio/frontend-sdk/types/trade";
-import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
 import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
 
+import useTradePage, {
+  useLockedValues,
+  useNotionalValue,
+} from "@symmio/frontend-sdk/hooks/useTradePage";
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 import {
   useActiveMarket,
   useLimitPrice,
   useOrderType,
 } from "@symmio/frontend-sdk/state/trade/hooks";
-import useTradePage, {
-  useLockedValues,
-  useNotionalValue,
-} from "@symmio/frontend-sdk/hooks/useTradePage";
 
-import InfoItem from "components/InfoItem";
-import { Column } from "components/Column";
-import { RowBetween, RowEnd } from "components/Row";
 import { useLeverage } from "@symmio/frontend-sdk/state/user/hooks";
+import { Column } from "components/Column";
+import InfoItem from "components/InfoItem";
+import { RowBetween, RowEnd } from "components/Row";
 
 const Wrapper = styled(Column)`
   padding: 0px;
@@ -63,7 +63,7 @@ export default function TradeOverview() {
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(
     COLLATERAL_TOKEN,
-    chainId
+    chainId,
   );
   const limitPrice = useLimitPrice();
   const orderType = useOrderType();
@@ -72,13 +72,13 @@ export default function TradeOverview() {
 
   const price = useMemo(
     () => (orderType === OrderType.MARKET ? markPrice : limitPrice),
-    [orderType, markPrice, limitPrice]
+    [orderType, markPrice, limitPrice],
   );
 
   const quantityAsset = useMemo(
     () =>
       toBN(formattedAmounts[1]).isNaN() ? BN_ZERO : toBN(formattedAmounts[1]),
-    [formattedAmounts]
+    [formattedAmounts],
   );
   const notionalValue = useNotionalValue(quantityAsset.toString(), price);
   const { cva, lf } = useLockedValues(notionalValue);
@@ -88,7 +88,7 @@ export default function TradeOverview() {
       market?.tradingFee
         ? toBN(notionalValue).times(market.tradingFee).toString()
         : "0",
-    [notionalValue, market]
+    [notionalValue, market],
   );
   const userLeverage = useLeverage();
 
@@ -129,11 +129,11 @@ export default function TradeOverview() {
               ? `${formatAmount(
                   toBN(tradingFee).div(2),
                   3,
-                  true
+                  true,
                 )} (OPEN) / ${formatAmount(
                   toBN(tradingFee).div(2),
                   3,
-                  true
+                  true,
                 )} (CLOSE) ${collateralCurrency?.symbol}`
               : `0 (OPEN) / 0 (CLOSE) ${collateralCurrency?.symbol}`
           }`}

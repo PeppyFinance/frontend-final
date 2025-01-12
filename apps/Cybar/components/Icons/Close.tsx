@@ -1,5 +1,3 @@
-import React from "react";
-
 // export const Close = styled(X)<{
 //   size?: string
 //   color?: string

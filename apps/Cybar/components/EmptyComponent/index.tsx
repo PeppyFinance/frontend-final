@@ -1,6 +1,6 @@
-import { useEffect, useMemo } from "react";
-import { useRouter } from "next/router";
 import find from "lodash/find.js";
+import { useRouter } from "next/router";
+import { useEffect, useMemo } from "react";
 
 import { Market } from "@symmio/frontend-sdk/types/market";
 import { DEFAULT_HEDGER } from "constants/chains/hedgers";
@@ -19,8 +19,8 @@ export function UpdaterRoot() {
     document.title = !market
       ? "Loading..."
       : price
-      ? `${price} | ${market.name}`
-      : `${market.name}`;
+        ? `${price} | ${market.name}`
+        : `${market.name}`;
   }, [price, market]);
 
   const markets = useMarkets();

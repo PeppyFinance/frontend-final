@@ -1,13 +1,13 @@
 import { useRef, useState } from "react";
-import styled from "styled-components";
 import { isMobile } from "react-device-detect";
+import styled from "styled-components";
 
 import { useActiveMarket } from "@symmio/frontend-sdk/state/trade/hooks";
 import useOnOutsideClick from "lib/hooks/useOnOutsideClick";
 
+import { MarketsModal } from "components/App/MarketBar/MarketsModal";
 import { ChevronDown, Loader } from "components/Icons";
 import { Row, RowEnd, RowStart } from "components/Row";
-import { MarketsModal } from "components/App/MarketBar/MarketsModal";
 
 const Container = styled.div`
   display: inline-flex;

@@ -2,7 +2,7 @@ export const UNDER_MAINTENANCE = false;
 
 export const AddressZero = "0x0000000000000000000000000000000000000000";
 export const MAX_UINT256 = BigInt(
-  "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+  "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
 );
 
 // transaction popup dismissal amounts
@@ -30,3 +30,5 @@ export const BALANCE_HISTORY_ITEMS_NUMBER = 10;
 
 export const CLOSE_QUOTE_HASH_CONTRACT = "0x501e891f";
 export const CANCEL_CLOSE_QUOTE_HASH_CONTRACT = "0xa63b9363";
+
+export const ONE_DAY_IN_MILLISECOND = 24 * 60 * 60 * 1000;

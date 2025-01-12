@@ -1,17 +1,17 @@
 import {
+  TransactionInfo,
+  TransactionType,
+} from "@symmio/frontend-sdk/state/transactions/types";
+import {
   AddAccountSummary,
   ApproveSummary,
   CancelQuoteSummary,
   MintSummary,
+  SignSummary,
   Summary,
   TradeSummary,
   TransferBalanceSummary,
-  SignSummary,
 } from "components/TransactionItem";
-import {
-  TransactionInfo,
-  TransactionType,
-} from "@symmio/frontend-sdk/state/transactions/types";
 
 export default function TransactionSummary({
   info,

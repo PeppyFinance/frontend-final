@@ -1,13 +1,13 @@
-import React, { useCallback, useContext } from "react";
-import toast from "react-hot-toast";
 import { useSentQuoteCallback } from "@symmio/frontend-sdk/callbacks/useSendQuote";
 import useTradePage from "@symmio/frontend-sdk/hooks/useTradePage";
-import { ModalState, StateContext } from "./ModalData";
-import ErrorButton from "components/Button/ErrorButton";
-import OpenPositionButton from "components/Button/OpenPositionButton";
 import { useSetTpSlState } from "@symmio/frontend-sdk/state/trade/hooks";
 import { TpSlProcessState } from "@symmio/frontend-sdk/state/trade/types";
 import { getCurrentTimeInSecond } from "@symmio/frontend-sdk/utils/time";
+import ErrorButton from "components/Button/ErrorButton";
+import OpenPositionButton from "components/Button/OpenPositionButton";
+import { useCallback, useContext } from "react";
+import toast from "react-hot-toast";
+import { ModalState, StateContext } from "./ModalData";
 
 export default function ActionButton() {
   const { state } = useTradePage();

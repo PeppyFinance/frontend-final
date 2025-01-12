@@ -4,9 +4,9 @@ import { useEffect } from "react";
 import { useUserAccounts } from "@symmio/frontend-sdk/hooks/useAccounts";
 import { useAppDispatch } from "@symmio/frontend-sdk/state";
 import { BackAlley } from "components/BackAlley";
+import { CharacterContextProvider } from "components/BackAlley/characterContext";
 import { Box } from "rebass/styled-components";
 import styled from "styled-components";
-import { CharacterContextProvider } from "components/BackAlley/characterContext";
 
 export const Row = styled(Box)<{
   width?: string;

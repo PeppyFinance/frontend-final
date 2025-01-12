@@ -1,7 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import ReactPaginate from "react-paginate";
 import { lighten } from "polished";
+import ReactPaginate from "react-paginate";
+import styled from "styled-components";
 
 const Wrapper = styled.div`
   /* margin: 0.8rem auto; */

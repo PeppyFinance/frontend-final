@@ -18,13 +18,13 @@ export default function useBidAskPrice(market?: Market): {
     toBN(bestAskPrice).times(toBN(1).plus(hedgerFeeOpen)),
     pricePrecision,
     false,
-    RoundMode.ROUND_UP
+    RoundMode.ROUND_UP,
   );
   const bestBid: string = formatPrice(
     toBN(bestBidPrice).times(toBN(1).minus(hedgerFeeClose)),
     pricePrecision,
     false,
-    RoundMode.ROUND_DOWN
+    RoundMode.ROUND_DOWN,
   );
 
   const diff = toBN(bestBid).minus(bestAsk).abs();

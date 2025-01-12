@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 // modified from https://usehooks.com/useDebounce/
 export default function useDebounce<InputType>(
   value: InputType,
-  delay: number
+  delay: number,
 ): InputType {
   const [debouncedValue, setDebouncedValue] = useState(value);
 

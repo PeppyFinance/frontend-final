@@ -1,28 +1,27 @@
+import BigNumber from "bignumber.js";
 import { useMemo } from "react";
 import styled, { useTheme } from "styled-components";
-import BigNumber from "bignumber.js";
 
-import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
-import { PositionType } from "@symmio/frontend-sdk/types/trade";
-import { Quote, QuoteStatus } from "@symmio/frontend-sdk/types/quote";
 import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
+import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
+import { Quote, QuoteStatus } from "@symmio/frontend-sdk/types/quote";
+import { PositionType } from "@symmio/frontend-sdk/types/trade";
 import { formatAmount, toBN } from "@symmio/frontend-sdk/utils/numbers";
-import { formatTimestamp } from "@symmio/frontend-sdk/utils/time";
 import { titleCase } from "@symmio/frontend-sdk/utils/string";
+import { formatTimestamp } from "@symmio/frontend-sdk/utils/time";
 
 import {
   useQuoteLeverage,
   useQuoteUpnlAndPnl,
 } from "@symmio/frontend-sdk/hooks/useQuotes";
+import { useMarketsStatus } from "@symmio/frontend-sdk/state/hedger/hooks";
 import {
   useHistoryQuotes,
   useQuoteDetail,
   useSetQuoteDetailCallback,
 } from "@symmio/frontend-sdk/state/quotes/hooks";
-import { useMarketsStatus } from "@symmio/frontend-sdk/state/hedger/hooks";
 import { ApiState } from "@symmio/frontend-sdk/types/api";
 
-import { useIsMobile } from "lib/hooks/useWindowSize";
 import PositionDetails from "components/App/AccountData/PositionDetails";
 import {
   EmptyPosition,
@@ -33,15 +32,16 @@ import {
   ShortArrow,
 } from "components/Icons";
 import { RowBetween, RowStart } from "components/Row";
+import { useIsMobile } from "lib/hooks/useWindowSize";
 import {
   BodyWrap,
-  Wrapper,
-  PositionTypeWrap,
-  PnlValue,
-  MarketName,
-  QuoteStatusValue,
   EmptyRow,
   LeverageWrap,
+  MarketName,
+  PnlValue,
+  PositionTypeWrap,
+  QuoteStatusValue,
+  Wrapper,
 } from "./Common";
 
 const TableStructure = styled(RowBetween)`
@@ -166,7 +166,7 @@ function TableBody({
               <PositionDetails key={index} quote={quote} />
             ) : (
               <QuoteRow key={index} quote={quote} />
-            )
+            ),
           )
         ) : (
           <EmptyRow>
@@ -176,7 +176,7 @@ function TableBody({
         )}
       </BodyWrap>
     ),
-    [account, loading, historyState, quotes, mobileVersion]
+    [account, loading, historyState, quotes, mobileVersion],
   );
 }
 
@@ -269,7 +269,7 @@ function QuoteRow({ quote }: { quote: Quote }): JSX.Element | null {
             <div>-</div>
           ) : (
             <PnlValue color={color}>{`${value} (${Math.abs(
-              Number(upnlPercent)
+              Number(upnlPercent),
             )}%)`}</PnlValue>
           )}
 
@@ -307,7 +307,7 @@ function QuoteRow({ quote }: { quote: Quote }): JSX.Element | null {
       activeDetail,
       setQuoteDetail,
       quote,
-    ]
+    ],
   );
 }
 

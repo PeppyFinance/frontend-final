@@ -1,27 +1,27 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import styled from "styled-components";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
+import styled from "styled-components";
 
-import { Modal } from "components/Modal";
-import { Option } from "components/Tab";
-import { Close as CloseIcon, DotFlashing } from "components/Icons";
-import { Row, RowBetween, RowStart } from "components/Row";
-import WithdrawCooldown from "components/App/AccountData/WithdrawCooldown";
+import { useTransferCollateral } from "@symmio/frontend-sdk/callbacks/useTransferCollateral";
+import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
-import {
-  useAccountPartyAStat,
-  useActiveAccountAddress,
-} from "@symmio/frontend-sdk/state/user/hooks";
-import { formatPrice, toBN } from "@symmio/frontend-sdk/utils/numbers";
 import {
   useModalOpen,
   useWithdrawBarModalToggle,
 } from "@symmio/frontend-sdk/state/application/hooks";
 import { ApplicationModal } from "@symmio/frontend-sdk/state/application/reducer";
+import {
+  useAccountPartyAStat,
+  useActiveAccountAddress,
+} from "@symmio/frontend-sdk/state/user/hooks";
 import { TransferTab } from "@symmio/frontend-sdk/types/transfer";
-import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
+import { formatPrice, toBN } from "@symmio/frontend-sdk/utils/numbers";
 import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
-import { useTransferCollateral } from "@symmio/frontend-sdk/callbacks/useTransferCollateral";
+import WithdrawCooldown from "components/App/AccountData/WithdrawCooldown";
+import { Close as CloseIcon, DotFlashing } from "components/Icons";
+import { Modal } from "components/Modal";
+import { Row, RowBetween, RowStart } from "components/Row";
+import { Option } from "components/Tab";
 
 const Wrapper = styled.div`
   display: flex;
@@ -94,12 +94,12 @@ export function WithdrawBarModalContent({
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(
     COLLATERAL_TOKEN,
-    chainId
+    chainId,
   );
 
   if (
     toBN(
-      toBN(accountBalance).toFixed(collateralCurrency?.decimals)
+      toBN(accountBalance).toFixed(collateralCurrency?.decimals),
     ).isGreaterThan(0)
   ) {
     return (
@@ -160,7 +160,7 @@ function CancelWithdraw() {
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(
     COLLATERAL_TOKEN,
-    chainId
+    chainId,
   );
 
   const cancelAmount = useMemo(() => {
@@ -182,7 +182,7 @@ function CancelWithdraw() {
   const { callback: transferBalanceCallback, error: transferBalanceError } =
     useTransferCollateral(
       formatPrice(cancelAmount, collateralCurrency?.decimals),
-      TransferTab.ALLOCATE
+      TransferTab.ALLOCATE,
     );
 
   const handleAction = useCallback(async () => {

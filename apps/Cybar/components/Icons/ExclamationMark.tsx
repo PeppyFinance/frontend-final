@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function ExclamationMark({
   width = 20,
   height = 18,

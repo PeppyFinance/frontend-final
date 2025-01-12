@@ -1,12 +1,11 @@
-import React from "react";
 import styled from "styled-components";
 
 import { toBN } from "@symmio/frontend-sdk/utils/numbers";
 
-import { Quote } from "@symmio/frontend-sdk/types/quote";
 import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
-import { CustomInputBox2 } from "components/InputBox";
 import { useExpertMode } from "@symmio/frontend-sdk/state/user/hooks";
+import { Quote } from "@symmio/frontend-sdk/types/quote";
+import { CustomInputBox2 } from "components/InputBox";
 
 export const InputAmount = styled.input.attrs({ type: "number" })<{
   active?: boolean;

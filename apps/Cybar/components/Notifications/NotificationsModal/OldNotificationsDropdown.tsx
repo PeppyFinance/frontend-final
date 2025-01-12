@@ -3,12 +3,12 @@ import styled from "styled-components";
 
 import { useReadNotifications } from "@symmio/frontend-sdk/state/notifications/hooks";
 
-import { newNotificationsFirst } from ".";
+import { Card } from "components/Card";
 import Column from "components/Column";
+import { ChevronDown } from "components/Icons";
 import NotificationCardsItems from "components/Notifications/Cards/index";
 import { RowCenter } from "components/Row";
-import { ChevronDown } from "components/Icons";
-import { Card } from "components/Card";
+import { newNotificationsFirst } from ".";
 
 const ContentContainer = styled(Column)`
   gap: 12px;

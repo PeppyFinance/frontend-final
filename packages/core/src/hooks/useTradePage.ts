@@ -1,38 +1,38 @@
-import { useMemo } from "react";
 import BigNumber from "bignumber.js";
+import { useMemo } from "react";
 
 import {
   DEFAULT_PRECISION,
   MARKET_PRICE_COEFFICIENT,
   MAX_PENDINGS_POSITIONS_NUMBER,
 } from "../constants/misc";
-import { removeTrailingZeros, RoundMode, toBN } from "../utils/numbers";
-import {
-  InputField,
-  OrderType,
-  ErrorState,
-  PositionType,
-} from "../types/trade";
 import {
   useMarketNotionalCap,
   useMarketOpenInterest,
   useMarketPriceRange,
 } from "../state/hedger/hooks";
 import {
+  useActiveMarket,
+  useActiveMarketPrice,
+  useInputField,
+  useLimitPrice,
+  useLockedPercentages,
+  useOrderType,
+  usePositionType,
+  useTypedValue,
+} from "../state/trade/hooks";
+import {
   useExpertMode,
   useLeverage,
   useSlippageTolerance,
 } from "../state/user/hooks";
 import {
-  useActiveMarket,
-  useActiveMarketPrice,
-  useLockedPercentages,
-  useLimitPrice,
-  useOrderType,
-  usePositionType,
-  useInputField,
-  useTypedValue,
-} from "../state/trade/hooks";
+  ErrorState,
+  InputField,
+  OrderType,
+  PositionType,
+} from "../types/trade";
+import { RoundMode, removeTrailingZeros, toBN } from "../utils/numbers";
 
 import { usePendingsQuotes } from "../state/quotes/hooks";
 import useAccountData from "./useAccountData";
@@ -112,17 +112,17 @@ export default function useTradePage(): {
       inputField === InputField.PRICE
         ? typedValue
         : independentValue
-        ? removeTrailingZeros(
-            independentValue.toFixed(pricePrecision, RoundMode.ROUND_DOWN)
-          )
-        : "",
+          ? removeTrailingZeros(
+              independentValue.toFixed(pricePrecision, RoundMode.ROUND_DOWN),
+            )
+          : "",
       inputField === InputField.QUANTITY
         ? typedValue
         : independentValue
-        ? removeTrailingZeros(
-            independentValue.toFixed(quantityPrecision, RoundMode.ROUND_DOWN)
-          )
-        : "",
+          ? removeTrailingZeros(
+              independentValue.toFixed(quantityPrecision, RoundMode.ROUND_DOWN),
+            )
+          : "",
     ];
   }, [
     inputField,
@@ -221,18 +221,18 @@ export default function useTradePage(): {
 
   return useMemo(
     () => ({ price, formattedAmounts, state, balance }),
-    [price, formattedAmounts, state, balance]
+    [price, formattedAmounts, state, balance],
   );
 }
 
 //Notional Value
 export function useNotionalValue(
   quantity: BigNumber.Value,
-  price: BigNumber.Value
+  price: BigNumber.Value,
 ): string {
   return useMemo(
     () => toBN(quantity).times(price).toString(),
-    [quantity, price]
+    [quantity, price],
   );
 }
 
@@ -248,7 +248,7 @@ export function useLockedCVA(notionalValue: string): string {
         .div(100)
         .div(leverage)
         .toString(),
-    [cva, leverage, notionalValue]
+    [cva, leverage, notionalValue],
   );
 }
 
@@ -262,7 +262,7 @@ export function usePartyBLockedMM(notionalValue: string): string {
         .times(partyBmm ?? 0)
         .div(100)
         .toString(),
-    [partyBmm, notionalValue]
+    [partyBmm, notionalValue],
   );
 }
 
@@ -278,7 +278,7 @@ export function usePartyALockedMM(notionalValue: string): string {
         .div(100)
         .div(leverage)
         .toString(),
-    [leverage, partyAmm, notionalValue]
+    [leverage, partyAmm, notionalValue],
   );
 }
 
@@ -294,7 +294,7 @@ export function useLockedLF(notionalValue: string): string {
         .div(100)
         .div(leverage)
         .toString(),
-    [leverage, lf, notionalValue]
+    [leverage, lf, notionalValue],
   );
 }
 
@@ -320,6 +320,6 @@ export function useLockedValues(notionalValue: string): {
       partyAmm,
       total: toBN(cva).plus(partyAmm).plus(lf).toString(),
     }),
-    [lf, partyAmm, cva]
+    [lf, partyAmm, cva],
   );
 }

@@ -18,7 +18,7 @@ export function useSingleContractMultipleData(
   contractAbi: Abi,
   functionName: string,
   callsData: any,
-  option?: any
+  option?: any,
 ) {
   const configs = callsData.map((args) => ({
     address: contractAddress as Address,
@@ -42,7 +42,7 @@ export function useSingleContractMultipleMethods(
   contractAddress: string,
   contractAbi: Abi,
   callsData?: CallData[],
-  option?: any
+  option?: any,
 ) {
   const configs =
     (contractAddress &&
@@ -78,7 +78,7 @@ export function useSingleCallResult(
   contract: ReturnType<typeof useContract>,
   functionName: string,
   callInputs?: any,
-  option?: any
+  option?: any,
 ) {
   return useReadContract({
     ...{ contract },
@@ -94,7 +94,7 @@ export function useMultipleContractSingleData(
   abi: Abi,
   functionName: string,
   callInputs: any,
-  option?: any
+  option?: any,
 ) {
   // TODO: fix any type
   const configs = addresses.map((address, i) => ({

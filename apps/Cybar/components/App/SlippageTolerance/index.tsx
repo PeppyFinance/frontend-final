@@ -1,9 +1,8 @@
-import React from "react";
 import styled from "styled-components";
 
 import { Row, RowCenter } from "components/Row";
-import CYBAR_LOGO_SHORT from "/public/static/images/cybar-short.svg";
 import Image from "next/legacy/image";
+import CYBAR_LOGO_SHORT from "/public/static/images/cybar-short.svg";
 
 const AutoSlippageContainer = styled.div`
   padding: 1px;

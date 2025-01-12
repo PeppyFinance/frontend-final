@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
-import useActiveWagmi from "./useActiveWagmi";
 import { useV3Ids } from "../../state/chains/hooks";
+import useActiveWagmi from "./useActiveWagmi";
 
 // Allow user to connect any chain globally, but restrict unsupported ones if needed
 export function useSupportedChainId() {

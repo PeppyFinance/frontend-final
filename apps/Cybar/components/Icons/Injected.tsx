@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Injected({
   width = 18,
   height = 18,

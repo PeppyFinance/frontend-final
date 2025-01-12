@@ -1,17 +1,17 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import styled, { useTheme } from "styled-components";
 
-import { formatPrice } from "@symmio/frontend-sdk/utils/numbers";
-import { PositionType } from "@symmio/frontend-sdk/types/trade";
 import { ConnectionStatus } from "@symmio/frontend-sdk/types/api";
+import { PositionType } from "@symmio/frontend-sdk/types/trade";
+import { formatPrice } from "@symmio/frontend-sdk/utils/numbers";
 
-import { DefaultHeader } from "../styles";
-import { Row } from "components/Row";
+import { useTotalNotionalValue } from "@symmio/frontend-sdk/hooks/usePositionOverview";
+import { IQuotesInfo } from "@symmio/frontend-sdk/types/quotesOverview";
 import Column from "components/Column";
 import { LongArrow, ShortArrow } from "components/Icons";
-import { IQuotesInfo } from "@symmio/frontend-sdk/types/quotesOverview";
-import { useTotalNotionalValue } from "@symmio/frontend-sdk/hooks/usePositionOverview";
+import { Row } from "components/Row";
 import ShimmerAnimation from "components/ShimmerAnimation";
+import { DefaultHeader } from "../styles";
 import { AccountPositionsContext } from "./context";
 
 import { useUpnlWebSocketStatus } from "@symmio/frontend-sdk/state/user/hooks";
@@ -63,10 +63,10 @@ function getPositionNumbers(quotesInfo: IQuotesInfo) {
       .reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
   const shortPositions = quotesInfo.filter(
-    (quoteInfo) => quoteInfo.positionType === PositionType.SHORT
+    (quoteInfo) => quoteInfo.positionType === PositionType.SHORT,
   );
   const longPositions = quotesInfo.filter(
-    (quoteInfo) => quoteInfo.positionType === PositionType.LONG
+    (quoteInfo) => quoteInfo.positionType === PositionType.LONG,
   );
 
   const totalPositionNumber = calcArraySum(quotesInfo);

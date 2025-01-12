@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Trade({
   width = 28,
   height = 18,

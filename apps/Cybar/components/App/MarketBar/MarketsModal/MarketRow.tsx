@@ -1,6 +1,6 @@
-import React, { useCallback, useMemo } from "react";
-import styled from "styled-components";
 import { useRouter } from "next/router";
+import { useCallback, useMemo } from "react";
+import styled from "styled-components";
 
 import { Market } from "@symmio/frontend-sdk/types/market";
 
@@ -10,8 +10,8 @@ import {
   useToggleUserFavoriteCallback,
 } from "@symmio/frontend-sdk/state/user/hooks";
 
-import { RowEnd, RowStart } from "components/Row";
 import { Star } from "components/Icons";
+import { RowEnd, RowStart } from "components/Row";
 
 const Row = styled(RowStart)<{ active: boolean }>`
   z-index: 0;
@@ -61,7 +61,7 @@ export default function MarketRow({
 
   const isActive = useMemo(
     () => market.id === activeMarket?.id,
-    [market, activeMarket]
+    [market, activeMarket],
   );
 
   const onClick = useCallback(() => {

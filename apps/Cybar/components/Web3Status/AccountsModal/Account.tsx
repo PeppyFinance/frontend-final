@@ -7,11 +7,11 @@ import {
   BalanceInfo,
 } from "@symmio/frontend-sdk/types/user";
 
-import { RowBetween, RowEnd, RowStart } from "components/Row";
 import { useCustomAccountUpnl } from "@symmio/frontend-sdk/state/user/hooks";
-import { formatAmount, toBN } from "@symmio/frontend-sdk/utils/numbers";
 import { ApiState } from "@symmio/frontend-sdk/types/api";
+import { formatAmount, toBN } from "@symmio/frontend-sdk/utils/numbers";
 import { Loader } from "components/Icons";
+import { RowBetween, RowEnd, RowStart } from "components/Row";
 
 const AccountWrapper = styled.div<{ active?: boolean }>`
   position: relative;

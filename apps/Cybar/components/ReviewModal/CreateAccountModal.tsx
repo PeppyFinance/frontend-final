@@ -1,13 +1,12 @@
-import React from "react";
 import styled from "styled-components";
 
-import { Modal } from "components/Modal";
-import CreateAccount from "components/App/AccountData/CreateAccount";
-import { ApplicationModal } from "@symmio/frontend-sdk/state/application/reducer";
 import {
   useCreateAccountModalToggle,
   useModalOpen,
 } from "@symmio/frontend-sdk/state/application/hooks";
+import { ApplicationModal } from "@symmio/frontend-sdk/state/application/reducer";
+import CreateAccount from "components/App/AccountData/CreateAccount";
+import { Modal } from "components/Modal";
 
 const Wrapper = styled.div`
   display: flex;
