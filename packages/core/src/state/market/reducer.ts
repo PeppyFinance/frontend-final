@@ -9,15 +9,10 @@ export const initialState: MarketState = {
 
 export const marketReducer = createReducer(initialState, (build) =>
   build
-    .addCase(setMarket, (state, action) => {
-      console.log("setMarket:\n ========================\n", { state, action });
+    .addCase(setMarket, (_state, action) => {
       return action.payload;
     })
-    .addCase(setCoinCategories, (state, action) => {
-      console.log("setCoinCategories:\n ========================\n", {
-        state,
-        action,
-      });
+    .addCase(setCoinCategories, (_state, action) => {
       return action.payload;
     }),
 );
