@@ -1,6 +1,6 @@
 {
-  "bracketSpacing": false,
+  "bracketSpacing": true,
   "trailingComma": "all",
-  "arrowParens": "avoid",
+  "arrowParens": "always",
   "plugins": ["prettier-plugin-organize-imports"]
 }
