@@ -1,8 +1,9 @@
 import { RowCenter } from "components/Row";
 import { lighten } from "polished";
+import { CSSProperties } from "react";
 import styled from "styled-components";
 
-export const BaseButton = styled(RowCenter)<{
+export const BaseButton = styled(RowCenter) <{
   active?: boolean;
   disabled?: boolean;
 }>`
@@ -31,7 +32,7 @@ export const BaseButton = styled(RowCenter)<{
   }
 `;
 
-export const NavButton = styled(BaseButton)<{ width?: number | string }>`
+export const NavButton = styled(BaseButton) <{ width?: number | string }>`
   height: 40px;
   width: ${({ width }) => (width ? width : "40px")};
   font-size: 14px;
@@ -48,7 +49,7 @@ export const NavButton = styled(BaseButton)<{ width?: number | string }>`
   `};
 `;
 
-export const PrimaryButton = styled(BaseButton)<{ height?: string | number }>`
+export const PrimaryButton = styled(BaseButton) <{ height?: string | number }>`
   z-index: 0;
   width: 100%;
   font-size: 14px;
@@ -111,7 +112,7 @@ export const ButtonEmpty = styled(BaseButton)`
   }
 `;
 
-export const TableButton = styled(PrimaryButton)<{ width?: string | number }>`
+export const TableButton = styled(PrimaryButton) <{ width?: string | number }>`
   width: ${({ width }) => (width ? width : "132px")};
   height: 40px;
   padding: 0;
@@ -169,7 +170,7 @@ export const MaxButton = styled.div`
   }
 `;
 
-export const OptionButton = styled(BaseButton)<{ active?: boolean }>`
+export const OptionButton = styled(BaseButton) <{ active?: boolean }>`
   height: 36px;
   width: 62px;
   font-size: 13px;
@@ -194,7 +195,7 @@ export const OptionButton = styled(BaseButton)<{ active?: boolean }>`
   }
 `;
 
-export const EnterButton = styled(BaseButton)<{
+export const EnterButton = styled(BaseButton) <{
   active?: boolean;
   calculationLoading?: boolean;
 }>`
@@ -217,7 +218,7 @@ export const EnterButton = styled(BaseButton)<{
   }
 `;
 
-export const PositionActionButton = styled(SecondaryButton)<{
+export const PositionActionButton = styled(SecondaryButton) <{
   expired?: boolean;
   liquidatePending?: boolean;
 }>`
@@ -261,7 +262,13 @@ export const PositionActionButton = styled(SecondaryButton)<{
   `};
 `;
 
-export const MarketsHeaderButton = styled.button<{ isActive: boolean }>`
+interface MarketsHeaderButton {
+  isActive: boolean;
+  paddingLeftRight?: CSSProperties['paddingLeft']
+  paddingTopBottom?: CSSProperties['paddingTop']
+}
+
+export const MarketsHeaderButton = styled.button<MarketsHeaderButton>`
   all: unset;
   display: inline-flex;
   align-items: center;
@@ -270,5 +277,6 @@ export const MarketsHeaderButton = styled.button<{ isActive: boolean }>`
   background-color: ${({ isActive, theme }) =>
     isActive ? `${theme.bg3}` : "none"};
   border-radius: 4px;
-  padding: 0.2rem 0.4rem;
+  padding:${({ paddingLeftRight = '0.4rem', paddingTopBottom = '0.2rem' }) => `${paddingTopBottom} ${paddingLeftRight}`} ;
 `;
+
