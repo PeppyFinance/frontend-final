@@ -1,14 +1,14 @@
 import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
-const { createReducer } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
-import { TransactionDetails } from "./types";
 import {
   addTransaction,
-  clearAllTransactions,
   checkedTransaction,
+  clearAllTransactions,
   finalizeTransaction,
   updateTransaction,
 } from "./actions";
+import { TransactionDetails } from "./types";
+const { createReducer } = ((toolkitRaw as any).default ??
+  toolkitRaw) as typeof toolkitRaw;
 
 const now = () => new Date().getTime();
 
@@ -38,7 +38,7 @@ export default createReducer(initialState, (builder) =>
         };
         txs[hash] = { hash, info, from, summary, addedTime: now() };
         state[chainId] = txs;
-      }
+      },
     )
     .addCase(
       updateTransaction,
@@ -48,7 +48,7 @@ export default createReducer(initialState, (builder) =>
         const txs = state[chainId];
         const hash = restParameter["hash"];
         txs[hash] = restParameter;
-      }
+      },
     )
     .addCase(clearAllTransactions, (transactions, { payload: { chainId } }) => {
       if (!transactions[chainId]) return;
@@ -66,10 +66,10 @@ export default createReducer(initialState, (builder) =>
         } else {
           tx.lastCheckedBlockNumber = Math.max(
             blockNumber,
-            tx.lastCheckedBlockNumber
+            tx.lastCheckedBlockNumber,
           );
         }
-      }
+      },
     )
     .addCase(
       finalizeTransaction,
@@ -80,6 +80,6 @@ export default createReducer(initialState, (builder) =>
         }
         tx.receipt = receipt;
         tx.confirmedTime = now();
-      }
-    )
+      },
+    ),
 );

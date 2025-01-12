@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import { useSetSdkConfig } from "@symmio/frontend-sdk/state/chains/hooks";
+import { useEffect } from "react";
 
 import { contractInfo } from "constants/chains/addresses";
 import { ClientChain, FALLBACK_CHAIN_ID } from "constants/chains/chains";

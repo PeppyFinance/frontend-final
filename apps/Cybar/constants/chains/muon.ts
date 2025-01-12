@@ -1,13 +1,13 @@
 import { SupportedChainId } from "@symmio/frontend-sdk/constants/chains";
 import { MuonDataType } from "@symmio/frontend-sdk/state/chains/reducer";
 import {
-  MUON_APP_NAME,
-  BSC_MUON_BASE_URLS,
-  POLYGON_MUON_BASE_URL,
-  MANTLE_MUON_BASE_URL,
+  ARBITRUM_MUON_BASE_URL,
   BASE_MUON_BASE_URL,
   BLAST_MUON_BASE_URL,
-  ARBITRUM_MUON_BASE_URL,
+  BSC_MUON_BASE_URLS,
+  MANTLE_MUON_BASE_URL,
+  MUON_APP_NAME,
+  POLYGON_MUON_BASE_URL,
 } from "constants/chains/misc";
 
 export const BSCChain: MuonDataType = {

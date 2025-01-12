@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import styled from "styled-components";
 import { Z_INDEX } from "theme";
 
@@ -7,12 +7,12 @@ import {
   useMarketsSearch,
 } from "@symmio/frontend-sdk/hooks/useMarkets";
 
+import { InputField } from "components/App/MarketBar/InputField";
+import Markets from "components/App/MarketBar/MarketsModal/Markets";
 import { Card } from "components/Card";
-import { RowStart, Row } from "components/Row";
 import { Close as CloseIcon } from "components/Icons";
 import { Modal as ModalBody } from "components/Modal";
-import Markets from "components/App/MarketBar/MarketsModal/Markets";
-import { InputField } from "components/App/MarketBar/InputField";
+import { Row, RowStart } from "components/Row";
 
 const ModalWrapper = styled(Card)`
   padding: 0.6rem;
@@ -102,7 +102,7 @@ export function MarketsModal({
 
   const { filtered } = useMemo(() => {
     const filtered = markets.filter((market) =>
-      market.name.toLowerCase().includes(search)
+      market.name.toLowerCase().includes(search),
     );
 
     return { filtered };

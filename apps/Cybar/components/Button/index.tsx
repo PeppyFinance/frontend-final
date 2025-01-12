@@ -1,6 +1,6 @@
-import styled from "styled-components";
 import { RowCenter } from "components/Row";
 import { lighten } from "polished";
+import styled from "styled-components";
 
 export const BaseButton = styled(RowCenter)<{
   active?: boolean;

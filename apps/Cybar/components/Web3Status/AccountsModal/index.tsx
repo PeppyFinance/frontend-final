@@ -6,15 +6,15 @@ import { useAppDispatch } from "@symmio/frontend-sdk/state";
 import { updateAccount } from "@symmio/frontend-sdk/state/user/actions";
 import { useActiveAccountAddress } from "@symmio/frontend-sdk/state/user/hooks";
 
-import { RowCenter } from "components/Row";
-import CreateAccountModal from "components/ReviewModal/CreateAccountModal";
-import Account from "./Account";
+import { useBalanceInfos } from "@symmio/frontend-sdk/hooks/useAccounts";
 import {
   useCreateAccountModalToggle,
   useModalOpen,
 } from "@symmio/frontend-sdk/state/application/hooks";
 import { ApplicationModal } from "@symmio/frontend-sdk/state/application/reducer";
-import { useBalanceInfos } from "@symmio/frontend-sdk/hooks/useAccounts";
+import CreateAccountModal from "components/ReviewModal/CreateAccountModal";
+import { RowCenter } from "components/Row";
+import Account from "./Account";
 
 const HoverWrapper = styled.div`
   padding: 0px 8px 12px 8px;

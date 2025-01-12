@@ -1,10 +1,10 @@
 import { useCallback, useMemo } from "react";
 
+import { useSupportedChainId } from "../lib/hooks/useSupportedChainId";
 import {
   createTransactionCallback,
   TransactionCallbackState,
 } from "../utils/web3";
-import { useSupportedChainId } from "../lib/hooks/useSupportedChainId";
 
 import { useTransactionAdder } from "../state/transactions/hooks";
 import {
@@ -13,17 +13,17 @@ import {
 } from "../state/transactions/types";
 
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
-import { ConstructCallReturnType } from "../types/web3";
 import { Address, encodeFunctionData } from "viem";
+import { MULTI_ACCOUNT_ABI } from "../constants";
 import useActiveWagmi from "../lib/hooks/useActiveWagmi";
-import { useActiveAccountAddress } from "../state/user/hooks";
 import {
   useFallbackChainId,
   useMultiAccountAddress,
   usePartyBWhitelistAddress,
   useWagmiConfig,
 } from "../state/chains";
-import { MULTI_ACCOUNT_ABI } from "../constants";
+import { useActiveAccountAddress } from "../state/user/hooks";
+import { ConstructCallReturnType } from "../types/web3";
 
 export function useDelegateAccess(): {
   state: TransactionCallbackState;
@@ -44,7 +44,7 @@ export function useDelegateAccess(): {
   const FALLBACK_CHAIN_ID = useFallbackChainId();
   const partyBWhiteList = useMemo(
     () => [PARTY_B_WHITELIST[chainId ?? FALLBACK_CHAIN_ID]],
-    [FALLBACK_CHAIN_ID, PARTY_B_WHITELIST, chainId]
+    [FALLBACK_CHAIN_ID, PARTY_B_WHITELIST, chainId],
   );
 
   const functionName = "delegateAccess";
@@ -125,7 +125,7 @@ export function useDelegateAccess(): {
           addTransaction,
           addRecentTransaction,
           txInfo,
-          wagmiConfig
+          wagmiConfig,
         ),
     };
   }, [

@@ -1,18 +1,20 @@
-import React, { useCallback, useMemo, useState } from "react";
-import styled, { useTheme } from "styled-components";
+import { useCallback, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
+import styled, { useTheme } from "styled-components";
 
-import { FALLBACK_CHAIN_ID } from "constants/chains/chains";
+import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
 import {
-  toBN,
-  formatAmount,
   BN_ZERO,
+  formatAmount,
   formatPrice,
+  toBN,
 } from "@symmio/frontend-sdk/utils/numbers";
 import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
-import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
+import { FALLBACK_CHAIN_ID } from "constants/chains/chains";
 
-import { TransferTab } from "@symmio/frontend-sdk/types/transfer";
+import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
+import { ApprovalState } from "@symmio/frontend-sdk/lib/hooks/useApproval";
+import { useApproveCallback } from "@symmio/frontend-sdk/lib/hooks/useApproveCallback";
 import {
   useDepositModalToggle,
   useModalOpen,
@@ -23,21 +25,18 @@ import {
   useAccountPartyAStat,
   useActiveAccountAddress,
 } from "@symmio/frontend-sdk/state/user/hooks";
-import { useApproveCallback } from "@symmio/frontend-sdk/lib/hooks/useApproveCallback";
-import { ApprovalState } from "@symmio/frontend-sdk/lib/hooks/useApproval";
-import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
+import { TransferTab } from "@symmio/frontend-sdk/types/transfer";
 
-import { Modal } from "components/Modal";
-import InfoItem from "components/InfoItem";
-import { Option } from "components/Tab";
-import { DotFlashing } from "components/Icons";
-import { PrimaryButton } from "components/Button";
-import { CustomInputBox2 } from "components/InputBox";
-import { Close as CloseIcon } from "components/Icons";
-import { useTransferCollateral } from "@symmio/frontend-sdk/callbacks/useTransferCollateral";
 import { useMintCollateral } from "@symmio/frontend-sdk/callbacks/useMintTestCollateral";
-import { Row, RowBetween, RowStart } from "components/Row";
+import { useTransferCollateral } from "@symmio/frontend-sdk/callbacks/useTransferCollateral";
 import { useMultiAccountAddress } from "@symmio/frontend-sdk/state/chains/hooks";
+import { PrimaryButton } from "components/Button";
+import { Close as CloseIcon, DotFlashing } from "components/Icons";
+import InfoItem from "components/InfoItem";
+import { CustomInputBox2 } from "components/InputBox";
+import { Modal } from "components/Modal";
+import { Row, RowBetween, RowStart } from "components/Row";
+import { Option } from "components/Tab";
 
 const Wrapper = styled.div`
   display: flex;
@@ -106,18 +105,18 @@ export default function DepositModal() {
   const MULTI_ACCOUNT_ADDRESS = useMultiAccountAddress();
   const spender = useMemo(
     () => MULTI_ACCOUNT_ADDRESS[chainId ?? FALLBACK_CHAIN_ID],
-    [MULTI_ACCOUNT_ADDRESS, chainId]
+    [MULTI_ACCOUNT_ADDRESS, chainId],
   );
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(
     COLLATERAL_TOKEN,
-    chainId
+    chainId,
   );
 
   const [approvalState, approveCallback] = useApproveCallback(
     collateralCurrency,
     typedAmount ?? "0",
-    spender
+    spender,
   );
 
   const [showApprove, showApproveLoader] = useMemo(() => {
@@ -228,7 +227,7 @@ export default function DepositModal() {
           label={"Allowed to Deposit"}
           balanceExact={formatPrice(
             allowedDepositAmount,
-            collateralCurrency?.decimals
+            collateralCurrency?.decimals,
           )}
           amount={formatAmount(allowedDepositAmount.toString(), 4, true)}
           ticker={`${collateralCurrency?.symbol}`}

@@ -1,7 +1,7 @@
 import { formatPrice } from "@symmio/frontend-sdk/utils/numbers";
 
 const calculationSeparatePattern = RegExp(
-  `([$%]?\\d+(?:\\.\\d+)?)(?:\\s*([-+])\\s*([$%]?\\d+(?:\\.\\d+)?))?`
+  `([$%]?\\d+(?:\\.\\d+)?)(?:\\s*([-+])\\s*([$%]?\\d+(?:\\.\\d+)?))?`,
 );
 export const calculationPattern = RegExp(`[%$+-]`);
 
@@ -31,7 +31,7 @@ function calculateOverall(
   secondPart: string,
   balance: string,
   pricePrecision: number | undefined,
-  basePrice: string
+  basePrice: string,
 ): string {
   let tempPricePrecision = 0;
   if (pricePrecision) {
@@ -58,7 +58,7 @@ export function calculateString(
   input: string,
   balance: string,
   pricePrecision: number | undefined,
-  basePrice: string
+  basePrice: string,
 ): string {
   const matchString = input.match(calculationSeparatePattern);
   let result = "";
@@ -69,7 +69,7 @@ export function calculateString(
       matchString[3],
       balance,
       pricePrecision,
-      basePrice
+      basePrice,
     );
   }
   return result;

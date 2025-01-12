@@ -1,5 +1,3 @@
-import React from "react";
-
 export const Wallet = ({
   size = 20,
   ...rest

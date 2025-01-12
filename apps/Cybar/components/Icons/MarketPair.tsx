@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function MarketPair({
   width = 30,
   height = 18,

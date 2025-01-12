@@ -11,7 +11,7 @@ export function getExplorerLink(
   chainId: SupportedChainId,
   type: ExplorerDataType,
   data: string,
-  FALLBACK_CHAIN_ID: number
+  FALLBACK_CHAIN_ID: number,
 ): string {
   const base =
     chainId in ChainInfo

@@ -3,16 +3,16 @@ import styled from "styled-components";
 import { useActivePopups } from "@symmio/frontend-sdk/state/application/hooks";
 import useWindowSize from "lib/hooks/useWindowSize";
 
-import PopupItem from "./PopupItem";
-import { MEDIA_WIDTHS, Z_INDEX } from "theme";
-import { useEffect } from "react";
+import { PopupList } from "@symmio/frontend-sdk/state/application/reducer";
 import { useNotificationAdderCallback } from "@symmio/frontend-sdk/state/notifications/hooks";
 import {
   NotificationDetails,
   NotificationType,
 } from "@symmio/frontend-sdk/state/notifications/types";
 import { useActiveAccountAddress } from "@symmio/frontend-sdk/state/user/hooks";
-import { PopupList } from "@symmio/frontend-sdk/state/application/reducer";
+import { useEffect } from "react";
+import { MEDIA_WIDTHS, Z_INDEX } from "theme";
+import PopupItem from "./PopupItem";
 
 const Container = styled.div`
   display: flex;
@@ -97,7 +97,7 @@ function useCreateNotificationFromTx(activePopups: PopupList) {
               transferType: info.transferType,
               counterpartyAddress: activeAccount,
             } as unknown as NotificationDetails,
-            "unread"
+            "unread",
           );
         }
       }

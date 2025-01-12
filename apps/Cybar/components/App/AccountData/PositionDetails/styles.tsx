@@ -1,15 +1,15 @@
 import styled from "styled-components";
 
+import { PnlValue } from "components/App/UserPanel/Common";
 import Column, { ColumnCenter } from "components/Column";
+import { NextIcon } from "components/Icons";
 import {
   RowBetween,
   RowCenter,
+  Row as RowComponent,
   RowEnd,
   RowStart,
-  Row as RowComponent,
 } from "components/Row";
-import { PnlValue } from "components/App/UserPanel/Common";
-import { NextIcon } from "components/Icons";
 
 import { ChevronDown } from "components/Icons";
 

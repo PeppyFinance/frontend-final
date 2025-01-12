@@ -1,19 +1,19 @@
 import { useContext, useMemo } from "react";
 import styled, { useTheme } from "styled-components";
 
-import { formatPrice } from "@symmio/frontend-sdk/utils/numbers";
-import { PositionType } from "@symmio/frontend-sdk/types/trade";
-import { ISingleQuoteInfo } from "@symmio/frontend-sdk/types/quotesOverview";
-import { AccountPositionsContext } from "./context";
 import { ConnectionStatus } from "@symmio/frontend-sdk/types/api";
+import { ISingleQuoteInfo } from "@symmio/frontend-sdk/types/quotesOverview";
+import { PositionType } from "@symmio/frontend-sdk/types/trade";
+import { formatPrice } from "@symmio/frontend-sdk/utils/numbers";
+import { AccountPositionsContext } from "./context";
 
 import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
 import { useTotalNotionalValue } from "@symmio/frontend-sdk/hooks/usePositionOverview";
 import { useUpnlWebSocketStatus } from "@symmio/frontend-sdk/state/user/hooks";
 
 import Column from "components/Column";
-import { Row, RowBetween } from "components/Row";
 import { LongArrow, ShortArrow } from "components/Icons";
+import { Row, RowBetween } from "components/Row";
 import ShimmerAnimation from "components/ShimmerAnimation";
 
 const TABLE_WIDTH = 377;
@@ -177,7 +177,7 @@ function PositionRow({
   const { marketId, positionType, value, positionQuantity } = marketQuoteInfo;
   const valuePercent = useMemo(
     () => (value / totalValue) * 100 || 0,
-    [value, totalValue]
+    [value, totalValue],
   );
   const market = useMarket(marketId);
 

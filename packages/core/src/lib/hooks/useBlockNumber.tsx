@@ -1,4 +1,4 @@
-import React, {
+import {
   createContext,
   ReactNode,
   useCallback,
@@ -8,10 +8,10 @@ import React, {
   useState,
 } from "react";
 
-import useIsWindowVisible from "./useIsWindowVisible";
-import useActiveWagmi from "./useActiveWagmi";
-import { Config, usePublicClient } from "wagmi";
 import { watchBlockNumber } from "@wagmi/core";
+import { Config, usePublicClient } from "wagmi";
+import useActiveWagmi from "./useActiveWagmi";
+import useIsWindowVisible from "./useIsWindowVisible";
 
 const MISSING_PROVIDER = Symbol();
 const BlockNumberContext = createContext<
@@ -26,7 +26,7 @@ function useBlockNumberContext() {
   const blockNumber = useContext(BlockNumberContext);
   if (blockNumber === MISSING_PROVIDER) {
     throw new Error(
-      "BlockNumber hooks must be wrapped in a <BlockNumberProvider>"
+      "BlockNumber hooks must be wrapped in a <BlockNumberProvider>",
     );
   }
   return blockNumber;
@@ -66,7 +66,7 @@ export function BlockNumberProvider({
         return chainBlock;
       });
     },
-    [activeChainId, setChainBlock]
+    [activeChainId, setChainBlock],
   );
 
   const windowVisible = useIsWindowVisible();
@@ -86,7 +86,7 @@ export function BlockNumberProvider({
       setChainBlock((chainBlock) =>
         chainBlock.chainId === activeChainId
           ? chainBlock
-          : { chainId: activeChainId }
+          : { chainId: activeChainId },
       );
       return () => {
         unwatch();
@@ -104,7 +104,7 @@ export function BlockNumberProvider({
         }
       },
     }),
-    [activeChainId, block, chainId]
+    [activeChainId, block, chainId],
   );
   return (
     <BlockNumberContext.Provider value={value}>

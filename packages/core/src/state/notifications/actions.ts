@@ -1,7 +1,7 @@
 import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
+import { NotificationDetails } from "./types";
 const { createAction } = ((toolkitRaw as any).default ??
   toolkitRaw) as typeof toolkitRaw;
-import { NotificationDetails } from "./types";
 
 export const addUnreadNotification = createAction<{
   notification: NotificationDetails;
@@ -21,10 +21,10 @@ export const readOneNotification = createAction<{
 }>("notifications/readOneNotification");
 
 export const updateTimestamp = createAction<{ timestamp: string }>(
-  "notifications/updateTimestamp"
+  "notifications/updateTimestamp",
 );
 export const updateIsNewNotification = createAction<{ flag: boolean }>(
-  "notifications/updateIsNewNotification"
+  "notifications/updateIsNewNotification",
 );
 
 // export const readAllNotifications = createAction('notifications/readAllNotifications')

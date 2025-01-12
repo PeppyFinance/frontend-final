@@ -1,10 +1,9 @@
-import React from "react";
-import styled from "styled-components";
 import Image from "next/legacy/image";
+import styled from "styled-components";
 
-import { ModalHeader, Modal } from "components/Modal";
-import { RowCenter } from "components/Row";
 import { PrimaryButton } from "components/Button";
+import { Modal, ModalHeader } from "components/Modal";
+import { RowCenter } from "components/Row";
 
 import WARNING from "/public/static/images/etc/warning.svg";
 

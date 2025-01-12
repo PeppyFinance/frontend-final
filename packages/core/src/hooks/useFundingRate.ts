@@ -3,16 +3,16 @@ import useWebSocket, { ReadyState } from "react-use-websocket";
 
 import useIsWindowVisible from "../lib/hooks/useIsWindowVisible";
 
-import { toBN } from "../utils/numbers";
-import { PositionType } from "../types/trade";
 import { ApiState, ConnectionStatus } from "../types/api";
+import { PositionType } from "../types/trade";
+import { toBN } from "../utils/numbers";
 
-import { useActiveMarket } from "../state/trade/hooks";
-import { getPaidAmount } from "../state/hedger/thunks";
+import { useFundingRateApolloClient } from "../apollo/client/fundingRate";
 import { AppThunkDispatch, useAppDispatch } from "../state";
 import { useFundingRateData, useHedgerInfo } from "../state/hedger/hooks";
+import { getPaidAmount } from "../state/hedger/thunks";
 import { FundingRateData, FundingRateMap } from "../state/hedger/types";
-import { useFundingRateApolloClient } from "../apollo/client/fundingRate";
+import { useActiveMarket } from "../state/trade/hooks";
 
 export default function useFetchFundingRate(name?: string) {
   const { webSocketFundingRateUrl } = useHedgerInfo() || {};
@@ -103,7 +103,7 @@ export function useGetPaidAmount(quoteId: number) {
 export function shouldPayFundingRate(
   positionType: PositionType,
   longRate: string,
-  shortRate: string
+  shortRate: string,
 ) {
   if (positionType === PositionType.LONG) {
     return toBN(longRate).isGreaterThan(0) ? false : true;

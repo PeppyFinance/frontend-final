@@ -5,7 +5,7 @@ export function getTargetPnl(
   openedPrice: string,
   quantityToClose: string,
   negativeFlag: boolean,
-  leverage: string
+  leverage: string,
 ) {
   const pnl =
     toBN(targetPrice)

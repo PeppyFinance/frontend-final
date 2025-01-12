@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 
+import { WEB_SETTING } from "@symmio/frontend-sdk/config";
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
+import { useMultiAccountAddress } from "@symmio/frontend-sdk/state/chains";
 import {
   useActiveAccount,
   useAddInWhitelist,
@@ -9,8 +11,6 @@ import {
   useUserWhitelist,
 } from "@symmio/frontend-sdk/state/user/hooks";
 import { GetWhiteListType } from "@symmio/frontend-sdk/state/user/types";
-import { WEB_SETTING } from "@symmio/frontend-sdk/config";
-import { useMultiAccountAddress } from "@symmio/frontend-sdk/state/chains";
 
 export default function Updater() {
   const { account, chainId } = useActiveWagmi();
@@ -25,13 +25,13 @@ export default function Updater() {
     subAccount?.accountAddress,
     chainId && Object.keys(MULTI_ACCOUNT_ADDRESS).length
       ? MULTI_ACCOUNT_ADDRESS[chainId]
-      : ""
+      : "",
   );
   const addInWhitelist = useAddInWhitelist(
     subAccount?.accountAddress,
     chainId && Object.keys(MULTI_ACCOUNT_ADDRESS).length
       ? MULTI_ACCOUNT_ADDRESS[chainId]
-      : ""
+      : "",
   );
 
   useEffect(() => {

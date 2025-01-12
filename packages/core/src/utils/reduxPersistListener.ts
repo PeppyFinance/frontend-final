@@ -4,7 +4,7 @@ import { RootState } from "../state/declaration";
 
 export default function crossBrowserListener(
   store: Store<RootState>,
-  persistConfig: PersistConfig<RootState>
+  persistConfig: PersistConfig<RootState>,
 ) {
   return async function () {
     const state = await getStoredState(persistConfig);

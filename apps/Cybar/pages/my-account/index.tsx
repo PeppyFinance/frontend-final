@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 import AccountBalance from "components/App/AccountData/MyAccount/AccountBalance";
-import BalanceHistory from "components/App/AccountData/MyAccount/BalanceHistory";
-import WithdrawBar from "components/App/AccountData/MyAccount/WithdrawBar";
 import AccountOverview from "components/App/AccountData/MyAccount/AccountOverview";
 import AccountPositions from "components/App/AccountData/MyAccount/AccountPositions";
+import BalanceHistory from "components/App/AccountData/MyAccount/BalanceHistory";
+import WithdrawBar from "components/App/AccountData/MyAccount/WithdrawBar";
 import WrapperBanner from "components/Banner";
 import { Container } from "pages/trade/[id]";
 

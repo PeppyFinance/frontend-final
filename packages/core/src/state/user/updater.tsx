@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useRef } from "react";
 import isEmpty from "lodash/isEmpty.js";
-import { AppDispatch, AppThunkDispatch, useAppDispatch } from "../declaration";
+import { useEffect, useMemo, useRef } from "react";
 import { useWebSocket } from "react-use-websocket/dist/lib/use-websocket.js";
+import { AppDispatch, AppThunkDispatch, useAppDispatch } from "../declaration";
 
 // TODO: fix this { ReadyState } from "react-use-websocket"
 enum ReadyState {
@@ -18,6 +18,21 @@ import useIsWindowVisible from "../../lib/hooks/useIsWindowVisible";
 import { AccountUpnl } from "../../types/user";
 import { useHedgerInfo } from "../hedger/hooks";
 
+import { useAnalyticsApolloClient } from "../../apollo/client/balanceHistory";
+import { useContractDelegateTpSl } from "../../hooks/useTpSl";
+import { ConnectionStatus } from "../../types/api";
+import { makeHttpRequestV2 } from "../../utils/http";
+import { autoRefresh } from "../../utils/retry";
+import {
+  useAnalyticsSubgraphAddress,
+  useAppName,
+  useMultiAccountAddress,
+} from "../chains/hooks";
+import {
+  useSetDelegateTpSl,
+  useSetTpSlConfig,
+  useTpSlDelegate,
+} from "../trade/hooks";
 import { updateAccountUpnl, updateMatchesDarkMode } from "./actions";
 import {
   useActiveAccountAddress,
@@ -25,21 +40,6 @@ import {
   useUserWhitelist,
 } from "./hooks";
 import { getIsWhiteList, getTotalDepositsAndWithdrawals } from "./thunks";
-import {
-  useAnalyticsSubgraphAddress,
-  useAppName,
-  useMultiAccountAddress,
-} from "../chains/hooks";
-import { ConnectionStatus } from "../../types/api";
-import { useAnalyticsApolloClient } from "../../apollo/client/balanceHistory";
-import { useContractDelegateTpSl } from "../../hooks/useTpSl";
-import {
-  useSetDelegateTpSl,
-  useSetTpSlConfig,
-  useTpSlDelegate,
-} from "../trade/hooks";
-import { autoRefresh } from "../../utils/retry";
-import { makeHttpRequestV2 } from "../../utils/http";
 
 export function UserUpdater(): null {
   const dispatch = useAppDispatch();
@@ -103,7 +103,7 @@ export function UserUpdater(): null {
           account,
           multiAccountAddress: MULTI_ACCOUNT_ADDRESS[chainId],
           appName,
-        })
+        }),
       );
   }, [
     thunkDispatch,
@@ -122,7 +122,7 @@ export function UserUpdater(): null {
           account: activeAccountAddress,
           chainId,
           client,
-        })
+        }),
       );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeAccountAddress, chainId, subgraphAddress, thunkDispatch]);
@@ -156,7 +156,7 @@ export function UserUpdater(): null {
 async function getTpSlConfigRequest(TP_SL_URL: string, APP_NAME: string) {
   const { href: tpSlUrl } = new URL(
     `conditional-order/dev/configs/`,
-    TP_SL_URL
+    TP_SL_URL,
   );
   const options = {
     headers: [["App-Name", APP_NAME]],
@@ -231,7 +231,7 @@ function useUpnlWebSocket(dispatch: AppDispatch) {
             upnl: 0,
             timestamp: 0,
             available_balance: 0,
-          })
+          }),
         );
         return;
       }
@@ -250,7 +250,7 @@ function useUpnlWebSocket(dispatch: AppDispatch) {
           upnl: 0,
           timestamp: 0,
           available_balance: 0,
-        })
+        }),
       );
     }
   }, [dispatch, upnlWebSocketMessage, windowVisible]);

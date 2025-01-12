@@ -1,5 +1,5 @@
-import styled from "styled-components";
 import Column from "components/Column";
+import styled from "styled-components";
 
 export const Card = styled(Column)`
   background: ${({ theme }) => theme.bg0};

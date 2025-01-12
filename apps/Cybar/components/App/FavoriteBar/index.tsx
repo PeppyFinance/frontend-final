@@ -1,14 +1,14 @@
+import { useRouter } from "next/router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import styled, { css } from "styled-components";
-import { useRouter } from "next/router";
 
 import { Market } from "@symmio/frontend-sdk/types/market";
 
 import { useFavoriteMarkets } from "@symmio/frontend-sdk/hooks/useMarkets";
 
-import { Row, RowCenter } from "components/Row";
-import { Star } from "components/Icons";
 import BlinkingPrice from "components/App/FavoriteBar/BlinkingPrice";
+import { Star } from "components/Icons";
+import { Row, RowCenter } from "components/Row";
 
 const Wrapper = styled(Row)`
   position: relative;

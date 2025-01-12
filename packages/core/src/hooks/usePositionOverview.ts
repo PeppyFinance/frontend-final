@@ -1,11 +1,11 @@
-import { useCallback, useMemo } from "react";
 import find from "lodash/find.js";
+import { useCallback, useMemo } from "react";
 
+import { useMarkets, usePrices } from "../state/hedger/hooks";
 import { Quote } from "../types/quote";
-import { BN_ZERO, toBN } from "../utils/numbers";
 import { IQuotesInfo } from "../types/quotesOverview";
 import { PositionType } from "../types/trade";
-import { useMarkets, usePrices } from "../state/hedger/hooks";
+import { BN_ZERO, toBN } from "../utils/numbers";
 
 export function usePositionValue(quotes: Quote[]): IQuotesInfo {
   const markets = useMarkets();
@@ -16,7 +16,7 @@ export function usePositionValue(quotes: Quote[]): IQuotesInfo {
       const marketData = marketName ? prices[marketName] : null;
       return marketData?.markPrice;
     },
-    [prices]
+    [prices],
   );
 
   return useMemo(() => {
@@ -44,7 +44,7 @@ export function usePositionValue(quotes: Quote[]): IQuotesInfo {
       });
       const totalPositionValue = calculateTotalPositionsValue(
         sameMarketQuotes,
-        markPrice
+        markPrice,
       );
 
       quoteByMarketValues.push({
@@ -65,7 +65,7 @@ export function useTotalNotionalValue(quotesInfo: IQuotesInfo): number {
       quotesInfo
         .map((quoteInfo) => quoteInfo.value)
         .reduce((accumulator, currentValue) => accumulator + currentValue, 0),
-    [quotesInfo]
+    [quotesInfo],
   );
 }
 
@@ -82,7 +82,7 @@ function calculateUpnl(quote: Quote, currentPrice: string): string {
 
 function calculateTotalPositionsValue(
   quotes: Quote[],
-  currentPrice: string | undefined
+  currentPrice: string | undefined,
 ): number {
   let totalPositionValue = 0;
   quotes.forEach((currentQuote) => {

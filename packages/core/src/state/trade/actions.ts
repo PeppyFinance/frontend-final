@@ -1,6 +1,4 @@
 import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
-const { createAction } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
 import { InputField, OrderType, PositionType } from "../../types/trade";
 import {
   TpSlConfigParams,
@@ -8,19 +6,21 @@ import {
   TpSlUpdateProcessState,
   TradeState,
 } from "./types";
+const { createAction } = ((toolkitRaw as any).default ??
+  toolkitRaw) as typeof toolkitRaw;
 
 export const setTradeState = createAction<TradeState>("trade/setTradeState");
 export const updateMarketId = createAction<{ id: number }>(
-  "hedger/updateMarketId"
+  "hedger/updateMarketId",
 );
 export const updateOrderType = createAction<OrderType>("trade/updateOrderType");
 export const updateInputField = createAction<InputField>(
-  "trade/updateInputField"
+  "trade/updateInputField",
 );
 export const updateLimitPrice = createAction<string>("trade/updateLimitPrice");
 export const updateTypedValue = createAction<string>("trade/updateTypedValue");
 export const updatePositionType = createAction<PositionType>(
-  "trade/updatePositionType"
+  "trade/updatePositionType",
 );
 export const updateLockedPercentages = createAction<{
   cva: string;
@@ -31,10 +31,10 @@ export const updateLockedPercentages = createAction<{
 export const updateTpSl = createAction<TpSlState>("trade/setTpSl");
 export const setTpSlOpened = createAction<boolean>("trade/setTpSlOpened");
 export const setTpSlConfig = createAction<TpSlConfigParams>(
-  "trade/setTpSlConfig"
+  "trade/setTpSlConfig",
 );
 export const updateDelegateTpSl = createAction<boolean>(
-  "trade/updateDelegateTpSl"
+  "trade/updateDelegateTpSl",
 );
 export const updateTpSlState =
   createAction<TpSlUpdateProcessState>("trade/setTpSlState");

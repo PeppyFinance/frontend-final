@@ -1,6 +1,5 @@
-import React from "react";
-import styled, { css } from "styled-components";
 import { Settings as SettingsIcon } from "react-feather";
+import styled, { css } from "styled-components";
 
 interface SvgStyledProps {
   className?: string;

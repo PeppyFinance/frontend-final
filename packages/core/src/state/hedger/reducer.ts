@@ -1,16 +1,17 @@
 import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
+import { HedgerState } from "./types";
 const { createReducer, current } = ((toolkitRaw as any).default ??
   toolkitRaw) as typeof toolkitRaw;
-import { HedgerState } from "./types";
 
+import { ApiState, ConnectionStatus } from "../../types/api";
 import {
-  updateWebSocketStatus,
-  updateHedgerId,
-  updatePrices,
   updateDepth,
   updateDepths,
-  updateNotionalCap,
   updateFundingRates,
+  updateHedgerId,
+  updateNotionalCap,
+  updatePrices,
+  updateWebSocketStatus,
 } from "./actions";
 import {
   getMarkets,
@@ -19,7 +20,6 @@ import {
   getOpenInterest,
   getPriceRange,
 } from "./thunks";
-import { ApiState, ConnectionStatus } from "../../types/api";
 
 const initialState: HedgerState = {
   hedgerId: "",
@@ -125,5 +125,5 @@ export default createReducer(initialState, (builder) =>
     .addCase(getPriceRange.rejected, (state) => {
       state.priceRangeStatus = ApiState.ERROR;
       console.error("Unable to fetch priceRange");
-    })
+    }),
 );

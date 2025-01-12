@@ -5,16 +5,16 @@ import { IQuotesInfo } from "@symmio/frontend-sdk/types/quotesOverview";
 import { AccountPositionsContext } from "./context";
 
 import { usePositionValue } from "@symmio/frontend-sdk/hooks/usePositionOverview";
-import useGenerateRandomColors from "lib/hooks/useGenerateRandomColor";
 import { usePositionsQuotes } from "@symmio/frontend-sdk/state/quotes/hooks";
+import useGenerateRandomColors from "lib/hooks/useGenerateRandomColor";
 
+import { useUpnlWebSocketStatus } from "@symmio/frontend-sdk/state/user/hooks";
+import { ConnectionStatus } from "@symmio/frontend-sdk/types/api";
+import { RowBetween } from "components/Row";
 import { DefaultContainer, DefaultHeader } from "../styles";
 import AccountTable from "./AccountTable";
 import PositionStatus from "./PositionStatus";
 import PositionsPieChart from "./PositionsPieChart";
-import { RowBetween } from "components/Row";
-import { ConnectionStatus } from "@symmio/frontend-sdk/types/api";
-import { useUpnlWebSocketStatus } from "@symmio/frontend-sdk/state/user/hooks";
 
 const Container = styled(DefaultContainer)`
   padding: 20px 16px 24px;

@@ -1,14 +1,25 @@
-import { useEffect, useMemo, useRef } from "react";
-import { useAppDispatch } from "../declaration";
+import differenceWith from "lodash/differenceWith.js";
 import find from "lodash/find.js";
 import isEqual from "lodash/isEqual.js";
-import differenceWith from "lodash/differenceWith.js";
+import { useEffect, useMemo, useRef } from "react";
+import { useAppDispatch } from "../declaration";
 
+import { TIME_TO_WAIT_POSITION_RECEIVE } from "../../constants";
 import {
   useGetPendingIds,
   useGetPositions,
   useGetQuoteByIds,
 } from "../../hooks/useQuotes";
+import usePrevious from "../../lib/hooks/usePrevious";
+import useWagmi from "../../lib/hooks/useWagmi";
+import { QuoteStatus } from "../../types/quote";
+import { makeHttpRequestV2 } from "../../utils/http";
+import { autoRefresh } from "../../utils/retry";
+import { useAppName } from "../chains";
+import { useHedgerInfo } from "../hedger/hooks";
+import { useSetTpSl, useTradeTpSl } from "../trade/hooks";
+import { TpSlProcessState } from "../trade/types";
+import { useActiveAccountAddress } from "../user/hooks";
 import {
   addQuoteToHistory,
   removeQuote,
@@ -26,18 +37,7 @@ import {
   useSetTpSlDataCallback,
   useUpdateInstantCloseDataCallback,
 } from "./hooks";
-import { QuoteStatus } from "../../types/quote";
-import usePrevious from "../../lib/hooks/usePrevious";
-import { autoRefresh } from "../../utils/retry";
-import { useActiveAccountAddress } from "../user/hooks";
-import useWagmi from "../../lib/hooks/useWagmi";
 import { InstantCloseStatus, TpSlDataState, TpSlDataStateParam } from "./types";
-import { useSetTpSl, useTradeTpSl } from "../trade/hooks";
-import { TpSlProcessState } from "../trade/types";
-import { TIME_TO_WAIT_POSITION_RECEIVE } from "../../constants";
-import { makeHttpRequestV2 } from "../../utils/http";
-import { useAppName } from "../chains";
-import { useHedgerInfo } from "../hedger/hooks";
 
 export function QuotesUpdater(): null {
   const dispatch = useAppDispatch();
@@ -78,7 +78,7 @@ export function QuotesUpdater(): null {
               tpSlState: TpSlDataState.LOADING,
               quoteId: position_i.id,
             },
-            position_i.id
+            position_i.id,
           );
         }
       }
@@ -127,7 +127,7 @@ export function QuotesUpdater(): null {
               tpSlState: TpSlDataState.LOADING,
               quoteId: position_i.id,
             },
-            position_i.id
+            position_i.id,
           );
         }
       }
@@ -168,11 +168,11 @@ export function QuotesUpdater(): null {
 async function getTpSlRequest(
   quoteId: number,
   AppName: string,
-  tpslBaseUrl: string
+  tpslBaseUrl: string,
 ) {
   const { href: tpSlUrl } = new URL(
     `conditional-order/${quoteId}/`,
-    tpslBaseUrl
+    tpslBaseUrl,
   );
   const options = {
     headers: [
@@ -209,7 +209,7 @@ export function TpSlUpdater(): null {
       stateParam: TpSlDataStateParam,
       tpOpenPrice: string,
       slOpenPrice: string,
-      state: TpSlDataState
+      state: TpSlDataState,
     ) {
       const receiveTp = await getTpSlRequest(quoteId, AppName, tpslUrl);
       if (!receiveTp) {
@@ -223,7 +223,7 @@ export function TpSlUpdater(): null {
               quoteId,
               tpSlState: TpSlDataState.NOT_FOUND,
             },
-            quoteId
+            quoteId,
           );
         }
         return;
@@ -272,7 +272,7 @@ export function TpSlUpdater(): null {
             quoteId,
             tpSlState: TpSlDataState.VALID,
           },
-          quoteId
+          quoteId,
         );
         if (intervalFunctions.current[quoteId]) {
           const targetFunc = intervalFunctions.current[quoteId];
@@ -291,7 +291,7 @@ export function TpSlUpdater(): null {
             TpSlDataStateParam.NONE,
             tpSlQuoteData[data_i].tpOpenPrice,
             tpSlQuoteData[data_i].slOpenPrice,
-            tpSlQuoteData[data_i].tpSlState
+            tpSlQuoteData[data_i].tpSlState,
           );
         } else if (
           tpSlQuoteData[data_i].tpSlState === TpSlDataState.FORCE_CHECKING
@@ -306,9 +306,9 @@ export function TpSlUpdater(): null {
                   TpSlDataStateParam.CHECK_ANY_TP_SL,
                 tpSlQuoteData[data_i].tpOpenPrice,
                 tpSlQuoteData[data_i].slOpenPrice,
-                tpSlQuoteData[data_i].tpSlState
+                tpSlQuoteData[data_i].tpSlState,
               ),
-            5
+            5,
           );
           intervalFunctions.current = {
             [tpSlQuoteData[data_i].quoteId]: intervalFunc,
@@ -395,7 +395,7 @@ export function UpdaterListeners(): null {
   useEffect(() => {
     if (!isEqual(prevPendingIds, pendingIds)) {
       const unpendingIds = prevPendingIds?.filter(
-        (id) => !pendingIds.includes(id)
+        (id) => !pendingIds.includes(id),
       );
       if (!unpendingIds?.length) return;
       for (let i = 0; i < unpendingIds?.length; i++) {

@@ -1,9 +1,8 @@
-import React from "react";
 import styled, { useTheme } from "styled-components";
 
-import HEDGER_ALERT_ICON from "/public/static/images/etc/ErrorTriangle.svg";
-import { Account } from "@symmio/frontend-sdk/types/user";
 import { Quote } from "@symmio/frontend-sdk/types/quote";
+import { Account } from "@symmio/frontend-sdk/types/user";
+import HEDGER_ALERT_ICON from "/public/static/images/etc/ErrorTriangle.svg";
 
 import { NotificationDetails } from "@symmio/frontend-sdk/state/notifications/types";
 
@@ -12,9 +11,9 @@ import {
   useMarket,
 } from "@symmio/frontend-sdk/hooks/useMarkets";
 
-import { PartiallyFillTitle } from "./styles";
 import BaseItem from "components/Notifications/Cards/BaseCard";
 import ShimmerAnimation from "components/ShimmerAnimation";
+import { PartiallyFillTitle } from "./styles";
 
 const ErrorMessage = styled.div`
   font-size: 12px;

@@ -12,7 +12,7 @@ import { ApplicationModal, Popup, PopupContent, PopupList } from "./reducer";
 
 export function useModalOpen(modal: ApplicationModal): boolean {
   const openModal = useAppSelector(
-    (state: AppState) => state.application.openModal
+    (state: AppState) => state.application.openModal,
   );
   return openModal === modal;
 }
@@ -22,7 +22,7 @@ export function useToggleModal(modal: ApplicationModal): () => void {
   const dispatch = useAppDispatch();
   return useCallback(
     () => dispatch(setOpenModal(open ? null : modal)),
-    [dispatch, modal, open]
+    [dispatch, modal, open],
   );
 }
 
@@ -58,7 +58,7 @@ export function useCreateAccountModalToggle(): () => void {
 export function useAddPopup(): (
   content: PopupContent,
   key?: string,
-  removeAfterMs?: number
+  removeAfterMs?: number,
 ) => void {
   const dispatch = useAppDispatch();
 
@@ -69,10 +69,10 @@ export function useAddPopup(): (
           content,
           key,
           removeAfterMs: removeAfterMs ?? DEFAULT_TXN_DISMISS_MS,
-        })
+        }),
       );
     },
-    [dispatch]
+    [dispatch],
   );
 }
 export function useRemovePopup(): (key: string) => void {
@@ -81,7 +81,7 @@ export function useRemovePopup(): (key: string) => void {
     (key: string) => {
       dispatch(removePopup({ key }));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -105,6 +105,6 @@ export function useSetInjectedAddressCallback() {
     (address: string) => {
       dispatch(setInjectedAddress({ address }));
     },
-    [dispatch]
+    [dispatch],
   );
 }

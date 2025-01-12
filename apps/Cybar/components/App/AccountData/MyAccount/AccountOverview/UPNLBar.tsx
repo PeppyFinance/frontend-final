@@ -1,29 +1,28 @@
-import React from "react";
-import styled, { useTheme } from "styled-components";
 import { Token } from "@uniswap/sdk-core";
+import styled, { useTheme } from "styled-components";
 
+import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
+import { ConnectionStatus } from "@symmio/frontend-sdk/types/api";
 import {
   formatAmount,
   fromWei,
   toBN,
 } from "@symmio/frontend-sdk/utils/numbers";
 import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
-import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
-import { ConnectionStatus } from "@symmio/frontend-sdk/types/api";
 
 import { useUpnlWebSocketStatus } from "@symmio/frontend-sdk/state/user/hooks";
 
 import { ApiState } from "@symmio/frontend-sdk/types/api";
 
+import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 import {
   useAccountPartyAStat,
   useActiveAccountAddress,
   useTotalDepositsAndWithdrawals,
 } from "@symmio/frontend-sdk/state/user/hooks";
-import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 
-import { Row, RowBetween } from "components/Row";
 import { UpnlValue } from "components/App/AccountData/AccountUpnl";
+import { Row, RowBetween } from "components/Row";
 import ShimmerAnimation from "components/ShimmerAnimation";
 
 const Wrapper = styled(RowBetween)<{ color?: string }>`
@@ -42,7 +41,7 @@ export default function UPNLBar() {
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(
     COLLATERAL_TOKEN,
-    chainId
+    chainId,
   );
   const { value, color, bgColor, isLoading } = usePnlValues(collateralCurrency);
 

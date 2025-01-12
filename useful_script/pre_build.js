@@ -33,7 +33,7 @@ function updateTsConfig(folderPath) {
         } else {
           console.log(`Path removed successfully from ${tsconfigPath}.`);
         }
-      }
+      },
     );
   });
 }

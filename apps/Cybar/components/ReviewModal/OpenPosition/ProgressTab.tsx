@@ -47,8 +47,8 @@ const StateSeparator1 = styled(GeneralStateSeparator)<{ state?: ModalState }>`
     state === ModalState.START
       ? theme.bg2
       : state === ModalState.LOADING
-      ? theme.bg7
-      : theme.primaryDarkBg};
+        ? theme.bg7
+        : theme.primaryDarkBg};
 `;
 
 const StateSeparator2 = styled(GeneralStateSeparator)<{ state?: ModalState }>`
@@ -65,8 +65,8 @@ export default function ProgressTab() {
           {state === ModalState.START
             ? "Open Position"
             : state === ModalState.LOADING
-            ? "Opening Position..."
-            : "Open Position Trx Confirmed"}
+              ? "Opening Position..."
+              : "Open Position Trx Confirmed"}
         </StateBox1>
         <StateSeparator1 state={state} />
         <StateSeparator2 state={state} />

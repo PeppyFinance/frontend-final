@@ -1,4 +1,3 @@
-import React from "react";
 import Image, { StaticImageData } from "next/legacy/image";
 import styled from "styled-components";
 

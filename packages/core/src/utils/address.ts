@@ -18,6 +18,6 @@ export function truncateAddress(address: string, size = 4) {
     return null;
   }
   return `${parsed.substring(0, size + 2)}...${parsed.substring(
-    address.length - size
+    address.length - size,
   )}`;
 }

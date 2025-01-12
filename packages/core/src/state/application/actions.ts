@@ -1,13 +1,13 @@
 import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
+import { ApplicationModal, PopupContent } from "./reducer";
 const { createAction } = ((toolkitRaw as any).default ??
   toolkitRaw) as typeof toolkitRaw;
-import { ApplicationModal, PopupContent } from "./reducer";
 
 export const setChainConnectivityWarning = createAction<{
   chainConnectivityWarning: boolean;
 }>("application/setChainConnectivityWarning");
 export const setOpenModal = createAction<ApplicationModal | null>(
-  "application/setOpenModal"
+  "application/setOpenModal",
 );
 export const addPopup = createAction<{
   key?: string;
@@ -15,9 +15,9 @@ export const addPopup = createAction<{
   content: PopupContent;
 }>("application/addPopup");
 export const removePopup = createAction<{ key: string }>(
-  "application/removePopup"
+  "application/removePopup",
 );
 
 export const setInjectedAddress = createAction<{ address: string }>(
-  "application/setInjectedAddress"
+  "application/setInjectedAddress",
 );

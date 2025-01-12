@@ -1,6 +1,6 @@
-import { useMemo } from "react";
-import Pagination from "components/Pagination";
 import { Quote } from "@symmio/frontend-sdk/types/quote";
+import Pagination from "components/Pagination";
+import { useMemo } from "react";
 
 export const ItemsPerPage = 7;
 

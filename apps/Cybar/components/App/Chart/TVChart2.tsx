@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { isMobile } from "react-device-detect";
 import styled from "styled-components";
 
@@ -30,7 +30,7 @@ export default function TradingViewWidget({ symbol }: { symbol: string }) {
     }
 
     tvScriptLoadingPromise.then(
-      () => onLoadScriptRef.current && onLoadScriptRef.current()
+      () => onLoadScriptRef.current && onLoadScriptRef.current(),
     );
     return () => {
       onLoadScriptRef.current = null;

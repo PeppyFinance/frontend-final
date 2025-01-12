@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Magnifier({
   width = 106,
   height = 144,
