@@ -19,6 +19,11 @@ export const CoinCategoriesHeader = ({
 
   const coinCategories = useCoinCategories();
 
+  // Only display CoinCategoriesHeader if there are categories
+  if (Object.keys(coinCategories).length === 0) {
+    return null;
+  }
+
   return (
     <HeaderWrap>
       <MarketsHeaderButton isActive={!coinCategory} onClick={() => onClick()}>
