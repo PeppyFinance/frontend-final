@@ -3,7 +3,11 @@ import { MarketsHeaderButton } from "components/Button";
 import { useRouter } from "next/router";
 import { HeaderWrap } from "./Header";
 
-export const CoinCategoriesHeader = () => {
+export const CoinCategoriesHeader = ({
+  coinCategory,
+}: {
+  coinCategory?: string;
+}) => {
   const router = useRouter();
 
   const onClick = (coinCategory: string) => {
@@ -17,8 +21,12 @@ export const CoinCategoriesHeader = () => {
 
   return (
     <HeaderWrap>
-      {Object.entries(coinCategories).map(([key,]) => (
-        <MarketsHeaderButton isActive key={key} onClick={() => onClick(key)}>
+      {Object.entries(coinCategories).map(([key]) => (
+        <MarketsHeaderButton
+          isActive={coinCategory?.toUpperCase() === key.toUpperCase()}
+          key={key}
+          onClick={() => onClick(key)}
+        >
           {key}
         </MarketsHeaderButton>
       ))}

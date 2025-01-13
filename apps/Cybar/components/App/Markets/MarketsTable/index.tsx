@@ -75,7 +75,7 @@ export default function Table({
         </InputWrapper>
       </Title>
       <Title></Title>
-      <CoinCategoriesHeader />
+      <CoinCategoriesHeader coinCategory={coinCategory} />
       <TableHeader
         HEADERS={[
           { name: "" },
