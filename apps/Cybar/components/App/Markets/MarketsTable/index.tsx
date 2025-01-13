@@ -43,11 +43,17 @@ const InputWrapper = styled.div`
 export interface MarketsTableProps {
   direction: Direction;
   orderBy: OrderMarktes;
+  coinCategory?: string;
 }
-export default function Table({ direction, orderBy }: MarketsTableProps) {
+export default function Table({
+  direction,
+  orderBy,
+  coinCategory,
+}: MarketsTableProps) {
   const { markets } = useMarketsSearch({
     orderBy,
     direction,
+    coinCategory,
   });
 
   const [search, setSearch] = useState("");
