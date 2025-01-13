@@ -10,7 +10,7 @@ export const CoinCategoriesHeader = ({
 }) => {
   const router = useRouter();
 
-  const onClick = (coinCategory: string) => {
+  const onClick = (coinCategory?: string) => {
     // TODO: should direction be desc?
     router.query.direction = "desc";
     router.query.coinCategory = coinCategory;
@@ -21,6 +21,9 @@ export const CoinCategoriesHeader = ({
 
   return (
     <HeaderWrap>
+      <MarketsHeaderButton isActive={!coinCategory} onClick={() => onClick()}>
+        All Coins
+      </MarketsHeaderButton>
       {Object.entries(coinCategories).map(([key]) => (
         <MarketsHeaderButton
           isActive={coinCategory?.toUpperCase() === key.toUpperCase()}
