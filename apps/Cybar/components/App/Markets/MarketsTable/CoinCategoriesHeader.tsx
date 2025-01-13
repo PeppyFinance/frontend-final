@@ -17,7 +17,7 @@ export const CoinCategoriesHeader = () => {
 
   return (
     <HeaderWrap>
-      {Object.entries(coinCategories).map(([key, _val]) => (
+      {Object.entries(coinCategories).map(([key,]) => (
         <MarketsHeaderButton isActive key={key} onClick={() => onClick(key)}>
           {key}
         </MarketsHeaderButton>
