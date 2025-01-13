@@ -1,6 +1,7 @@
 import { useAppSelector } from "../declaration";
+import { CoinCategories } from "./types";
 
-export function useCoinCategories() {
-  const coinCategories = useAppSelector((state) => state.market.coinCategories);
+export function useCoinCategories(): CoinCategories {
+  const coinCategories: CoinCategories = useAppSelector((state) => state.market.coinCategories);
   return coinCategories;
 }
