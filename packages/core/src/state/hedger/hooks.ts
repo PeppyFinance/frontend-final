@@ -9,6 +9,7 @@ import { useSupportedChainId } from "../../lib/hooks/useSupportedChainId";
 import { ApiState, ConnectionStatus } from "../../types/api";
 import { Market } from "../../types/market";
 import { useHedgerAddress } from "../chains/hooks";
+import { useCoinCategories } from "../market/hooks";
 import {
   updateDepth,
   updateFundingRates,
@@ -85,12 +86,39 @@ export type Direction = "asc" | "desc";
 export interface OrderMarktesProps {
   orderBy?: OrderMarktes;
   direction?: Direction;
+  coinCategory?: string;
 }
-export function useMarkets({ orderBy, direction }: OrderMarktesProps = {}) {
-  const markets: Market[] = useAppSelector((state) => state.hedger.markets);
+export function useMarkets({
+  orderBy,
+  direction,
+  coinCategory,
+}: OrderMarktesProps = {}) {
+  let markets: Market[] = useAppSelector((state) => state.hedger.markets);
+  const coinCategories = useCoinCategories();
   const { marketsInfo, infoStatus } = useAllMarketsData();
-  // TODO: consider sorting library like fast-sort if too slow
+
   return useMemo(() => {
+    if (infoStatus === ApiState.OK && coinCategory) {
+      // convert coinCategories keys to uppercase to ensure equality
+      // when accessing coinCategories object keys
+      // coinCategories[coinCategory.toUpperCase()]
+      const coinCategoriesUpperCase = Object.fromEntries(
+        Object.entries(coinCategories).map(([key, val]) => [
+          key.toUpperCase(),
+          val,
+        ]),
+      );
+
+      const category = coinCategoriesUpperCase[coinCategory.toUpperCase()].map(
+        (symbol) => symbol.toUpperCase(),
+      );
+      const upperCaseCoinSymbolSet = new Set(category);
+
+      markets = markets.filter((market) =>
+        upperCaseCoinSymbolSet.has(market.symbol.toUpperCase()),
+      );
+    }
+
     if (infoStatus === ApiState.OK && orderBy) {
       // TODO: fix tsConfig and use toSorted
       return [...markets].sort((m1, m2) => {
@@ -106,7 +134,15 @@ export function useMarkets({ orderBy, direction }: OrderMarktesProps = {}) {
     } else {
       return markets;
     }
-  }, [direction, infoStatus, markets, marketsInfo, orderBy]);
+  }, [
+    direction,
+    infoStatus,
+    markets,
+    marketsInfo,
+    orderBy,
+    coinCategory,
+    coinCategories,
+  ]);
 }
 
 export function useErrorMessages() {
