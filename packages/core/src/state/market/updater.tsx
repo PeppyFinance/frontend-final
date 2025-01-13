@@ -44,6 +44,6 @@ async function getCoinCategories() {
 
 //TODO: Delete before submitting
 export const TESTDATA: CoinCategories = {
-  MEME: [1, 2, 3, 4],
-  Hype: [2, 4, 6, 8],
+  Oldschool: ['eth', 'btc', 'sol', 'sui'],
+  Hype: ['link', 'iota', 'crv'],
 };
