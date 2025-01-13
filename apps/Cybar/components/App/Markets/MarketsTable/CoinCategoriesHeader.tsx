@@ -11,8 +11,6 @@ export const CoinCategoriesHeader = ({
   const router = useRouter();
 
   const onClick = (coinCategory?: string) => {
-    // TODO: should direction be desc?
-    router.query.direction = "desc";
     router.query.coinCategory = coinCategory;
     router.push(router);
   };
