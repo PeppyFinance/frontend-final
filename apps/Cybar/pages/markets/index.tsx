@@ -49,7 +49,7 @@ export default function MarketsPage() {
 
   const direction = cleanDirectionParam(query.direction);
   const orderBy = cleanOrderParam(query.orderby);
-  const coinCategory = cleanCoinCategories(query.catergory, coinCategories);
+  const coinCategory = cleanCoinCategories(query.coinCategory, coinCategories);
 
   return (
     <Wrapper>
