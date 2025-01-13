@@ -109,14 +109,19 @@ export function useMarkets({
         ]),
       );
 
-      const category = coinCategoriesUpperCase[coinCategory.toUpperCase()].map(
-        (symbol) => symbol.toUpperCase(),
-      );
-      const upperCaseCoinSymbolSet = new Set(category);
+      const category = coinCategoriesUpperCase[coinCategory.toUpperCase()]
+        ?.map(
+          (symbol) => symbol.toUpperCase(),
+        );
 
-      markets = markets.filter((market) =>
-        upperCaseCoinSymbolSet.has(market.symbol.toUpperCase()),
-      );
+      if (category?.length > 0) {
+        const upperCaseCoinSymbolSet = new Set(category);
+
+        markets = markets.filter((market) =>
+          upperCaseCoinSymbolSet.has(market.symbol.toUpperCase()),
+        );
+
+      }
     }
 
     if (infoStatus === ApiState.OK && orderBy) {
