@@ -46,4 +46,10 @@ async function getCoinCategories() {
 export const TESTDATA: CoinCategories = {
   Oldschool: ['eth', 'btc', 'sol', 'sui'],
   Hype: ['link', 'iota', 'crv'],
+  Layer1: ['link', 'iota', 'crv'],
+  Layer2: ['link', 'iota', 'crv'],
+  Eth: ['link', 'iota', 'crv'],
+  Solana: ['link', 'iota', 'crv'],
+  Pocketmoney: ['link', 'iota', 'crv'],
+  'Test Whitespace and long words': ['link', 'iota', 'crv'],
 };

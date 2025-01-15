@@ -4,7 +4,7 @@ import { MarketState } from "./types";
 import { TESTDATA } from "./updater";
 
 export const initialState: MarketState = {
-  coinCategories: TESTDATA,
+  coinCategories: undefined,
 };
 
 export const marketReducer = createReducer(initialState, (build) =>
