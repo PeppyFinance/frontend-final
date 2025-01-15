@@ -22,7 +22,7 @@ const CategoryButton = styled.button<CategoryButton>`
     background-color: ${({ theme }) => theme.bg3};
     color: ${({ isActive, theme }) => (isActive ? theme.text0 : theme.text1)};
     border-color: ${({ isActive, theme }) =>
-      isActive ? theme.text0 : theme.text1};
+    isActive ? theme.text0 : theme.text1};
   }
 `;
 
@@ -36,6 +36,7 @@ const HeaderWrap = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.border3};
   padding: 0.25rem 0.5rem 1rem 0.5rem;
 `;
+
 export const CoinCategoriesHeader = ({
   coinCategory,
 }: {
