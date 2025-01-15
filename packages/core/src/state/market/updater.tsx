@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { makeHttpRequestV2 } from "../../utils/http";
 import { useAppDispatch } from "../declaration";
 import { setCoinCategories } from "./actions";
-import { CoinCategories } from "./types";
 
 export function MarketUpdater(): null {
   const dispatch = useAppDispatch();
@@ -21,12 +20,8 @@ export function MarketUpdater(): null {
 async function getCoinCategories() {
   const url = process.env.NEXT_PUBLIC_COIN_CATEGORIES_URL;
   if (!url) {
-    //TODO: Undo before submitting
-    // return null
-    return TESTDATA;
+    return null
   }
-  // no-cache is the default option for makeHttpRequestV2
-  // const options: RequestInit = { cache: 'no-cache' }
 
   try {
     const { status, result }: { status: number; result: any } =
@@ -41,15 +36,3 @@ async function getCoinCategories() {
     return null;
   }
 }
-
-//TODO: Delete before submitting
-export const TESTDATA: CoinCategories = {
-  Oldschool: ['eth', 'btc', 'sol', 'sui'],
-  Hype: ['link', 'iota', 'crv'],
-  Layer1: ['link', 'iota', 'crv'],
-  Layer2: ['link', 'iota', 'crv'],
-  Eth: ['link', 'iota', 'crv'],
-  Solana: ['link', 'iota', 'crv'],
-  Pocketmoney: ['link', 'iota', 'crv'],
-  'Test Whitespace and long words': ['link', 'iota', 'crv'],
-};

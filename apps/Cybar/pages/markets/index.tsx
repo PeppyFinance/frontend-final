@@ -32,7 +32,7 @@ const cleanDirectionParam = (param: RouterParam): Direction => {
   }
 };
 
-const cleanCoinCategories = (
+const cleanCoinCategoriesParam = (
   param: RouterParam,
   coinCategories: string[],
 ): string | undefined => {
@@ -49,7 +49,10 @@ export default function MarketsPage() {
 
   const direction = cleanDirectionParam(query.direction);
   const orderBy = cleanOrderParam(query.orderby);
-  const coinCategory = cleanCoinCategories(query.coinCategory, coinCategories);
+  const coinCategory = cleanCoinCategoriesParam(
+    query.coinCategory,
+    coinCategories,
+  );
 
   return (
     <Wrapper>
