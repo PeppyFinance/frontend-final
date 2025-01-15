@@ -21,7 +21,7 @@ const CategoryButton = styled.button<CategoryButton>`
     background-color: ${({ theme }) => theme.bg3};
     color: ${({ isActive, theme }) => (isActive ? theme.text0 : theme.text1)};
     border-color: ${({ isActive, theme }) =>
-    isActive ? theme.text0 : theme.text1};
+      isActive ? theme.text0 : theme.text1};
   }
 `;
 
