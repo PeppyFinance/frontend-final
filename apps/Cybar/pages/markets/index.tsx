@@ -45,7 +45,7 @@ const cleanCoinCategories = (
 export default function MarketsPage() {
   const { query } = useRouter();
   const coinCategoriesObj = useCoinCategories();
-  const coinCategories = Object.keys(coinCategoriesObj);
+  const coinCategories = Object.keys(coinCategoriesObj ?? []);
 
   const direction = cleanDirectionParam(query.direction);
   const orderBy = cleanOrderParam(query.orderby);
