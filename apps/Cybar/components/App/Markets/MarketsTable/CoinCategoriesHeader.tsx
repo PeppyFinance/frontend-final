@@ -6,9 +6,10 @@ interface CategoryButton {
   isActive: boolean;
 }
 const CategoryButton = styled.button<CategoryButton>`
-  width: 10em;
-  height: 40px;
+  min-width: 7rem;
+  height: 1.5rem;
   position: relative;
+  padding: 0.25rem;
   text-align: center;
   overflow: hidden;
   background-color: ${({ isActive, theme }) =>
@@ -18,18 +19,21 @@ const CategoryButton = styled.button<CategoryButton>`
     ${({ isActive, theme }) => (isActive ? theme.text0 : theme.text4)};
   &:hover {
     background-color: ${({ theme }) => theme.bg3};
-    color: ${({ theme }) => theme.text1};
-    border-color: ${({ theme }) => theme.text1};
+    color: ${({ isActive, theme }) => (isActive ? theme.text0 : theme.text1)};
+    border-color: ${({ isActive, theme }) =>
+      isActive ? theme.text0 : theme.text1};
   }
 `;
 
 const HeaderWrap = styled.div`
   display: flex;
-  gap: 3em;
+  flex-wrap: wrap;
+  column-gap: 3em;
+  row-gap: 1em;
   color: ${({ theme }) => theme.text4};
   background-color: ${({ theme }) => theme.bg0};
-  padding: 24px 24px 15px 12px;
   border-bottom: 1px solid ${({ theme }) => theme.border3};
+  padding: 0.25rem 0.5rem 1rem 0.5rem;
 `;
 export const CoinCategoriesHeader = ({
   coinCategory,
@@ -46,7 +50,7 @@ export const CoinCategoriesHeader = ({
   const coinCategories = useCoinCategories();
 
   // Only display CoinCategoriesHeader if there are categories
-  if (Object.keys(coinCategories).length === 0) {
+  if (!coinCategories ?? Object.keys(coinCategories).length === 0) {
     return null;
   }
 
