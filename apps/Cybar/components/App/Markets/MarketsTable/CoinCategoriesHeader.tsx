@@ -6,10 +6,11 @@ interface CategoryButton {
   isActive: boolean;
 }
 const CategoryButton = styled.button<CategoryButton>`
-  min-width: 7rem;
-  height: 1.5rem;
+  min-width: 4rem;
+  height: 1.25rem;
   position: relative;
-  padding: 0.25rem;
+  padding: 0.25rem 0.3rem;
+  font-size: 0.65rem;
   text-align: center;
   overflow: hidden;
   background-color: ${({ isActive, theme }) =>
@@ -21,7 +22,7 @@ const CategoryButton = styled.button<CategoryButton>`
     background-color: ${({ theme }) => theme.bg3};
     color: ${({ isActive, theme }) => (isActive ? theme.text0 : theme.text1)};
     border-color: ${({ isActive, theme }) =>
-      isActive ? theme.text0 : theme.text1};
+    isActive ? theme.text0 : theme.text1};
   }
 `;
 
