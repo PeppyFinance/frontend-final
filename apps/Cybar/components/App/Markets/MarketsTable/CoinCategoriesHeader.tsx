@@ -21,15 +21,15 @@ const CategoryButton = styled.button<CategoryButton>`
     background-color: ${({ theme }) => theme.bg3};
     color: ${({ isActive, theme }) => (isActive ? theme.text0 : theme.text1)};
     border-color: ${({ isActive, theme }) =>
-      isActive ? theme.text0 : theme.text1};
+    isActive ? theme.text0 : theme.text1};
   }
 `;
 
 const HeaderWrap = styled.div`
   display: flex;
   flex-wrap: wrap;
-  column-gap: 3em;
-  row-gap: 1em;
+  column-gap: 1.5rem;
+  row-gap: 1rem;
   color: ${({ theme }) => theme.text4};
   background-color: ${({ theme }) => theme.bg0};
   border-bottom: 1px solid ${({ theme }) => theme.border3};
