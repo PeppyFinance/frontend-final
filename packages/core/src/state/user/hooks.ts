@@ -49,6 +49,8 @@ import {
 } from "../chains/hooks";
 import { useAnalyticsApolloClient } from "../../apollo/client/balanceHistory";
 import useActiveWagmi from "../../lib/hooks/useActiveWagmi";
+import { useLockedPercentages } from "../trade/hooks";
+import { formatAmount, toBN } from "../../utils/numbers";
 
 export function useIsDarkMode(): boolean {
   const { userDarkMode, matchesDarkMode } = useAppSelector(
@@ -120,6 +122,33 @@ export function useUserWhitelist(): null | boolean {
 export function useLeverage(): number {
   const leverage = useAppSelector((state) => state.user.leverage);
   return leverage;
+}
+
+export function useLiquidationPrice(price: string): { liquidationPriceLong: string, liquidationPriceShort: string } | undefined {
+  const leverage = useLeverage();
+  const { lf, cva } = useLockedPercentages()
+
+  if (!lf || !cva) {
+    return undefined
+  }
+  const mmr = (Number(cva) + Number(lf)) / 100;
+
+  const liquidationPriceLong = formatAmount(
+    toBN(price).times(
+      1 - 1 / leverage + mmr / leverage
+    ),
+    6,
+    true
+  )
+  const liquidationPriceShort = formatAmount(
+    toBN(price).times(
+      1 + 1 / leverage - mmr / leverage
+    ),
+    6,
+    true
+  )
+
+  return { liquidationPriceLong, liquidationPriceShort }
 }
 
 export function useSetLeverageCallback() {
