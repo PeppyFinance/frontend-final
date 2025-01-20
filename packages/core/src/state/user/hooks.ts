@@ -1,15 +1,22 @@
 import { useCallback, useMemo } from "react";
 import { shallowEqual } from "react-redux";
 
-import { makeHttpRequest } from "../../utils/http";
+import { WEB_SETTING } from "../../config/index";
 import { BALANCE_HISTORY_ITEMS_NUMBER } from "../../constants/misc";
+import { ApiState, ConnectionStatus } from "../../types/api";
 import {
   Account,
   AccountUpnl,
   UserPartyAStatDetail,
   initialUserPartyAStatDetail,
 } from "../../types/user";
-import { ApiState, ConnectionStatus } from "../../types/api";
+import { makeHttpRequest } from "../../utils/http";
+import {
+  AppThunkDispatch,
+  useAppDispatch,
+  useAppSelector,
+} from "../declaration";
+import { getBalanceHistory } from "./thunks";
 import {
   AddedHedger,
   AddedHedgersData,
@@ -17,38 +24,31 @@ import {
   GetWhiteListType,
   WhiteListResponse,
 } from "./types";
-import { getBalanceHistory } from "./thunks";
-import {
-  AppThunkDispatch,
-  useAppDispatch,
-  useAppSelector,
-} from "../declaration";
-import { WEB_SETTING } from "../../config/index";
 
-import {
-  updateUserSlippageTolerance,
-  updateUserDarkMode,
-  updateUserLeverage,
-  updateUserFavorites,
-  updateUserExpertMode,
-  updateUpnlWebSocketStatus,
-  setFEName,
-  addHedger,
-  selectOrUnselectHedger,
-  setAllHedgerData,
-  removeHedger,
-  toggleDefaultHedger,
-} from "./actions";
-import { useHedgerInfo } from "../hedger/hooks";
+import { useAnalyticsApolloClient } from "../../apollo/client/balanceHistory";
+import useActiveWagmi from "../../lib/hooks/useActiveWagmi";
 import useDebounce from "../../lib/hooks/useDebounce";
-import { getAppNameHeader } from "../hedger/thunks";
 import {
   useAnalyticsSubgraphAddress,
   useAppName,
   usePartyBWhitelistAddress,
 } from "../chains/hooks";
-import { useAnalyticsApolloClient } from "../../apollo/client/balanceHistory";
-import useActiveWagmi from "../../lib/hooks/useActiveWagmi";
+import { useHedgerInfo } from "../hedger/hooks";
+import { getAppNameHeader } from "../hedger/thunks";
+import {
+  addHedger,
+  removeHedger,
+  selectOrUnselectHedger,
+  setAllHedgerData,
+  setFEName,
+  toggleDefaultHedger,
+  updateUpnlWebSocketStatus,
+  updateUserDarkMode,
+  updateUserExpertMode,
+  updateUserFavorites,
+  updateUserLeverage,
+  updateUserSlippageTolerance,
+} from "./actions";
 
 export function useIsDarkMode(): boolean {
   const { userDarkMode, matchesDarkMode } = useAppSelector(
@@ -56,7 +56,7 @@ export function useIsDarkMode(): boolean {
       userDarkMode,
       matchesDarkMode,
     }),
-    shallowEqual
+    shallowEqual,
   );
   return userDarkMode === null ? matchesDarkMode : userDarkMode;
 }
@@ -73,7 +73,7 @@ export function useDarkModeManager(): [boolean, () => void] {
 }
 
 export function useSetSlippageToleranceCallback(): (
-  slippageTolerance: "auto"
+  slippageTolerance: "auto",
 ) => void {
   const dispatch = useAppDispatch();
   return useCallback(
@@ -81,16 +81,16 @@ export function useSetSlippageToleranceCallback(): (
       dispatch(
         updateUserSlippageTolerance({
           userSlippageTolerance,
-        })
+        }),
       );
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
 export function useSlippageTolerance(): number | "auto" {
   const userSlippageTolerance = useAppSelector(
-    (state) => state.user.userSlippageTolerance
+    (state) => state.user.userSlippageTolerance,
   );
   return userSlippageTolerance;
 }
@@ -101,7 +101,7 @@ export function useSetExpertModeCallback() {
     (userExpertMode: boolean) => {
       dispatch(updateUserExpertMode({ userExpertMode }));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -112,7 +112,7 @@ export function useExpertMode(): boolean {
 
 export function useUserWhitelist(): null | boolean {
   const whiteListAccount = useAppSelector(
-    (state) => state.user.whiteListAccount
+    (state) => state.user.whiteListAccount,
   );
   return whiteListAccount;
 }
@@ -128,7 +128,7 @@ export function useSetLeverageCallback() {
     (leverage: number) => {
       dispatch(updateUserLeverage(leverage));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -168,19 +168,23 @@ export function useActiveAccountAddress(): string | null {
 }
 
 export function useAccountPartyAStat(
-  address: string | null | undefined
+  address: string | null | undefined,
 ): UserPartyAStatDetail {
   const accountsPartyAStat = useAppSelector(
-    (state) => state.user.accountsPartyAStat
+    (state) => state.user.accountsPartyAStat,
   );
-  if (!address || !accountsPartyAStat) return initialUserPartyAStatDetail;
-  if (!accountsPartyAStat[address]) return initialUserPartyAStatDetail;
+  if (!address || !accountsPartyAStat) {
+    return initialUserPartyAStatDetail;
+  }
+  if (!accountsPartyAStat[address]) {
+    return initialUserPartyAStatDetail;
+  }
   return accountsPartyAStat[address];
 }
 
 export function useAccountUpnl() {
   const activeAccountUpnl = useAppSelector(
-    (state) => state.user.activeAccountUpnl
+    (state) => state.user.activeAccountUpnl,
   );
   return activeAccountUpnl;
 }
@@ -191,7 +195,7 @@ export function useSetUpnlWebSocketStatus() {
     (status: ConnectionStatus) => {
       dispatch(updateUpnlWebSocketStatus({ status }));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -202,7 +206,7 @@ export function useGetAddedHedgers(): AddedHedgersData {
 
 export function useGetDefaultHedgerStatus(): boolean {
   const isDefaultHedgerSelected = useAppSelector(
-    (state) => state.user.isDefaultHedgerSelected
+    (state) => state.user.isDefaultHedgerSelected,
   );
   return isDefaultHedgerSelected;
 }
@@ -217,9 +221,11 @@ export function useGetBalanceHistoryCallback() {
       chainId: number | undefined,
       account: string | null,
       skip?: number,
-      first?: number
+      first?: number,
     ) => {
-      if (!chainId || !account) return;
+      if (!chainId || !account) {
+        return;
+      }
       thunkDispatch(
         getBalanceHistory({
           account,
@@ -227,24 +233,24 @@ export function useGetBalanceHistoryCallback() {
           client,
           first: first ?? BALANCE_HISTORY_ITEMS_NUMBER,
           skip: skip ? skip : 0,
-        })
+        }),
       );
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [thunkDispatch, subgraphAddress]
+    [thunkDispatch, subgraphAddress],
   );
 }
 
 export function useUpnlWebSocketStatus() {
   const upnlWebSocketStatus = useAppSelector(
-    (state) => state.user.upnlWebSocketStatus
+    (state) => state.user.upnlWebSocketStatus,
   );
   return upnlWebSocketStatus;
 }
 
 export function useIsWhiteList(
   account: string | undefined,
-  multiAccountAddress: string | undefined
+  multiAccountAddress: string | undefined,
 ): () => Promise<WhiteListResponse> {
   const { baseUrl, fetchData } = useHedgerInfo() || {};
   const appName = useAppName();
@@ -262,7 +268,7 @@ export function useIsWhiteList(
 
     const { href: url } = new URL(
       `/check_in-whitelist/${account}/${multiAccountAddress}`,
-      baseUrl
+      baseUrl,
     );
     return makeHttpRequest<WhiteListResponse>(url, getAppNameHeader(appName));
   }, [fetchData, account, baseUrl, multiAccountAddress, appName]);
@@ -272,7 +278,7 @@ export function useIsWhiteList(
 
 export function useAddInWhitelist(
   subAccount: string | undefined,
-  multiAccountAddress: string | undefined
+  multiAccountAddress: string | undefined,
 ): () => Promise<GetWhiteListType | null> {
   const { baseUrl, fetchData } = useHedgerInfo() || {};
   const appName = useAppName();
@@ -290,7 +296,7 @@ export function useAddInWhitelist(
 
     const { href: url } = new URL(
       `/add-sub-address-in-whitelist/${subAccount}/${multiAccountAddress}`,
-      baseUrl
+      baseUrl,
     );
     return makeHttpRequest<GetWhiteListType>(url, getAppNameHeader(appName));
   }, [appName, baseUrl, fetchData, multiAccountAddress, subAccount]);
@@ -306,7 +312,7 @@ export function useBalanceHistory(): {
   const hasMoreHistory = useAppSelector((state) => state.user.hasMoreHistory);
   const balanceHistory = useAppSelector((state) => state.user.balanceHistory);
   const balanceHistoryState = useAppSelector(
-    (state) => state.user.balanceHistoryState
+    (state) => state.user.balanceHistoryState,
   );
 
   return { hasMoreHistory, balanceHistory, balanceHistoryState };
@@ -314,10 +320,10 @@ export function useBalanceHistory(): {
 
 export function useTotalDepositsAndWithdrawals() {
   const depositWithdrawalsData = useAppSelector(
-    (state) => state.user.depositWithdrawalsData
+    (state) => state.user.depositWithdrawalsData,
   );
   const depositWithdrawalsState = useAppSelector(
-    (state) => state.user.depositWithdrawalsState
+    (state) => state.user.depositWithdrawalsState,
   );
   const debounceState = useDebounce(depositWithdrawalsState, 200);
 
@@ -357,7 +363,7 @@ export function useIsTermsAccepted() {
 
 export function useCustomAccountUpnl(account: string): AccountUpnl | undefined {
   return useAppSelector((state) =>
-    (state.user.allAccountsUpnl || []).find((x: any) => x.account === account)
+    (state.user.allAccountsUpnl || []).find((x: any) => x.account === account),
   )?.upnl;
 }
 
@@ -367,7 +373,7 @@ export function useSetFEName() {
     (name: string) => {
       dispatch(setFEName(name));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -379,7 +385,7 @@ export function useAddHedgerCallback() {
     (name: string, address: string) => {
       dispatch(addHedger({ name, address, chainId }));
     },
-    [chainId, dispatch]
+    [chainId, dispatch],
   );
 }
 
@@ -391,7 +397,7 @@ export function useSelectOrUnselectHedgerCallback() {
     (hedger: AddedHedger) => {
       dispatch(selectOrUnselectHedger({ hedger, chainId }));
     },
-    [chainId, dispatch]
+    [chainId, dispatch],
   );
 }
 
@@ -402,7 +408,7 @@ export function useSetHedgerDataCallback() {
     (data: AddedHedgersData) => {
       dispatch(setAllHedgerData(data));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -414,7 +420,7 @@ export function useRemoveHedgerCallback() {
     (address: string) => {
       dispatch(removeHedger({ address, chainId }));
     },
-    [chainId, dispatch]
+    [chainId, dispatch],
   );
 }
 

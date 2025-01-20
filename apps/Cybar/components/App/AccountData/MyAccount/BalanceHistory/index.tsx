@@ -1,17 +1,17 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { DefaultContainer, DefaultHeader } from "../styles";
 
-import { ColumnCenter } from "components/Column";
-import HistoryData from "components/App/AccountData/MyAccount/BalanceHistory/BalanceData";
+import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 import {
   useActiveAccountAddress,
   useBalanceHistory,
   useGetBalanceHistoryCallback,
 } from "@symmio/frontend-sdk/state/user/hooks";
 import { ApiState } from "@symmio/frontend-sdk/types/api";
-import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
+import HistoryData from "components/App/AccountData/MyAccount/BalanceHistory/BalanceData";
+import { ColumnCenter } from "components/Column";
 
 const Container = styled(DefaultContainer)`
   position: relative;
@@ -82,8 +82,9 @@ export default function BalanceHistory() {
 
   useEffect(() => {
     if (!isLoaded) {
-      if (balanceHistory && Object.values(balanceHistory).length)
+      if (balanceHistory && Object.values(balanceHistory).length) {
         setIsLoaded(true);
+      }
     }
   }, [balanceHistory, isLoaded]);
 

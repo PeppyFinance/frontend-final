@@ -1,17 +1,17 @@
-import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
-const { createAsyncThunk } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
 import { ApolloClient, NormalizedCacheObject } from "@apollo/client";
+import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
 import { ORDER_HISTORY_DATA } from "../../apollo/queries";
-import { InstantCloseResponseType, SubGraphData } from "./types";
-import { Quote } from "../../types/quote";
-import { OrderType } from "../../types/trade";
-import { fromWei } from "../../utils/numbers";
 import {
   getPositionTypeByIndex,
   getQuoteStateByIndex,
 } from "../../hooks/useQuotes";
+import { Quote } from "../../types/quote";
+import { OrderType } from "../../types/trade";
 import { makeHttpRequest } from "../../utils/http";
+import { fromWei } from "../../utils/numbers";
+import { InstantCloseResponseType, SubGraphData } from "./types";
+const { createAsyncThunk } = ((toolkitRaw as any).default ??
+  toolkitRaw) as typeof toolkitRaw;
 
 function toQuoteFromGraph(entity: SubGraphData) {
   return {
@@ -82,7 +82,7 @@ export const getHistory = createAsyncThunk(
       });
 
       const quotes: Quote[] = resultEntities.map((entity: SubGraphData) =>
-        toQuoteFromGraph(entity)
+        toQuoteFromGraph(entity),
       );
       if (quotes.length === ItemsPerPage + 1) {
         hasMore = true;
@@ -93,7 +93,7 @@ export const getHistory = createAsyncThunk(
       console.error(error);
       throw new Error(`Unable to query data from Client`);
     }
-  }
+  },
 );
 
 export const getInstantCloses = createAsyncThunk(
@@ -134,5 +134,5 @@ export const getInstantCloses = createAsyncThunk(
     } catch (error) {
       throw new Error(`Unable to get instant closes data from hedger`);
     }
-  }
+  },
 );

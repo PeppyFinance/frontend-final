@@ -1,16 +1,16 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import styled from "styled-components";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { isMobile } from "react-device-detect";
+import styled from "styled-components";
 
 import useOnOutsideClick from "lib/hooks/useOnOutsideClick";
 
-import { NavButton } from "components/Button";
-import HedgersModal from "./HedgersModal";
 import {
   useGetAddedHedgers,
   useSetHedgerDataCallback,
 } from "@symmio/frontend-sdk/state/user/hooks";
 import { AddedHedgersData } from "@symmio/frontend-sdk/state/user/types";
+import { NavButton } from "components/Button";
+import HedgersModal from "./HedgersModal";
 
 const Container = styled.div`
   display: unset;
@@ -22,7 +22,9 @@ export default function HedgerSelector() {
   const ref = useRef(null);
   useAddedHedgersData();
   useOnOutsideClick(ref, () => {
-    if (!isMobile) setModalOpen(false);
+    if (!isMobile) {
+      setModalOpen(false);
+    }
   });
   const [modalOpen, setModalOpen] = useState(false);
 

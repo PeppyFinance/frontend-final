@@ -1,15 +1,15 @@
-import { createConfig, http } from "wagmi";
-import { Chain } from "wagmi/chains";
 import { connectorsForWallets } from "@rainbow-me/rainbowkit";
 import {
+  coinbaseWallet,
   injectedWallet,
+  metaMaskWallet,
   rabbyWallet,
   rainbowWallet,
-  metaMaskWallet,
-  coinbaseWallet,
-  walletConnectWallet,
   safeWallet,
+  walletConnectWallet,
 } from "@rainbow-me/rainbowkit/wallets";
+import { createConfig, http } from "wagmi";
+import { Chain } from "wagmi/chains";
 
 import { ALL_CHAINS } from "constants/chains/chains";
 import { APP_NAME } from "constants/chains/misc";
@@ -52,7 +52,7 @@ export const getWagmiConfig = () => {
     {
       appName: APP_NAME,
       projectId,
-    }
+    },
   );
 
   const config = createConfig({

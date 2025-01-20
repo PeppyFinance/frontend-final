@@ -1,11 +1,11 @@
-import React from "react";
-import styled from "styled-components";
-import { ExternalLink as LinkIconFeather } from "react-feather";
 import {
   ExplorerDataType,
   getExplorerLink,
 } from "@symmio/frontend-sdk/utils/explorers";
 import { FALLBACK_CHAIN_ID } from "constants/chains/chains";
+import React from "react";
+import { ExternalLink as LinkIconFeather } from "react-feather";
+import styled from "styled-components";
 
 function handleClickExternalLink(event: React.MouseEvent<HTMLAnchorElement>) {
   const { target } = event.currentTarget;

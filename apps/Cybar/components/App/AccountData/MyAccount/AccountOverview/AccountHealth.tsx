@@ -1,13 +1,12 @@
-import React from "react";
 import styled from "styled-components";
 
 import { formatAmount } from "@symmio/frontend-sdk/utils/numbers";
 
 import useAccountData from "@symmio/frontend-sdk/hooks/useAccountData";
 
+import { AccountHealthText } from "components/App/AccountData/AccountOverview";
 import Emoji from "components/App/AccountData/Emoji";
 import { Row, RowBetween, RowEnd } from "components/Row";
-import { AccountHealthText } from "components/App/AccountData/AccountOverview";
 import ShimmerAnimation from "components/ShimmerAnimation";
 
 const Title = styled(Row)`

@@ -1,9 +1,11 @@
 export function autoRefresh(
   callback: () => void,
   seconds: number,
-  instantCall = true
+  instantCall = true,
 ): () => void {
-  if (instantCall) callback();
+  if (instantCall) {
+    callback();
+  }
   const interval = setInterval(() => {
     callback();
   }, seconds * 1000);
@@ -50,7 +52,7 @@ export interface RetryOptions {
  */
 export function retry<T>(
   fn: () => Promise<T>,
-  { n, minWait, maxWait }: RetryOptions
+  { n, minWait, maxWait }: RetryOptions,
 ): { promise: Promise<T>; cancel: () => void } {
   let completed = false;
   let rejectCancelled: (error: Error) => void;
@@ -82,7 +84,9 @@ export function retry<T>(
   return {
     promise,
     cancel: () => {
-      if (completed) return;
+      if (completed) {
+        return;
+      }
       completed = true;
       rejectCancelled(new CancelledError());
     },

@@ -1,10 +1,9 @@
-import React from "react";
 import styled from "styled-components";
 
 import { Quote } from "@symmio/frontend-sdk/types/quote";
 
-import useCurrencyLogo, { useCollateralLogo } from "lib/hooks/useCurrencyLogo";
 import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
+import useCurrencyLogo, { useCollateralLogo } from "lib/hooks/useCurrencyLogo";
 
 import Logos from "components/Notifications/Logos";
 import { RowEnd, RowStart } from "components/Row";

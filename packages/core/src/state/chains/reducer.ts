@@ -1,10 +1,10 @@
-import { Config } from "@wagmi/core";
 import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
+import { Config } from "@wagmi/core";
+import { SupportedChainId } from "../../constants/chains";
+import { HedgerInfoMap } from "../../types/hedger";
+import { setChains } from "./actions";
 const { createReducer } = ((toolkitRaw as any).default ??
   toolkitRaw) as typeof toolkitRaw;
-import { setChains } from "./actions";
-import { HedgerInfoMap } from "../../types/hedger";
-import { SupportedChainId } from "../../constants/chains";
 
 export interface ChainType {
   readonly COLLATERAL_SYMBOL: string;
@@ -66,5 +66,5 @@ export default createReducer(initialState, (builder) =>
     state.appName = appName;
     state.MuonData = MuonData;
     state.wagmiConfig = wagmiConfig;
-  })
+  }),
 );

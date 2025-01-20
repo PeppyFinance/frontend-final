@@ -1,11 +1,10 @@
-import React from "react";
-import styled from "styled-components";
 import { Token } from "@uniswap/sdk-core";
 import { isMobile } from "react-device-detect";
+import styled from "styled-components";
 
-import useCurrencyLogo from "lib/hooks/useCurrencyLogo";
 import ImageWithFallback from "components/ImageWithFallback";
 import { RowBetween, RowStart } from "components/Row";
+import useCurrencyLogo from "lib/hooks/useCurrencyLogo";
 
 const Wrapper = styled(RowBetween).attrs({
   align: "center",

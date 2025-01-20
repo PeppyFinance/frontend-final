@@ -1,11 +1,10 @@
-import React from "react";
 import styled from "styled-components";
 
 import { formatAmount } from "@symmio/frontend-sdk/utils/numbers";
 
-import { RowBetween, RowEnd } from "components/Row";
-import { InnerCard } from "components/Card";
 import SlippageTolerance from "components/App/SlippageTolerance";
+import { InnerCard } from "components/Card";
+import { RowBetween, RowEnd } from "components/Row";
 
 // const DefaultOptionButton = styled.div<{ active?: boolean }>`
 //   padding: 4px 8px;

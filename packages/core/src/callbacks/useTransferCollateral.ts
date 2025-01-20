@@ -1,39 +1,39 @@
-import { useCallback, useMemo } from "react";
 import BigNumber from "bignumber.js";
+import { useCallback, useMemo } from "react";
 
+import { useCollateralToken } from "../constants/tokens";
+import { TransferTab } from "../types/transfer";
+import { formatPrice } from "../utils/numbers";
+import { useGetTokenWithFallbackChainId } from "../utils/token";
 import {
   createTransactionCallback,
   TransactionCallbackState,
 } from "../utils/web3";
-import { formatPrice } from "../utils/numbers";
-import { useCollateralToken } from "../constants/tokens";
-import { useGetTokenWithFallbackChainId } from "../utils/token";
-import { TransferTab } from "../types/transfer";
 
-import { useActiveAccount, useExpertMode } from "../state/user/hooks";
 import { useTransactionAdder } from "../state/transactions/hooks";
 import {
   TransactionType,
   TransferCollateralTransactionInfo,
 } from "../state/transactions/types";
+import { useActiveAccount, useExpertMode } from "../state/user/hooks";
 
-import { DeallocateCollateralClient } from "../lib/muon";
+import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
+import { Abi, Address, encodeFunctionData } from "viem";
+import { DIAMOND_ABI, MULTI_ACCOUNT_ABI } from "../constants";
 import useActiveWagmi from "../lib/hooks/useActiveWagmi";
 import { useSupportedChainId } from "../lib/hooks/useSupportedChainId";
-import { ConstructCallReturnType } from "../types/web3";
-import { Abi, Address, encodeFunctionData } from "viem";
-import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
+import { DeallocateCollateralClient } from "../lib/muon";
 import {
   useDiamondAddress,
   useMultiAccountAddress,
   useMuonData,
   useWagmiConfig,
 } from "../state/chains";
-import { DIAMOND_ABI, MULTI_ACCOUNT_ABI } from "../constants";
+import { ConstructCallReturnType } from "../types/web3";
 
 export function useTransferCollateral(
   typedAmount: string,
-  activeTab: TransferTab
+  activeTab: TransferTab,
 ): {
   state: TransactionCallbackState;
   callback: null | (() => Promise<any>);
@@ -52,7 +52,7 @@ export function useTransferCollateral(
 
   const collateralCurrency = useGetTokenWithFallbackChainId(
     COLLATERAL_TOKEN,
-    chainId
+    chainId,
   );
   const addTransaction = useTransactionAdder();
   const addRecentTransaction = useAddRecentTransaction();
@@ -75,7 +75,7 @@ export function useTransferCollateral(
       AppName,
       Urls,
       chainId,
-      DIAMOND_ADDRESS[chainId] as Address
+      DIAMOND_ADDRESS[chainId] as Address,
     );
     const { success, signature, error } = result;
     if (success === false || !signature) {
@@ -88,12 +88,12 @@ export function useTransferCollateral(
     return activeTab === TransferTab.DEPOSIT
       ? "depositAndAllocateForAccount"
       : activeTab === TransferTab.DEALLOCATE
-      ? "deallocate"
-      : activeTab === TransferTab.WITHDRAW
-      ? "withdrawFromAccount"
-      : activeTab === TransferTab.ALLOCATE
-      ? "allocate"
-      : "";
+        ? "deallocate"
+        : activeTab === TransferTab.WITHDRAW
+          ? "withdrawFromAccount"
+          : activeTab === TransferTab.ALLOCATE
+            ? "allocate"
+            : "";
   }, [activeTab]);
 
   const constructCall = useCallback(async (): ConstructCallReturnType => {
@@ -136,7 +136,7 @@ export function useTransferCollateral(
       } else if (activeTab === TransferTab.DEALLOCATE) {
         const fixedAmount = formatPrice(
           typedAmount,
-          collateralCurrency.decimals
+          collateralCurrency.decimals,
         );
         const amount = new BigNumber(fixedAmount).times(1e18).toFixed();
 
@@ -174,7 +174,7 @@ export function useTransferCollateral(
       } else if (activeTab === TransferTab.WITHDRAW) {
         const fixedAmount = formatPrice(
           typedAmount,
-          collateralCurrency.decimals
+          collateralCurrency.decimals,
         );
         const amount = new BigNumber(fixedAmount)
           .times(collateralShiftAmount)
@@ -198,7 +198,7 @@ export function useTransferCollateral(
       } else if (activeTab === TransferTab.ALLOCATE) {
         const fixedAmount = formatPrice(
           typedAmount,
-          collateralCurrency.decimals
+          collateralCurrency.decimals,
         );
         const amount = new BigNumber(fixedAmount).times(1e18).toFixed();
         const diamondArgs = [BigInt(amount)] as const;
@@ -239,7 +239,9 @@ export function useTransferCollateral(
         },
       };
     } catch (error) {
-      if (error && typeof error === "string") throw new Error(error);
+      if (error && typeof error === "string") {
+        throw new Error(error);
+      }
       throw new Error("error3");
     }
   }, [
@@ -295,7 +297,7 @@ export function useTransferCollateral(
           txInfo,
           wagmiConfig,
           summary,
-          userExpertMode
+          userExpertMode,
         ),
     };
   }, [

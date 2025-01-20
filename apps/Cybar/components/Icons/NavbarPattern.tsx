@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function NavbarPattern({
   width = 1890,
   height = 69,

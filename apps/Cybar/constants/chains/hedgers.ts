@@ -87,9 +87,7 @@ export const HedgerInfo = {
       clientName: "MANTLE",
     },
   ],
-  [SupportedChainId.BASE]: [
-    DEFAULT_HEDGER
-  ],
+  [SupportedChainId.BASE]: [DEFAULT_HEDGER],
   [SupportedChainId.BLAST]: [
     {
       apiUrl: "https://fapi.binance.com/",

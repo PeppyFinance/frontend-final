@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { Quote } from "@symmio/frontend-sdk/types/quote";
 
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
-import { useActiveAccountAddress } from "@symmio/frontend-sdk/state/user/hooks";
 import {
   useGetOpenInstantClosesCallback,
   useGetOrderHistoryCallback,
@@ -14,15 +13,16 @@ import {
   useQuoteDetail,
   useSetQuoteDetailCallback,
 } from "@symmio/frontend-sdk/state/quotes/hooks";
+import { useActiveAccountAddress } from "@symmio/frontend-sdk/state/user/hooks";
 
 import { Card } from "components/Card";
-import History from "./History";
-import Position from "./Position";
-import OrdersTab, { StateTabs } from "./OrdersTab";
-import { ItemsPerPage } from "./PaginateTable";
+import { IconWrapper } from "components/Icons";
 import ArrowRightTriangle from "components/Icons/ArrowRightTriangle";
 import { RowCenter } from "components/Row";
-import { IconWrapper } from "components/Icons";
+import History from "./History";
+import OrdersTab, { StateTabs } from "./OrdersTab";
+import { ItemsPerPage } from "./PaginateTable";
+import Position from "./Position";
 
 const Wrapper = styled(Card)`
   padding: 0;
@@ -61,21 +61,26 @@ export default function UserPanel(): JSX.Element | null {
   const getOpenInstantCloses = useGetOpenInstantClosesCallback();
 
   useEffect(() => {
-    if (positions.length) getOpenInstantCloses();
+    if (positions.length) {
+      getOpenInstantCloses();
+    }
   }, [getOpenInstantCloses, positions.length]);
 
   function getHistoryQuotes() {
     const skip = page * ItemsPerPage;
     const first = ItemsPerPage + 1;
-    if (skip + first < closed.length) return;
-    if (account && chainId && hasMoreHistory)
+    if (skip + first < closed.length) {
+      return;
+    }
+    if (account && chainId && hasMoreHistory) {
       getHistory(account, chainId, first, skip, ItemsPerPage);
+    }
   }
 
   const positionQuotes: Quote[] = useMemo(() => {
     return [...pendings, ...positions].sort(
       (a: Quote, b: Quote) =>
-        Number(b.statusModifyTimestamp) - Number(a.statusModifyTimestamp)
+        Number(b.statusModifyTimestamp) - Number(a.statusModifyTimestamp),
     );
   }, [pendings, positions]);
 
@@ -115,7 +120,7 @@ export default function UserPanel(): JSX.Element | null {
 
   useEffect(() => {
     const isQuoteInPositions = positionQuotes.some(
-      (quote) => quote.id === quoteDetail?.id
+      (quote) => quote.id === quoteDetail?.id,
     );
 
     if (!isQuoteInPositions && selectedTab === StateTabs.POSITIONS) {
@@ -130,13 +135,17 @@ export default function UserPanel(): JSX.Element | null {
         getHistoryQuotes();
       }
     } else {
-      if (value >= 1) setPage(value);
+      if (value >= 1) {
+        setPage(value);
+      }
     }
   };
 
   const activeNext = (() => {
     const itemsLengthCondition = page * ItemsPerPage < currentOrders.length;
-    if (selectedTab === StateTabs.POSITIONS) return itemsLengthCondition;
+    if (selectedTab === StateTabs.POSITIONS) {
+      return itemsLengthCondition;
+    }
     return hasMoreHistory || itemsLengthCondition;
   })();
 

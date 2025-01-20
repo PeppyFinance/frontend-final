@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 import Column from "components/Column";
-import { RowCenter } from "components/Row";
 import { LottieCloverfield } from "components/Icons";
+import { RowCenter } from "components/Row";
 import ActionButton from "./ActionButton";
 
 const SummaryWrap = styled(RowCenter)`

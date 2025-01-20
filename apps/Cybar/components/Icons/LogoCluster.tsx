@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function LogoCluster({
   width = 1200,
   height = 275,

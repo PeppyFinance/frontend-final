@@ -1,10 +1,9 @@
-import React from "react";
 import styled from "styled-components";
 
 import { toBN } from "@symmio/frontend-sdk/utils/numbers";
 
-import { PositionType } from "@symmio/frontend-sdk/types/trade";
 import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
+import { PositionType } from "@symmio/frontend-sdk/types/trade";
 import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
 
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
@@ -13,10 +12,10 @@ import {
   usePositionType,
 } from "@symmio/frontend-sdk/state/trade/hooks";
 
-import { RowBetween, RowEnd } from "components/Row";
-import { InnerCard } from "components/Card";
-import SlippageTolerance from "components/App/SlippageTolerance";
 import useBidAskPrice from "@symmio/frontend-sdk/hooks/useBidAskPrice";
+import SlippageTolerance from "components/App/SlippageTolerance";
+import { InnerCard } from "components/Card";
+import { RowBetween, RowEnd } from "components/Row";
 
 const PriceWrap = styled(InnerCard)`
   padding-top: 8px;
@@ -71,7 +70,7 @@ export default function MarketPanel() {
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(
     COLLATERAL_TOKEN,
-    chainId
+    chainId,
   );
   const { ask, bid } = useBidAskPrice(market);
 

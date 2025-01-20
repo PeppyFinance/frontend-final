@@ -1,6 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
 const fs = require("fs");
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
 const path = require("path");
 
 const appsDir = "./apps"; // Replace with the actual path to your 'apps' directory
@@ -39,7 +39,7 @@ function updateTsConfig(folderPath) {
         } else {
           console.log(`Path added successfully in ${tsconfigPath}.`);
         }
-      }
+      },
     );
   });
 }
@@ -77,10 +77,10 @@ function updatePackageJson(folderPath) {
           console.error("Error writing file:", err);
         } else {
           console.log(
-            `Package '${packageName}' removed successfully from ${packageJsonPath}.`
+            `Package '${packageName}' removed successfully from ${packageJsonPath}.`,
           );
         }
-      }
+      },
     );
   });
 }

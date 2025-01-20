@@ -1,11 +1,10 @@
-import { Ether, NativeCurrency, Token, Currency } from "@uniswap/sdk-core";
+import { Currency, Ether, NativeCurrency, Token } from "@uniswap/sdk-core";
 import invariant from "tiny-invariant";
 
-import { WRAPPED_NATIVE_CURRENCY } from "../constants/tokens";
 import { SupportedChainId } from "../constants/chains";
-import { useFallbackChainId } from "../state/chains/hooks";
+import { WRAPPED_NATIVE_CURRENCY } from "../constants/tokens";
+import { useFallbackChainId, useV3Ids } from "../state/chains/hooks";
 import { AddressMap, DecimalMap, SymbolMap } from "./address";
-import { useV3Ids } from "../state/chains/hooks";
 
 export const NATIVE_CHAIN_ID = "NATIVE";
 export const DEFAULT_ERC20_DECIMALS = 18;
@@ -24,7 +23,7 @@ export function duplicateTokenByAddressMap(
   decimals: number,
   symbol: SymbolMap,
   name: SymbolMap,
-  decimalMap: DecimalMap = {}
+  decimalMap: DecimalMap = {},
 ): TokenMap {
   return Object.keys(addressMap)
     .map((chainId) => Number(chainId)) //convert string to number because of the object.keys() always returns string
@@ -34,7 +33,7 @@ export function duplicateTokenByAddressMap(
         addressMap[chainId],
         decimalMap[chainId] ?? decimals,
         symbol[chainId],
-        name[chainId]
+        name[chainId],
       );
       return acc;
     }, {});
@@ -42,11 +41,13 @@ export function duplicateTokenByAddressMap(
 
 export function useGetTokenWithFallbackChainId(
   tokenMap: TokenMap,
-  chainId: number | undefined
+  chainId: number | undefined,
 ): Token {
   const v3_ids = useV3Ids();
   const FALLBACK_CHAIN_ID = useFallbackChainId();
-  if (chainId && v3_ids.includes(chainId)) return tokenMap[chainId];
+  if (chainId && v3_ids.includes(chainId)) {
+    return tokenMap[chainId];
+  }
   return tokenMap[FALLBACK_CHAIN_ID];
 }
 
@@ -61,7 +62,7 @@ export function isFTM(chainId: number): chainId is SupportedChainId.FANTOM {
 }
 
 export function isPolygon(
-  chainId: number
+  chainId: number,
 ): chainId is SupportedChainId.POLYGON {
   return chainId === SupportedChainId.POLYGON;
 }
@@ -84,14 +85,18 @@ class BscNativeCurrency extends NativeCurrency {
   }
 
   get wrapped(): Token {
-    if (!isBSC(this.chainId)) throw new Error("Not bnb");
+    if (!isBSC(this.chainId)) {
+      throw new Error("Not bnb");
+    }
     const wrapped = WRAPPED_NATIVE_CURRENCY[this.chainId];
     invariant(wrapped instanceof Token);
     return wrapped;
   }
 
   public constructor(chainId: number) {
-    if (!isBSC(chainId)) throw new Error("Not bnb");
+    if (!isBSC(chainId)) {
+      throw new Error("Not bnb");
+    }
     super(chainId, 18, "BNB", "BNB");
   }
 }
@@ -102,14 +107,18 @@ class MantleNativeCurrency extends NativeCurrency {
   }
 
   get wrapped(): Token {
-    if (!isMantle(this.chainId)) throw new Error("Not Mantle");
+    if (!isMantle(this.chainId)) {
+      throw new Error("Not Mantle");
+    }
     const wrapped = WRAPPED_NATIVE_CURRENCY[this.chainId];
     invariant(wrapped instanceof Token);
     return wrapped;
   }
 
   public constructor(chainId: number) {
-    if (!isMantle(chainId)) throw new Error("Not Mantle");
+    if (!isMantle(chainId)) {
+      throw new Error("Not Mantle");
+    }
     super(chainId, 18, "MANTLE", "MANTLE");
   }
 }
@@ -120,14 +129,18 @@ class FtmNativeCurrency extends NativeCurrency {
   }
 
   get wrapped(): Token {
-    if (!isFTM(this.chainId)) throw new Error("Not FTM");
+    if (!isFTM(this.chainId)) {
+      throw new Error("Not FTM");
+    }
     const wrapped = WRAPPED_NATIVE_CURRENCY[this.chainId];
     invariant(wrapped instanceof Token);
     return wrapped;
   }
 
   public constructor(chainId: number) {
-    if (!isFTM(chainId)) throw new Error("Not FTM");
+    if (!isFTM(chainId)) {
+      throw new Error("Not FTM");
+    }
     super(chainId, 18, "FTM", "FTM");
   }
 }
@@ -138,14 +151,18 @@ class PolygonNativeCurrency extends NativeCurrency {
   }
 
   get wrapped(): Token {
-    if (!isPolygon(this.chainId)) throw new Error("Not Matic");
+    if (!isPolygon(this.chainId)) {
+      throw new Error("Not Matic");
+    }
     const wrapped = WRAPPED_NATIVE_CURRENCY[this.chainId];
     invariant(wrapped instanceof Token);
     return wrapped;
   }
 
   public constructor(chainId: number) {
-    if (!isPolygon(chainId)) throw new Error("Not Matic");
+    if (!isPolygon(chainId)) {
+      throw new Error("Not Matic");
+    }
     super(chainId, 18, "Matic", "Matic");
   }
 }
@@ -156,14 +173,18 @@ class BaseNativeCurrency extends NativeCurrency {
   }
 
   get wrapped(): Token {
-    if (!isBASE(this.chainId)) throw new Error("Not Eth");
+    if (!isBASE(this.chainId)) {
+      throw new Error("Not Eth");
+    }
     const wrapped = WRAPPED_NATIVE_CURRENCY[this.chainId];
     invariant(wrapped instanceof Token);
     return wrapped;
   }
 
   public constructor(chainId: number) {
-    if (!isBASE(chainId)) throw new Error("Not Eth");
+    if (!isBASE(chainId)) {
+      throw new Error("Not Eth");
+    }
     super(chainId, 18, "ETH", "ETH");
   }
 }
@@ -174,14 +195,18 @@ class BlastNativeCurrency extends NativeCurrency {
   }
 
   get wrapped(): Token {
-    if (!isBLAST(this.chainId)) throw new Error("Not Eth");
+    if (!isBLAST(this.chainId)) {
+      throw new Error("Not Eth");
+    }
     const wrapped = WRAPPED_NATIVE_CURRENCY[this.chainId];
     invariant(wrapped instanceof Token);
     return wrapped;
   }
 
   public constructor(chainId: number) {
-    if (!isBLAST(chainId)) throw new Error("Not Eth");
+    if (!isBLAST(chainId)) {
+      throw new Error("Not Eth");
+    }
     super(chainId, 18, "ETH", "ETH");
   }
 }
@@ -189,7 +214,9 @@ class BlastNativeCurrency extends NativeCurrency {
 class ExtendedEther extends Ether {
   public get wrapped(): Token {
     const wrapped = WRAPPED_NATIVE_CURRENCY[this.chainId];
-    if (wrapped) return wrapped;
+    if (wrapped) {
+      return wrapped;
+    }
     throw new Error("Unsupported chain ID");
   }
 }

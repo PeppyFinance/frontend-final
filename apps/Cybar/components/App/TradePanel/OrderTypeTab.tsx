@@ -1,5 +1,5 @@
+import { InputField, OrderType } from "@symmio/frontend-sdk/types/trade";
 import { useEffect } from "react";
-import { OrderType, InputField } from "@symmio/frontend-sdk/types/trade";
 
 import {
   useOrderType,

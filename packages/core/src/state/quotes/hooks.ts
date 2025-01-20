@@ -1,14 +1,19 @@
+import uniqWith from "lodash/uniqWith.js";
 import { useCallback, useMemo } from "react";
 import {
-  useAppSelector,
-  useAppDispatch,
   AppThunkDispatch,
+  useAppDispatch,
+  useAppSelector,
 } from "../declaration";
-import uniqWith from "lodash/uniqWith.js";
 
-import { Quote } from "../../types/quote";
-import { ApiState } from "../../types/api";
+import { useOrderHistoryApolloClient } from "../../apollo/client/orderHistory";
+import { sortQuotesByModifyTimestamp } from "../../hooks/useQuotes";
 import useActiveWagmi from "../../lib/hooks/useActiveWagmi";
+import { ApiState } from "../../types/api";
+import { Quote } from "../../types/quote";
+import { useAppName, useOrderHistorySubgraphAddress } from "../chains";
+import { useHedgerInfo } from "../hedger/hooks";
+import { useActiveAccountAddress } from "../user/hooks";
 import {
   addQuote,
   addQuoteInstantCloseData,
@@ -20,18 +25,13 @@ import {
   setTpSlData,
   updateQuoteInstantCloseStatus,
 } from "./actions";
-import { useActiveAccountAddress } from "../user/hooks";
-import { sortQuotesByModifyTimestamp } from "../../hooks/useQuotes";
-import { useOrderHistoryApolloClient } from "../../apollo/client/orderHistory";
 import { getHistory, getInstantCloses } from "./thunks";
-import { useAppName, useOrderHistorySubgraphAddress } from "../chains";
 import {
   InstantCloseItem,
   InstantCloseObject,
   InstantCloseStatus,
   TpSlContent,
 } from "./types";
-import { useHedgerInfo } from "../hedger/hooks";
 
 // returns all the histories
 export function useHistoryQuotes(): {
@@ -45,18 +45,18 @@ export function useHistoryQuotes(): {
   const historyState = useAppSelector((state) => state.quotes.historyState);
   const hasMoreHistory = useAppSelector((state) => state.quotes.hasMoreHistory);
   return useMemo(() => {
-    const histories = chainId ? history[chainId] ?? [] : [];
+    const histories = chainId ? (history[chainId] ?? []) : [];
     return {
       quotes: uniqWith(
         histories
           .filter(
             (h: Quote) =>
-              account && h.partyA.toLowerCase() === account.toLowerCase()
+              account && h.partyA.toLowerCase() === account.toLowerCase(),
           )
           .sort(sortQuotesByModifyTimestamp),
         (quoteA, quoteB) => {
           return quoteA.id === quoteB.id;
-        }
+        },
       ),
       state: historyState,
       hasMoreHistory,
@@ -105,7 +105,7 @@ export function useInstantClosesData(): InstantCloseObject {
 
 export function useQuoteInstantCloseData(id: number): InstantCloseItem {
   const data: InstantCloseObject = useAppSelector(
-    (state) => state.quotes.instantClosesStates
+    (state) => state.quotes.instantClosesStates,
   );
   return data[id] ?? null;
 }
@@ -116,7 +116,7 @@ export function useAddQuotesToListenerCallback() {
     (id: number) => {
       dispatch(addQuote({ id }));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -126,7 +126,7 @@ export function useSetQuoteDetailCallback() {
     (quote: Quote | null) => {
       dispatch(setQuoteDetail({ quote }));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 export function useSetHistoryCallback() {
@@ -135,9 +135,11 @@ export function useSetHistoryCallback() {
 
   return useCallback(
     (quotes: Quote[]) => {
-      if (chainId) dispatch(setHistory({ quotes, chainId }));
+      if (chainId) {
+        dispatch(setHistory({ quotes, chainId }));
+      }
     },
-    [dispatch, chainId]
+    [dispatch, chainId],
   );
 }
 
@@ -147,7 +149,7 @@ export function useSetPendingsCallback() {
     (quotes: Quote[]) => {
       dispatch(setPendings({ quotes }));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -157,7 +159,7 @@ export function useRemoveQuotesFromListenerCallback() {
     (id: number) => {
       dispatch(removeQuote({ id }));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -166,9 +168,11 @@ export function useAddQuoteToHistoryCallback() {
   const { chainId } = useActiveWagmi();
   return useCallback(
     (quote: Quote) => {
-      if (chainId) dispatch(addQuoteToHistory({ quote, chainId }));
+      if (chainId) {
+        dispatch(addQuoteToHistory({ quote, chainId }));
+      }
     },
-    [dispatch, chainId]
+    [dispatch, chainId],
   );
 }
 
@@ -189,7 +193,7 @@ export function useInstantCloseDataCallback() {
     }) => {
       dispatch(addQuoteInstantCloseData({ id, amount, timestamp, status }));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -200,7 +204,7 @@ export function useUpdateInstantCloseDataCallback() {
     ({ id, status }: { id: number; status: InstantCloseStatus }) => {
       dispatch(updateQuoteInstantCloseStatus({ id, newStatus: status }));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -209,13 +213,17 @@ export function useGetExistedQuoteByIdsCallback() {
 
   return useCallback(
     (id: string | null) => {
-      if (!id) return null;
+      if (!id) {
+        return null;
+      }
 
       const existedQuote = quotes.find((quote) => quote.id.toString() === id);
-      if (existedQuote) return existedQuote;
+      if (existedQuote) {
+        return existedQuote;
+      }
       return null;
     },
-    [quotes]
+    [quotes],
   );
 }
 
@@ -230,15 +238,17 @@ export function useGetOrderHistoryCallback() {
       chainId: number,
       first: number,
       skip: number,
-      ItemsPerPage: number
+      ItemsPerPage: number,
     ) => {
-      if (!chainId || !account) return;
+      if (!chainId || !account) {
+        return;
+      }
       thunkDispatch(
-        getHistory({ account, chainId, client, first, skip, ItemsPerPage })
+        getHistory({ account, chainId, client, first, skip, ItemsPerPage }),
       );
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [thunkDispatch, subgraphAddress]
+    [thunkDispatch, subgraphAddress],
   );
 }
 
@@ -249,13 +259,15 @@ export function useGetOpenInstantClosesCallback() {
   const appName = useAppName();
 
   return useCallback(() => {
-    if (!account) return;
+    if (!account) {
+      return;
+    }
     thunkDispatch(
       getInstantCloses({
         account,
         baseUrl,
         appName,
-      })
+      }),
     );
   }, [account, appName, baseUrl, thunkDispatch]);
 }
@@ -271,6 +283,6 @@ export function useSetTpSlDataCallback() {
     (value: TpSlContent, quoteId: number) => {
       dispatch(setTpSlData({ value, quoteId }));
     },
-    [dispatch]
+    [dispatch],
   );
 }

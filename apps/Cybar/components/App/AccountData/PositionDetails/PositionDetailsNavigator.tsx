@@ -1,8 +1,7 @@
+import findIndex from "lodash/findIndex.js";
 import { useMemo } from "react";
 import styled, { useTheme } from "styled-components";
-import findIndex from "lodash/findIndex.js";
 
-import { Quote, QuoteStatus } from "@symmio/frontend-sdk/types/quote";
 import {
   useHistoryQuotes,
   usePendingsQuotes,
@@ -10,12 +9,13 @@ import {
   useQuoteDetail,
   useSetQuoteDetailCallback,
 } from "@symmio/frontend-sdk/state/quotes/hooks";
+import { Quote, QuoteStatus } from "@symmio/frontend-sdk/types/quote";
 
-import { PreviousIcon } from "./styles";
-import { RowEnd } from "components/Row";
-import { NextIcon } from "components/Icons";
-import { ItemsPerPage } from "components/App/UserPanel/PaginateTable";
 import { sortQuotesByModifyTimestamp } from "@symmio/frontend-sdk/hooks/useQuotes";
+import { ItemsPerPage } from "components/App/UserPanel/PaginateTable";
+import { NextIcon } from "components/Icons";
+import { RowEnd } from "components/Row";
+import { PreviousIcon } from "./styles";
 
 const ChangePositionBtn = styled.button<{ disabled?: boolean }>`
   display: flex;

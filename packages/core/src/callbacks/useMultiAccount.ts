@@ -15,10 +15,10 @@ import {
 
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import { Abi, Address, encodeFunctionData } from "viem";
-import { ConstructCallReturnType } from "../types/web3";
 import { useWalletClient } from "wagmi";
-import { useMultiAccountAddress, useWagmiConfig } from "../state/chains";
 import { MULTI_ACCOUNT_ABI } from "../constants";
+import { useMultiAccountAddress, useWagmiConfig } from "../state/chains";
+import { ConstructCallReturnType } from "../types/web3";
 
 export function useAddAccountToContract(accountName: string): {
   state: TransactionCallbackState;
@@ -63,7 +63,9 @@ export function useAddAccountToContract(accountName: string): {
         },
       };
     } catch (error) {
-      if (error && typeof error === "string") throw new Error(error);
+      if (error && typeof error === "string") {
+        throw new Error(error);
+      }
       throw new Error("error3");
     }
   }, [
@@ -106,7 +108,7 @@ export function useAddAccountToContract(accountName: string): {
           addRecentTransaction,
           txInfo,
           wagmiConfig,
-          summary
+          summary,
         ),
     };
   }, [

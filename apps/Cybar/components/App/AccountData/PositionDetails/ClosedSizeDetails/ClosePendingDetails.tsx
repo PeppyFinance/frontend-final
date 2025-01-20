@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 import styled, { useTheme } from "styled-components";
 
-import { OrderType } from "@symmio/frontend-sdk/types/trade";
 import { Quote, QuoteStatus } from "@symmio/frontend-sdk/types/quote";
+import { OrderType } from "@symmio/frontend-sdk/types/trade";
 
 import { formatAmount, toBN } from "@symmio/frontend-sdk/utils/numbers";
 
@@ -13,13 +13,13 @@ import {
 } from "@symmio/frontend-sdk/hooks/useQuotes";
 import { useMarketData } from "@symmio/frontend-sdk/state/hedger/hooks";
 
-import { PnlValue } from "components/App/UserPanel/Common";
 import {
   DataWrap,
   Label,
-  Value,
   Row,
+  Value,
 } from "components/App/AccountData/PositionDetails/styles";
+import { PnlValue } from "components/App/UserPanel/Common";
 
 const Wrapper = styled(DataWrap)`
   margin-bottom: 4px;
@@ -64,19 +64,20 @@ export default function ClosePendingDetails({
     quote || ({} as Quote),
     marketData?.markPrice || 0,
     quantityToClose,
-    requestedCloseLimitPrice
+    requestedCloseLimitPrice,
   );
   const [, marketPnl] = useQuoteUpnlAndPnl(
     quote || ({} as Quote),
     marketData?.markPrice || 0,
     quantityToClose,
-    marketData?.markPrice || 0
+    marketData?.markPrice || 0,
   );
 
   function getPnlData(value: string) {
     const valueBN = toBN(value);
-    if (!quantityToClose || !openedPrice)
+    if (!quantityToClose || !openedPrice) {
       return [`$${formatAmount(value)}`, "0", theme.text1];
+    }
     const valuePercent = valueBN
       .div(quantityToClose)
       .div(openedPrice)
@@ -84,14 +85,15 @@ export default function ClosePendingDetails({
       .times(100)
       .toFixed(2);
 
-    if (valueBN.isGreaterThan(0))
+    if (valueBN.isGreaterThan(0)) {
       return [`+ $${formatAmount(valueBN)}`, valuePercent, theme.positive];
-    else if (valueBN.isLessThan(0))
+    } else if (valueBN.isLessThan(0)) {
       return [
         `- $${formatAmount(Math.abs(valueBN.toNumber()))}`,
         valuePercent,
         theme.negative,
       ];
+    }
     return [`$${formatAmount(valueBN)}`, valuePercent, theme.text1];
   }
 
@@ -111,7 +113,7 @@ export default function ClosePendingDetails({
             <Value>{`${formatAmount(
               quantityToClose,
               6,
-              true
+              true,
             )} ${symbol}`}</Value>
           </Row>
           <Row>
@@ -126,13 +128,13 @@ export default function ClosePendingDetails({
             <Label>Estimated PNL:</Label>
             {orderType === OrderType.LIMIT ? (
               <PositionPnl color={limitValueColor}>{`${limitValue} (${Math.abs(
-                Number(limitValuePercent)
+                Number(limitValuePercent),
               )}%)`}</PositionPnl>
             ) : (
               <PositionPnl
                 color={marketValueColor}
               >{`${marketValue} (${Math.abs(
-                Number(marketValuePercent)
+                Number(marketValuePercent),
               )}%)`}</PositionPnl>
             )}
           </Row>

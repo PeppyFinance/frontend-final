@@ -1,14 +1,14 @@
 import styled from "styled-components";
 
-import { PrimaryButton } from ".";
-import { DotFlashing, LongArrow, ShortArrow } from "components/Icons";
-import { useCallback } from "react";
 import {
   useActiveMarket,
   usePositionType,
 } from "@symmio/frontend-sdk/state/trade/hooks";
 import { PositionType } from "@symmio/frontend-sdk/types/trade";
 import { titleCase } from "@symmio/frontend-sdk/utils/string";
+import { DotFlashing, LongArrow, ShortArrow } from "components/Icons";
+import { useCallback } from "react";
+import { PrimaryButton } from ".";
 
 const IconWrap = styled.div`
   position: absolute;
@@ -49,7 +49,9 @@ export default function OpenPositionButton({
   const positionType = usePositionType();
 
   const handleClick = useCallback(() => {
-    if (!loading || !disabled) onClick();
+    if (!loading || !disabled) {
+      onClick();
+    }
   }, [disabled, loading, onClick]);
 
   return (

@@ -1,6 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
 const fs = require("fs");
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
 const path = require("path");
 
 const appsDir = "./apps"; // Replace with the actual path to your 'apps' directory
@@ -33,7 +33,7 @@ function updateTsConfig(folderPath) {
         } else {
           console.log(`Path removed successfully from ${tsconfigPath}.`);
         }
-      }
+      },
     );
   });
 }

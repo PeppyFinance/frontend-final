@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { RowCenter, RowStart } from "components/Row";
 import { Column } from "components/Column";
+import { RowCenter, RowStart } from "components/Row";
+import styled from "styled-components";
 
 export const Wrapper = styled.div`
   overflow-y: scroll;

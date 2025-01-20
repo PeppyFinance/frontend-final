@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
 import {
   useQuoteDetail,
   useSetQuoteDetailCallback,
 } from "@symmio/frontend-sdk/state/quotes/hooks";
-import { useIsMobile } from "lib/hooks/useWindowSize";
-import { Tab } from "components/Tab";
 import AccountOverview from "components/App/AccountData/AccountOverview";
 import PositionDetails from "components/App/AccountData/PositionDetails";
 import { Card } from "components/Card";
+import { Tab } from "components/Tab";
+import { useIsMobile } from "lib/hooks/useWindowSize";
+import { useEffect, useState } from "react";
+import styled from "styled-components";
 
 const Wrapper = styled(Card)`
   width: 100%;
@@ -43,17 +43,21 @@ export enum PanelType {
 
 export default function Overviews() {
   const [panelType, setPanelType] = useState<PanelType>(
-    PanelType.ACCOUNT_OVERVIEW
+    PanelType.ACCOUNT_OVERVIEW,
   );
   const quoteDetail = useQuoteDetail();
   const setQuoteDetail = useSetQuoteDetailCallback();
   const mobileVersion = useIsMobile();
 
   useEffect(() => {
-    if (quoteDetail) setPanelType(PanelType.POSITION_OVERVIEW);
+    if (quoteDetail) {
+      setPanelType(PanelType.POSITION_OVERVIEW);
+    }
   }, [quoteDetail]);
   useEffect(() => {
-    if (mobileVersion) setPanelType(PanelType.ACCOUNT_OVERVIEW);
+    if (mobileVersion) {
+      setPanelType(PanelType.ACCOUNT_OVERVIEW);
+    }
   }, [mobileVersion]);
   return (
     <Wrapper>
@@ -63,7 +67,9 @@ export default function Overviews() {
           activeOption={panelType}
           onChange={(option: string) => {
             setPanelType(option as PanelType);
-            if (option === PanelType.ACCOUNT_OVERVIEW) setQuoteDetail(null);
+            if (option === PanelType.ACCOUNT_OVERVIEW) {
+              setQuoteDetail(null);
+            }
           }}
           hideOuterBorder
         />

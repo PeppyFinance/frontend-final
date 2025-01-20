@@ -1,15 +1,15 @@
-import React, { useMemo, useRef, useState } from "react";
-import styled, { useTheme } from "styled-components";
+import { useMemo, useRef, useState } from "react";
 import { isMobile } from "react-device-detect";
+import styled, { useTheme } from "styled-components";
 
-import useOnOutsideClick from "lib/hooks/useOnOutsideClick";
 import {
   useMarkAsReadAllNotificationsCallback,
   useUnreadNotifications,
 } from "@symmio/frontend-sdk/state/notifications/hooks";
+import useOnOutsideClick from "lib/hooks/useOnOutsideClick";
 
-import { Bell } from "components/Icons";
 import { NavButton } from "components/Button";
+import { Bell } from "components/Icons";
 import NotificationsModal from "components/Notifications/NotificationsModal";
 
 const Container = styled.div`
@@ -47,19 +47,25 @@ export default function Notifications() {
   const theme = useTheme();
   const ref = useRef(null);
   useOnOutsideClick(ref, () => {
-    if (!isMobile) setModalOpen(false);
-    if (modalOpen) readAllNotifications();
+    if (!isMobile) {
+      setModalOpen(false);
+    }
+    if (modalOpen) {
+      readAllNotifications();
+    }
   });
   const [modalOpen, setModalOpen] = useState(false);
   const readAllNotifications = useMarkAsReadAllNotificationsCallback();
   const unreadNotifications = [...useUnreadNotifications()];
   const newNotifications = useMemo(
     () => unreadNotifications.length !== 0,
-    [unreadNotifications.length]
+    [unreadNotifications.length],
   );
 
   const closeOnClick = () => {
-    if (modalOpen) readAllNotifications();
+    if (modalOpen) {
+      readAllNotifications();
+    }
     setModalOpen(!modalOpen);
   };
 

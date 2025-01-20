@@ -1,54 +1,57 @@
 import { useCallback, useMemo } from "react";
 
-import useActiveWagmi from "../lib/hooks/useActiveWagmi";
 import {
   DEFAULT_PRECISION,
   LIMIT_ORDER_DEADLINE,
   MARKET_ORDER_DEADLINE,
   MARKET_PRICE_COEFFICIENT,
 } from "../constants/misc";
+import useActiveWagmi from "../lib/hooks/useActiveWagmi";
+import { useSupportedChainId } from "../lib/hooks/useSupportedChainId";
+import { useCurrency } from "../lib/hooks/useTokens";
 import {
   useAppName,
   useDiamondAddress,
   useMuonData,
   useWagmiConfig,
 } from "../state/chains/hooks";
-import { makeHttpRequest } from "../utils/http";
-import { OrderType, TradeState, PositionType } from "../types/trade";
-import { useCurrency } from "../lib/hooks/useTokens";
-import { useSupportedChainId } from "../lib/hooks/useSupportedChainId";
 import { useHedgerInfo, useSetNotionalCap } from "../state/hedger/hooks";
 import { getAppNameHeader, getNotionalCapUrl } from "../state/hedger/thunks";
-import {
-  useActiveAccountAddress,
-  useExpertMode,
-  usePartyBsWhiteList,
-  useSlippageTolerance,
-} from "../state/user/hooks";
-import { useTransactionAdder } from "../state/transactions/hooks";
-import {
-  TradeTransactionInfo,
-  TransactionType,
-} from "../state/transactions/types";
-import { ConstructCallReturnType } from "../types/web3";
 import {
   useActiveMarketId,
   useLockedPercentages,
   useOrderType,
   usePositionType,
 } from "../state/trade/hooks";
+import { useTransactionAdder } from "../state/transactions/hooks";
+import {
+  TradeTransactionInfo,
+  TransactionType,
+} from "../state/transactions/types";
+import {
+  useActiveAccountAddress,
+  useExpertMode,
+  usePartyBsWhiteList,
+  useSlippageTolerance,
+} from "../state/user/hooks";
+import { OrderType, PositionType, TradeState } from "../types/trade";
+import { ConstructCallReturnType } from "../types/web3";
+import { makeHttpRequest } from "../utils/http";
 
 import {
+  formatPrice,
   removeTrailingZeros,
   toBN,
   toWei,
-  formatPrice,
 } from "../utils/numbers";
 import {
-  createTransactionCallback,
   TransactionCallbackState,
+  createTransactionCallback,
 } from "../utils/web3";
 
+import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
+import { Abi, Address, encodeFunctionData } from "viem";
+import { DIAMOND_ABI } from "../constants";
 import { useMarket } from "../hooks/useMarkets";
 import { useMultiAccountable } from "../hooks/useMultiAccountable";
 import useTradePage, {
@@ -60,10 +63,7 @@ import useTradePage, {
   usePartyBLockedMM,
 } from "../hooks/useTradePage";
 import { SendQuoteClient } from "../lib/muon";
-import { Abi, Address, encodeFunctionData } from "viem";
-import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import { useCollateralAddress } from "../state/chains/hooks";
-import { DIAMOND_ABI } from "../constants";
 
 export function useSentQuoteCallback(): {
   state: TransactionCallbackState;
@@ -84,7 +84,7 @@ export function useSentQuoteCallback(): {
   const functionName = "sendQuote";
   const COLLATERAL_ADDRESS = useCollateralAddress();
   const collateralCurrency = useCurrency(
-    chainId ? COLLATERAL_ADDRESS[chainId] : undefined
+    chainId ? COLLATERAL_ADDRESS[chainId] : undefined,
   );
   const orderType = useOrderType();
   const positionType = usePositionType();
@@ -96,15 +96,19 @@ export function useSentQuoteCallback(): {
   const slippage = useSlippageTolerance();
   const pricePrecision = useMemo(
     () =>
-      userExpertMode ? undefined : market?.pricePrecision ?? DEFAULT_PRECISION,
-    [market?.pricePrecision, userExpertMode]
+      userExpertMode
+        ? undefined
+        : (market?.pricePrecision ?? DEFAULT_PRECISION),
+    [market?.pricePrecision, userExpertMode],
   );
   const openPrice = useMemo(() => (price ? price : "0"), [price]);
   const autoSlippage = market ? market.autoSlippage : MARKET_PRICE_COEFFICIENT;
   const MuonData = useMuonData();
 
   const openPriceFinal = useMemo(() => {
-    if (orderType === OrderType.LIMIT) return openPrice;
+    if (orderType === OrderType.LIMIT) {
+      return openPrice;
+    }
 
     if (slippage === "auto") {
       return positionType === PositionType.SHORT
@@ -120,19 +124,19 @@ export function useSentQuoteCallback(): {
 
   const openPriceWied = useMemo(
     () => toWei(formatPrice(openPriceFinal, pricePrecision ?? 20)),
-    [openPriceFinal, pricePrecision]
+    [openPriceFinal, pricePrecision],
   );
 
   // console.log({ openPrice, openPriceFinal, openPriceWied, pricePrecision });
 
   const quantityAsset = useMemo(
     () => (toBN(formattedAmounts[1]).isNaN() ? "0" : formattedAmounts[1]),
-    [formattedAmounts]
+    [formattedAmounts],
   );
 
   const notionalValue = useNotionalValue(
     quantityAsset,
-    formatPrice(openPriceFinal, pricePrecision)
+    formatPrice(openPriceFinal, pricePrecision),
   );
   const lockedCVA = useLockedCVA(notionalValue);
   const lockedLF = useLockedLF(notionalValue);
@@ -164,7 +168,7 @@ export function useSentQuoteCallback(): {
       Urls,
       chainId,
       DIAMOND_ADDRESS[chainId],
-      marketId
+      marketId,
     );
 
     if (success === false || !signature) {
@@ -184,7 +188,9 @@ export function useSentQuoteCallback(): {
       total_cap: number;
       used: number;
     }>(notionalCapUrl, getAppNameHeader(appName));
-    if (!tempResponse) return;
+    if (!tempResponse) {
+      return;
+    }
     const { total_cap, used }: { total_cap: number; used: number } =
       tempResponse;
 
@@ -192,7 +198,9 @@ export function useSentQuoteCallback(): {
     const notionalValue = toBN(openPrice).times(quantityAsset);
     updateNotionalCap({ name: market.name, used, totalCap: total_cap });
 
-    if (freeCap.minus(notionalValue).lte(0)) throw new Error("Cap is reached.");
+    if (freeCap.minus(notionalValue).lte(0)) {
+      throw new Error("Cap is reached.");
+    }
   }, [appName, baseUrl, market, openPrice, quantityAsset, updateNotionalCap]);
 
   const preConstructCall = useCallback(async (): ConstructCallReturnType => {
@@ -258,7 +266,9 @@ export function useSentQuoteCallback(): {
         },
       };
     } catch (error) {
-      if (error && typeof error === "string") throw new Error(error);
+      if (error && typeof error === "string") {
+        throw new Error(error);
+      }
       throw new Error("error3");
     }
   }, [
@@ -345,7 +355,7 @@ export function useSentQuoteCallback(): {
           txInfo,
           wagmiConfig,
           summary,
-          userExpertMode
+          userExpertMode,
         ),
     };
   }, [

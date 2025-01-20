@@ -1,12 +1,12 @@
 import React from "react";
 import styled, { useTheme } from "styled-components";
 
-import { toBN } from "@symmio/frontend-sdk/utils/numbers";
 import { CloseGuides, OrderType } from "@symmio/frontend-sdk/types/trade";
+import { toBN } from "@symmio/frontend-sdk/utils/numbers";
 
-import { Amount, Child, ColoredBox, Full, Label } from "./styles";
 import Item from "components/App/UserPanel/CloseModal/Item";
 import Column from "components/Column";
+import { Amount, Child, ColoredBox, Full, Label } from "./styles";
 
 const Wrapper = styled(Column)`
   gap: 12px;
@@ -43,7 +43,7 @@ export default function GuideTwo({
     text: string,
     boxColor: string,
     availability?: string,
-    availabilityColor?: string
+    availabilityColor?: string,
   ): JSX.Element {
     return (
       <React.Fragment>
@@ -57,7 +57,9 @@ export default function GuideTwo({
   }
 
   const clickOnAmount = (value: string) => {
-    if (toBN(maxPartiallyClose).isEqualTo(0)) return undefined;
+    if (toBN(maxPartiallyClose).isEqualTo(0)) {
+      return undefined;
+    }
     return setSize(value);
   };
 
@@ -66,11 +68,13 @@ export default function GuideTwo({
     maxValue: string,
     symbol: string | undefined,
     color: string,
-    onClick?: (amount: string) => void
+    onClick?: (amount: string) => void,
   ) {
     const active = onClick ? true : false;
     const handleClick = () => {
-      if (!onClick) return;
+      if (!onClick) {
+        return;
+      }
       onClick(value);
     };
     return (
@@ -113,7 +117,7 @@ export default function GuideTwo({
           "Full Close:",
           theme.negative,
           "Unavailable",
-          theme.negative
+          theme.negative,
         )}
         amount={
           <Amount>
@@ -144,14 +148,14 @@ export default function GuideTwo({
           "Partial close:",
           partialCloseColor,
           partialCloseText,
-          partialCloseColor
+          partialCloseColor,
         )}
         amount={getItemAmount(
           maxPartiallyClose,
           maxClose,
           symbol,
           theme.text0,
-          clickOnAmount
+          clickOnAmount,
         )}
       />
       <Item

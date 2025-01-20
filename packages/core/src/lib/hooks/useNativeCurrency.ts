@@ -1,5 +1,5 @@
-import { useMemo } from "react";
 import { NativeCurrency, Token } from "@uniswap/sdk-core";
+import { useMemo } from "react";
 
 import { useFallbackChainId } from "../../state/chains/hooks";
 import { nativeOnChain } from "../../utils/token";
@@ -15,6 +15,6 @@ export default function useNativeCurrency(): NativeCurrency | Token {
         ? nativeOnChain(chainId)
         : // display mainnet when not connected
           nativeOnChain(FALLBACK_CHAIN_ID),
-    [FALLBACK_CHAIN_ID, chainId]
+    [FALLBACK_CHAIN_ID, chainId],
   );
 }

@@ -1,10 +1,8 @@
-import React from "react";
 import styled from "styled-components";
 
 import { Z_INDEX } from "theme";
 
-import { Info } from "components/Icons";
-import { Close as CloseIcon } from "components/Icons";
+import { Close as CloseIcon, Info } from "components/Icons";
 import { RowCenter } from "components/Row";
 
 const Wrapper = styled(RowCenter)`

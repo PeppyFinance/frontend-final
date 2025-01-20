@@ -1,13 +1,13 @@
-import { useTheme } from "styled-components";
 import { PositionType } from "@symmio/frontend-sdk/types/trade";
+import { useTheme } from "styled-components";
 
-import { LongArrow, ShortArrow } from "components/Icons";
-import { RowCenter } from "components/Row";
-import { TabModalJSX, TabOption } from "components/Tab";
 import {
   usePositionType,
   useSetPositionType,
 } from "@symmio/frontend-sdk/state/trade/hooks";
+import { LongArrow, ShortArrow } from "components/Icons";
+import { RowCenter } from "components/Row";
+import { TabModalJSX, TabOption } from "components/Tab";
 import { lighten, rgba } from "polished";
 
 export default function PositionTypeTab() {

@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 
 import { formatAmount } from "@symmio/frontend-sdk/utils/numbers";
 
-import { CustomInputBox2 } from "components/InputBox";
-import { Quote } from "@symmio/frontend-sdk/types/quote";
 import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
 import { useMarketData } from "@symmio/frontend-sdk/state/hedger/hooks";
-import { RowBetween, RowEnd } from "components/Row";
+import { Quote } from "@symmio/frontend-sdk/types/quote";
+import SlippageTolerance from "components/App/SlippageTolerance";
 import { InnerCard } from "components/Card";
 import { Column } from "components/Column";
-import SlippageTolerance from "components/App/SlippageTolerance";
+import { CustomInputBox2 } from "components/InputBox";
+import { RowBetween, RowEnd } from "components/Row";
 
 const Wrapper = styled(Column)`
   & > * {

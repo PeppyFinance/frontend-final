@@ -1,6 +1,5 @@
-import React from "react";
-import styled from "styled-components";
 import { ArrowDown } from "react-feather";
+import styled from "styled-components";
 
 const Circle = styled.div<{
   size: number;

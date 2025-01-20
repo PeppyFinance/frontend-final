@@ -1,6 +1,6 @@
+import { isMobile } from "react-device-detect";
 import styled from "styled-components";
 import { MEDIA_WIDTHS } from "theme";
-import { isMobile } from "react-device-detect";
 
 import { formatAmount, toBN } from "@symmio/frontend-sdk/utils/numbers";
 
@@ -105,8 +105,11 @@ export default function InputPanel({
 
   const onMaxValueClick = () => {
     const maxValueBN = toBN(maxValue);
-    if (!precision) onChange(maxValueBN.toFixed());
-    else if (maxValueBN.gt(0)) onChange(toBN(maxValue).toFixed(precision, 1));
+    if (!precision) {
+      onChange(maxValueBN.toFixed());
+    } else if (maxValueBN.gt(0)) {
+      onChange(toBN(maxValue).toFixed(precision, 1));
+    }
   };
 
   return (

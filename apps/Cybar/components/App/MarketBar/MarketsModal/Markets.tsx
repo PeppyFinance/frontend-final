@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 
 import { Market } from "@symmio/frontend-sdk/types/market";
@@ -37,7 +37,7 @@ export default function Markets({
     <>
       {favorites.length > 0 &&
         markets.length > 0 &&
-        markets.length === allMarkets.length && (
+        markets.length === allMarkets.length && ( // TODO favorite markets are not on top due to the length diff between markets & allMarkets
           <div>
             <Title>Favorite Markets</Title>
             {favorites.map((market, index) => (

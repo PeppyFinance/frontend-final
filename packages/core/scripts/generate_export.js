@@ -1,7 +1,6 @@
 import fs from "fs-extra";
-import path from "path";
+import path, { dirname } from "path";
 import { fileURLToPath } from "url";
-import { dirname } from "path";
 
 // Replace 'currentPath' with your current directory path
 const __filename = fileURLToPath(import.meta.url);
@@ -32,7 +31,9 @@ function listFiles(dirPath, depth = 0) {
 async function generateExports(entry, noExport) {
   const exports = {};
   for (const file of entry) {
-    if (noExport?.includes(file)) continue;
+    if (noExport?.includes(file)) {
+      continue;
+    }
     const extension = path.extname(file);
     const fileWithoutExtension = file.replace(extension, "");
     const name = fileWithoutExtension
@@ -40,11 +41,11 @@ async function generateExports(entry, noExport) {
       .replace(/\/index$/, "");
     const distSourceFile = `${fileWithoutExtension.replace(
       /^src\//g,
-      "./dist/"
+      "./dist/",
     )}.js`;
     const distTypesFile = `${fileWithoutExtension.replace(
       /^src\//g,
-      "./dist/"
+      "./dist/",
     )}.d.ts`;
     exports[name] = {
       types: distTypesFile,
@@ -58,7 +59,7 @@ async function generateExports(entry, noExport) {
   packageJson.exports = exports;
   await fs.writeFile(
     "package.json",
-    JSON.stringify(packageJson, null, 2) + "\n"
+    JSON.stringify(packageJson, null, 2) + "\n",
   );
   return exports;
 }

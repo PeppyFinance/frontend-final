@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 
-import { ApiState } from "../types/api";
 import { AppThunkDispatch, useAppDispatch } from "../state/declaration";
+import { ApiState } from "../types/api";
 
-import { useHedgerInfo } from "../state/hedger/hooks";
-import { MarketsInfo } from "../state/hedger/types";
-import { getMarketsInfo } from "../state/hedger/thunks";
 import { useAppName } from "../state/chains/hooks";
+import { useHedgerInfo } from "../state/hedger/hooks";
+import { getMarketsInfo } from "../state/hedger/thunks";
+import { MarketsInfo } from "../state/hedger/types";
 
 export function useAllMarketsData() {
   const [marketsInfo, setMarketsInfo] = useState<MarketsInfo>({});
@@ -23,7 +23,7 @@ export function useAllMarketsData() {
       getMarketsInfo({
         hedgerUrl: baseUrl,
         appName,
-      })
+      }),
     )
       .unwrap()
       .then((res) => {

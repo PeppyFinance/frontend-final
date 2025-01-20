@@ -1,6 +1,6 @@
-import { useMemo } from "react";
 import { Token } from "@uniswap/sdk-core";
 import BigNumber from "bignumber.js";
+import { useMemo } from "react";
 
 import { Address, erc20Abi } from "viem";
 import { useReadContract } from "wagmi";
@@ -42,6 +42,6 @@ export function useERC20Allowance({
       isSyncing: isLoading,
       refetch,
     }),
-    [data, isLoading, refetch, token]
+    [data, isLoading, refetch, token],
   );
 }

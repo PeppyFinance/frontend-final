@@ -1,5 +1,5 @@
-import { EmptyRow } from "./styles";
 import { EmptyPositionDetails } from "components/Icons";
+import { EmptyRow } from "./styles";
 
 export default function EmptyDetails() {
   return (

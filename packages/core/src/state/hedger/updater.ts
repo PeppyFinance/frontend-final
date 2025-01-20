@@ -1,6 +1,9 @@
-import { useCallback, useEffect, useMemo } from "react";
 import isEmpty from "lodash/isEmpty.js";
+import { useCallback, useEffect, useMemo } from "react";
 import { useWebSocket } from "react-use-websocket/dist/lib/use-websocket.js";
+import useIsWindowVisible from "../../lib/hooks/useIsWindowVisible";
+import { autoRefresh, retry } from "../../utils/retry";
+import { AppThunkDispatch, useAppDispatch } from "../declaration";
 
 // const useWebSocket = useWebSocketRaw.useWebSocket;
 // TODO: fix this { ReadyState } from "react-use-websocket"
@@ -11,27 +14,23 @@ enum ReadyState {
   CLOSING = 2,
   CLOSED = 3,
 }
-import { useAppDispatch, AppThunkDispatch } from "../declaration";
-import useIsWindowVisible from "../../lib/hooks/useIsWindowVisible";
-import { autoRefresh, retry } from "../../utils/retry";
 
 import { ApiState, ConnectionStatus } from "../../types/api";
+import { Hedger, HedgerWebsocketType } from "../../types/hedger";
+import { Market } from "../../types/market";
+import { useAppName } from "../chains/hooks";
+import { useActiveMarket } from "../trade/hooks";
 import {
-  MarketDataMap as PricesType,
-  MarketData,
-  PriceResponse,
-} from "./types";
-import {
-  useWebSocketUrl,
-  useSetWebSocketStatus,
-  useSetPrices,
   useHedgerInfo,
-  useMarketsStatus,
   useMarketNotionalCap,
-  useSetDepth,
   useMarkets,
-  useSetFundingRates,
+  useMarketsStatus,
   useOpenInterestStatus,
+  useSetDepth,
+  useSetFundingRates,
+  useSetPrices,
+  useSetWebSocketStatus,
+  useWebSocketUrl,
 } from "./hooks";
 import {
   getMarkets,
@@ -40,10 +39,11 @@ import {
   getOpenInterest,
   getPriceRange,
 } from "./thunks";
-import { useActiveMarket } from "../trade/hooks";
-import { Hedger, HedgerWebsocketType } from "../../types/hedger";
-import { Market } from "../../types/market";
-import { useAppName } from "../chains/hooks";
+import {
+  MarketData,
+  PriceResponse,
+  MarketDataMap as PricesType,
+} from "./types";
 
 export function HedgerUpdater(): null {
   const thunkDispatch: AppThunkDispatch = useAppDispatch();
@@ -66,14 +66,19 @@ export function HedgerUpdater(): null {
 
   //auto update price range per symbol, every 1 hours
   useEffect(() => {
-    if (fetchData && activeMarket)
+    if (fetchData && activeMarket) {
       return autoRefresh(
         () =>
           thunkDispatch(
-            getPriceRange({ hedgerUrl: baseUrl, market: activeMarket, appName })
+            getPriceRange({
+              hedgerUrl: baseUrl,
+              market: activeMarket,
+              appName,
+            }),
           ),
-        60 * 60
+        60 * 60,
       );
+    }
   }, [thunkDispatch, baseUrl, activeMarket, fetchData, appName]);
 
   return null;
@@ -81,7 +86,7 @@ export function HedgerUpdater(): null {
 
 function useFetchMarkets(
   hedger: Hedger | null,
-  thunkDispatch: AppThunkDispatch
+  thunkDispatch: AppThunkDispatch,
 ) {
   const appName = useAppName();
   const { baseUrl } = hedger || {};
@@ -91,10 +96,10 @@ function useFetchMarkets(
     (options?: { [x: string]: any }) => {
       const allOptions = { headers: [["App-Name", appName]], ...options };
       return thunkDispatch(
-        getMarkets({ hedgerUrl: baseUrl, options: allOptions })
+        getMarkets({ hedgerUrl: baseUrl, options: allOptions }),
       );
     },
-    [appName, baseUrl, thunkDispatch]
+    [appName, baseUrl, thunkDispatch],
   );
 
   // TODO: fix auto update
@@ -112,18 +117,19 @@ function useFetchMarkets(
 
   //if error occurs it will retry to fetch markets 5 times
   useEffect(() => {
-    if (marketsStatus === ApiState.ERROR)
+    if (marketsStatus === ApiState.ERROR) {
       retry(hedgerMarket, {
         n: 5,
         minWait: 1000,
         maxWait: 10000,
       });
+    }
   }, [marketsStatus, hedgerMarket]);
 }
 
 function useFetchOpenInterest(
   hedger: Hedger | null,
-  thunkDispatch: AppThunkDispatch
+  thunkDispatch: AppThunkDispatch,
 ) {
   const appName = useAppName();
   const { baseUrl } = hedger || {};
@@ -136,10 +142,10 @@ function useFetchOpenInterest(
         getOpenInterest({
           hedgerUrl: baseUrl,
           options: allOptions,
-        })
+        }),
       );
     },
-    [appName, baseUrl, thunkDispatch]
+    [appName, baseUrl, thunkDispatch],
   );
 
   // TODO: fix auto update
@@ -158,19 +164,20 @@ function useFetchOpenInterest(
 
   //if error occurs it will retry to fetch markets 5 times
   useEffect(() => {
-    if (marketsStatus === ApiState.ERROR)
+    if (marketsStatus === ApiState.ERROR) {
       retry(hedgerOpenInterest, {
         n: 5,
         minWait: 1000,
         maxWait: 10000,
       });
+    }
   }, [marketsStatus, hedgerOpenInterest]);
 }
 
 function useFetchNotionalCap(
   hedger: Hedger | null,
   thunkDispatch: AppThunkDispatch,
-  activeMarket?: Market
+  activeMarket?: Market,
 ) {
   const { marketNotionalCap, marketNotionalCapStatus } = useMarketNotionalCap();
   const { baseUrl } = hedger || {};
@@ -184,14 +191,16 @@ function useFetchNotionalCap(
           market: activeMarket,
           preNotional: marketNotionalCap,
           appName,
-        })
+        }),
       ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [thunkDispatch, baseUrl, activeMarket, appName]
+    [thunkDispatch, baseUrl, activeMarket, appName],
   );
   //auto update notional cap per symbol, every 1 hours
   useEffect(() => {
-    if (activeMarket) return autoRefresh(notionalCaps, 60 * 60);
+    if (activeMarket) {
+      return autoRefresh(notionalCaps, 60 * 60);
+    }
   }, [activeMarket, notionalCaps]);
 
   //if error occurs it will retry to fetch markets 5 times
@@ -224,7 +233,7 @@ function usePriceWebSocket() {
       },
       onClose: () => console.log("WebSocket connection closed"),
       onError: (e) => console.log("WebSocket connection has error ", e),
-    }
+    },
   );
 
   const connectionStatus = useMemo(() => {
@@ -255,7 +264,9 @@ function usePriceWebSocket() {
       const lastMessage = lastJsonMessage as HedgerWebsocketType;
 
       //don't update anything if user is idle instead of updating to empty prices
-      if (!windowVisible) return;
+      if (!windowVisible) {
+        return;
+      }
 
       if (!lastMessage || isEmpty(lastMessage) || !lastMessage.data) {
         // return
@@ -333,7 +344,9 @@ function useFundingRateWebSocket() {
     try {
       const lastMessage = lastJsonMessage as any;
       //don't update anything if user is idle instead of updating to empty prices
-      if (!windowVisible) return;
+      if (!windowVisible) {
+        return;
+      }
 
       if (!lastMessage || isEmpty(lastMessage)) {
         return;

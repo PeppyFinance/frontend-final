@@ -1,13 +1,11 @@
-import React from "react";
 import styled from "styled-components";
 
 import { ExternalLink } from "components/Link";
-import { RowCenter } from "components/Row";
+import { RowCenter, RowStart } from "components/Row";
 import { APP_URL } from "constants/chains/misc";
-import { RowStart } from "components/Row";
-import CYBAR_HEADER_LOGO from "/public/static/images/cybar-long.svg";
 import Image from "next/legacy/image";
 import { useRouter } from "next/router";
+import CYBAR_HEADER_LOGO from "/public/static/images/cybar-long.svg";
 
 const Wrapper = styled(RowCenter)`
   width: fit-content;

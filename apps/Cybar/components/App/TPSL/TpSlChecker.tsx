@@ -1,6 +1,8 @@
 import { useSignMessage } from "@symmio/frontend-sdk/callbacks/useMultiAccount";
 import { DEFAULT_PRECISION } from "@symmio/frontend-sdk/constants";
 import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
+import { useAppName } from "@symmio/frontend-sdk/state/chains";
+import { useHedgerInfo } from "@symmio/frontend-sdk/state/hedger/hooks";
 import {
   usePendingsQuotes,
   useSetTpSlDataCallback,
@@ -21,8 +23,6 @@ import {
   handleSignManageAndTpSlRequest,
   priceSlippageCalculation,
 } from "./manage";
-import { useAppName } from "@symmio/frontend-sdk/state/chains";
-import { useHedgerInfo } from "@symmio/frontend-sdk/state/hedger/hooks";
 
 export function TpSlChecker() {
   const { quotes: pendings } = usePendingsQuotes();
@@ -59,14 +59,14 @@ export function TpSlChecker() {
         tradePanelTp,
         tpSlippage,
         positionType,
-        market?.pricePrecision ?? DEFAULT_PRECISION
+        market?.pricePrecision ?? DEFAULT_PRECISION,
       );
 
       const openPriceSl = priceSlippageCalculation(
         tradePanelSl,
         slSlippage,
         positionType,
-        market?.pricePrecision ?? DEFAULT_PRECISION
+        market?.pricePrecision ?? DEFAULT_PRECISION,
       );
 
       handleSignManageAndTpSlRequest(
@@ -95,10 +95,10 @@ export function TpSlChecker() {
                 tpSlStateParam: TpSlDataStateParam.CHECK_ANY_TP_SL,
                 quoteId: targetQuote?.id,
               },
-              targetQuote?.id
+              targetQuote?.id,
             );
           }
-        }
+        },
       );
       setTradePanelState({
         state: TpSlProcessState.INITIALIZE,

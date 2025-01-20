@@ -1,16 +1,16 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 
-import { toBN } from "@symmio/frontend-sdk/utils/numbers";
-import { Account } from "@symmio/frontend-sdk/types/user";
 import { Quote, QuoteStatus } from "@symmio/frontend-sdk/types/quote";
+import { Account } from "@symmio/frontend-sdk/types/user";
+import { toBN } from "@symmio/frontend-sdk/utils/numbers";
 
 import {
   LastSeenAction,
   NotificationDetails,
 } from "@symmio/frontend-sdk/state/notifications/types";
 
-import useCurrencyLogo, { useCollateralLogo } from "lib/hooks/useCurrencyLogo";
 import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
+import useCurrencyLogo, { useCollateralLogo } from "lib/hooks/useCurrencyLogo";
 
 import BaseItem from "components/Notifications/Cards/BaseCard";
 import ShimmerAnimation from "components/ShimmerAnimation";
@@ -40,8 +40,9 @@ export default function PartiallyFillCard({
     if (
       quoteStatus === QuoteStatus.CLOSE_PENDING ||
       quoteStatus === QuoteStatus.CANCEL_CLOSE_PENDING
-    )
+    ) {
       return quantityToClose;
+    }
     return quantity;
   }, [quantityToClose, quantity, quoteStatus]);
   // const text = lastSeenAction === LastSeenAction.SEND_QUOTE ? 'Position Opened' : 'Position Closed'

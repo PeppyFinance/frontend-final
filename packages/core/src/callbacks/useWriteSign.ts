@@ -18,9 +18,9 @@ import {
 
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import { Abi, Address, encodeFunctionData } from "viem";
-import { ConstructCallReturnType } from "../types/web3";
-import { useSignatureStoreAddress, useWagmiConfig } from "../state/chains";
 import { SIGNATURE_STORE_ABI } from "../constants";
+import { useSignatureStoreAddress, useWagmiConfig } from "../state/chains";
+import { ConstructCallReturnType } from "../types/web3";
 
 export function useWriteSign(): {
   state: TransactionCallbackState;
@@ -67,11 +67,13 @@ export function useWriteSign(): {
           },
         };
       } catch (error) {
-        if (error && typeof error === "string") throw new Error(error);
+        if (error && typeof error === "string") {
+          throw new Error(error);
+        }
         throw new Error("error3");
       }
     },
-    [SIGNATURE_STORE_ADDRESS, account, chainId, isSupportedChainId]
+    [SIGNATURE_STORE_ADDRESS, account, chainId, isSupportedChainId],
   );
 
   return useMemo(() => {
@@ -106,7 +108,7 @@ export function useWriteSign(): {
           addRecentTransaction,
           txInfo,
           wagmiConfig,
-          summary
+          summary,
         ),
     };
   }, [
