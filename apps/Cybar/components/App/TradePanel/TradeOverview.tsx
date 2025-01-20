@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import styled from "styled-components";
 
 import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
-import { OrderType } from "@symmio/frontend-sdk/types/trade";
+import { OrderType, PositionType } from "@symmio/frontend-sdk/types/trade";
 import {
   BN_ZERO,
   formatAmount,
@@ -20,6 +20,7 @@ import {
   useLimitPrice,
   useLockedPercentages,
   useOrderType,
+  usePositionType,
 } from "@symmio/frontend-sdk/state/trade/hooks";
 
 import { useLeverage } from "@symmio/frontend-sdk/state/user/hooks";
@@ -68,9 +69,11 @@ export default function TradeOverview() {
   );
   const limitPrice = useLimitPrice();
   const orderType = useOrderType();
+  const positionType = usePositionType();
 
   const { price: markPrice, formattedAmounts } = useTradePage();
 
+  // TODO: is useMemo needed?
   const price = useMemo(
     () => (orderType === OrderType.MARKET ? markPrice : limitPrice),
     [orderType, markPrice, limitPrice],
@@ -100,7 +103,7 @@ export default function TradeOverview() {
     <>
       <Wrapper>
         <PositionWrap>
-          {/* // TODO handle NaN */}
+          {/* // TODO: handle NaN */}
           <div>Est. Liquidation Price:</div>
           <PositionValue>
             <div>

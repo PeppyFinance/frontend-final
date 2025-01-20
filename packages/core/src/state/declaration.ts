@@ -1,5 +1,7 @@
 import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
 import {
+  Action,
+  AnyAction,
   Store,
   ThunkAction,
   ThunkDispatch,
@@ -48,7 +50,7 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, reducer);
 
-export type RootState = ReturnType;
+export type RootState = ReturnType<typeof reducer>;
 function makeStore() {
   return configureStore({
     reducer: persistedReducer,
@@ -82,18 +84,30 @@ export const getOrCreateStore = () => {
 };
 
 store = getOrCreateStore();
-export default store;
 export const persistor = persistStore(store);
+export default store;
 
-export type AppState = ReturnType;
+export type AppState = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
-export type AppThunk<ReturnType = void> = ThunkAction;
-export type AppThunkDispatch = ThunkDispatch;
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  AppState,
+  unknown,
+  Action<string>
+>;
+export type AppThunkDispatch = ThunkDispatch<unknown, void, AnyAction>;
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
-export const useAppSelector: TypedUseSelectorHook = useSelector;
+export const useAppSelector: TypedUseSelectorHook<AppState> = useSelector;
 
-export default store;
+// export const persistor = persistStore(store);
 
+// if (typeof window === "object") {
+//   window.addEventListener(
+//     "storage",
+//     crossBrowserListener(store, persistConfig)
+//   );
+// }
+// export const SymmioPersistGate = PersistGate;
 export const ReduxProvider = Provider;
