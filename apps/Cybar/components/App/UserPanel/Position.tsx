@@ -1,11 +1,12 @@
-import styled, { useTheme } from "styled-components";
 import { lighten } from "polished";
 import React, { useEffect, useMemo, useState } from "react";
+import styled, { useTheme } from "styled-components";
 
-import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
-import { OrderType, PositionType } from "@symmio/frontend-sdk/types/trade";
-import { Quote, QuoteStatus } from "@symmio/frontend-sdk/types/quote";
 import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
+import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
+import { ApiState } from "@symmio/frontend-sdk/types/api";
+import { Quote, QuoteStatus } from "@symmio/frontend-sdk/types/quote";
+import { OrderType, PositionType } from "@symmio/frontend-sdk/types/trade";
 import {
   formatAmount,
   formatDollarAmount,
@@ -13,13 +14,22 @@ import {
   toBN,
 } from "@symmio/frontend-sdk/utils/numbers";
 import { titleCase } from "@symmio/frontend-sdk/utils/string";
-import { ApiState } from "@symmio/frontend-sdk/types/api";
 
+import {
+  useClosingLastMarketPrice,
+  useInstantCloseNotifications,
+  useLiquidationPrice,
+  useOpeningLastMarketPrice,
+  useQuoteFillAmount,
+  useQuoteLeverage,
+  useQuoteSize,
+  useQuoteUpnlAndPnl,
+} from "@symmio/frontend-sdk/hooks/useQuotes";
+import { useNotionalValue } from "@symmio/frontend-sdk/hooks/useTradePage";
 import {
   useMarketData,
   useMarketsStatus,
 } from "@symmio/frontend-sdk/state/hedger/hooks";
-import { useIsMobile } from "lib/hooks/useWindowSize";
 import {
   useQuoteDetail,
   useQuoteInstantCloseData,
@@ -27,22 +37,20 @@ import {
   useSetQuoteDetailCallback,
 } from "@symmio/frontend-sdk/state/quotes/hooks";
 import {
-  useQuoteSize,
-  useQuoteLeverage,
-  useQuoteUpnlAndPnl,
-  useQuoteFillAmount,
-  useClosingLastMarketPrice,
-  useOpeningLastMarketPrice,
-  useInstantCloseNotifications,
-  useLiquidationPrice,
-} from "@symmio/frontend-sdk/hooks/useQuotes";
-import { useNotionalValue } from "@symmio/frontend-sdk/hooks/useTradePage";
-import {
   useAccountPartyAStat,
   useActiveAccountAddress,
 } from "@symmio/frontend-sdk/state/user/hooks";
+import { useIsMobile } from "lib/hooks/useWindowSize";
 
-import { Row, RowBetween, RowCenter, RowStart } from "components/Row";
+import { useTpSlAvailable } from "@symmio/frontend-sdk/state/chains";
+import {
+  InstantCloseStatus,
+  TpSlDataState,
+} from "@symmio/frontend-sdk/state/quotes/types";
+import { getRemainingTime } from "@symmio/frontend-sdk/utils/time";
+import PositionDetails from "components/App/AccountData/PositionDetails";
+import { PositionActionButton } from "components/Button";
+import Column from "components/Column";
 import {
   EmptyPosition,
   Loader,
@@ -52,32 +60,24 @@ import {
   Rectangle,
   ShortArrow,
 } from "components/Icons";
+import EditPencil from "components/Icons/EditPencil";
+import { Row, RowBetween, RowCenter, RowStart } from "components/Row";
+import { useCheckQuoteIsExpired } from "lib/hooks/useCheckQuoteIsExpired";
+import ManageTpSlModal from "../TPSL/manage";
+import CancelModal from "./CancelModal/index";
+import CloseModal, { useInstantClosePosition } from "./CloseModal/index";
 import {
   BodyWrap,
-  Wrapper,
-  PositionTypeWrap,
-  PnlValue,
+  EmptyRow,
   LeverageWrap,
   MarketName,
+  PnlValue,
+  PositionTypeWrap,
   QuoteStatusValue,
-  EmptyRow,
+  Wrapper,
 } from "./Common";
-import { PositionActionButton } from "components/Button";
-import CloseModal, { useInstantClosePosition } from "./CloseModal/index";
-import CancelModal from "./CancelModal/index";
-import Column from "components/Column";
-import PositionDetails from "components/App/AccountData/PositionDetails";
-import { useCheckQuoteIsExpired } from "lib/hooks/useCheckQuoteIsExpired";
-import { getRemainingTime } from "@symmio/frontend-sdk/utils/time";
-import {
-  InstantCloseStatus,
-  TpSlDataState,
-} from "@symmio/frontend-sdk/state/quotes/types";
-import ManageTpSlModal from "../TPSL/manage";
-import EditPencil from "components/Icons/EditPencil";
-import { useTpSlAvailable } from "@symmio/frontend-sdk/state/chains";
 
-const TableStructure = styled(RowBetween) <{ active?: boolean }>`
+const TableStructure = styled(RowBetween)<{ active?: boolean }>`
   width: 100%;
   color: ${({ theme }) => theme.text2};
   font-size: 12px;
@@ -107,7 +107,7 @@ export const TpWrapper = styled(Row)`
   gap: 6px;
 `;
 
-const QuoteWrap = styled(TableStructure) <{
+const QuoteWrap = styled(TableStructure)<{
   canceled?: boolean;
   pending?: boolean;
   custom?: string;
@@ -136,7 +136,7 @@ const QuoteWrap = styled(TableStructure) <{
   &:hover {
     animation: none;
     background: ${({ theme, custom }) =>
-    custom ? lighten(0.05, custom) : theme.bg6};
+      custom ? lighten(0.05, custom) : theme.bg6};
   }
 `;
 
@@ -156,7 +156,7 @@ const TwoColumn = styled(Column)`
   }
 `;
 
-const TwoColumnPnl = styled(Column) <{ color?: string }>`
+const TwoColumnPnl = styled(Column)<{ color?: string }>`
   gap: 4px;
   font-weight: 500;
   font-size: 10px;
@@ -305,7 +305,7 @@ function TableRow({
 
     const interval = setInterval(() => {
       const updatedTime = getRemainingTime(
-        toBN(quote.statusModifyTimestamp).plus(cooldown).times(1000).toNumber()
+        toBN(quote.statusModifyTimestamp).plus(cooldown).times(1000).toNumber(),
       );
       setRemainingTime(updatedTime);
     }, 1000);
@@ -453,7 +453,7 @@ function TableBody({
       toggleCancelModal,
       toggleCloseModal,
       mobileVersion,
-    ]
+    ],
   );
 }
 
@@ -496,7 +496,7 @@ function QuoteRow({
   const quoteAvailableAmount = useQuoteSize(quote);
   const notionalValue = useNotionalValue(
     quoteAvailableAmount,
-    marketData?.markPrice || 0
+    marketData?.markPrice || 0,
   );
   const openLastMarketPrice = useOpeningLastMarketPrice(quote, market);
   const closeLastMarketPrice = useClosingLastMarketPrice(quote, market);
@@ -601,7 +601,7 @@ function QuoteRow({
     quote,
     marketData?.markPrice ?? "0",
     undefined,
-    undefined
+    undefined,
   );
 
   const [value, color] = useMemo(() => {
@@ -675,7 +675,7 @@ function QuoteRow({
               <div>{`Close Size: ${formatAmount(
                 quantityToClose,
                 6,
-                true
+                true,
               )}`}</div>
             </TwoColumn>
           ) : (
@@ -697,10 +697,11 @@ function QuoteRow({
           {quoteStatus === QuoteStatus.CLOSE_PENDING ? (
             <TwoColumn>
               <div>{quoteOpenPrice}</div>
-              <div>{`Close Price: ${orderType === OrderType.LIMIT
+              <div>{`Close Price: ${
+                orderType === OrderType.LIMIT
                   ? `$${formatAmount(requestedCloseLimitPrice, 6, true)}`
                   : "Market"
-                }`}</div>
+              }`}</div>
             </TwoColumn>
           ) : (
             <div>{quoteOpenPrice}</div>
@@ -715,7 +716,14 @@ function QuoteRow({
             liquidatePending ? (
               <LiquidatedStatusValue>Liquidation...</LiquidatedStatusValue>
             ) : quoteStatus === QuoteStatus.OPENED ? (
-              <PnlValue color={color} style={{ width: "15%", marginLeft: "10px", textAlign: "center" }}>
+              <PnlValue
+                color={color}
+                style={{
+                  width: "15%",
+                  marginLeft: "10px",
+                  textAlign: "center",
+                }}
+              >
                 {value === "-"
                   ? value
                   : `${value} (${Math.abs(Number(upnlPercent))})%`}
@@ -757,12 +765,12 @@ function QuoteRow({
           {tpSlAvailable && (
             <TpWrapper>
               {tpSlState === TpSlDataState.LOADING ||
-                tpSlState === TpSlDataState.FORCE_CHECKING ? (
+              tpSlState === TpSlDataState.FORCE_CHECKING ? (
                 <Loader />
               ) : (
                 <Row gap="5px">
                   <Row width="unset">
-                    <div>{tp ? `${tp}/` : ''}</div>
+                    <div>{tp ? `${tp}/` : ""}</div>
                     <div>{sl}</div>
                   </Row>
                   <Row style={{ width: "unset", gap: "5px" }}>
@@ -864,7 +872,7 @@ function QuoteRow({
       slOpenPrice,
       setQuoteDetail,
       quoteLiquidationPrice,
-    ]
+    ],
   );
 }
 

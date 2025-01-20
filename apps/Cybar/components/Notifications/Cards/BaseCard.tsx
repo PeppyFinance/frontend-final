@@ -1,7 +1,7 @@
-import React, { useMemo } from "react";
-import styled, { useTheme } from "styled-components";
 import Image, { StaticImageData } from "next/legacy/image";
+import { useMemo } from "react";
 import { isMobile } from "react-device-detect";
+import styled, { useTheme } from "styled-components";
 
 import { formatTimestamp } from "@symmio/frontend-sdk/utils/time";
 

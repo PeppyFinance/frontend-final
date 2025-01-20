@@ -1,7 +1,7 @@
+import { CharacterModal } from "components/BackAlley/Characters/Modal";
 import { Character } from "components/BackAlley/Characters/character";
 import { BackAlleyChars } from "components/BackAlley/Characters/characterConfig";
 import { CharacterId } from "components/BackAlley/Characters/characterIds.type";
-import { CharacterModal } from "components/BackAlley/Characters/Modal";
 import styled from "styled-components";
 import { NavigationArrow } from "./Arrow";
 import { useCharacterContext } from "./characterContext";

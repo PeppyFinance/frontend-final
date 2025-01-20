@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled, { useTheme } from "styled-components";
 
 import { Quote } from "@symmio/frontend-sdk/types/quote";
 import { PositionType } from "@symmio/frontend-sdk/types/trade";
-import { formatTimestamp } from "@symmio/frontend-sdk/utils/time";
 import {
   formatAmount,
   formatCurrency,
   toBN,
 } from "@symmio/frontend-sdk/utils/numbers";
+import { formatTimestamp } from "@symmio/frontend-sdk/utils/time";
 
 import { useMarketData } from "@symmio/frontend-sdk/state/hedger/hooks";
 
+import useBidAskPrice from "@symmio/frontend-sdk/hooks/useBidAskPrice";
 import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
 import {
   useLockedMargin,
@@ -19,33 +20,32 @@ import {
   useQuoteSize,
 } from "@symmio/frontend-sdk/hooks/useQuotes";
 import { useNotionalValue } from "@symmio/frontend-sdk/hooks/useTradePage";
-import useBidAskPrice from "@symmio/frontend-sdk/hooks/useBidAskPrice";
 
-import { LongArrow, ShortArrow } from "components/Icons";
-import BlinkingPrice from "components/App/FavoriteBar/BlinkingPrice";
-import { Row as RowComponent } from "components/Row";
+import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
+import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
+import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
 import {
-  Wrapper,
-  MarketName,
-  Leverage,
-  QuoteData,
-  PositionInfoBox,
-  TopWrap,
+  Chevron,
   ContentWrapper,
   DataWrap,
-  Label,
-  Value,
-  Row,
-  Chevron,
   FlexColumn,
+  Label,
+  Leverage,
+  MarketName,
+  PositionInfoBox,
+  QuoteData,
+  Row,
   RowPnl,
+  TopWrap,
+  Value,
+  Wrapper,
 } from "components/App/AccountData/PositionDetails/styles";
+import BlinkingPrice from "components/App/FavoriteBar/BlinkingPrice";
 import { PositionActionButton } from "components/Button";
-import PositionDetailsNavigator from "./PositionDetailsNavigator";
+import { LongArrow, ShortArrow } from "components/Icons";
+import { Row as RowComponent } from "components/Row";
 import { useCheckQuoteIsExpired } from "lib/hooks/useCheckQuoteIsExpired";
-import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
-import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
-import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
+import PositionDetailsNavigator from "./PositionDetailsNavigator";
 
 const ExpiredStatus = styled.div`
   font-style: normal;
@@ -92,7 +92,7 @@ export default function PendingQuoteDetails({
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(
     COLLATERAL_TOKEN,
-    chainId
+    chainId,
   );
 
   const marketData = useMarketData(name);
@@ -197,7 +197,7 @@ export default function PendingQuoteDetails({
               <Value>{`${formatAmount(
                 requestedOpenPrice,
                 6,
-                true
+                true,
               )} ${asset}`}</Value>
             </Row>
             {positionType === PositionType.LONG ? (
@@ -254,11 +254,11 @@ export default function PendingQuoteDetails({
               <Value>{`${formatAmount(
                 toBN(platformFee).div(2),
                 3,
-                true
+                true,
               )} (OPEN) / ${formatAmount(
                 toBN(platformFee).div(2),
                 3,
-                true
+                true,
               )} (CLOSE) ${collateralCurrency?.symbol}`}</Value>
             </Row>
           </ContentWrapper>

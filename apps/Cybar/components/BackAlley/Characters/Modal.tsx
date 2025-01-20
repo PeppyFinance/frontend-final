@@ -1,8 +1,8 @@
 import { useCharacterContext } from "components/BackAlley/characterContext";
 import styled, { keyframes } from "styled-components";
+import { Z_INDEX } from "theme";
 import { DialogButton, DialogButtonText } from "./DialogButton";
 import { Header } from "./Header";
-import { Z_INDEX } from "theme";
 
 const growAnimation = keyframes`
   from {

@@ -1,20 +1,20 @@
-import React, { useCallback, useState } from "react";
-import styled from "styled-components";
 import Image from "next/image";
+import { useCallback, useState } from "react";
+import styled from "styled-components";
 
 import GRADIENT_CLOVERFIELD_LOGO from "/public/static/images/etc/GradientCloverfield.svg";
 
-import { Modal } from "components/Modal";
 import { DotFlashing, Wallet } from "components/Icons";
+import { Modal } from "components/Modal";
 
-import { Row, RowCenter, RowEnd, RowStart } from "components/Row";
-import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
-import { truncateAddress } from "@symmio/frontend-sdk/utils/address";
-import Checkbox from "components/CheckBox";
 import { useSignMessage } from "@symmio/frontend-sdk/callbacks/useMultiAccount";
 import { useWriteSign } from "@symmio/frontend-sdk/callbacks/useWriteSign";
 import { useGetMessage } from "@symmio/frontend-sdk/hooks/useCheckSign";
+import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
+import { truncateAddress } from "@symmio/frontend-sdk/utils/address";
 import GradientButton from "components/Button/GradientButton";
+import Checkbox from "components/CheckBox";
+import { Row, RowCenter, RowEnd, RowStart } from "components/Row";
 
 const Wrapper = styled.div`
   display: flex;
@@ -129,7 +129,7 @@ function ActionButton({ isTermsAccepted }: { isTermsAccepted: boolean }) {
       }
       setAwaitingConfirmation(false);
     },
-    [writeSignCallback]
+    [writeSignCallback],
   );
 
   const onClickButton = useCallback(async () => {

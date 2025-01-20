@@ -1,7 +1,7 @@
-import React, { useMemo } from "react";
-import styled, { useTheme } from "styled-components";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
+import { useMemo } from "react";
+import styled, { useTheme } from "styled-components";
 
 import {
   MAX_LEVERAGE_VALUE,
@@ -46,11 +46,11 @@ export function LeverageSlider({
     const range = (
       start: number,
       stop: number,
-      step = maxLeverage < 10 ? 1 : Math.floor(maxLeverage / 10)
+      step = maxLeverage < 10 ? 1 : Math.floor(maxLeverage / 10),
     ) =>
       Array.from(
         { length: (stop - start) / step + 1 },
-        (_, i) => start + i * step
+        (_, i) => start + i * step,
       ).reduce((a, v) => ({ ...a, [v]: v, [maxLeverage]: maxLeverage }), {});
 
     return range(1, maxLeverage);

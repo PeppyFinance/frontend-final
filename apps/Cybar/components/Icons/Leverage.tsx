@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Leverage({
   width = 10,
   height = 7,

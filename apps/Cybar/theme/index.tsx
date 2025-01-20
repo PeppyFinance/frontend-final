@@ -7,8 +7,8 @@ import {
 } from "styled-components";
 
 import { useIsDarkMode } from "@symmio/frontend-sdk/state/user/hooks";
-import { Colors, Shadows } from "./styled";
 import { useRouter } from "next/router";
+import { Colors, Shadows } from "./styled";
 
 export const MEDIA_WIDTHS = {
   upToExtraSmall: 500,
@@ -208,7 +208,7 @@ export default function ThemeProvider({
   if (
     parsedTheme &&
     Object.values(SupportedThemes).some(
-      (theme: string) => theme === parsedTheme
+      (theme: string) => theme === parsedTheme,
     )
   ) {
     themeName = parsedTheme as SupportedThemes;

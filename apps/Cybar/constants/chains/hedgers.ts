@@ -4,18 +4,17 @@ import { Hedger, OpenInterest } from "@symmio/frontend-sdk/types/hedger";
 export const DEFAULT_HEDGER = {
   apiUrl: "https://fapi.binance.com/",
   webSocketUrl: "wss://fstream.binance.com/stream",
-  baseUrl: "https://polygon-hedger-test.rasa.capital",
-  tpslUrl: "",
-  webSocketFundingRateUrl:
-    "wss://polygon-hedger-test.rasa.capital/ws/funding-rate-ws",
-  webSocketUpnlUrl: "",
-  webSocketNotificationUrl: "",
+  baseUrl: `https://${process.env.NEXT_PUBLIC_BASE_HEDGER_URL}`,
+  tpslUrl: "https://hedger2.deus.finance",
+  webSocketUpnlUrl: `wss://${process.env.NEXT_PUBLIC_BASE_HEDGER_URL}/ws/upnl-ws`,
+  webSocketNotificationUrl: `wss://${process.env.NEXT_PUBLIC_BASE_HEDGER_URL}/ws/position-state-ws3`,
+  webSocketFundingRateUrl: `wss://${process.env.NEXT_PUBLIC_BASE_HEDGER_URL}/ws/funding-rate-ws`,
   defaultMarketId: 1,
   markets: [],
-  openInterest: { total: 0, used: 0 },
-  // TODO: do we use this ID?
-  id: "Cloverfield",
-  fetchData: false,
+  openInterest: { total: 0, used: 0 } as OpenInterest,
+  id: "mantle-hedger",
+  fetchData: true,
+  clientName: "BASE",
 } as Hedger;
 
 export const HedgerInfo = {
@@ -88,23 +87,7 @@ export const HedgerInfo = {
       clientName: "MANTLE",
     },
   ],
-  [SupportedChainId.BASE]: [
-    {
-      apiUrl: "https://fapi.binance.com/",
-      webSocketUrl: "wss://fstream.binance.com/stream",
-      baseUrl: `https://${process.env.NEXT_PUBLIC_BASE_HEDGER_URL}`,
-      tpslUrl: "https://hedger2.deus.finance",
-      webSocketUpnlUrl: `wss://${process.env.NEXT_PUBLIC_BASE_HEDGER_URL}/ws/upnl-ws`,
-      webSocketNotificationUrl: `wss://${process.env.NEXT_PUBLIC_BASE_HEDGER_URL}/ws/position-state-ws3`,
-      webSocketFundingRateUrl: `wss://${process.env.NEXT_PUBLIC_BASE_HEDGER_URL}/ws/funding-rate-ws`,
-      defaultMarketId: 1,
-      markets: [],
-      openInterest: { total: 0, used: 0 } as OpenInterest,
-      id: "mantle-hedger",
-      fetchData: true,
-      clientName: "BASE",
-    },
-  ],
+  [SupportedChainId.BASE]: [DEFAULT_HEDGER],
   [SupportedChainId.BLAST]: [
     {
       apiUrl: "https://fapi.binance.com/",

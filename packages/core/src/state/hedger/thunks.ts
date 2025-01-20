@@ -1,8 +1,7 @@
-import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
 import { ApolloClient, NormalizedCacheObject } from "@apollo/client";
-const { createAsyncThunk } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
-import { makeHttpRequest } from "../../utils/http";
+import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
+import { GET_PAID_AMOUNT } from "../../apollo/queries";
+import { OpenInterest } from "../../types/hedger";
 import {
   Market,
   MarketApiType,
@@ -10,7 +9,8 @@ import {
   OpenInterestResponseType,
   PriceRangeResponseType,
 } from "../../types/market";
-import { OpenInterest } from "../../types/hedger";
+import { makeHttpRequest } from "../../utils/http";
+import { toBN } from "../../utils/numbers";
 import {
   DepthResponse,
   ErrorMessages,
@@ -23,8 +23,8 @@ import {
   MarketsInfoRes,
   PriceRange,
 } from "./types";
-import { GET_PAID_AMOUNT } from "../../apollo/queries";
-import { toBN } from "../../utils/numbers";
+const { createAsyncThunk } = ((toolkitRaw as any).default ??
+  toolkitRaw) as typeof toolkitRaw;
 
 export const getMarkets = createAsyncThunk(
   "hedger/getAllApi",
@@ -93,7 +93,7 @@ export const getMarkets = createAsyncThunk(
     }
 
     return { markets, count, openInterest, errorMessages };
-  }
+  },
 );
 
 export const getOpenInterest = createAsyncThunk(
@@ -128,7 +128,7 @@ export const getOpenInterest = createAsyncThunk(
     }
 
     return { openInterest };
-  }
+  },
 );
 
 export const getNotionalCap = createAsyncThunk(
@@ -170,7 +170,7 @@ export const getNotionalCap = createAsyncThunk(
       const [notionalCapRes] = await Promise.allSettled([
         makeHttpRequest<NotionalCapResponseType>(
           notionalCapUrl,
-          getAppNameHeader(appName)
+          getAppNameHeader(appName),
         ),
       ]);
 
@@ -185,7 +185,7 @@ export const getNotionalCap = createAsyncThunk(
     }
 
     return { notionalCap };
-  }
+  },
 );
 
 export const getPriceRange = createAsyncThunk(
@@ -208,7 +208,7 @@ export const getPriceRange = createAsyncThunk(
 
     const { href: priceRangeUrl } = new URL(
       `price-range/${market.name}`,
-      hedgerUrl
+      hedgerUrl,
     );
 
     const priceRange: PriceRange = { name: "", minPrice: -1, maxPrice: -1 };
@@ -217,7 +217,7 @@ export const getPriceRange = createAsyncThunk(
       const [priceRangeRes] = await Promise.allSettled([
         makeHttpRequest<PriceRangeResponseType>(
           priceRangeUrl,
-          getAppNameHeader(appName)
+          getAppNameHeader(appName),
         ),
       ]);
 
@@ -231,7 +231,7 @@ export const getPriceRange = createAsyncThunk(
     }
 
     return { priceRange };
-  }
+  },
 );
 
 export const getMarketsDepth = createAsyncThunk(
@@ -243,7 +243,7 @@ export const getMarketsDepth = createAsyncThunk(
     const depths: MarketDepthMap = {};
     const { href: marketDepthUrl } = new URL(
       `fapi/v1/ticker/bookTicker`,
-      apiUrl
+      apiUrl,
     );
 
     try {
@@ -267,7 +267,7 @@ export const getMarketsDepth = createAsyncThunk(
       return { depths: {} };
     }
     return { depths };
-  }
+  },
 );
 
 export const getMarketsInfo = createAsyncThunk(
@@ -289,7 +289,7 @@ export const getMarketsInfo = createAsyncThunk(
       const [marketsInfoRes] = await Promise.allSettled([
         makeHttpRequest<MarketsInfoRes>(
           marketsInfoUrl,
-          getAppNameHeader(appName)
+          getAppNameHeader(appName),
         ),
       ]);
       if (marketsInfoRes.status === "fulfilled") {
@@ -297,7 +297,7 @@ export const getMarketsInfo = createAsyncThunk(
           (localMarketEntry) => {
             const [marketName, marketInfoValue]: [
               marketName: string,
-              marketInfoValue: MarketInfoValue
+              marketInfoValue: MarketInfoValue,
             ] = localMarketEntry;
             marketsInfo[marketName] = {
               price: marketInfoValue.price.toString(),
@@ -306,7 +306,7 @@ export const getMarketsInfo = createAsyncThunk(
               tradeVolume: marketInfoValue.trade_volume.toString(),
               notionalCap: marketInfoValue.notional_cap.toString(),
             };
-          }
+          },
         );
       }
     } catch (error) {
@@ -316,7 +316,7 @@ export const getMarketsInfo = createAsyncThunk(
     }
 
     return { marketsInfo };
-  }
+  },
 );
 
 export const getFundingRate = createAsyncThunk(
@@ -348,7 +348,7 @@ export const getFundingRate = createAsyncThunk(
       const [fundingRateRes] = await Promise.allSettled([
         makeHttpRequest<FundingRateRes>(
           fundingRateUrl.href,
-          getAppNameHeader(appName)
+          getAppNameHeader(appName),
         ),
       ]);
 
@@ -359,7 +359,7 @@ export const getFundingRate = createAsyncThunk(
     }
 
     return {};
-  }
+  },
 );
 
 export const getPaidAmount = createAsyncThunk(
@@ -391,7 +391,7 @@ export const getPaidAmount = createAsyncThunk(
       console.error(error);
       throw new Error(`Unable to query Paid Amount from Client`);
     }
-  }
+  },
 );
 
 export function getAppNameHeader(appName: string) {

@@ -1,13 +1,8 @@
-import React from "react";
 import styled from "styled-components";
 import { Z_INDEX } from "theme";
 
-import { Card } from "components/Card";
-import { Modal } from "components/Modal";
-import { usePartyBWhitelistAddress } from "@symmio/frontend-sdk/state/chains";
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
-import HedgerInfo from "./HedgerInfo";
-import CreateHedger from "./CreateHedger";
+import { usePartyBWhitelistAddress } from "@symmio/frontend-sdk/state/chains";
 import {
   useGetAddedHedgers,
   useGetDefaultHedgerStatus,
@@ -16,6 +11,10 @@ import {
   useToggleDefaultHedgerCallback,
 } from "@symmio/frontend-sdk/state/user/hooks";
 import { AddedHedger } from "@symmio/frontend-sdk/state/user/types";
+import { Card } from "components/Card";
+import { Modal } from "components/Modal";
+import CreateHedger from "./CreateHedger";
+import HedgerInfo from "./HedgerInfo";
 
 const ModalWrapper = styled(Card)`
   padding: 0.6rem;

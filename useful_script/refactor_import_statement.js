@@ -39,7 +39,7 @@ files.forEach((file) => {
       const targetPath = path.resolve("./", `./${p1}`);
       const relativePath = calculateRelativePath(file, targetPath);
       return `from "${relativePath}"`;
-    }
+    },
   );
 
   fs.writeFileSync(file, content, "utf-8");

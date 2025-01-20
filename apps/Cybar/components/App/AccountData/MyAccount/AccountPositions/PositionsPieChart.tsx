@@ -1,15 +1,15 @@
-import React, { useCallback, useContext, useState } from "react";
-import styled, { useTheme } from "styled-components";
 import Image from "next/legacy/image";
-import { PieChart, Pie, Cell, ResponsiveContainer, Sector } from "recharts";
+import { useCallback, useContext, useState } from "react";
+import { Cell, Pie, PieChart, ResponsiveContainer, Sector } from "recharts";
+import styled, { useTheme } from "styled-components";
 
 import { ConnectionStatus } from "@symmio/frontend-sdk/types/api";
 import { PositionType } from "@symmio/frontend-sdk/types/trade";
 import { AccountPositionsContext } from "./context";
 
 // TODO: replace svg with cybar
-import Clover from "/public/static/images/Clover.svg";
 import { RowCenter } from "components/Row";
+import Clover from "/public/static/images/Clover.svg";
 
 import { useUpnlWebSocketStatus } from "@symmio/frontend-sdk/state/user/hooks";
 
@@ -136,7 +136,7 @@ export default function PositionsPieChart() {
     (_, index) => {
       setActiveIndex(index);
     },
-    [setActiveIndex]
+    [setActiveIndex],
   );
   const onPieLeave = useCallback(() => {
     setActiveIndex(-1);

@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
-import { toBN } from "../utils/numbers";
 import { WEB_SETTING } from "../config";
+import { toBN } from "../utils/numbers";
 
 import {
   useAccountPartyAStat,
@@ -110,7 +110,7 @@ export default function useAccountData(): AccountData {
       availableForOrder,
       loading,
     }),
-    [accountHealthData, availableForOrder, equity, loading, maintenanceMargin]
+    [accountHealthData, availableForOrder, equity, loading, maintenanceMargin],
   );
 }
 

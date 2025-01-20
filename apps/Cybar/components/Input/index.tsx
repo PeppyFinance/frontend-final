@@ -94,7 +94,7 @@ export function makeRegex(precision: number, calculational: boolean): RegExp {
 
 const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`); // match escaped "." characters via in a non-capturing group
 const calculationalInputRegex = RegExp(
-  "^([$%]?\\d*(\\.?\\d*)?)(?:\\s*([-+])\\s*([$%]?\\d*(\\.?\\d*)?)?)?$"
+  "^([$%]?\\d*(\\.?\\d*)?)(?:\\s*([-+])\\s*([$%]?\\d*(\\.?\\d*)?)?)?$",
 );
 export const NumericalInput = ({
   value,

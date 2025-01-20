@@ -1,9 +1,8 @@
-import React from "react";
 import styled from "styled-components";
 
-import MarketsTable from "./MarketsTable";
 import WrapperBanner from "components/Banner";
 import { RowCenter } from "components/Row";
+import MarketsTable, { MarketsTableProps } from "./MarketsTable";
 
 const Container = styled.div`
   width: 100%;
@@ -38,13 +37,21 @@ const TableWrapper = styled.div`
   `}
 `;
 
-export default function Markets() {
+const HiddenText = styled.span`
+  visibitlity: hidden;
+  width: 0;
+  height: 1;
+`;
+
+export default function Markets(props: MarketsTableProps) {
   return (
     <Container>
       <WrapperBanner />
-      <BigMarketsLabel>MARKETS</BigMarketsLabel>
+      <BigMarketsLabel>
+        <HiddenText>.</HiddenText>
+      </BigMarketsLabel>
       <TableWrapper>
-        <MarketsTable />
+        <MarketsTable {...props} />
       </TableWrapper>
     </Container>
   );

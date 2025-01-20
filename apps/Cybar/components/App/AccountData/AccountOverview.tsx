@@ -1,44 +1,44 @@
-import { useEffect, useState } from "react";
-import styled, { useTheme } from "styled-components";
 import Image from "next/legacy/image";
+import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
+import styled, { useTheme } from "styled-components";
 
+import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
 import {
   formatAmount,
   formatPrice,
   toBN,
 } from "@symmio/frontend-sdk/utils/numbers";
-import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
 import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
 
+import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
+import {
+  useDepositModalToggle,
+  useModalOpen,
+  useWithdrawModalToggle,
+} from "@symmio/frontend-sdk/state/application/hooks";
+import { ApplicationModal } from "@symmio/frontend-sdk/state/application/reducer";
 import {
   useAccountPartyAStat,
   useActiveAccount,
   useExpertMode,
   useSetExpertModeCallback,
 } from "@symmio/frontend-sdk/state/user/hooks";
-import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
-import { ApplicationModal } from "@symmio/frontend-sdk/state/application/reducer";
-import {
-  useDepositModalToggle,
-  useModalOpen,
-  useWithdrawModalToggle,
-} from "@symmio/frontend-sdk/state/application/hooks";
 
-import { useAccountsLength } from "@symmio/frontend-sdk/hooks/useAccounts";
 import useAccountData from "@symmio/frontend-sdk/hooks/useAccountData";
+import { useAccountsLength } from "@symmio/frontend-sdk/hooks/useAccounts";
 
-import { ColumnCenter } from "components/Column";
-import { Row, RowBetween, RowEnd } from "components/Row";
-import Emoji from "components/App/AccountData/Emoji";
-import GradientButton from "components/Button/GradientButton";
-import StartTrading from "components/App/AccountData/StartTrading";
+import AccountUpnl from "components/App/AccountData/AccountUpnl";
 import CreateAccount from "components/App/AccountData/CreateAccount";
+import DataRow from "components/App/AccountData/DataRow";
+import Emoji from "components/App/AccountData/Emoji";
+import StartTrading from "components/App/AccountData/StartTrading";
+import GradientButton from "components/Button/GradientButton";
+import { ColumnCenter } from "components/Column";
 import { ContextError, useInvalidContext } from "components/InvalidContext";
 import DepositModal from "components/ReviewModal/DepositModal";
-import AccountUpnl from "components/App/AccountData/AccountUpnl";
-import DataRow from "components/App/AccountData/DataRow";
 import WithdrawModal from "components/ReviewModal/WithdrawModal";
+import { Row, RowBetween, RowEnd } from "components/Row";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -152,7 +152,7 @@ export default function AccountOverview({
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(
     COLLATERAL_TOKEN,
-    chainId
+    chainId,
   );
 
   const showDepositModal = useModalOpen(ApplicationModal.DEPOSIT);
@@ -282,7 +282,7 @@ export const DeveloperModeTitle = ({
   useEffect(() => {
     const toggleExpertMode = () => {
       toast.success(
-        `Developer mode ${isExpertMode ? "deactivated" : "activated"}!`
+        `Developer mode ${isExpertMode ? "deactivated" : "activated"}!`,
       );
       setExpertMode(!isExpertMode);
       setTries(0);
@@ -294,10 +294,10 @@ export const DeveloperModeTitle = ({
       toast.error(
         `Developer mode is ${
           isExpertMode ? "deactivating" : "activating"
-        } #${tries}`
+        } #${tries}`,
       );
     }
-  }, [tries, setExpertMode]);
+  }, [tries, setExpertMode, isExpertMode]);
 
   const handleAccountOverviewClick = () => {
     setTries(tries + 1);

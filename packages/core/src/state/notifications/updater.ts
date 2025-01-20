@@ -1,30 +1,30 @@
-import { useCallback, useEffect, useMemo } from "react";
 import isEmpty from "lodash/isEmpty.js";
+import { useCallback, useEffect, useMemo } from "react";
 import { useWebSocket } from "react-use-websocket/dist/lib/use-websocket.js";
 // const useWebSocket = useWebSocketRaw.useWebSocket;
 
-import { getNotifications } from "./thunks";
 import { L2_TXN_DISMISS_MS } from "../../constants/misc";
 import { AppThunkDispatch, useAppDispatch } from "../declaration";
+import { getNotifications } from "./thunks";
 import {
-  NotificationResponse,
   ActionStatus,
-  StateType,
   NotificationDetails,
+  NotificationResponse,
   NotificationType,
+  StateType,
 } from "./types";
 
 import useNotificationHistory from "../../lib/hooks/useNotificationHistory";
 
+import { useAddPopup } from "../application/hooks";
+import { useAppName } from "../chains/hooks";
 import { useHedgerInfo } from "../hedger/hooks";
 import { useActiveAccountAddress, useUserWhitelist } from "../user/hooks";
-import { useAddPopup } from "../application/hooks";
 import {
   useLastUpdateTimestamp,
-  useSetNewNotificationFlag,
   useNotificationAdderCallback,
+  useSetNewNotificationFlag,
 } from "./hooks";
-import { useAppName } from "../chains/hooks";
 
 export function NotificationUpdater(): null {
   const thunkDispatch: AppThunkDispatch = useAppDispatch();
@@ -84,7 +84,7 @@ function useNotificationsWebSocket() {
       }
 
       const notification: NotificationDetails = groupingNotification(
-        toNotification(lastMessage)
+        toNotification(lastMessage),
       );
 
       if (notification.notificationType !== NotificationType.OTHER) {
@@ -106,7 +106,7 @@ function useNotifications(
   fetchData?: boolean,
   baseUrl?: string,
   timestamp?: string,
-  thunkDispatch?: AppThunkDispatch
+  thunkDispatch?: AppThunkDispatch,
 ) {
   const appName = useAppName();
   const cleanup = useCallback(() => {
@@ -122,7 +122,7 @@ function useNotifications(
           baseUrl,
           timestamp: Number(timestamp),
           appName,
-        })
+        }),
       );
       return cleanup;
     }
@@ -130,7 +130,7 @@ function useNotifications(
 }
 
 export function toNotification(
-  data: NotificationResponse
+  data: NotificationResponse,
 ): NotificationDetails {
   const notification: NotificationDetails = {
     id: data.id,
@@ -154,7 +154,7 @@ export function toNotification(
 }
 
 export function groupingNotification(
-  notification: NotificationDetails
+  notification: NotificationDetails,
 ): NotificationDetails {
   if (notification.stateType === StateType.REPORT) {
     notification.notificationType = NotificationType.PARTIAL_FILL;

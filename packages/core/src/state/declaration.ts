@@ -1,3 +1,4 @@
+import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
 import {
   Action,
   AnyAction,
@@ -5,33 +6,67 @@ import {
   ThunkAction,
   ThunkDispatch,
 } from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
-import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
-const { configureStore } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
 import {
   Provider,
   TypedUseSelectorHook,
   useDispatch,
   useSelector,
 } from "react-redux";
+import { createTransform, persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 import "symbol-observable";
+import { ONE_DAY_IN_MILLISECOND } from "../constants";
 import reducer from "./reducer";
+const { configureStore } = ((toolkitRaw as any).default ??
+  toolkitRaw) as typeof toolkitRaw;
+// import crossBrowserListener from "../utils/reduxPersistListener";
 
-export type RootState = ReturnType<typeof reducer>;
+const createExpirationTransform = (expiryTime) => {
+  return createTransform(
+    (inboundState) => {
+      return {
+        data: inboundState,
+        timestamp: Date.now(),
+      };
+    },
+    (outboundState) => {
+      if (!outboundState) return undefined;
+
+      const now = Date.now();
+      const expired = now - outboundState.timestamp > expiryTime;
+
+      return expired ? undefined : outboundState.data;
+    },
+  );
+};
+
+const PERSISTED_KEYS: string[] = ["user"];
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: PERSISTED_KEYS,
+  transforms: [createExpirationTransform(ONE_DAY_IN_MILLISECOND)],
+};
+
+const persistedReducer = persistReducer(persistConfig, reducer);
+
+export type RootState = ReturnType;
 function makeStore() {
   return configureStore({
-    reducer,
+    reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         thunk: true,
         immutableCheck: true,
-        serializableCheck: false,
+        serializableCheck: {
+          ignoredActions: ["persist/PERSIST"],
+        },
       }),
     devTools: process.env.NODE_ENV === "development",
   });
 }
 
-let store: Store<RootState, AnyAction>;
+let store: Store;
 
 export const getOrCreateStore = () => {
   const _store = store ?? makeStore();
@@ -49,20 +84,17 @@ export const getOrCreateStore = () => {
 };
 
 store = getOrCreateStore();
+export default store;
+export const persistor = persistStore(store);
 
-export type AppState = ReturnType<typeof store.getState>;
+export type AppState = ReturnType;
 
 export type AppDispatch = typeof store.dispatch;
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  AppState,
-  unknown,
-  Action<string>
->;
-export type AppThunkDispatch = ThunkDispatch<unknown, void, AnyAction>;
+export type AppThunk<ReturnType = void> = ThunkAction;
+export type AppThunkDispatch = ThunkDispatch;
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
-export const useAppSelector: TypedUseSelectorHook<AppState> = useSelector;
+export const useAppSelector: TypedUseSelectorHook = useSelector;
 
 export default store;
 

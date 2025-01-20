@@ -1,5 +1,5 @@
-import styled from "styled-components";
 import ReactTooltip from "react-tooltip";
+import styled from "styled-components";
 
 export const ToolTip = styled(ReactTooltip).attrs({
   place: "right",

@@ -10,7 +10,7 @@ export function useContract<T extends Abi>(
     | { [chainId: number]: string }
     | null
     | undefined,
-  ABI?: T
+  ABI?: T,
 ): any {
   const { chainId } = useWagmi();
   const publicClient = usePublicClient();

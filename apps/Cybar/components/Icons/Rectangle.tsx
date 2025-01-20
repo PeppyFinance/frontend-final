@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Rectangle({
   width = 9,
   height = 20,

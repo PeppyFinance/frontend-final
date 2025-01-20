@@ -1,5 +1,5 @@
-import { useCallback, useMemo } from "react";
 import BigNumber from "bignumber.js";
+import { useCallback, useMemo } from "react";
 
 import useActiveWagmi from "../lib/hooks/useActiveWagmi";
 import { useSupportedChainId } from "../lib/hooks/useSupportedChainId";
@@ -14,11 +14,11 @@ import {
   createTransactionCallback,
 } from "../utils/web3";
 
-import { Abi, Address, encodeFunctionData } from "viem";
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
+import { Abi, Address, encodeFunctionData } from "viem";
+import { COLLATERAL_ABI } from "../constants";
 import { useCollateralToken } from "../constants/tokens";
 import { useCollateralAddress, useWagmiConfig } from "../state/chains";
-import { COLLATERAL_ABI } from "../constants";
 
 export function useMintCollateral(): {
   state: TransactionCallbackState;
@@ -106,7 +106,7 @@ export function useMintCollateral(): {
           addRecentTransaction,
           txInfo,
           wagmiConfig,
-          summary
+          summary,
         ),
     };
   }, [

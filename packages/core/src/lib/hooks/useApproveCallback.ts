@@ -1,6 +1,6 @@
-import { useCallback } from "react";
-import BigNumber from "bignumber.js";
 import { Currency } from "@uniswap/sdk-core";
+import BigNumber from "bignumber.js";
+import { useCallback } from "react";
 import { ApprovalState, useApproval } from "./useApproval";
 
 import {
@@ -11,7 +11,7 @@ import { TransactionType } from "../../state/transactions/types";
 import useWagmi from "./useWagmi";
 
 function useGetAndTrackApproval(
-  getApproval: ReturnType<typeof useApproval>[1]
+  getApproval: ReturnType<typeof useApproval>[1],
 ) {
   const addTransaction = useTransactionAdder();
   return useCallback(() => {
@@ -32,7 +32,7 @@ function useGetAndTrackApproval(
 export function useApproveCallback(
   currency?: Currency,
   amountToApprove?: BigNumber.Value,
-  spender?: string
+  spender?: string,
 ): [ApprovalState, () => Promise<void>] {
   const { account } = useWagmi();
   const [approval, getApproval] = useApproval(
@@ -40,7 +40,7 @@ export function useApproveCallback(
     amountToApprove,
     account,
     spender,
-    useHasPendingApproval
+    useHasPendingApproval,
   );
   return [approval, useGetAndTrackApproval(getApproval)];
 }

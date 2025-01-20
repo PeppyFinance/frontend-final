@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function ArrowRightTriangle({
   width = 7,
   height = 12,

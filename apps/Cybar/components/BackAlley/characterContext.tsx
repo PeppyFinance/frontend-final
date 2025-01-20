@@ -6,9 +6,9 @@ import {
   useReducer,
 } from "react";
 import {
+  characterReducer,
   CharacterState,
   DispatchAction,
-  characterReducer,
 } from "./characterReducer";
 
 export interface CharacterContextValue {
@@ -18,7 +18,7 @@ export interface CharacterContextValue {
 
 // TODO: refactor to remove undefined
 const CharacterContext = createContext<CharacterContextValue | undefined>(
-  undefined
+  undefined,
 );
 interface Props {
   children: ReactNode;
@@ -44,7 +44,7 @@ export const useCharacterContext = () => {
   const context = useContext(CharacterContext);
   if (!context) {
     throw new Error(
-      "DialogContext must be used within a DialogContextProvider"
+      "DialogContext must be used within a DialogContextProvider",
     );
   }
   return context;

@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { Quote } from "@symmio/frontend-sdk/types/quote";
 
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
-import { useActiveAccountAddress } from "@symmio/frontend-sdk/state/user/hooks";
 import {
   useGetOpenInstantClosesCallback,
   useGetOrderHistoryCallback,
@@ -14,15 +13,16 @@ import {
   useQuoteDetail,
   useSetQuoteDetailCallback,
 } from "@symmio/frontend-sdk/state/quotes/hooks";
+import { useActiveAccountAddress } from "@symmio/frontend-sdk/state/user/hooks";
 
 import { Card } from "components/Card";
-import History from "./History";
-import Position from "./Position";
-import OrdersTab, { StateTabs } from "./OrdersTab";
-import { ItemsPerPage } from "./PaginateTable";
+import { IconWrapper } from "components/Icons";
 import ArrowRightTriangle from "components/Icons/ArrowRightTriangle";
 import { RowCenter } from "components/Row";
-import { IconWrapper } from "components/Icons";
+import History from "./History";
+import OrdersTab, { StateTabs } from "./OrdersTab";
+import { ItemsPerPage } from "./PaginateTable";
+import Position from "./Position";
 
 const Wrapper = styled(Card)`
   padding: 0;
@@ -75,7 +75,7 @@ export default function UserPanel(): JSX.Element | null {
   const positionQuotes: Quote[] = useMemo(() => {
     return [...pendings, ...positions].sort(
       (a: Quote, b: Quote) =>
-        Number(b.statusModifyTimestamp) - Number(a.statusModifyTimestamp)
+        Number(b.statusModifyTimestamp) - Number(a.statusModifyTimestamp),
     );
   }, [pendings, positions]);
 
@@ -115,7 +115,7 @@ export default function UserPanel(): JSX.Element | null {
 
   useEffect(() => {
     const isQuoteInPositions = positionQuotes.some(
-      (quote) => quote.id === quoteDetail?.id
+      (quote) => quote.id === quoteDetail?.id,
     );
 
     if (!isQuoteInPositions && selectedTab === StateTabs.POSITIONS) {

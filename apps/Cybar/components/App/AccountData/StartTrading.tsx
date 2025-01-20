@@ -1,24 +1,24 @@
+import Image from "next/legacy/image";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import Image from "next/legacy/image";
 
-import { formatAmount } from "@symmio/frontend-sdk/utils/numbers";
 import { SupportedChainId } from "@symmio/frontend-sdk/constants/chains";
+import { formatAmount } from "@symmio/frontend-sdk/utils/numbers";
 
-import { ApplicationModal } from "@symmio/frontend-sdk/state/application/reducer";
-import {
-  useAccountPartyAStat,
-  useActiveAccountAddress,
-} from "@symmio/frontend-sdk/state/user/hooks";
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 import {
   useDepositModalToggle,
   useModalOpen,
 } from "@symmio/frontend-sdk/state/application/hooks";
+import { ApplicationModal } from "@symmio/frontend-sdk/state/application/reducer";
+import {
+  useAccountPartyAStat,
+  useActiveAccountAddress,
+} from "@symmio/frontend-sdk/state/user/hooks";
 
 import GradientButton from "components/Button/GradientButton";
-import { Row, RowStart, RowBetween, RowCenter, RowEnd } from "components/Row";
 import DepositModal from "components/ReviewModal/DepositModal";
+import { Row, RowBetween, RowCenter, RowEnd, RowStart } from "components/Row";
 
 const Wrapper = styled.div`
   border: none;

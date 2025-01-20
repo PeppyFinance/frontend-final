@@ -61,9 +61,9 @@ export default function BlinkingPrice({
       data
         ? data
         : marketData
-        ? parseFloat(marketData.markPrice).toFixed(pricePrecision)
-        : 0,
-    [marketData, pricePrecision, data]
+          ? parseFloat(marketData.markPrice).toFixed(pricePrecision)
+          : 0,
+    [marketData, pricePrecision, data],
   );
 
   const [markPrice, setMarkPrice] = useState(mark);

@@ -1,35 +1,35 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { DotFlashing } from "components/Icons";
+import { WEB_SETTING } from "@symmio/frontend-sdk/config";
+import { DEFAULT_PRECISION } from "@symmio/frontend-sdk/constants/misc";
+import { useSendDelegateAccess } from "@symmio/frontend-sdk/hooks/useTpSl";
+import useTradePage from "@symmio/frontend-sdk/hooks/useTradePage";
 import { useToggleOpenPositionModal } from "@symmio/frontend-sdk/state/application/hooks";
-import {
-  ContextError,
-  InvalidContext,
-  useInvalidContext,
-} from "components/InvalidContext";
-import ErrorButton from "components/Button/ErrorButton";
 import { useWebSocketStatus } from "@symmio/frontend-sdk/state/hedger/hooks";
 import {
-  useSetLimitPrice,
   useActiveMarket,
+  useSetLimitPrice,
   useSetTypedValue,
   useTpSlDelegate,
   useTradeTpSl,
 } from "@symmio/frontend-sdk/state/trade/hooks";
 import { useIsHavePendingTransaction } from "@symmio/frontend-sdk/state/transactions/hooks";
-import { MainButton } from "components/Button";
-import { RowStart } from "components/Row";
-import useTradePage from "@symmio/frontend-sdk/hooks/useTradePage";
-import { DEFAULT_PRECISION } from "@symmio/frontend-sdk/constants/misc";
-import { calculateString } from "utils/calculationalString";
-import { InputField } from "@symmio/frontend-sdk/types/trade";
-import { ConnectionStatus } from "@symmio/frontend-sdk/types/api";
 import {
-  useUserWhitelist,
   useIsTermsAccepted,
+  useUserWhitelist,
 } from "@symmio/frontend-sdk/state/user/hooks";
-import { WEB_SETTING } from "@symmio/frontend-sdk/config";
+import { ConnectionStatus } from "@symmio/frontend-sdk/types/api";
+import { InputField } from "@symmio/frontend-sdk/types/trade";
+import { MainButton } from "components/Button";
+import ErrorButton from "components/Button/ErrorButton";
 import OpenPositionButton from "components/Button/OpenPositionButton";
-import { useSendDelegateAccess } from "@symmio/frontend-sdk/hooks/useTpSl";
+import { DotFlashing } from "components/Icons";
+import {
+  ContextError,
+  InvalidContext,
+  useInvalidContext,
+} from "components/InvalidContext";
+import { RowStart } from "components/Row";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { calculateString } from "utils/calculationalString";
 
 export default function TradeActionButtons(): JSX.Element | null {
   const validatedContext = useInvalidContext();
@@ -53,7 +53,7 @@ export default function TradeActionButtons(): JSX.Element | null {
 
   const pricePrecision = useMemo(
     () => (market ? market.pricePrecision : DEFAULT_PRECISION),
-    [market]
+    [market],
   );
   const { callback: setDelegateAccessCallBack, error } =
     useSendDelegateAccess();
@@ -77,7 +77,7 @@ export default function TradeActionButtons(): JSX.Element | null {
       formattedAmounts[0],
       balance,
       pricePrecision,
-      "1"
+      "1",
     );
     setTypedValue(result, InputField.PRICE);
     setCalculationLoading(false);

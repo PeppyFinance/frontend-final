@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function CheckMark({
   size = 12,
   color = "#00E376",

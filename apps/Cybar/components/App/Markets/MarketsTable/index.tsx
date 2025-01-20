@@ -1,10 +1,15 @@
 import styled from "styled-components";
 
+import { useMarketsSearch } from "@symmio/frontend-sdk/hooks/useMarkets";
+import {
+  Direction,
+  OrderMarktes,
+} from "@symmio/frontend-sdk/state/hedger/hooks";
+import { InputField } from "components/App/MarketBar/InputField";
+import { RowBetween } from "components/Row";
+import { useMemo, useState } from "react";
 import TableBody from "./Body";
 import TableHeader from "./Header";
-import { RowBetween } from "components/Row";
-import { InputField } from "components/App/MarketBar/InputField";
-import { useMarketsSearch } from "@symmio/frontend-sdk/hooks/useMarkets";
 
 const TableWrapper = styled.div`
   border-radius: 4px;
@@ -34,30 +39,48 @@ const InputWrapper = styled.div`
   }
 `;
 
-export default function Table() {
-  const { markets, searchProps } = useMarketsSearch();
-  const searchMarketsValue = searchProps?.ref?.current?.value || "";
+export interface MarketsTableProps {
+  direction: Direction;
+  orderBy: OrderMarktes;
+}
+export default function Table({ direction, orderBy }: MarketsTableProps) {
+  const { markets } = useMarketsSearch({
+    orderBy,
+    direction,
+  });
+
+  const [search, setSearch] = useState("");
+
+  const { filtered } = useMemo(() => {
+    const filtered = markets.filter((market) =>
+      market.name.toLowerCase().includes(search),
+    );
+
+    return { filtered };
+  }, [search, markets]);
 
   return (
     <TableWrapper>
       <Title>
         <div>Markets</div>
         <InputWrapper>
-          <InputField searchProps={searchProps} placeholder={"Search Name"} />
+          <InputField setSearch={setSearch} placeholder={"Search Name"} />
         </InputWrapper>
       </Title>
       <TableHeader
         HEADERS={[
-          "",
-          "Name",
-          "Price",
-          "24h Change",
-          "24h Volume",
-          "Notional Cap",
-          "Action",
+          { name: "" },
+          { name: "Name" },
+          { name: "Price", orderBy: "price" },
+          { name: "24h Change", orderBy: "priceChangePercent" },
+          { name: "24h Volume", orderBy: "tradeVolume" },
+          { name: "Notional Cap", orderBy: "notionalCap" },
+          { name: "Action" },
         ]}
+        orderedBy={orderBy}
+        direction={direction}
       />
-      <TableBody markets={markets} searchValue={searchMarketsValue} />
+      <TableBody markets={filtered} searchValue={search} />
     </TableWrapper>
   );
 }

@@ -1,13 +1,13 @@
 import { useRef, useState } from "react";
-import styled from "styled-components";
 import { isMobile } from "react-device-detect";
+import styled from "styled-components";
 
 import { useActiveMarket } from "@symmio/frontend-sdk/state/trade/hooks";
 import useOnOutsideClick from "lib/hooks/useOnOutsideClick";
 
+import { MarketsModal } from "components/App/MarketBar/MarketsModal";
 import { ChevronDown, Loader } from "components/Icons";
 import { Row, RowEnd, RowStart } from "components/Row";
-import { MarketsModal } from "components/App/MarketBar/MarketsModal";
 
 const Container = styled.div`
   display: inline-flex;
@@ -32,7 +32,7 @@ const InnerContentWrapper = styled(Row)`
   background: ${({ theme }) => theme.bg3};
 `;
 
-const Chevron = styled(ChevronDown)<{
+export const Chevron = styled(ChevronDown)<{
   open: boolean;
 }>`
   transform: rotateX(${({ open }) => (open ? "180deg" : "0deg")});
