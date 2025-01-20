@@ -3,7 +3,7 @@ import JSBI from "jsbi";
 
 const MIN_NATIVE_CURRENCY_FOR_GAS: JSBI = JSBI.exponentiate(
   JSBI.BigInt(10),
-  JSBI.BigInt(16)
+  JSBI.BigInt(16),
 ); // .01 ETH
 
 /**
@@ -11,7 +11,7 @@ const MIN_NATIVE_CURRENCY_FOR_GAS: JSBI = JSBI.exponentiate(
  * @param currencyAmount to return max of
  */
 export function maxAmountSpend(
-  currencyAmount?: CurrencyAmount<Currency>
+  currencyAmount?: CurrencyAmount<Currency>,
 ): CurrencyAmount<Currency> | undefined {
   if (!currencyAmount) return undefined;
   if (currencyAmount.currency.isNative) {
@@ -20,12 +20,12 @@ export function maxAmountSpend(
     ) {
       return CurrencyAmount.fromRawAmount(
         currencyAmount.currency,
-        JSBI.subtract(currencyAmount.quotient, MIN_NATIVE_CURRENCY_FOR_GAS)
+        JSBI.subtract(currencyAmount.quotient, MIN_NATIVE_CURRENCY_FOR_GAS),
       );
     } else {
       return CurrencyAmount.fromRawAmount(
         currencyAmount.currency,
-        JSBI.BigInt(0)
+        JSBI.BigInt(0),
       );
     }
   }

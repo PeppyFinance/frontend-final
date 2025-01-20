@@ -1,29 +1,33 @@
 import { useCallback, useMemo } from "react";
-import { useAppDispatch, useAppSelector } from "../declaration";
-import { InputField, OrderType, PositionType } from "../../types/trade";
-import { BN_ZERO, formatPrice } from "../../utils/numbers";
+import { useMarket } from "../../hooks/useMarkets";
 import { Market } from "../../types/market";
+import { InputField, OrderType, PositionType } from "../../types/trade";
+import { makeHttpRequest } from "../../utils/http";
+import { BN_ZERO, formatPrice } from "../../utils/numbers";
+import { useAppDispatch, useAppSelector } from "../declaration";
 import { useHedgerInfo, useMarketData } from "../hedger/hooks";
 import {
-  updateOrderType,
-  updateLimitPrice,
-  updateMarketId,
-  updateInputField,
-  updateTypedValue,
-  updatePositionType,
-  updateLockedPercentages,
-  updateTpSl,
-  updateTpError,
-  updateSlError,
-  updateTpSlState,
-  updateDelegateTpSl,
-  setTpSlOpened,
   setTpSlConfig,
+  setTpSlOpened,
+  updateDelegateTpSl,
+  updateInputField,
+  updateLimitPrice,
+  updateLockedPercentages,
+  updateMarketId,
+  updateOrderType,
+  updatePositionType,
+  updateSlError,
+  updateTpError,
+  updateTpSl,
+  updateTpSlState,
+  updateTypedValue,
 } from "./actions";
-import { useMarket } from "../../hooks/useMarkets";
-import { makeHttpRequest } from "../../utils/http";
-import { GetLockedParamUrlResponse } from "./types";
-import { TpSlUpdateProcessState, TpSlState, TpSlConfigParams } from "./types";
+import {
+  GetLockedParamUrlResponse,
+  TpSlConfigParams,
+  TpSlState,
+  TpSlUpdateProcessState,
+} from "./types";
 
 export function useActiveMarketId(): number | undefined {
   const marketId = useAppSelector((state) => state.trade.marketId);
@@ -43,7 +47,7 @@ export function useActiveMarketPrice(): string {
       !marketData
         ? BN_ZERO.toString()
         : formatPrice(marketData.markPrice, market?.pricePrecision),
-    [market?.pricePrecision, marketData]
+    [market?.pricePrecision, marketData],
   );
 }
 
@@ -79,7 +83,7 @@ export function useTradeTpSlError() {
 }
 export function useTpSlDelegate(): boolean {
   const delegateStatus = useAppSelector(
-    (state) => state.trade.tpSlDelegateChecker
+    (state) => state.trade.tpSlDelegateChecker,
   );
   return delegateStatus;
 }
@@ -98,7 +102,7 @@ export function useSetTpSlConfig(): (tpSlValue: TpSlConfigParams) => void {
     (tpSlValue: TpSlConfigParams) => {
       dispatch(setTpSlConfig(tpSlValue));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -108,18 +112,18 @@ export function useSetTpSl(): (tpSlValue: TpSlState) => void {
     (tpSlValue: TpSlState) => {
       dispatch(updateTpSl(tpSlValue));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 export function useSetTpSlState(): (
-  tpSlStateValue: TpSlUpdateProcessState
+  tpSlStateValue: TpSlUpdateProcessState,
 ) => void {
   const dispatch = useAppDispatch();
   return useCallback(
     (tpSlStateValue: TpSlUpdateProcessState) => {
       dispatch(updateTpSlState(tpSlStateValue));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 export function useSetDelegateTpSl() {
@@ -128,7 +132,7 @@ export function useSetDelegateTpSl() {
     (delegateStatus: boolean) => {
       dispatch(updateDelegateTpSl(delegateStatus));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -138,7 +142,7 @@ export function useSetTpSlOpened() {
     (tpSlOpened: boolean) => {
       dispatch(setTpSlOpened(tpSlOpened));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 export function useSetTpError(): (tpValue: string) => void {
@@ -147,7 +151,7 @@ export function useSetTpError(): (tpValue: string) => void {
     (tpValue: string) => {
       dispatch(updateTpError(tpValue));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 export function useSetSlError(): (slValue: string) => void {
@@ -156,7 +160,7 @@ export function useSetSlError(): (slValue: string) => void {
     (slValue: string) => {
       dispatch(updateSlError(slValue));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -177,7 +181,7 @@ export function useLockedPercentages(): {
       partyBmm,
       lf,
     }),
-    [cva, lf, partyAmm, partyBmm]
+    [cva, lf, partyAmm, partyBmm],
   );
 }
 
@@ -187,7 +191,7 @@ export function useSetOrderType(): (orderType: OrderType) => void {
     (orderType: OrderType) => {
       dispatch(updateOrderType(orderType));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 export function useSetInputField(): (inputField: InputField) => void {
@@ -196,7 +200,7 @@ export function useSetInputField(): (inputField: InputField) => void {
     (inputField: InputField) => {
       dispatch(updateInputField(inputField));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -206,7 +210,7 @@ export function useSetPositionType() {
     (type: PositionType) => {
       dispatch(updatePositionType(type));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -216,7 +220,7 @@ export function useSetLimitPrice() {
     (price: string) => {
       dispatch(updateLimitPrice(price));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -227,7 +231,7 @@ export function useSetTypedValue() {
       dispatch(updateInputField(inputField));
       dispatch(updateTypedValue(value));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -241,12 +245,12 @@ export function useSetMarketId(): (id: number) => void {
         dispatch(updateMarketId({ id }));
       }
     },
-    [dispatch, marketId]
+    [dispatch, marketId],
   );
 }
 
 export function useGetLockedPercentages(
-  leverage: number
+  leverage: number,
 ): (options: {
   signal: AbortSignal;
   headers: [string, string][];
@@ -261,12 +265,12 @@ export function useGetLockedPercentages(
         if (!baseUrl || !market) throw new Error("missing parameters");
         const { href: url } = new URL(
           `/get_locked_params/${market.name}?leverage=${leverage}`,
-          baseUrl
+          baseUrl,
         );
 
         const response = await makeHttpRequest<GetLockedParamUrlResponse>(
           url,
-          options
+          options,
         );
 
         if (response) dispatch(updateLockedPercentages({ ...response }));
@@ -278,6 +282,6 @@ export function useGetLockedPercentages(
         }
       }
     },
-    [baseUrl, dispatch, leverage, market]
+    [baseUrl, dispatch, leverage, market],
   );
 }

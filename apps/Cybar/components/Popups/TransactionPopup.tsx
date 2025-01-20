@@ -1,25 +1,24 @@
-import React from "react";
-import styled, { useTheme } from "styled-components";
 import { ArrowUpRight } from "react-feather";
+import styled, { useTheme } from "styled-components";
 
-import DEPOSIT_USDT_ICON from "/public/static/images/etc/DepositUSDTPopUp.svg";
-import WITHDRAW_USDT_ICON from "/public/static/images/etc/WithdrawUSDTPopUp.svg";
 import DEPOSIT_USDC_ICON from "/public/static/images/etc/DepositUSDCPopUp.svg";
+import DEPOSIT_USDT_ICON from "/public/static/images/etc/DepositUSDTPopUp.svg";
 import WITHDRAW_USDC_ICON from "/public/static/images/etc/WithdrawUSDCPopUp.svg";
+import WITHDRAW_USDT_ICON from "/public/static/images/etc/WithdrawUSDTPopUp.svg";
 
-import { TransferTab } from "@symmio/frontend-sdk/types/transfer";
-import { ExplorerDataType } from "@symmio/frontend-sdk/utils/explorers";
 import { SupportedChainId } from "@symmio/frontend-sdk/constants/chains";
-import { FALLBACK_CHAIN_ID } from "constants/chains/chains";
 import { useTransaction } from "@symmio/frontend-sdk/state/transactions/hooks";
 import { TransactionDetails } from "@symmio/frontend-sdk/state/transactions/types";
+import { TransferTab } from "@symmio/frontend-sdk/types/transfer";
+import { ExplorerDataType } from "@symmio/frontend-sdk/utils/explorers";
+import { FALLBACK_CHAIN_ID } from "constants/chains/chains";
 
-import TransactionSummary from "components/Summaries/TransactionSummary ";
-import { ExplorerLink } from "components/Link";
-import { Row, RowEnd, RowStart } from "components/Row";
+import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 import { CheckMark, Close } from "components/Icons";
 import ImageWithFallback from "components/ImageWithFallback";
-import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
+import { ExplorerLink } from "components/Link";
+import { Row, RowEnd, RowStart } from "components/Row";
+import TransactionSummary from "components/Summaries/TransactionSummary ";
 
 const Wrapper = styled(Row)<{ success?: boolean; color: string }>`
   height: 40px;

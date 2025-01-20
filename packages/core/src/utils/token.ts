@@ -1,11 +1,10 @@
-import { Ether, NativeCurrency, Token, Currency } from "@uniswap/sdk-core";
+import { Currency, Ether, NativeCurrency, Token } from "@uniswap/sdk-core";
 import invariant from "tiny-invariant";
 
-import { WRAPPED_NATIVE_CURRENCY } from "../constants/tokens";
 import { SupportedChainId } from "../constants/chains";
-import { useFallbackChainId } from "../state/chains/hooks";
+import { WRAPPED_NATIVE_CURRENCY } from "../constants/tokens";
+import { useFallbackChainId, useV3Ids } from "../state/chains/hooks";
 import { AddressMap, DecimalMap, SymbolMap } from "./address";
-import { useV3Ids } from "../state/chains/hooks";
 
 export const NATIVE_CHAIN_ID = "NATIVE";
 export const DEFAULT_ERC20_DECIMALS = 18;
@@ -24,7 +23,7 @@ export function duplicateTokenByAddressMap(
   decimals: number,
   symbol: SymbolMap,
   name: SymbolMap,
-  decimalMap: DecimalMap = {}
+  decimalMap: DecimalMap = {},
 ): TokenMap {
   return Object.keys(addressMap)
     .map((chainId) => Number(chainId)) //convert string to number because of the object.keys() always returns string
@@ -34,7 +33,7 @@ export function duplicateTokenByAddressMap(
         addressMap[chainId],
         decimalMap[chainId] ?? decimals,
         symbol[chainId],
-        name[chainId]
+        name[chainId],
       );
       return acc;
     }, {});
@@ -42,7 +41,7 @@ export function duplicateTokenByAddressMap(
 
 export function useGetTokenWithFallbackChainId(
   tokenMap: TokenMap,
-  chainId: number | undefined
+  chainId: number | undefined,
 ): Token {
   const v3_ids = useV3Ids();
   const FALLBACK_CHAIN_ID = useFallbackChainId();
@@ -61,7 +60,7 @@ export function isFTM(chainId: number): chainId is SupportedChainId.FANTOM {
 }
 
 export function isPolygon(
-  chainId: number
+  chainId: number,
 ): chainId is SupportedChainId.POLYGON {
   return chainId === SupportedChainId.POLYGON;
 }

@@ -28,14 +28,14 @@ import {
 
 export function useMarketsStatus(): ApiState {
   const marketsStatus: ApiState = useAppSelector(
-    (state) => state.hedger.marketsStatus
+    (state) => state.hedger.marketsStatus,
   );
   return marketsStatus;
 }
 
 export function useOpenInterestStatus(): ApiState {
   const openInterestStatus: ApiState = useAppSelector(
-    (state) => state.hedger.openInterestStatus
+    (state) => state.hedger.openInterestStatus,
   );
   return openInterestStatus;
 }
@@ -46,7 +46,7 @@ export function useSetWebSocketStatus() {
     (status: ConnectionStatus) => {
       dispatch(updateWebSocketStatus({ status }));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -64,7 +64,7 @@ export function useHedgerInfo() {
       debouncedIsSupportedChainId && chainId && hedgerAddress[chainId]
         ? hedgerAddress[chainId][activeHedgerId]
         : hedgerAddress[SupportedChainId.NOT_SET][activeHedgerId],
-    [activeHedgerId, chainId, debouncedIsSupportedChainId, hedgerAddress]
+    [activeHedgerId, chainId, debouncedIsSupportedChainId, hedgerAddress],
   );
 }
 
@@ -75,7 +75,7 @@ export function useWebSocketUrl() {
 
 export function useWebSocketStatus() {
   const webSocketStatus = useAppSelector(
-    (state) => state.hedger.webSocketStatus
+    (state) => state.hedger.webSocketStatus,
   );
   return webSocketStatus;
 }
@@ -116,10 +116,10 @@ export function useErrorMessages() {
 
 export function useMarketNotionalCap() {
   const marketNotionalCap = useAppSelector(
-    (state) => state.hedger.marketNotionalCap
+    (state) => state.hedger.marketNotionalCap,
   );
   const marketNotionalCapStatus = useAppSelector(
-    (state) => state.hedger.marketNotionalCapStatus
+    (state) => state.hedger.marketNotionalCapStatus,
   );
   return { marketNotionalCap, marketNotionalCapStatus };
 }
@@ -145,14 +145,14 @@ export function useMarketData(name: string | undefined): MarketData | null {
 }
 
 export function useFundingRateData(
-  name: string | undefined
+  name: string | undefined,
 ): FundingRateData | null {
   const fundingRates = useAppSelector((state) => state.hedger.fundingRates);
   return name ? fundingRates[name] : null;
 }
 
 export function useMarketDepth(
-  name: string | undefined
+  name: string | undefined,
 ): MarketDepthData | null {
   const depths = useAppSelector((state) => state.hedger.depths);
   return name ? depths[name] : null;
@@ -164,7 +164,7 @@ export function useSetPrices() {
     (prices: MarketDataMap) => {
       dispatch(updatePrices({ prices }));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -174,7 +174,7 @@ export function useSetFundingRates() {
     (fundingRates: FundingRateMap) => {
       dispatch(updateFundingRates({ fundingRates }));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -184,7 +184,7 @@ export function useSetDepth() {
     (depth: MarketDepthData, name: string) => {
       dispatch(updateDepth({ name, depth }));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -194,6 +194,6 @@ export function useSetNotionalCap() {
     (notionalCap: MarketNotionalCap) => {
       dispatch(updateNotionalCap({ notionalCap }));
     },
-    [dispatch]
+    [dispatch],
   );
 }

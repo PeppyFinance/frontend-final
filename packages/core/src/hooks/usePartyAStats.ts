@@ -4,23 +4,23 @@ import { useSingleContractMultipleMethods } from "../lib/hooks/multicall";
 
 import { useSupportedChainId } from "../lib/hooks/useSupportedChainId";
 
-import { fromWei } from "../utils/numbers";
 import { getMultipleBN, getSingleWagmiResult } from "../utils/multicall";
+import { fromWei } from "../utils/numbers";
 
-import { UserPartyAStatDetail } from "../types/user";
+import { COLLATERAL_ABI, DIAMOND_ABI } from "../constants";
+import useActiveWagmi from "../lib/hooks/useActiveWagmi";
 import {
   useCollateralAddress,
   useCollateralDecimal,
   useDiamondAddress,
   useFallbackChainId,
 } from "../state/chains";
-import useActiveWagmi from "../lib/hooks/useActiveWagmi";
-import { COLLATERAL_ABI, DIAMOND_ABI } from "../constants";
+import { UserPartyAStatDetail } from "../types/user";
 
 //TODO why its not covered by useMemo
 //we converted all BigNumbers to string to avoid spurious rerenders
 export function usePartyAStats(
-  account: string | null | undefined
+  account: string | null | undefined,
 ): UserPartyAStatDetail {
   const { chainId } = useActiveWagmi();
   const isSupportedChainId = useSupportedChainId();
@@ -81,7 +81,7 @@ export function usePartyAStats(
     ],
     {
       watch: true,
-    }
+    },
   );
 
   const {
@@ -95,7 +95,7 @@ export function usePartyAStats(
     {
       watch: true,
       enabled: partyAStatsCallsFirstCall.length > 0,
-    }
+    },
   );
 
   const {
@@ -109,7 +109,7 @@ export function usePartyAStats(
     {
       watch: true,
       enabled: partyAStatsCallsSecondCall.length > 0,
-    }
+    },
   );
 
   const loading =
@@ -122,7 +122,7 @@ export function usePartyAStats(
     collateralBalance:
       fromWei(
         getSingleWagmiResult(cBalance),
-        collateralDecimal[chainId ?? fallBackChainId]
+        collateralDecimal[chainId ?? fallBackChainId],
       ) ?? "0",
     accountBalance: fromWei(getSingleWagmiResult(firstData, 0)),
     liquidationStatus:

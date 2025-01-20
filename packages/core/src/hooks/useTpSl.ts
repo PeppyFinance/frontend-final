@@ -1,30 +1,30 @@
 import { useCallback, useMemo } from "react";
 
-import useActiveWagmi from "../lib/hooks/useActiveWagmi";
-import {
-  createTransactionCallback,
-  TransactionCallbackState,
-} from "../utils/web3";
-import { useActiveAccountAddress } from "../state/user/hooks";
-import { useTransactionAdder } from "../state/transactions/hooks";
-import { useSupportedChainId } from "../lib/hooks/useSupportedChainId";
-import { useSingleContractMultipleMethods } from "../lib/hooks/multicall";
-import {
-  useMultiAccountAddress,
-  useTpSlWalletAddress,
-  useWagmiConfig,
-} from "../state/chains";
+import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import { Address, encodeFunctionData } from "viem";
 import {
   CANCEL_CLOSE_QUOTE_HASH_CONTRACT,
   CLOSE_QUOTE_HASH_CONTRACT,
   MULTI_ACCOUNT_ABI,
 } from "../constants";
+import { useSingleContractMultipleMethods } from "../lib/hooks/multicall";
+import useActiveWagmi from "../lib/hooks/useActiveWagmi";
+import { useSupportedChainId } from "../lib/hooks/useSupportedChainId";
+import {
+  useMultiAccountAddress,
+  useTpSlWalletAddress,
+  useWagmiConfig,
+} from "../state/chains";
+import { useTransactionAdder } from "../state/transactions/hooks";
 import {
   SignMessageTransactionInfo,
   TransactionType,
 } from "../state/transactions/types";
-import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
+import { useActiveAccountAddress } from "../state/user/hooks";
+import {
+  TransactionCallbackState,
+  createTransactionCallback,
+} from "../utils/web3";
 
 export function useSendDelegateAccess(): {
   state: TransactionCallbackState;
@@ -38,12 +38,12 @@ export function useSendDelegateAccess(): {
   const MULTI_ACCOUNT_ADDRESS_CHAIN = useMultiAccountAddress();
   const MULTI_ACCOUNT_ADDRESS = useMemo(
     () => (chainId ? MULTI_ACCOUNT_ADDRESS_CHAIN[chainId] : ""),
-    [MULTI_ACCOUNT_ADDRESS_CHAIN, chainId]
+    [MULTI_ACCOUNT_ADDRESS_CHAIN, chainId],
   );
   const TPSL_WALLET_ADDRESS_CHAIN = useTpSlWalletAddress();
   const TPSL_WALLET_ADDRESS = useMemo(
     () => (chainId ? TPSL_WALLET_ADDRESS_CHAIN[chainId] : ""),
-    [TPSL_WALLET_ADDRESS_CHAIN, chainId]
+    [TPSL_WALLET_ADDRESS_CHAIN, chainId],
   );
   const addRecentTransaction = useAddRecentTransaction();
   const wagmiConfig = useWagmiConfig();
@@ -124,7 +124,7 @@ export function useSendDelegateAccess(): {
           addRecentTransaction,
           txInfo,
           wagmiConfig,
-          summary
+          summary,
         ),
     };
   }, [
@@ -144,12 +144,12 @@ export function useContractDelegateTpSl(): [boolean, boolean] {
   const MULTI_ACCOUNT_ADDRESS_CHAIN = useMultiAccountAddress();
   const MULTI_ACCOUNT_ADDRESS = useMemo(
     () => (chainId ? MULTI_ACCOUNT_ADDRESS_CHAIN[chainId] : ""),
-    [MULTI_ACCOUNT_ADDRESS_CHAIN, chainId]
+    [MULTI_ACCOUNT_ADDRESS_CHAIN, chainId],
   );
   const TPSL_WALLET_ADDRESS_CHAIN = useTpSlWalletAddress();
   const TPSL_WALLET_ADDRESS = useMemo(
     () => (chainId ? TPSL_WALLET_ADDRESS_CHAIN[chainId] : ""),
-    [TPSL_WALLET_ADDRESS_CHAIN, chainId]
+    [TPSL_WALLET_ADDRESS_CHAIN, chainId],
   );
 
   const calls =
@@ -177,7 +177,7 @@ export function useContractDelegateTpSl(): [boolean, boolean] {
     useSingleContractMultipleMethods(
       MULTI_ACCOUNT_ADDRESS,
       MULTI_ACCOUNT_ABI,
-      calls
+      calls,
     );
 
   return [

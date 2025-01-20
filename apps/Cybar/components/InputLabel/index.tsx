@@ -1,12 +1,11 @@
-import React from "react";
 import styled from "styled-components";
 
 import { formatPrice, toBN } from "@symmio/frontend-sdk/utils/numbers";
 
+import { Info as InfoIcon } from "components/Icons";
 import { NumericalInput } from "components/Input";
 import { RowBetween, RowEnd, RowStart } from "components/Row";
 import { ToolTip } from "components/ToolTip";
-import { Info as InfoIcon } from "components/Icons";
 
 export const Wrapper = styled(RowBetween)`
   width: 100%;

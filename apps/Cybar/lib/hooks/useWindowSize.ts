@@ -1,7 +1,7 @@
 import { useLayoutEffect, useState } from "react";
 
-import useEventListener from "./useEventListener";
 import { MEDIA_WIDTHS } from "theme";
+import useEventListener from "./useEventListener";
 
 interface WindowSize {
   width: number;

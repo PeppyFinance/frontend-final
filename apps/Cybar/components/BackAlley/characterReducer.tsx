@@ -29,12 +29,12 @@ export type DispatchAction = SetActive | SetInactive | SetDialog;
 
 export const characterReducer = (
   state: CharacterState,
-  action: DispatchAction
+  action: DispatchAction,
 ) => {
   switch (action.type) {
     case "SET_ACTIVE": {
       const character = BackAlleyChars.find(
-        (character) => character.id === action.characterId
+        (character) => character.id === action.characterId,
       );
       return {
         ...state,
@@ -53,7 +53,7 @@ export const characterReducer = (
       return {
         ...state,
         dialog: state.character?.dialogs?.find(
-          (dialog) => dialog.id === action.dialogId
+          (dialog) => dialog.id === action.dialogId,
         ),
       };
     }

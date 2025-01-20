@@ -1,26 +1,25 @@
-import React from "react";
-import styled from "styled-components";
 import Image from "next/legacy/image";
+import styled from "styled-components";
 
+import DEALLOCATE_ICON from "/public/static/images/etc/BalanceHistory/Deallocate.svg";
 import DEPOSIT_ICON from "/public/static/images/etc/BalanceHistory/Deposit.svg";
 import WITHDRAW_ICON from "/public/static/images/etc/BalanceHistory/Withdraw.svg";
-import DEALLOCATE_ICON from "/public/static/images/etc/BalanceHistory/Deallocate.svg";
 
-import { BN_TEN, formatAmount, toBN } from "@symmio/frontend-sdk/utils/numbers";
-import { formatTimestamp } from "@symmio/frontend-sdk/utils/time";
-import { ExplorerDataType } from "@symmio/frontend-sdk/utils/explorers";
 import {
   BalanceHistoryData,
   BalanceHistoryName,
   BalanceHistoryType,
 } from "@symmio/frontend-sdk/state/user/types";
+import { ExplorerDataType } from "@symmio/frontend-sdk/utils/explorers";
+import { BN_TEN, formatAmount, toBN } from "@symmio/frontend-sdk/utils/numbers";
+import { formatTimestamp } from "@symmio/frontend-sdk/utils/time";
 
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 
-import { Row, RowStart } from "components/Row";
-import { ExplorerLink } from "components/Link";
-import ShimmerAnimation from "components/ShimmerAnimation";
 import { useCollateralDecimal } from "@symmio/frontend-sdk/state/chains/hooks";
+import { ExplorerLink } from "components/Link";
+import { Row, RowStart } from "components/Row";
+import ShimmerAnimation from "components/ShimmerAnimation";
 
 interface HistoryItemInputs {
   data: BalanceHistoryData;
@@ -113,14 +112,14 @@ export default function BalanceItem({
               ? formatAmount(
                   toBN(amount).div(BN_TEN.pow(18)).toString(),
                   undefined,
-                  true
+                  true,
                 )
               : formatAmount(
                   toBN(amount)
                     .div(BN_TEN.pow(COLLATERAL_DECIMALS[chainId]))
                     .toString(),
                   undefined,
-                  true
+                  true,
                 )}{" "}
             {currency}
           </Amount>

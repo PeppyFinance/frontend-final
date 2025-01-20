@@ -2,11 +2,12 @@ import styled from "styled-components";
 
 import { useMarketsSearch } from "@symmio/frontend-sdk/hooks/useMarkets";
 import {
-  OrderMarktes,
   Direction,
+  OrderMarktes,
 } from "@symmio/frontend-sdk/state/hedger/hooks";
 import { InputField } from "components/App/MarketBar/InputField";
 import { RowBetween } from "components/Row";
+import { useMemo, useState } from "react";
 import TableBody from "./Body";
 import TableHeader from "./Header";
 
@@ -43,18 +44,27 @@ export interface MarketsTableProps {
   orderBy: OrderMarktes;
 }
 export default function Table({ direction, orderBy }: MarketsTableProps) {
-  const { markets, searchProps } = useMarketsSearch({
+  const { markets } = useMarketsSearch({
     orderBy,
     direction,
   });
-  const searchMarketsValue = searchProps?.ref?.current?.value || "";
+
+  const [search, setSearch] = useState("");
+
+  const { filtered } = useMemo(() => {
+    const filtered = markets.filter((market) =>
+      market.name.toLowerCase().includes(search),
+    );
+
+    return { filtered };
+  }, [search, markets]);
 
   return (
     <TableWrapper>
       <Title>
         <div>Markets</div>
         <InputWrapper>
-          <InputField searchProps={searchProps} placeholder={"Search Name"} />
+          <InputField setSearch={setSearch} placeholder={"Search Name"} />
         </InputWrapper>
       </Title>
       <TableHeader
@@ -70,7 +80,7 @@ export default function Table({ direction, orderBy }: MarketsTableProps) {
         orderedBy={orderBy}
         direction={direction}
       />
-      <TableBody markets={markets} searchValue={searchMarketsValue} />
+      <TableBody markets={filtered} searchValue={search} />
     </TableWrapper>
   );
 }

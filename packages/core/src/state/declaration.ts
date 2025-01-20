@@ -1,3 +1,4 @@
+import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
 import {
   Action,
   AnyAction,
@@ -5,11 +6,10 @@ import {
   ThunkAction,
   ThunkDispatch,
 } from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
-import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
+import { createTransform, persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 const { configureStore } = ((toolkitRaw as any).default ??
   toolkitRaw) as typeof toolkitRaw;
-// import { persistReducer, persistStore } from "redux-persist";
-// import storage from "redux-persist/lib/storage";
 // import { AsyncNodeStorage } from "redux-persist-node-storage";
 // import * as reduxPersisRaw from "redux-persist/lib/integration/react";
 // const { PersistGate } = ((reduxPersisRaw as any).default ??
@@ -21,27 +21,50 @@ import {
   useSelector,
 } from "react-redux";
 import "symbol-observable";
+import { ONE_DAY_IN_MILLISECOND } from "../constants";
 import reducer from "./reducer";
 // import crossBrowserListener from "../utils/reduxPersistListener";
 
-// const PERSISTED_KEYS: string[] = ["user", "transactions"];
+const createExpirationTransform = (expiryTime) => {
+  return createTransform(
+    (inboundState) => {
+      return {
+        data: inboundState,
+        timestamp: Date.now(),
+      };
+    },
+    (outboundState) => {
+      if (!outboundState) return undefined;
 
-// const persistConfig = {
-//   key: "root",
-//   whitelist: PERSISTED_KEYS,
-//   storage,
-// };
+      const now = Date.now();
+      const expired = now - outboundState.timestamp > expiryTime;
 
-// const persistedReducer = persistReducer(persistConfig, reducer);
+      return expired ? undefined : outboundState.data;
+    },
+  );
+};
+
+const PERSISTED_KEYS: string[] = ["user"];
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: PERSISTED_KEYS,
+  transforms: [createExpirationTransform(ONE_DAY_IN_MILLISECOND)],
+};
+
+const persistedReducer = persistReducer(persistConfig, reducer);
+
 export type RootState = ReturnType<typeof reducer>;
 function makeStore() {
   return configureStore({
-    reducer,
+    reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         thunk: true,
         immutableCheck: true,
-        serializableCheck: false,
+        serializableCheck: {
+          ignoredActions: ["persist/PERSIST"],
+        },
       }),
     devTools: process.env.NODE_ENV === "development",
   });
@@ -65,6 +88,8 @@ export const getOrCreateStore = () => {
 };
 
 store = getOrCreateStore();
+export default store;
+export const persistor = persistStore(store);
 
 export type AppState = ReturnType<typeof store.getState>;
 
@@ -79,10 +104,6 @@ export type AppThunkDispatch = ThunkDispatch<unknown, void, AnyAction>;
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<AppState> = useSelector;
-
-export default store;
-
-// export const persistor = persistStore(store);
 
 // if (typeof window === "object") {
 //   window.addEventListener(

@@ -1,11 +1,11 @@
 import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
-const { createReducer } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
 import find from "lodash/find.js";
 import unionBy from "lodash/unionBy.js";
+const { createReducer } = ((toolkitRaw as any).default ??
+  toolkitRaw) as typeof toolkitRaw;
 
-import { InstantCloseResponse, InstantCloseStatus, QuotesState } from "./types";
 import { Quote } from "../../types/quote";
+import { InstantCloseResponse, InstantCloseStatus, QuotesState } from "./types";
 
 import { ApiState } from "../../types/api";
 import {
@@ -135,7 +135,7 @@ export default createReducer(initialState, (builder) =>
           state.history[chainId] = unionBy(history, quotes, "id");
           state.historyState = ApiState.OK;
         }
-      }
+      },
     )
 
     .addCase(getHistory.rejected, (state) => {
@@ -147,14 +147,14 @@ export default createReducer(initialState, (builder) =>
       addQuoteInstantCloseData,
       (state, { payload: { id, amount, timestamp, status } }) => {
         state.instantClosesStates[id] = { amount, timestamp, status };
-      }
+      },
     )
     .addCase(
       updateQuoteInstantCloseStatus,
       (state, { payload: { id, newStatus } }) => {
         const data = state.instantClosesStates[id];
         state.instantClosesStates[id] = { ...data, status: newStatus };
-      }
+      },
     )
 
     .addCase(getInstantCloses.pending, (state) => {
@@ -179,11 +179,11 @@ export default createReducer(initialState, (builder) =>
         });
 
         state.instantClosesStates = instantClosesStates;
-      }
+      },
     )
 
     .addCase(getInstantCloses.rejected, (state) => {
       state.openInstantClosesState = ApiState.ERROR;
       console.error("Unable to fetch from The Hedger");
-    })
+    }),
 );

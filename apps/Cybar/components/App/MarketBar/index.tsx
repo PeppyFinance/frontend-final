@@ -1,18 +1,18 @@
 import { useMemo } from "react";
 import styled from "styled-components";
 
-import { ApiState } from "@symmio/frontend-sdk/types/api";
-import { formatDollarAmount } from "@symmio/frontend-sdk/utils/numbers";
-import { useActiveMarket } from "@symmio/frontend-sdk/state/trade/hooks";
 import {
   useMarketNotionalCap,
   useMarketOpenInterest,
 } from "@symmio/frontend-sdk/state/hedger/hooks";
+import { useActiveMarket } from "@symmio/frontend-sdk/state/trade/hooks";
+import { ApiState } from "@symmio/frontend-sdk/types/api";
+import { formatDollarAmount } from "@symmio/frontend-sdk/utils/numbers";
 
-import { Loader } from "components/Icons";
+import BlinkingPrice from "components/App/FavoriteBar/BlinkingPrice";
 import MarketInfo from "components/App/MarketBar/MarketInfo";
 import { ColumnCenter } from "components/Column";
-import BlinkingPrice from "components/App/FavoriteBar/BlinkingPrice";
+import { Loader } from "components/Icons";
 import { Row, RowBetween } from "components/Row";
 import MarketDepths from "./MarketDepths";
 import MarketFundingRate from "./MarketFundingRate";
@@ -97,7 +97,7 @@ export default function MarketBar() {
 
   const [used, total] = useMemo(
     () => [openInterest?.used, openInterest?.total],
-    [openInterest]
+    [openInterest],
   );
   const [notionalCapUsed, totalCap] = useMemo(() => {
     return activeMarket?.name === marketNotionalCap.name &&

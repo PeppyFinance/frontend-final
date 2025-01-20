@@ -1,25 +1,25 @@
 import styled from "styled-components";
 
-import { Container } from "pages/trade/[id]";
-import Markets from "components/App/Markets";
 import {
   Direction,
   OrderMarktes,
 } from "@symmio/frontend-sdk/state/hedger/hooks";
+import Markets from "components/App/Markets";
 import { useRouter } from "next/router";
+import { Container } from "pages/trade/[id]";
 
 const Wrapper = styled(Container)`
   padding: 0px 12px;
 `;
 
 const cleanOrderParam = (
-  param: string | string[] | undefined
+  param: string | string[] | undefined,
 ): OrderMarktes => {
   if (typeof param !== "string") {
     return "tradeVolume";
   }
   return (["price", "priceChangePercent", "tradeVolume", "notionalCap"].find(
-    (order) => order.toLowerCase() === param.toLowerCase()
+    (order) => order.toLowerCase() === param.toLowerCase(),
   ) ?? "tradeVolume") as OrderMarktes;
 };
 

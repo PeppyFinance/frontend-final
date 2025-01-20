@@ -1,6 +1,5 @@
-import React from "react";
-import styled from "styled-components";
 import { Gift as GiftIcon } from "react-feather";
+import styled from "styled-components";
 
 const Icon = styled(GiftIcon)<{
   size?: string;

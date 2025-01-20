@@ -1,13 +1,13 @@
-import React, { useCallback } from "react";
-import styled, { useTheme } from "styled-components";
-import { isMobile } from "react-device-detect";
 import { darken } from "polished";
+import { useCallback } from "react";
+import { isMobile } from "react-device-detect";
+import styled, { useTheme } from "styled-components";
 
+import { EnterButton, MaxButton } from "components/Button";
+import { ChevronDown as ChevronDownIcon, Enter } from "components/Icons";
 import ImageWithFallback from "components/ImageWithFallback";
 import { NumericalInput } from "components/Input";
 import { RowBetween, RowCenter, RowEnd } from "components/Row";
-import { ChevronDown as ChevronDownIcon, Enter } from "components/Icons";
-import { MaxButton, EnterButton } from "components/Button";
 import { StaticImageData } from "next/legacy/image";
 
 export const Wrapper = styled.div`

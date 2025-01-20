@@ -1,11 +1,11 @@
 import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
-const { createAction } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
 import {
   SerializableTransactionReceipt,
   TransactionDetails,
   TransactionInfo,
 } from "./types";
+const { createAction } = ((toolkitRaw as any).default ??
+  toolkitRaw) as typeof toolkitRaw;
 
 export const addTransaction = createAction<{
   chainId: number;
@@ -15,7 +15,7 @@ export const addTransaction = createAction<{
   summary?: string;
 }>("transactions/addTransaction");
 export const clearAllTransactions = createAction<{ chainId: number }>(
-  "transactions/clearAllTransactions"
+  "transactions/clearAllTransactions",
 );
 export const finalizeTransaction = createAction<{
   chainId: number;

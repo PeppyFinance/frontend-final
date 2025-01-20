@@ -1,18 +1,18 @@
 import styled from "styled-components";
 
-import useAccountData from "@symmio/frontend-sdk/hooks/useAccountData";
 import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
+import useAccountData from "@symmio/frontend-sdk/hooks/useAccountData";
 import { formatAmount } from "@symmio/frontend-sdk/utils/numbers";
 
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 
-import { Row } from "components/Row";
+import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
 import Column from "components/Column";
 import InfoItem from "components/InfoItem";
+import { Row } from "components/Row";
 import { DefaultContainer } from "../styles";
 import AccountHealth from "./AccountHealth";
 import UPNLBar from "./UPNLBar";
-import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
 
 const Container = styled(DefaultContainer)`
   padding-bottom: 16px;
@@ -34,7 +34,7 @@ export default function AccountOverview() {
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(
     COLLATERAL_TOKEN,
-    chainId
+    chainId,
   );
   const loading = chainId ? accountLoading : true;
 

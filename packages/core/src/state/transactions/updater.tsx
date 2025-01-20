@@ -1,19 +1,19 @@
-import React, { useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 import LibUpdater from "../../lib/hooks/transactions/updater";
 import useActiveWagmi from "../../lib/hooks/useActiveWagmi";
 
-import { useAppDispatch, useAppSelector } from "../declaration";
-import { useAddPopup } from "../application/hooks";
 import { L2_CHAIN_IDS } from "../../constants/chains";
 import {
   DEFAULT_TXN_DISMISS_MS,
   L2_TXN_DISMISS_MS,
 } from "../../constants/misc";
+import { useAddPopup } from "../application/hooks";
+import { useAppDispatch, useAppSelector } from "../declaration";
 
-import { checkedTransaction, finalizeTransaction } from "./actions";
-import { useSetNewNotificationFlag } from "../notifications/hooks";
 import { TransactionReceipt } from "viem";
+import { useSetNewNotificationFlag } from "../notifications/hooks";
+import { checkedTransaction, finalizeTransaction } from "./actions";
 
 export function TransactionUpdater() {
   const { chainId } = useActiveWagmi();
@@ -36,7 +36,7 @@ export function TransactionUpdater() {
       hash: string;
       blockNumber: number;
     }) => dispatch(checkedTransaction({ chainId, hash, blockNumber })),
-    [dispatch]
+    [dispatch],
   );
 
   const onReceipt = useCallback(
@@ -63,7 +63,7 @@ export function TransactionUpdater() {
             transactionHash: receipt.transactionHash,
             transactionIndex: receipt.transactionIndex,
           },
-        })
+        }),
       );
       const transaction = transactions[chainId][hash];
       newPopupNotifier();
@@ -77,15 +77,15 @@ export function TransactionUpdater() {
           },
         },
         hash,
-        isL2 ? L2_TXN_DISMISS_MS : DEFAULT_TXN_DISMISS_MS
+        isL2 ? L2_TXN_DISMISS_MS : DEFAULT_TXN_DISMISS_MS,
       );
     },
-    [addPopup, dispatch, isL2, newPopupNotifier, transactions]
+    [addPopup, dispatch, isL2, newPopupNotifier, transactions],
   );
 
   const pendingTransactions = useMemo(
-    () => (chainId ? transactions[chainId] ?? {} : {}),
-    [chainId, transactions]
+    () => (chainId ? (transactions[chainId] ?? {}) : {}),
+    [chainId, transactions],
   );
 
   return (

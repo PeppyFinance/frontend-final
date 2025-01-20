@@ -1,19 +1,23 @@
+import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
 import {
-  sendTransaction,
-  waitForTransactionReceipt,
   Config,
   estimateGas,
+  sendTransaction,
+  waitForTransactionReceipt,
 } from "@wagmi/core";
-import { UserRejectedRequestError, parseEther } from "viem";
-import { ContractFunctionRevertedError, BaseError } from "viem";
-import { useAddRecentTransaction } from "@rainbow-me/rainbowkit";
+import {
+  BaseError,
+  ContractFunctionRevertedError,
+  UserRejectedRequestError,
+  parseEther,
+} from "viem";
 
+import { WEB_SETTING } from "../config";
 import { useTransactionAdder } from "../state/transactions/hooks";
 import { TransactionInfo } from "../state/transactions/types";
+import { useExpertMode } from "../state/user/hooks";
 import { ConstructCallReturnType } from "../types/web3";
 import { toBN } from "./numbers";
-import { WEB_SETTING } from "../config";
-import { useExpertMode } from "../state/user/hooks";
 
 export function calculateGasMargin(value: bigint): bigint {
   return BigInt(toBN(value.toString()).times(12_000).div(10_000).toFixed(0));
@@ -33,7 +37,7 @@ export async function createTransactionCallback(
   txInfo: TransactionInfo,
   wagmiConfig: Config,
   summary?: string,
-  expertMode?: ReturnType<typeof useExpertMode>
+  expertMode?: ReturnType<typeof useExpertMode>,
 ) {
   let call: any;
   try {
@@ -66,7 +70,7 @@ export async function createTransactionCallback(
 
       if (expertMode && !error.message.includes("User rejected the request")) {
         console.log(
-          "Proceeding with transaction despite the error due to expert mode"
+          "Proceeding with transaction despite the error due to expert mode",
         );
 
         const config = call.config;

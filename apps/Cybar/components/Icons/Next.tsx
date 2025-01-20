@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Next({
   width = 10,
   height = 8,

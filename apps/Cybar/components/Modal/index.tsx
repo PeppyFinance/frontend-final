@@ -1,13 +1,16 @@
-import React from "react";
+import { Text } from "rebass";
 import styled, { useTheme } from "styled-components";
 import StyledModal from "styled-react-modal";
 import { Z_INDEX } from "theme";
-import { Text } from "rebass";
 
 import { PositionType } from "@symmio/frontend-sdk/types/trade";
 
-import { Close as CloseIcon, LongArrow, ShortArrow } from "components/Icons";
-import { ChevronDown } from "components/Icons";
+import {
+  ChevronDown,
+  Close as CloseIcon,
+  LongArrow,
+  ShortArrow,
+} from "components/Icons";
 import { RowBetween } from "components/Row";
 
 const BaseModal = StyledModal.styled`

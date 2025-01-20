@@ -1,3 +1,5 @@
+import isEqual from "lodash/isEqual.js";
+import { lighten } from "polished";
 import React, {
   useCallback,
   useEffect,
@@ -5,55 +7,53 @@ import React, {
   useRef,
   useState,
 } from "react";
-import styled, { useTheme } from "styled-components";
 import { Activity } from "react-feather";
-import isEqual from "lodash/isEqual.js";
-import { lighten } from "polished";
+import styled, { useTheme } from "styled-components";
 import { useConnect } from "wagmi";
 
+import { WEB_SETTING } from "@symmio/frontend-sdk/config";
+import { ChainInfo } from "@symmio/frontend-sdk/constants/chainInfo";
 import { useAppDispatch } from "@symmio/frontend-sdk/state";
 import { truncateAddress } from "@symmio/frontend-sdk/utils/address";
-import { ChainInfo } from "@symmio/frontend-sdk/constants/chainInfo";
 import { FALLBACK_CHAIN_ID, FALLBACK_FE_NAME } from "constants/chains/chains";
-import { WEB_SETTING } from "@symmio/frontend-sdk/config";
 
-import useRpcChangerCallback from "@symmio/frontend-sdk/lib/hooks/useRpcChangerCallback";
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 import usePrevious from "@symmio/frontend-sdk/lib/hooks/usePrevious";
+import useRpcChangerCallback from "@symmio/frontend-sdk/lib/hooks/useRpcChangerCallback";
+import { updateAccount } from "@symmio/frontend-sdk/state/user/actions";
 import {
   useAccountPartyAStat,
   useActiveAccount,
   useSetFEName,
 } from "@symmio/frontend-sdk/state/user/hooks";
-import { updateAccount } from "@symmio/frontend-sdk/state/user/actions";
 
 import {
   useAccountsLength,
   useUserAccounts,
 } from "@symmio/frontend-sdk/hooks/useAccounts";
 
-import { NavButton } from "components/Button";
-import { ChevronDown, Switch, Status as StatusIcon } from "components/Icons";
-import { Row, RowCenter, RowEnd, RowStart } from "components/Row";
-import AccountsModal from "./AccountsModal";
-import CreateAccountModal from "components/ReviewModal/CreateAccountModal";
-import {
-  GradientButtonWrapper,
-  GradientColorButton,
-} from "components/Button/GradientButton";
-import AccountUpnl from "components/App/AccountData/AccountUpnl";
-import ImageWithFallback from "components/ImageWithFallback";
-import Badge from "./Badge";
 import { useAccountModal, useConnectModal } from "@rainbow-me/rainbowkit";
-import { getChainLogo } from "utils/chainLogo";
-import { useV3Ids } from "@symmio/frontend-sdk/state/chains/hooks";
-import { ApplicationModal } from "@symmio/frontend-sdk/state/application/reducer";
 import {
   useCreateAccountModalToggle,
   useModalOpen,
 } from "@symmio/frontend-sdk/state/application/hooks";
-import useOnOutsideClick from "lib/hooks/useOnOutsideClick";
+import { ApplicationModal } from "@symmio/frontend-sdk/state/application/reducer";
+import { useV3Ids } from "@symmio/frontend-sdk/state/chains/hooks";
 import { AllAccountsUpdater } from "@symmio/frontend-sdk/state/user/allAccountsUpdater";
+import AccountUpnl from "components/App/AccountData/AccountUpnl";
+import { NavButton } from "components/Button";
+import {
+  GradientButtonWrapper,
+  GradientColorButton,
+} from "components/Button/GradientButton";
+import { ChevronDown, Status as StatusIcon, Switch } from "components/Icons";
+import ImageWithFallback from "components/ImageWithFallback";
+import CreateAccountModal from "components/ReviewModal/CreateAccountModal";
+import { Row, RowCenter, RowEnd, RowStart } from "components/Row";
+import useOnOutsideClick from "lib/hooks/useOnOutsideClick";
+import { getChainLogo } from "utils/chainLogo";
+import AccountsModal from "./AccountsModal";
+import Badge from "./Badge";
 
 const Container = styled.div`
   display: inline-flex;

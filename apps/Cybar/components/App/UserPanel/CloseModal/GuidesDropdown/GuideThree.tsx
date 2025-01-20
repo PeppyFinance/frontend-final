@@ -1,11 +1,11 @@
 import styled, { useTheme } from "styled-components";
 
-import { toBN } from "@symmio/frontend-sdk/utils/numbers";
 import { CloseGuides, OrderType } from "@symmio/frontend-sdk/types/trade";
+import { toBN } from "@symmio/frontend-sdk/utils/numbers";
 
-import { Amount, Child, ColoredBox, Full, Label } from "./styles";
 import Item from "components/App/UserPanel/CloseModal/Item";
 import Column from "components/Column";
+import { Amount, Child, ColoredBox, Full, Label } from "./styles";
 
 const Wrapper = styled(Column)`
   gap: 12px;
@@ -42,7 +42,7 @@ export default function GuideThree({
     text: string,
     boxColor: string,
     availability?: string,
-    availabilityColor?: string
+    availabilityColor?: string,
   ): JSX.Element {
     return (
       <>
@@ -60,7 +60,7 @@ export default function GuideThree({
     maxValue: string,
     symbol: string | undefined,
     color: string,
-    onClick?: (amount: string) => void
+    onClick?: (amount: string) => void,
   ) {
     const active = onClick ? true : false;
 
@@ -93,14 +93,14 @@ export default function GuideThree({
           "Full Close:",
           maxOrLiquidColor,
           maxOrLiquidText,
-          maxOrLiquidColor
+          maxOrLiquidColor,
         )}
         amount={getItemAmount(
           maxClose,
           maxClose,
           symbol,
           maxOrLiquidColor,
-          () => setSize(maxClose)
+          () => setSize(maxClose),
         )}
       />
 
@@ -109,7 +109,7 @@ export default function GuideThree({
           "Partial close:",
           theme.text0,
           "Unavailable",
-          theme.negative
+          theme.negative,
         )}
         amount={
           <Amount>

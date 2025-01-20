@@ -1,7 +1,6 @@
-import React from "react";
+import { useDetectAdBlock } from "adblock-detect-react";
 import Image from "next/legacy/image";
 import styled from "styled-components";
-import { useDetectAdBlock } from "adblock-detect-react";
 
 import LOADING_CHART from "/public/static/images/etc/LoadChart.svg";
 
@@ -9,8 +8,8 @@ import { useActiveMarket } from "@symmio/frontend-sdk/state/trade/hooks";
 
 import { Card } from "components/Card";
 // TODO: replace icon
-import { LottieCloverfield } from "components/Icons";
 import TVChart from "components/App/Chart/TVChart";
+import { LottieCloverfield } from "components/Icons";
 import { RowCenter } from "components/Row";
 
 const Wrapper = styled(Card)`

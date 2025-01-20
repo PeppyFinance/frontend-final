@@ -1,6 +1,5 @@
-import React from "react";
-import { useTheme } from "styled-components";
 import { Moon, Sun } from "react-feather";
+import { useTheme } from "styled-components";
 
 import { useIsDarkMode } from "@symmio/frontend-sdk/state/user/hooks";
 import { IconWrapper } from "./index";

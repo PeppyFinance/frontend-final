@@ -1,25 +1,25 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import {
-  usePositionType,
-  useTradeTpSl,
-} from "@symmio/frontend-sdk/state/trade/hooks";
-import { ApplicationModal } from "@symmio/frontend-sdk/state/application/reducer";
-import { useActiveMarket } from "@symmio/frontend-sdk/state/trade/hooks";
-import { TransactionType } from "@symmio/frontend-sdk/state/transactions/types";
-import { useIsHavePendingTransaction } from "@symmio/frontend-sdk/state/transactions/hooks";
 import {
   useModalOpen,
   useToggleOpenPositionModal,
 } from "@symmio/frontend-sdk/state/application/hooks";
+import { ApplicationModal } from "@symmio/frontend-sdk/state/application/reducer";
+import {
+  useActiveMarket,
+  usePositionType,
+  useTradeTpSl,
+} from "@symmio/frontend-sdk/state/trade/hooks";
+import { useIsHavePendingTransaction } from "@symmio/frontend-sdk/state/transactions/hooks";
+import { TransactionType } from "@symmio/frontend-sdk/state/transactions/types";
 
 import { ModalState, StateContext } from "./ModalData";
 
+import Column from "components/Column";
+import { Modal, ModalHeader } from "components/Modal";
 import Loading from "./Loading";
 import OpenPositionData from "./OpenPositionData";
-import Column from "components/Column";
-import { ModalHeader, Modal } from "components/Modal";
 
 const Wrapper = styled(Column)`
   gap: 16px;

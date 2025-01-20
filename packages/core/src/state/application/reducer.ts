@@ -1,16 +1,16 @@
 import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
-const { createReducer, nanoid } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
 import { SupportedChainId } from "../../constants/chains";
 import { NotificationDetails } from "../notifications/types";
 import { TransactionInfo } from "../transactions/types";
+const { createReducer, nanoid } = ((toolkitRaw as any).default ??
+  toolkitRaw) as typeof toolkitRaw;
 
 import {
   addPopup,
   removePopup,
-  setOpenModal,
   setChainConnectivityWarning,
   setInjectedAddress,
+  setOpenModal,
 } from "./actions";
 
 export enum ApplicationModal {
@@ -85,7 +85,7 @@ export default createReducer(initialState, (builder) =>
             removeAfterMs,
           },
         ]);
-      }
+      },
     )
     .addCase(removePopup, (state, { payload }) => {
       const { key } = payload;
@@ -99,5 +99,5 @@ export default createReducer(initialState, (builder) =>
     .addCase(setInjectedAddress, (state, { payload }) => {
       const { address } = payload;
       state.injectedAddress = address;
-    })
+    }),
 );

@@ -1,14 +1,14 @@
 import { SupportedChainId } from "@symmio/frontend-sdk/constants/chains";
 import {
+  Chain,
+  arbitrum,
+  base,
+  blast,
   bsc,
   fantom,
-  base,
-  polygon,
-  arbitrum,
   mainnet,
   mantle,
-  blast,
-  Chain,
+  polygon,
 } from "wagmi/chains";
 import { FrontEndsName } from "./addresses";
 

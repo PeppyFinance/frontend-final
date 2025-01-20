@@ -1,6 +1,6 @@
+import { isMobile } from "react-device-detect";
 import styled from "styled-components";
 import { MEDIA_WIDTHS } from "theme";
-import { isMobile } from "react-device-detect";
 
 import { formatAmount, toBN } from "@symmio/frontend-sdk/utils/numbers";
 

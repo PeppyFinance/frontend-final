@@ -4,7 +4,7 @@ export const makeHttpRequest = async function <T>(
     [x: string]: unknown;
   } = {
     cache: "no-cache",
-  }
+  },
 ): Promise<T | null> {
   try {
     const response = await fetch(url, options);
@@ -29,7 +29,7 @@ export const makeHttpRequestV2 = async function <T>(
     [x: string]: any;
   } = {
     cache: "no-cache",
-  }
+  },
 ): Promise<{ result: T | null; status: number }> {
   try {
     const response = await fetch(url, options);

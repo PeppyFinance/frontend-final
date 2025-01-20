@@ -1,8 +1,7 @@
-import React from "react";
 import styled from "styled-components";
 
-import { formatAmount } from "@symmio/frontend-sdk/utils/numbers";
 import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
+import { formatAmount } from "@symmio/frontend-sdk/utils/numbers";
 import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
 
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
@@ -12,8 +11,8 @@ import {
   useActiveAccountAddress,
 } from "@symmio/frontend-sdk/state/user/hooks";
 
-import { Row, RowBetween } from "components/Row";
 import WithdrawCooldown from "components/App/AccountData/WithdrawCooldown";
+import { Row, RowBetween } from "components/Row";
 
 const Container = styled(RowBetween)`
   height: 59px;
@@ -57,7 +56,7 @@ export default function Statusbar() {
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(
     COLLATERAL_TOKEN,
-    chainId
+    chainId,
   );
   return (
     <Container>

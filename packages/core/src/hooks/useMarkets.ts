@@ -47,13 +47,13 @@ loadSelect().then((useSelectTemp) => {
 import Fuse from "fuse.js";
 import find from "lodash/find.js";
 
-import { useFavorites } from "../state/user/hooks";
-import { Market } from "../types/market";
 import {
   OrderMarktesProps,
   useErrorMessages,
   useMarkets,
 } from "../state/hedger/hooks";
+import { useFavorites } from "../state/user/hooks";
+import { Market } from "../types/market";
 
 export function useMarket(id: number | undefined): Market | undefined {
   const markets = useMarkets();
@@ -66,7 +66,7 @@ export function useMarket(id: number | undefined): Market | undefined {
 
 function fuzzySearch(
   options: SelectSearchOption[],
-  query: string
+  query: string,
 ): SelectSearchOption[] {
   const config = {
     keys: ["name", "symbol"],
@@ -105,7 +105,7 @@ export function useMarketsSearch(orderProps: OrderMarktesProps = {}) {
       searchProps,
       optionProps,
     }),
-    [snapshot, searchProps, optionProps]
+    [snapshot, searchProps, optionProps],
   );
 }
 
@@ -115,7 +115,7 @@ export function useFavoriteMarkets(): Market[] {
   return useMemo(
     () =>
       markets.filter((market: Market) => favorites.indexOf(market.id) !== -1),
-    [favorites, markets]
+    [favorites, markets],
   );
 }
 
@@ -125,7 +125,7 @@ export function useNeutralMarkets(): Market[] {
   return useMemo(
     () =>
       markets.filter((market: Market) => favorites?.indexOf(market.id) === -1),
-    [favorites, markets]
+    [favorites, markets],
   );
 }
 

@@ -39,7 +39,7 @@ function updateTsConfig(folderPath) {
         } else {
           console.log(`Path added successfully in ${tsconfigPath}.`);
         }
-      }
+      },
     );
   });
 }
@@ -77,10 +77,10 @@ function updatePackageJson(folderPath) {
           console.error("Error writing file:", err);
         } else {
           console.log(
-            `Package '${packageName}' removed successfully from ${packageJsonPath}.`
+            `Package '${packageName}' removed successfully from ${packageJsonPath}.`,
           );
         }
-      }
+      },
     );
   });
 }

@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { useAllMarketsData } from "@symmio/frontend-sdk/hooks/useAllMarketsData";
-import { Market } from "@symmio/frontend-sdk/types/market";
 import { ApiState } from "@symmio/frontend-sdk/types/api";
+import { Market } from "@symmio/frontend-sdk/types/market";
 
-import MarketRow from "./Row";
-import Footer from "./Footer";
 import Column from "components/Column";
 import { Loader } from "components/Icons";
 import { RowBetween } from "components/Row";
+import Footer from "./Footer";
+import MarketRow from "./Row";
 
 const FooterWrapper = styled(RowBetween)`
   height: 56px;
@@ -33,8 +33,8 @@ export default function TableBody({
   const [visibleMarkets, setVisibleMarkets] = useState<Market[]>(
     markets.slice(
       (page - 1) * marketsPerPage,
-      Math.min(page * marketsPerPage, markets.length)
-    )
+      Math.min(page * marketsPerPage, markets.length),
+    ),
   );
   const { marketsInfo, infoStatus } = useAllMarketsData();
 
@@ -51,7 +51,7 @@ export default function TableBody({
   const onMarketsPerPageChange = (
     currentPage: number,
     prevRowsPerPageValue: number,
-    newRowsPerPageValue: number
+    newRowsPerPageValue: number,
   ) => {
     const rowsPerPageRatio = prevRowsPerPageValue / newRowsPerPageValue;
     const newCalculatedPage =
@@ -65,8 +65,8 @@ export default function TableBody({
     setVisibleMarkets(
       markets.slice(
         (page - 1) * marketsPerPage,
-        Math.min(page * marketsPerPage, markets.length)
-      )
+        Math.min(page * marketsPerPage, markets.length),
+      ),
     );
   }, [markets, page, marketsPerPage]);
 
