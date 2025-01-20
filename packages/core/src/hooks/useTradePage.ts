@@ -323,6 +323,6 @@ export function useLockedValues(notionalValue: string): {
         .plus(liquidationFeeAmount)
         .toString(),
     }),
-    [liquidationFeeAmount, partyAmm, adjustedCollateralValue]
+    [liquidationFeeAmount, partyAmm, adjustedCollateralValue],
   );
 }

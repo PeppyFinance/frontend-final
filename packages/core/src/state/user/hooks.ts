@@ -28,6 +28,7 @@ import {
 import { useAnalyticsApolloClient } from "../../apollo/client/balanceHistory";
 import useActiveWagmi from "../../lib/hooks/useActiveWagmi";
 import useDebounce from "../../lib/hooks/useDebounce";
+import { formatAmount, toBN } from "../../utils/numbers";
 import {
   useAnalyticsSubgraphAddress,
   useAppName,
@@ -35,6 +36,7 @@ import {
 } from "../chains/hooks";
 import { useHedgerInfo } from "../hedger/hooks";
 import { getAppNameHeader } from "../hedger/thunks";
+import { useLockedPercentages } from "../trade/hooks";
 import {
   addHedger,
   removeHedger,
@@ -49,8 +51,6 @@ import {
   updateUserLeverage,
   updateUserSlippageTolerance,
 } from "./actions";
-import { useLockedPercentages } from "../trade/hooks";
-import { formatAmount, toBN } from "../../utils/numbers";
 
 export function useIsDarkMode(): boolean {
   const { userDarkMode, matchesDarkMode } = useAppSelector(
@@ -124,31 +124,29 @@ export function useLeverage(): number {
   return leverage;
 }
 
-export function useLiquidationPrice(price: string): { liquidationPriceLong: string, liquidationPriceShort: string } | undefined {
+export function useLiquidationPrice(
+  price: string,
+): { liquidationPriceLong: string; liquidationPriceShort: string } | undefined {
   const leverage = useLeverage();
-  const { lf, cva } = useLockedPercentages()
+  const { lf, cva } = useLockedPercentages();
 
   if (!lf || !cva) {
-    return undefined
+    return undefined;
   }
   const mmr = (Number(cva) + Number(lf)) / 100;
 
   const liquidationPriceLong = formatAmount(
-    toBN(price).times(
-      1 - 1 / leverage + mmr / leverage
-    ),
+    toBN(price).times(1 - 1 / leverage + mmr / leverage),
     6,
-    true
-  )
+    true,
+  );
   const liquidationPriceShort = formatAmount(
-    toBN(price).times(
-      1 + 1 / leverage - mmr / leverage
-    ),
+    toBN(price).times(1 + 1 / leverage - mmr / leverage),
     6,
-    true
-  )
+    true,
+  );
 
-  return { liquidationPriceLong, liquidationPriceShort }
+  return { liquidationPriceLong, liquidationPriceShort };
 }
 
 export function useSetLeverageCallback() {

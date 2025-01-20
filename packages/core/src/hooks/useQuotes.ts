@@ -549,12 +549,12 @@ export function useLiquidationPrice(quote: Quote): string {
         toBN(openedPrice)
           .times(1 - 1 / Number(leverage) + mmr / Number(leverage))
           .toString(),
-        6
+        6,
       )
     : formatAmount(
         toBN(openedPrice)
           .times(1 + 1 / Number(leverage) - mmr / Number(leverage))
           .toString(),
-        6
+        6,
       );
 }
