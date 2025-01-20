@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function ExclamationMark({
   width = 20,
   height = 18,
@@ -7,10 +5,10 @@ export default function ExclamationMark({
   bg = "#473F2A",
   ...rest
 }: {
-  width?: number;
-  height?: number;
-  color?: string;
-  bg?: string;
+  width?: React.CSSProperties["width"];
+  height?: React.CSSProperties["height"];
+  color?: React.CSSProperties["color"];
+  bg?: React.CSSProperties["backgroundColor"];
   [x: string]: any;
 }) {
   return (

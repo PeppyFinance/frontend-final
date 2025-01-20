@@ -1,20 +1,20 @@
-import React, { useMemo, useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import styled from "styled-components";
 
 import { toBN } from "@symmio/frontend-sdk/utils/numbers";
 
 import QuestionMark from "components/Icons/QuestionMark";
+import { Row } from "components/Row";
 import { ToolTip } from "components/ToolTip";
 import {
+  AmountsInnerWrapper,
   AmountsWrapper,
   CustomOption,
   DefaultOptionButton,
+  InputAmount,
   QuestionMarkWrap,
   Title,
-  InputAmount,
-  AmountsInnerWrapper,
 } from "./index";
-import { Row } from "components/Row";
 
 const Wrapper = styled.div`
   margin-top: 5px;
@@ -65,12 +65,12 @@ export default function AdvancedOptions({
         setAmount("0");
       }
     },
-    [setAmount]
+    [setAmount],
   );
 
   const customSelected = useMemo(
     () => !defaultAmounts.includes(amount),
-    [defaultAmounts, amount]
+    [defaultAmounts, amount],
   );
 
   return useMemo(() => {

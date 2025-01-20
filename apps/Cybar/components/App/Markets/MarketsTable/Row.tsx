@@ -1,13 +1,13 @@
-import styled from "styled-components";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import styled from "styled-components";
 
 import {
   useFavorites,
   useToggleUserFavoriteCallback,
 } from "@symmio/frontend-sdk/state/user/hooks";
-import { formatDollarAmount, toBN } from "@symmio/frontend-sdk/utils/numbers";
 import { Market } from "@symmio/frontend-sdk/types/market";
+import { formatDollarAmount, toBN } from "@symmio/frontend-sdk/utils/numbers";
 
 import useCurrencyLogo from "lib/hooks/useCurrencyLogo";
 
@@ -95,8 +95,8 @@ const ColorLabel = styled(Row)<{ color: "green" | "red" | "gray" }>`
     color === "green"
       ? theme.positive
       : color === "red"
-      ? theme.negative
-      : theme.text2};
+        ? theme.negative
+        : theme.text2};
 `;
 
 const ActionBtn = styled.button`
@@ -169,7 +169,9 @@ export default function MarketRow({
       >
         <span>
           {(() => {
-            if (!priceChangePercent) return "-";
+            if (!priceChangePercent) {
+              return "-";
+            }
             return `${
               toBN(priceChangePercent).isGreaterThan(0) ? "+" : ""
             }${priceChangePercent}%`;

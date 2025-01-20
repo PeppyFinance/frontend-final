@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 
-import { ModalHeader, Modal } from "components/Modal";
-import AdvancedOptions from "./AdvancedOptions";
-import TransactionFee from "./TransactionFee";
-import ThemeSelector from "./ThemeSelector";
 import {
-  useSlippageTolerance,
-  useSetSlippageToleranceCallback,
   useDarkModeManager,
+  useSetSlippageToleranceCallback,
+  useSlippageTolerance,
 } from "@symmio/frontend-sdk/state/user/hooks";
+import { Modal, ModalHeader } from "components/Modal";
+import AdvancedOptions from "./AdvancedOptions";
+import ThemeSelector from "./ThemeSelector";
+import TransactionFee from "./TransactionFee";
 
 const MainModal = styled(Modal)`
   display: flex;

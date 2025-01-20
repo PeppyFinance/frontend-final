@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function CloverfieldLogo({
   width = 32,
   height = 32,

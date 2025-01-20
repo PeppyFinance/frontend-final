@@ -1,20 +1,19 @@
-import React from "react";
 import styled, { useTheme } from "styled-components";
 
-import { Quote } from "@symmio/frontend-sdk/types/quote";
-import { useGetExistedQuoteByIdsCallback } from "@symmio/frontend-sdk/state/quotes/hooks";
 import {
   NotificationDetails,
   NotificationType,
 } from "@symmio/frontend-sdk/state/notifications/types";
+import { useGetExistedQuoteByIdsCallback } from "@symmio/frontend-sdk/state/quotes/hooks";
+import { Quote } from "@symmio/frontend-sdk/types/quote";
 
 import LIQUIDATION_ALERT_ICON from "/public/static/images/etc/RedErrorTriangle.svg";
 
 import { useGetQuoteByIds } from "@symmio/frontend-sdk/hooks/useQuotes";
 
+import ImageWithFallback from "components/ImageWithFallback";
 import { Row, RowEnd, RowStart } from "components/Row";
 import NotificationSummary from "components/Summaries/NotificationSummary";
-import ImageWithFallback from "components/ImageWithFallback";
 import NotificationPopupIcon from "./NotificationPopupIcon";
 
 const Wrapper = styled(Row)<{ border?: string; bg?: string }>`
@@ -44,16 +43,16 @@ export default function NotificationPopup({
   const quoteData = existedQuote
     ? existedQuote
     : !loading
-    ? quotes[0]
-    : ({} as Quote);
+      ? quotes[0]
+      : ({} as Quote);
 
   const [bg, border] =
     notificationType === NotificationType.LIQUIDATION_ALERT
       ? [theme.bgLoose, theme.negative]
       : notificationType === NotificationType.EXPIRED_ORDER ||
-        notificationType === NotificationType.HEDGER_ERROR
-      ? [theme.bgWarning, theme.warning0]
-      : [];
+          notificationType === NotificationType.HEDGER_ERROR
+        ? [theme.bgWarning, theme.warning0]
+        : [];
 
   return (
     <Wrapper bg={bg} border={border}>

@@ -2,12 +2,14 @@ import styled from "styled-components";
 
 import { useMarketsSearch } from "@symmio/frontend-sdk/hooks/useMarkets";
 import {
-  OrderMarktes,
   Direction,
+  OrderMarktes,
 } from "@symmio/frontend-sdk/state/hedger/hooks";
 import { InputField } from "components/App/MarketBar/InputField";
 import { RowBetween } from "components/Row";
+import { useMemo, useState } from "react";
 import TableBody from "./Body";
+import { CoinCategoriesHeader } from "./CoinCategoriesHeader";
 import TableHeader from "./Header";
 
 const TableWrapper = styled.div`
@@ -41,22 +43,39 @@ const InputWrapper = styled.div`
 export interface MarketsTableProps {
   direction: Direction;
   orderBy: OrderMarktes;
+  coinCategory?: string;
 }
-export default function Table({ direction, orderBy }: MarketsTableProps) {
-  const { markets, searchProps } = useMarketsSearch({
+export default function Table({
+  direction,
+  orderBy,
+  coinCategory,
+}: MarketsTableProps) {
+  const { markets } = useMarketsSearch({
     orderBy,
     direction,
+    coinCategory,
   });
-  const searchMarketsValue = searchProps?.ref?.current?.value || "";
+
+  const [search, setSearch] = useState("");
+
+  const { filtered } = useMemo(() => {
+    const filtered = markets.filter((market) =>
+      market.name.toLowerCase().includes(search),
+    );
+
+    return { filtered };
+  }, [search, markets]);
 
   return (
     <TableWrapper>
       <Title>
         <div>Markets</div>
         <InputWrapper>
-          <InputField searchProps={searchProps} placeholder={"Search Name"} />
+          <InputField setSearch={setSearch} placeholder={"Search Name"} />
         </InputWrapper>
       </Title>
+      <Title></Title>
+      <CoinCategoriesHeader coinCategory={coinCategory} />
       <TableHeader
         HEADERS={[
           { name: "" },
@@ -70,7 +89,7 @@ export default function Table({ direction, orderBy }: MarketsTableProps) {
         orderedBy={orderBy}
         direction={direction}
       />
-      <TableBody markets={markets} searchValue={searchMarketsValue} />
+      <TableBody markets={filtered} searchValue={search} />
     </TableWrapper>
   );
 }

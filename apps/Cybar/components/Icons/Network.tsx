@@ -1,5 +1,5 @@
-import styled from "styled-components";
 import { Activity } from "react-feather";
+import styled from "styled-components";
 
 export const Network = styled(Activity)<{
   size?: string | number;

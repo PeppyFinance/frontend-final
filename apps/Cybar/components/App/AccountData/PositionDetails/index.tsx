@@ -1,16 +1,16 @@
-import React from "react";
 import { Quote, QuoteStatus } from "@symmio/frontend-sdk/types/quote";
 import { OrderType } from "@symmio/frontend-sdk/types/trade";
 import { toBN } from "@symmio/frontend-sdk/utils/numbers";
+import React from "react";
 
-import { useIsMobile } from "lib/hooks/useWindowSize";
 import { useMarket } from "@symmio/frontend-sdk/hooks/useMarkets";
+import { useIsMobile } from "lib/hooks/useWindowSize";
 
-import LiquidatedQuoteDetails from "./LiquidatedQuoteDetails";
 import CanceledQuoteDetails from "./CanceledQuoteDetails";
-import PendingQuoteDetails from "./PendingsQuoteDetails";
-import OpenedQuoteDetails from "./OpenedQuoteDetails";
 import EmptyDetails from "./EmptyDetails";
+import LiquidatedQuoteDetails from "./LiquidatedQuoteDetails";
+import OpenedQuoteDetails from "./OpenedQuoteDetails";
+import PendingQuoteDetails from "./PendingsQuoteDetails";
 
 export default function PositionDetails({
   quote,
@@ -29,17 +29,21 @@ export default function PositionDetails({
   const mobileVersion = useIsMobile();
 
   const platformFee = (() => {
-    if (!quantity || !marketPrice || !tradingFee || !requestedOpenPrice)
+    if (!quantity || !marketPrice || !tradingFee || !requestedOpenPrice) {
       return "0";
-    if (orderType === OrderType.LIMIT)
+    }
+    if (orderType === OrderType.LIMIT) {
       return toBN(quantity)
         .times(requestedOpenPrice)
         .times(tradingFee)
         .toString();
+    }
     return toBN(quantity).times(marketPrice).times(tradingFee).toString();
   })();
 
-  if (!quote) return <EmptyDetails />;
+  if (!quote) {
+    return <EmptyDetails />;
+  }
 
   switch (quoteStatus) {
     case QuoteStatus.PENDING:

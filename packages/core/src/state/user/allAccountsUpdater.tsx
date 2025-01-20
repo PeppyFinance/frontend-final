@@ -1,12 +1,12 @@
-import { useEffect, useMemo } from "react";
 import isEmpty from "lodash/isEmpty.js";
+import { useEffect, useMemo } from "react";
 
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import { useUserAccounts } from "../../hooks/useAccounts";
-import { useAppDispatch } from "../declaration";
 import useIsWindowVisible from "../../lib/hooks/useIsWindowVisible";
-import { useHedgerInfo } from "../hedger/hooks";
 import { AccountUpnl } from "../../types/user";
+import { useAppDispatch } from "../declaration";
+import { useHedgerInfo } from "../hedger/hooks";
 import { updateAllAccountsUpnl } from "./actions";
 
 export function AllAccountsUpdater() {
@@ -67,7 +67,7 @@ function AccountUpdater({ account }: { account: string }) {
               upnl: 0,
               timestamp: 0,
             },
-          })
+          }),
         );
         return;
       }
@@ -88,7 +88,7 @@ function AccountUpdater({ account }: { account: string }) {
             upnl: 0,
             timestamp: 0,
           },
-        })
+        }),
       );
     }
   }, [dispatch, upnlWebSocketMessage, windowVisible]);

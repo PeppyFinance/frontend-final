@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function NotConnectedWallet({
   width = 92,
   height = 96,

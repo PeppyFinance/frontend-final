@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function WarningCloverfield({
   width = 82,
   height = 82,

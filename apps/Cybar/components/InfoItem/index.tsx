@@ -1,10 +1,10 @@
-import { useCallback } from "react";
+import { ReactNode, useCallback } from "react";
 import styled from "styled-components";
 
-import { RowBetween, RowStart } from "components/Row";
-import { ToolTip } from "components/ToolTip";
 import { Info as InfoIcon } from "components/Icons";
+import { RowBetween, RowStart } from "components/Row";
 import ShimmerAnimation from "components/ShimmerAnimation";
+import { ToolTip } from "components/ToolTip";
 
 const StyledInfoIcon = styled(InfoIcon)`
   color: ${({ theme }) => theme.text2};
@@ -45,19 +45,10 @@ export const Value = styled.div<{
   `};
 `;
 
-export default function InfoItem({
-  label,
-  amount,
-  ticker,
-  tooltip,
-  valueColor,
-  onClick,
-  balanceExact,
-  fontSize,
-  loading,
-}: {
+interface InfoItemProps {
   label: string;
   amount: string;
+  children?: ReactNode;
   ticker?: string;
   tooltip?: string;
   valueColor?: string;
@@ -65,13 +56,46 @@ export default function InfoItem({
   balanceExact?: string;
   fontSize?: string;
   loading?: boolean;
-}): JSX.Element {
+}
+
+const ValueChild = ({
+  onClick,
+  balanceExact,
+  valueColor,
+  fontSize,
+  amount,
+  ticker,
+}: Pick<
+  InfoItemProps,
+  "onClick" | "balanceExact" | "valueColor" | "fontSize" | "amount" | "ticker"
+>): JSX.Element => {
   const handleClick = useCallback(() => {
-    if (!balanceExact || !onClick) return;
+    if (!balanceExact || !onClick) {
+      return;
+    }
     onClick(balanceExact.toString());
   }, [balanceExact, onClick]);
 
-  const cursor = onClick ? "pointer" : undefined;
+  return (
+    <Value onClick={handleClick} color={valueColor} size={fontSize}>
+      {amount} {ticker && ` ${ticker}`}
+    </Value>
+  );
+};
+
+export default function InfoItem({
+  label,
+  tooltip,
+  valueColor,
+  balanceExact,
+  fontSize,
+  loading,
+  children,
+  ...props
+}: InfoItemProps): JSX.Element {
+  children = children ?? (
+    <ValueChild fontSize={fontSize} valueColor={valueColor} {...props} />
+  );
   return (
     <DataRow>
       <Label size={fontSize}>
@@ -84,18 +108,7 @@ export default function InfoItem({
         </a>
         {/* {tooltip && <>:</>} */}
       </Label>
-      {loading ? (
-        <ShimmerAnimation width="68px" height="17px" />
-      ) : (
-        <Value
-          onClick={handleClick}
-          color={valueColor}
-          cursor={cursor}
-          size={fontSize}
-        >
-          {amount} {ticker && ` ${ticker}`}
-        </Value>
-      )}
+      {loading ? <ShimmerAnimation width="68px" height="17px" /> : children}
     </DataRow>
   );
 }

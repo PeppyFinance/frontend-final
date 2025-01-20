@@ -7,11 +7,11 @@ import {
   BalanceInfo,
 } from "@symmio/frontend-sdk/types/user";
 
-import { RowBetween, RowEnd, RowStart } from "components/Row";
 import { useCustomAccountUpnl } from "@symmio/frontend-sdk/state/user/hooks";
-import { formatAmount, toBN } from "@symmio/frontend-sdk/utils/numbers";
 import { ApiState } from "@symmio/frontend-sdk/types/api";
+import { formatAmount, toBN } from "@symmio/frontend-sdk/utils/numbers";
 import { Loader } from "components/Icons";
+import { RowBetween, RowEnd, RowStart } from "components/Row";
 
 const AccountWrapper = styled.div<{ active?: boolean }>`
   position: relative;
@@ -69,19 +69,21 @@ export default function Account({
 
   const [value, color] = useMemo(() => {
     const upnlBN = toBN(customAccount?.upnl || 0);
-    if (upnlBN.isGreaterThan(0))
+    if (upnlBN.isGreaterThan(0)) {
       return [`+ $${formatAmount(upnlBN)}`, theme.positive];
-    else if (upnlBN.isLessThan(0))
+    } else if (upnlBN.isLessThan(0)) {
       return [
         `- $${formatAmount(Math.abs(upnlBN.toNumber()))}`,
         theme.negative,
       ];
+    }
     return [`-`, undefined];
   }, [customAccount?.upnl, theme]);
 
   const { availableForOrder, lockedMargin } = useMemo(() => {
-    if (!balanceInfo || balanceInfoStatus !== ApiState.OK)
+    if (!balanceInfo || balanceInfoStatus !== ApiState.OK) {
       return { availableForOrder: undefined, lockedMargin: undefined };
+    }
 
     let availableForOrder = "0";
     const {
@@ -96,7 +98,7 @@ export default function Account({
     } = balanceInfo;
     const upnlBN = value ? toBN(value) : toBN(upnl);
 
-    if (upnlBN.isGreaterThanOrEqualTo(0))
+    if (upnlBN.isGreaterThanOrEqualTo(0)) {
       availableForOrder = toBN(allocatedBalance)
         .plus(upnlBN)
         .minus(cva)
@@ -106,7 +108,7 @@ export default function Account({
         .minus(pendingLf)
         .minus(pendingMm)
         .toString();
-    else {
+    } else {
       const considering_mm = upnlBN.times(-1).minus(mm).gt(0)
         ? upnlBN.times(-1)
         : mm;

@@ -14,7 +14,7 @@ export default function useNotificationHistory() {
     localStorage.getItem("lastUpdateTimestamp");
   const setCurrentTimestamp = useCallback(
     () => localStorage.setItem("lastUpdateTimestamp", currentTimestamp()),
-    []
+    [],
   );
   const currentTimestamp = () => Math.floor(Date.now() / 1000).toString();
 

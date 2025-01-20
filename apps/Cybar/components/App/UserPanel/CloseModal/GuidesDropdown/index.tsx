@@ -1,16 +1,16 @@
-import { useState, memo } from "react";
+import { memo, useState } from "react";
 import styled from "styled-components";
 
-import { BN_ZERO, toBN } from "@symmio/frontend-sdk/utils/numbers";
 import { CloseGuides, OrderType } from "@symmio/frontend-sdk/types/trade";
+import { BN_ZERO, toBN } from "@symmio/frontend-sdk/utils/numbers";
 
-import Column from "components/Column";
-import { Row, RowEnd } from "components/Row";
-import { ChevronDown } from "components/Icons";
 import { Card } from "components/Card";
+import Column from "components/Column";
+import { ChevronDown } from "components/Icons";
+import { Row, RowEnd } from "components/Row";
 import GuideOne from "./GuideOne";
-import GuideTwo from "./GuideTwo";
 import GuideThree from "./GuideThree";
+import GuideTwo from "./GuideTwo";
 
 const ContentContainer = styled(Column)`
   gap: 12px;
@@ -117,10 +117,10 @@ export default memo(function GuidesDropDown({
           ? "Full Close"
           : "Full Close, Partial Close"
         : state === CloseGuides.TWO
-        ? "Partial Close"
-        : state === CloseGuides.THREE
-        ? "Full Close"
-        : null;
+          ? "Partial Close"
+          : state === CloseGuides.THREE
+            ? "Full Close"
+            : null;
 
     return (
       <DropdownHeader borderBottom={border} onClick={() => setBorder(!border)}>

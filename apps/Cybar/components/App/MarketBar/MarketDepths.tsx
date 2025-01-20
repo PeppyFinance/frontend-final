@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
-import { useActiveMarket } from "@symmio/frontend-sdk/state/trade/hooks";
 import useBidAskPrice from "@symmio/frontend-sdk/hooks/useBidAskPrice";
+import { useActiveMarket } from "@symmio/frontend-sdk/state/trade/hooks";
 
-import { Name, Separator, Value } from ".";
+import BlinkingPrice from "components/App/FavoriteBar/BlinkingPrice";
 import { ColumnCenter } from "components/Column";
 import { RowEnd } from "components/Row";
-import BlinkingPrice from "components/App/FavoriteBar/BlinkingPrice";
+import { Name, Separator, Value } from ".";
 
 const MarginColumn = styled(ColumnCenter)`
   ${({ theme }) => theme.mediaWidth.upToMedium` 

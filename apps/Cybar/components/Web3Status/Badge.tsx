@@ -1,18 +1,18 @@
-import { useMemo, useState } from "react";
 import Image from "next/legacy/image";
+import { useMemo, useState } from "react";
 import styled from "styled-components";
 
-import Sniper from "/public/static/images/sniper.svg";
 import Medic from "/public/static/images/doctor.svg";
 import Archer from "/public/static/images/hunter.svg";
+import Sniper from "/public/static/images/sniper.svg";
 
 import useAccountData from "@symmio/frontend-sdk/hooks/useAccountData";
 import {
   useMax20ClosedQuotes,
   useQuotesPnl,
 } from "@symmio/frontend-sdk/hooks/useBadgesData";
-import { ToolTipBottom } from "components/ToolTip";
 import Column from "components/Column";
+import { ToolTipBottom } from "components/ToolTip";
 
 const CustomTooltipBottom = styled(ToolTipBottom)`
   font-size: 12px !important;
@@ -32,11 +32,15 @@ const useIsArcher = () => {
   for (let i = 0; i < closedPnlList.length; i++) {
     const pnl = closedPnlList[i];
 
-    if (marketIdList.length >= 5) break;
+    if (marketIdList.length >= 5) {
+      break;
+    }
 
     if (Number(pnl) > 0) {
       const { marketId } = closed[i];
-      if (!marketIdList.includes(marketId)) marketIdList.push(marketId);
+      if (!marketIdList.includes(marketId)) {
+        marketIdList.push(marketId);
+      }
     }
   }
 
@@ -83,21 +87,21 @@ export default function Badge() {
     ) {
       setTooltipTitle("Medic");
       setTooltipText(
-        "For users with a robust account health above 200%. Your portfolio is as strong as your strategy."
+        "For users with a robust account health above 200%. Your portfolio is as strong as your strategy.",
       );
       return Medic;
     }
     if (isArcher) {
       setTooltipTitle("Archer");
       setTooltipText(
-        "Earn this badge by making profit in at least 5 different markets in your last 20 trades."
+        "Earn this badge by making profit in at least 5 different markets in your last 20 trades.",
       );
       return Archer;
     }
     if (isSniper) {
       setTooltipTitle("Sniper");
       setTooltipText(
-        "Be a sharpshooter by closing 80% of your last 20 trades with profit."
+        "Be a sharpshooter by closing 80% of your last 20 trades with profit.",
       );
       return Sniper;
     }

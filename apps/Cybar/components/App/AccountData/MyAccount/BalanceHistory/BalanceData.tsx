@@ -1,13 +1,11 @@
 import { useState } from "react";
-import styled from "styled-components";
 import InfiniteScroll from "react-infinite-scroll-component";
+import styled from "styled-components";
 
-import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
-import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
 import { BALANCE_HISTORY_ITEMS_NUMBER } from "@symmio/frontend-sdk/constants/misc";
+import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
+import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
 
-import { BalanceHistoryData } from "@symmio/frontend-sdk/state/user/types";
-import { ConnectionStatus } from "@symmio/frontend-sdk/types/api";
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 import {
   useActiveAccountAddress,
@@ -15,12 +13,14 @@ import {
   useGetBalanceHistoryCallback,
   useUpnlWebSocketStatus,
 } from "@symmio/frontend-sdk/state/user/hooks";
+import { BalanceHistoryData } from "@symmio/frontend-sdk/state/user/types";
+import { ConnectionStatus } from "@symmio/frontend-sdk/types/api";
 
-import BalanceItem from "./BalanceItem";
-import { DotFlashing } from "components/Icons";
-import Column from "components/Column";
 import { usePositionValue } from "@symmio/frontend-sdk/hooks/usePositionOverview";
 import { usePositionsQuotes } from "@symmio/frontend-sdk/state/quotes/hooks";
+import Column from "components/Column";
+import { DotFlashing } from "components/Icons";
+import BalanceItem from "./BalanceItem";
 
 const ScrollableDiv = styled(Column)<{ dataLength: number }>`
   width: 100%;
@@ -45,7 +45,7 @@ export default function BalanceData() {
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(
     COLLATERAL_TOKEN,
-    chainId
+    chainId,
   );
   const { balanceHistory: data, hasMoreHistory: hasMore } = useBalanceHistory();
 
@@ -55,11 +55,12 @@ export default function BalanceData() {
     ? [...Array(4)]
     : Object.values(data ?? {})
         .filter(
-          (i) => i.account.toLowerCase() === activeAccountAddress?.toLowerCase()
+          (i) =>
+            i.account.toLowerCase() === activeAccountAddress?.toLowerCase(),
         )
         .sort(
           (a: BalanceHistoryData, b: BalanceHistoryData) =>
-            Number(b.timestamp) - Number(a.timestamp)
+            Number(b.timestamp) - Number(a.timestamp),
         );
 
   const { quotes: positions } = usePositionsQuotes();

@@ -1,4 +1,3 @@
-import React from "react";
 import { Search as SearchIcon } from "react-feather";
 
 import { useTheme } from "styled-components";

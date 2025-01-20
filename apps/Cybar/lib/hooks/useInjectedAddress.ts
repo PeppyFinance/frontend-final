@@ -1,7 +1,7 @@
+import { useSetInjectedAddressCallback } from "@symmio/frontend-sdk/state/application/hooks";
+import { useRouter } from "next/router";
 import { useEffect, useMemo } from "react";
 import { isAddress } from "viem";
-import { useRouter } from "next/router";
-import { useSetInjectedAddressCallback } from "@symmio/frontend-sdk/state/application/hooks";
 
 export function useInjectedAddress() {
   const router = useRouter();
@@ -9,9 +9,11 @@ export function useInjectedAddress() {
   const setInjectedAddress = useSetInjectedAddressCallback();
 
   useEffect(() => {
-    if (WalletAddress && isAddress(WalletAddress.toString()))
+    if (WalletAddress && isAddress(WalletAddress.toString())) {
       setInjectedAddress(WalletAddress.toString());
-    else setInjectedAddress("");
+    } else {
+      setInjectedAddress("");
+    }
   }, [WalletAddress, setInjectedAddress]);
 
   return useMemo(
@@ -19,6 +21,6 @@ export function useInjectedAddress() {
       WalletAddress && isAddress(WalletAddress.toString())
         ? WalletAddress.toString()
         : "",
-    [WalletAddress]
+    [WalletAddress],
   );
 }

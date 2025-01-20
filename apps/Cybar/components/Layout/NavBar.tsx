@@ -1,30 +1,30 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { Z_INDEX } from "theme";
 
-import { useIsMobile } from "lib/hooks/useWindowSize";
 import { useNewNotification } from "@symmio/frontend-sdk/state/notifications/hooks";
 import { useInjectedAddress } from "lib/hooks/useInjectedAddress";
+import { useIsMobile } from "lib/hooks/useWindowSize";
 
 import { Row } from "components/Row";
 import Web3Network from "components/Web3Network";
 
-import Web3Status from "components/Web3Status";
-import { InfoHeader } from "components/InfoHeader";
-import NavLogo from "./NavLogo";
-import WithdrawCooldown from "components/App/AccountData/WithdrawCooldown";
-import Notifications from "components/Notifications";
-import Warning from "./Warning";
-import Menu from "./Menu";
-import Column from "components/Column";
+import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 import {
   useModalOpen,
   useWithdrawBarModalToggle,
 } from "@symmio/frontend-sdk/state/application/hooks";
 import { ApplicationModal } from "@symmio/frontend-sdk/state/application/reducer";
-import WithdrawBarModal from "components/ReviewModal/WithdrawBarModal";
+import WithdrawCooldown from "components/App/AccountData/WithdrawCooldown";
+import Column from "components/Column";
 import HedgerSelector from "components/HedgerSelector";
-import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
+import { InfoHeader } from "components/InfoHeader";
+import Notifications from "components/Notifications";
+import WithdrawBarModal from "components/ReviewModal/WithdrawBarModal";
+import Web3Status from "components/Web3Status";
+import Menu from "./Menu";
+import NavLogo from "./NavLogo";
+import Warning from "./Warning";
 
 const Wrapper = styled(Row)`
   gap: 5px;

@@ -1,21 +1,21 @@
 import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
-const { createReducer } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
 import find from "lodash/find.js";
 import remove from "lodash/remove.js";
+const { createReducer } = ((toolkitRaw as any).default ??
+  toolkitRaw) as typeof toolkitRaw;
 
+import { ApiState } from "../../types/api";
 import {
   addReadNotification,
   addUnreadNotification,
+  readOneNotification,
   setReadNotifications,
   setUnreadNotifications,
-  readOneNotification,
-  updateTimestamp,
   updateIsNewNotification,
+  updateTimestamp,
 } from "./actions";
-import { NotificationDetails, NotificationType } from "./types";
 import { getNotifications } from "./thunks";
-import { ApiState } from "../../types/api";
+import { NotificationDetails, NotificationType } from "./types";
 
 export interface NotificationState {
   unreadNotification: NotificationDetails[];
@@ -91,7 +91,7 @@ export default createReducer(initialState, (builder) =>
       setUnreadNotifications,
       (state, { payload: { notifications } }) => {
         state.unreadNotification = notifications;
-      }
+      },
     )
     .addCase(setReadNotifications, (state, { payload: { notifications } }) => {
       state.readNotification = notifications;
@@ -134,7 +134,7 @@ export default createReducer(initialState, (builder) =>
       (state, { payload: { unreadNotifications } }) => {
         state.unreadNotification = unreadNotifications;
         state.notificationsStatus = ApiState.OK;
-      }
+      },
     )
     .addCase(getNotifications.rejected, (state) => {
       state.notificationsStatus = ApiState.ERROR;
@@ -145,5 +145,5 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(updateIsNewNotification, (state, { payload: { flag } }) => {
       state.isNewNotification = flag;
-    })
+    }),
 );

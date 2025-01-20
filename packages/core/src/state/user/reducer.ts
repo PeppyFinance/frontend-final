@@ -1,36 +1,36 @@
 import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
-const { createReducer } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
 import { ApiState, ConnectionStatus } from "../../types/api";
 import { AddedHedger, TermsStatus, UserState } from "./types";
+const { createReducer } = ((toolkitRaw as any).default ??
+  toolkitRaw) as typeof toolkitRaw;
 
+import find from "lodash/find.js";
+import { AccountUpnl } from "../../types/user";
 import {
-  updateUserSlippageTolerance,
+  addHedger,
+  removeHedger,
+  selectOrUnselectHedger,
+  setAllHedgerData,
+  setFEName,
+  toggleDefaultHedger,
+  updateAcceptTerms,
+  updateAccount,
+  updateAccountPartyAStat,
+  updateAccountUpnl,
+  updateAllAccountsUpnl,
   updateMatchesDarkMode,
+  updateUpnlWebSocketStatus,
   updateUserDarkMode,
   updateUserExpertMode,
   updateUserFavorites,
   updateUserLeverage,
-  updateAccount,
-  updateAccountUpnl,
-  updateUpnlWebSocketStatus,
-  updateAccountPartyAStat,
-  updateAcceptTerms,
-  updateAllAccountsUpnl,
-  setFEName,
-  addHedger,
-  selectOrUnselectHedger,
-  setAllHedgerData,
-  removeHedger,
-  toggleDefaultHedger,
+  updateUserSlippageTolerance,
 } from "./actions";
 import {
   getBalanceHistory,
   getIsWhiteList,
   getTotalDepositsAndWithdrawals,
 } from "./thunks";
-import { AccountUpnl } from "../../types/user";
-import find from "lodash/find.js";
 
 const currentTimestamp = () => new Date().getTime();
 
@@ -107,7 +107,7 @@ export default createReducer(initialState, (builder) =>
         state.allAccountsUpnl = [];
       }
       const item = state.allAccountsUpnl.find(
-        (x) => x.account === action.payload.account
+        (x) => x.account === action.payload.account,
       );
 
       if (item) {
@@ -141,7 +141,9 @@ export default createReducer(initialState, (builder) =>
       getBalanceHistory.fulfilled,
       (state, { payload: { hasMore, result } }) => {
         const history = { ...state.balanceHistory };
-        if (!result) return;
+        if (!result) {
+          return;
+        }
 
         result.forEach((d) => {
           history[d.transaction] = d;
@@ -149,7 +151,7 @@ export default createReducer(initialState, (builder) =>
         state.balanceHistory = history;
         state.hasMoreHistory = hasMore;
         state.balanceHistoryState = ApiState.OK;
-      }
+      },
     )
 
     .addCase(getBalanceHistory.pending, (state) => {
@@ -166,7 +168,7 @@ export default createReducer(initialState, (builder) =>
       (state, { payload: { result } }) => {
         state.depositWithdrawalsData = result;
         state.depositWithdrawalsState = ApiState.OK;
-      }
+      },
     )
 
     .addCase(getTotalDepositsAndWithdrawals.pending, (state) => {
@@ -212,7 +214,8 @@ export default createReducer(initialState, (builder) =>
         const hedgers = state.addedHedgers[chainId] ?? [];
         const index = hedgers.findIndex(
           (h: AddedHedger) =>
-            h.address.toLocaleLowerCase() === hedger.address.toLocaleLowerCase()
+            h.address.toLocaleLowerCase() ===
+            hedger.address.toLocaleLowerCase(),
         );
 
         if (index !== -1) {
@@ -223,10 +226,10 @@ export default createReducer(initialState, (builder) =>
           };
           state.addedHedgers[chainId] = updatedHedgers;
         }
-      }
+      },
     )
 
     .addCase(toggleDefaultHedger, (state) => {
       state.isDefaultHedgerSelected = !state.isDefaultHedgerSelected;
-    })
+    }),
 );

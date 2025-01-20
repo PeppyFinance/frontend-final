@@ -10,7 +10,7 @@ export class MuonClient {
   public async _sendRequest(
     baseUrl: string,
     appName: string,
-    requestParams: string[][]
+    requestParams: string[][],
   ) {
     const MuonURL = new URL(baseUrl);
     MuonURL.searchParams.set("app", appName);
@@ -21,7 +21,7 @@ export class MuonClient {
 
     try {
       const response = await makeHttpRequest<{ result: any; success: boolean }>(
-        MuonURL.href
+        MuonURL.href,
       );
       return response;
     } catch (error) {

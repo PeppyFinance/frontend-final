@@ -1,4 +1,5 @@
 import { CharacterContextValue } from "components/BackAlley/characterContext";
+import { CSSProperties } from "react";
 import { CharacterId } from "../characterIds.type";
 import { charBackAlley1 } from "./charBackAlley1";
 import { charBackAlley2 } from "./charBackAlley2";
@@ -15,16 +16,20 @@ export interface Dialog extends DialogContent {
   id: number;
   answers?: DialogContent[];
 }
-export interface CharacterProps {
+
+interface CharacterPositions {
+  left: CSSProperties["left"];
+  bottom: CSSProperties["left"];
+  height: CSSProperties["bottom"];
+  zIndex?: CSSProperties["zIndex"];
+  focusedBottom?: CSSProperties["bottom"];
+  focusedLeft?: CSSProperties["left"];
+  focusedHeight?: CSSProperties["height"];
+}
+export interface CharacterProps extends CharacterPositions {
   id: CharacterId;
   name: string;
-  left: string;
-  bottom: string;
-  height: string;
-  zIndex?: string;
-  focusedBottom?: string;
-  focusedLeft?: string;
-  focusedHeight?: string;
+  mobilePositions?: CharacterPositions;
   dialogs?: Dialog[];
 }
 

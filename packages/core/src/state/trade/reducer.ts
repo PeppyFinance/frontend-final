@@ -1,26 +1,26 @@
 import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
-const { createReducer } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
-import { InputField, PositionType, OrderType } from "../../types/trade";
+import { DEFAULT_SLIPPAGE } from "../../constants";
+import { InputField, OrderType, PositionType } from "../../types/trade";
 import {
-  setTradeState,
-  updateOrderType,
-  updateLimitPrice,
-  updateMarketId,
-  updateInputField,
-  updateTypedValue,
-  updatePositionType,
-  updateLockedPercentages,
-  updateTpSl,
-  setTpSlOpened,
-  updateDelegateTpSl,
-  updateTpError,
-  updateSlError,
   setTpSlConfig,
+  setTpSlOpened,
+  setTradeState,
+  updateDelegateTpSl,
+  updateInputField,
+  updateLimitPrice,
+  updateLockedPercentages,
+  updateMarketId,
+  updateOrderType,
+  updatePositionType,
+  updateSlError,
+  updateTpError,
+  updateTpSl,
   updateTpSlState,
+  updateTypedValue,
 } from "./actions";
 import { TpSlConfigState, TpSlProcessState, TradeState } from "./types";
-import { DEFAULT_SLIPPAGE } from "../../constants";
+const { createReducer } = ((toolkitRaw as any).default ??
+  toolkitRaw) as typeof toolkitRaw;
 
 export const initialState: TradeState = {
   marketId: undefined,
@@ -113,6 +113,6 @@ export default createReducer(initialState, (builder) =>
         state.partyAmm = partyAmm;
         state.partyBmm = partyBmm;
         state.lf = lf;
-      }
-    )
+      },
+    ),
 );

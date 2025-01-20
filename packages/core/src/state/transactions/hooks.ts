@@ -1,12 +1,12 @@
-import { useCallback, useMemo } from "react";
 import { Token } from "@uniswap/sdk-core";
+import { useCallback, useMemo } from "react";
 
 import useActiveWagmi from "../../lib/hooks/useActiveWagmi";
 
+import useWagmi from "../../lib/hooks/useWagmi";
 import { useAppDispatch, useAppSelector } from "../declaration";
 import { addTransaction } from "./actions";
 import { TransactionDetails, TransactionInfo, TransactionType } from "./types";
-import useWagmi from "../../lib/hooks/useWagmi";
 
 export interface TransactionResponseLight {
   hash: string;
@@ -16,22 +16,26 @@ export interface TransactionResponseLight {
 export function useTransactionAdder(): (
   hash: string,
   info: TransactionInfo,
-  summary?: string
+  summary?: string,
 ) => void {
   const { chainId, account } = useWagmi();
   const dispatch = useAppDispatch();
 
   return useCallback(
     (hash: string, info: TransactionInfo, summary?: string) => {
-      if (!account) return;
-      if (!chainId) return;
+      if (!account) {
+        return;
+      }
+      if (!chainId) {
+        return;
+      }
 
       if (!hash) {
         throw Error("No transaction hash found.");
       }
       dispatch(addTransaction({ hash, from: account, info, chainId, summary }));
     },
-    [account, chainId, dispatch]
+    [account, chainId, dispatch],
   );
 }
 
@@ -41,11 +45,11 @@ export function useAllTransactions(): { [txHash: string]: TransactionDetails } {
 
   const state = useAppSelector((state) => state.transactions);
 
-  return chainId ? state[chainId] ?? {} : {};
+  return chainId ? (state[chainId] ?? {}) : {};
 }
 
 export function useTransaction(
-  transactionHash?: string
+  transactionHash?: string,
 ): TransactionDetails | undefined {
   const allTransactions = useAllTransactions();
 
@@ -67,7 +71,9 @@ export function isTransactionRecent(tx: TransactionDetails): boolean {
 export function useIsTransactionPending(transactionHash?: string): boolean {
   const transactions = useAllTransactions();
 
-  if (!transactionHash || !transactions[transactionHash]) return false;
+  if (!transactionHash || !transactions[transactionHash]) {
+    return false;
+  }
 
   return !transactions[transactionHash].receipt;
 }
@@ -75,7 +81,9 @@ export function useIsTransactionPending(transactionHash?: string): boolean {
 export function useIsTransactionConfirmed(transactionHash?: string): boolean {
   const transactions = useAllTransactions();
 
-  if (!transactionHash || !transactions[transactionHash]) return false;
+  if (!transactionHash || !transactions[transactionHash]) {
+    return false;
+  }
 
   return Boolean(transactions[transactionHash].receipt);
 }
@@ -83,7 +91,7 @@ export function useIsTransactionConfirmed(transactionHash?: string): boolean {
 // returns whether a token has a pending approval transaction
 export function useHasPendingApproval(
   token?: Token,
-  spender?: string
+  spender?: string,
 ): boolean {
   const allTransactions = useAllTransactions();
   return useMemo(
@@ -92,11 +100,15 @@ export function useHasPendingApproval(
       typeof spender === "string" &&
       Object.keys(allTransactions).some((hash) => {
         const tx = allTransactions[hash];
-        if (!tx) return false;
+        if (!tx) {
+          return false;
+        }
         if (tx.receipt) {
           return false;
         } else {
-          if (tx.info.type !== TransactionType.APPROVAL) return false;
+          if (tx.info.type !== TransactionType.APPROVAL) {
+            return false;
+          }
           return (
             tx.info.spender === spender &&
             tx.info.tokenAddress === token.address &&
@@ -104,7 +116,7 @@ export function useHasPendingApproval(
           );
         }
       }),
-    [allTransactions, spender, token?.address]
+    [allTransactions, spender, token?.address],
   );
 }
 
@@ -118,15 +130,18 @@ export function useIsHavePendingTransaction(transactionType?: TransactionType) {
       .filter(isTransactionRecent)
       .sort(
         (a: TransactionDetails, b: TransactionDetails) =>
-          b.addedTime - a.addedTime
+          b.addedTime - a.addedTime,
       )
       .filter((tx) => tx.from == account);
   }, [allTransactions, account]);
 
   const pending = sortedRecentTransactions
     .filter((tx) => {
-      if (!transactionType) return !tx.receipt;
-      else return !tx.receipt && tx.info.type === transactionType;
+      if (!transactionType) {
+        return !tx.receipt;
+      } else {
+        return !tx.receipt && tx.info.type === transactionType;
+      }
     })
     .map((tx) => tx.hash);
   return useMemo(() => pending.length > 0, [pending.length]);

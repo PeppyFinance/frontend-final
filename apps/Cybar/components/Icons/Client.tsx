@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Client({
   width = 18,
   height = 20,

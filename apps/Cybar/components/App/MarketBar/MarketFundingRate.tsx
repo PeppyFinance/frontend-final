@@ -1,20 +1,19 @@
-import React from "react";
 import styled, { useTheme } from "styled-components";
 
-import { useActiveMarket } from "@symmio/frontend-sdk/state/trade/hooks";
 import { useFundingRateData } from "@symmio/frontend-sdk/state/hedger/hooks";
-import { getRemainingTime } from "@symmio/frontend-sdk/utils/time";
+import { useActiveMarket } from "@symmio/frontend-sdk/state/trade/hooks";
 import {
   BN_ZERO,
   formatAmount,
   toBN,
 } from "@symmio/frontend-sdk/utils/numbers";
+import { getRemainingTime } from "@symmio/frontend-sdk/utils/time";
 
-import { Name, Separator } from ".";
-import { Row } from "components/Row";
 import { ColumnCenter } from "components/Column";
 import { Info as InfoIcon } from "components/Icons";
+import { Row } from "components/Row";
 import { ToolTip } from "components/ToolTip";
+import { Name, Separator } from ".";
 
 const DataRow = styled(Row)`
   gap: 4px;
@@ -50,7 +49,7 @@ export default function MarketFundingRate() {
   const { name } = activeMarket || {};
   const fundingRate = useFundingRateData(name);
   const { diff, hours, minutes, seconds } = getRemainingTime(
-    fundingRate?.next_funding_time || 0
+    fundingRate?.next_funding_time || 0,
   );
 
   const nextFundingRateLongBN = fundingRate
@@ -81,7 +80,7 @@ export default function MarketFundingRate() {
             <Value size={"12px"} color={longColor}>
               {fundingRate
                 ? `${formatAmount(
-                    nextFundingRateLongBN.times(100).toFixed(4)
+                    nextFundingRateLongBN.times(100).toFixed(4),
                   )}%`
                 : "-"}
             </Value>
@@ -89,7 +88,7 @@ export default function MarketFundingRate() {
             <Value size={"12px"} color={shortColor}>
               {fundingRate
                 ? `${formatAmount(
-                    nextFundingRateShortBN.times(100).toFixed(4)
+                    nextFundingRateShortBN.times(100).toFixed(4),
                   )}%`
                 : "-"}
             </Value>
@@ -119,7 +118,11 @@ function useColor(value: string) {
   const theme = useTheme();
   const valueBN = toBN(value);
 
-  if (valueBN.isEqualTo(0)) return theme.text0;
-  else if (valueBN.isGreaterThan(0)) return theme.positive;
-  else return theme.negative;
+  if (valueBN.isEqualTo(0)) {
+    return theme.text0;
+  } else if (valueBN.isGreaterThan(0)) {
+    return theme.positive;
+  } else {
+    return theme.negative;
+  }
 }

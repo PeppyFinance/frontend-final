@@ -1,21 +1,21 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
 
 import { ChainInfo } from "@symmio/frontend-sdk/constants/chainInfo";
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 
-import { NavButton } from "components/Button";
-import { ChevronDown } from "components/Icons";
-import ImageWithFallback from "components/ImageWithFallback";
-import { isMobile } from "react-device-detect";
-import { NetworksModal } from "./NetworksModal";
-import useOnOutsideClick from "lib/hooks/useOnOutsideClick";
-import { getChainLogo } from "utils/chainLogo";
 import {
   useAllMultiAccountAddresses,
   useV3Ids,
 } from "@symmio/frontend-sdk/state/chains/hooks";
 import { useSetFEName } from "@symmio/frontend-sdk/state/user/hooks";
+import { NavButton } from "components/Button";
+import { ChevronDown } from "components/Icons";
+import ImageWithFallback from "components/ImageWithFallback";
+import useOnOutsideClick from "lib/hooks/useOnOutsideClick";
+import { isMobile } from "react-device-detect";
+import { getChainLogo } from "utils/chainLogo";
+import { NetworksModal } from "./NetworksModal";
 
 const Container = styled.div`
   display: inline-flex;
@@ -66,7 +66,9 @@ export default function Web3Network() {
   }, [MULTI_ACCOUNT_ADDRESS, chainId, setFrontEndName]);
 
   const onClickButton = () => {
-    if (isMultiChain) toggleNetworksModal(!networksModal);
+    if (isMultiChain) {
+      toggleNetworksModal(!networksModal);
+    }
   };
 
   const Chain = useMemo(() => {

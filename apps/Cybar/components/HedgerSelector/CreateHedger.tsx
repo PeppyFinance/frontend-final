@@ -7,9 +7,9 @@ import {
   useUserWhitelist,
 } from "@symmio/frontend-sdk/state/user/hooks";
 
+import GradientButton from "components/Button/GradientButton";
 import Column from "components/Column";
 import { Row, RowStart } from "components/Row";
-import GradientButton from "components/Button/GradientButton";
 
 const Wrapper = styled.div<{ modal?: boolean }>`
   border: none;

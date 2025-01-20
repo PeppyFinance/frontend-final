@@ -1,12 +1,11 @@
-import React from "react";
 import styled, { useTheme } from "styled-components";
 
 import { useActiveMarket } from "@symmio/frontend-sdk/state/trade/hooks";
 
-import { ColumnCenter } from "components/Column";
-import { RowCenter } from "components/Row";
 import { MainButton } from "components/Button";
+import { ColumnCenter } from "components/Column";
 import BigExclamationMark from "components/Icons/BigExclamationMark";
+import { RowCenter } from "components/Row";
 
 const ErrorWrapper = styled(ColumnCenter)<{
   blacklisted?: boolean;

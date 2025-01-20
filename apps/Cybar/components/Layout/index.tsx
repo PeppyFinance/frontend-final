@@ -1,12 +1,12 @@
+import "@rainbow-me/rainbowkit/styles.css";
 import React from "react";
 import styled from "styled-components";
-import "@rainbow-me/rainbowkit/styles.css";
 
 import { UNDER_MAINTENANCE } from "@symmio/frontend-sdk/constants/misc";
 
-import NavBar from "./NavBar";
-import { RowCenter } from "components/Row";
 import { UnderMaintenance } from "components/Icons";
+import { RowCenter } from "components/Row";
+import NavBar from "./NavBar";
 // import Footer from 'components/Disclaimer'
 
 const Wrapper = styled.div`

@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function TableauBackground({
   width = 524,
   height = 72,

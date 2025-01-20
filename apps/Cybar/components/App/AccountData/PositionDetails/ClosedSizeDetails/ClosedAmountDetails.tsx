@@ -16,13 +16,13 @@ import {
   useQuoteUpnlAndPnl,
 } from "@symmio/frontend-sdk/hooks/useQuotes";
 
-import { PnlValue } from "components/App/UserPanel/Common";
 import {
   DataWrap,
-  Row,
   Label,
+  Row,
   Value,
 } from "components/App/AccountData/PositionDetails/styles";
+import { PnlValue } from "components/App/UserPanel/Common";
 
 const Wrapper = styled(DataWrap)`
   margin-top: 4px;
@@ -52,18 +52,21 @@ export default function ClosedAmountDetails({
     quote || ({} as Quote),
     marketData?.markPrice || 0,
     closedAmount,
-    undefined
+    undefined,
   );
   const [value, color] = useMemo(() => {
     const pnlBN = toBN(pnl);
-    if (pnlBN.isGreaterThan(0))
+    if (pnlBN.isGreaterThan(0)) {
       return [`+ $${formatAmount(pnlBN)}`, theme.positive];
-    else if (pnlBN.isLessThan(0))
+    } else if (pnlBN.isLessThan(0)) {
       return [`- $${formatAmount(Math.abs(pnlBN.toNumber()))}`, theme.negative];
+    }
     return [`$${formatAmount(pnlBN)}`, theme.text1];
   }, [pnl, theme]);
   const pnlPercent = useMemo(() => {
-    if (!closedAmount || !openedPrice) return "0";
+    if (!closedAmount || !openedPrice) {
+      return "0";
+    }
     return toBN(pnl)
       .div(closedAmount)
       .div(openedPrice)
@@ -78,7 +81,7 @@ export default function ClosedAmountDetails({
       !closedAmountBN.isEqualTo(0) &&
       quoteStatus !== QuoteStatus.CANCELED &&
       quoteStatus !== QuoteStatus.CLOSED
-    )
+    ) {
       return (
         <Wrapper>
           <Row>
@@ -86,7 +89,7 @@ export default function ClosedAmountDetails({
             <Value>{`${formatAmount(
               closedAmountBN,
               6,
-              true
+              true,
             )} ${symbol}`}</Value>
           </Row>
           <Row>
@@ -94,17 +97,18 @@ export default function ClosedAmountDetails({
             <Value>{`${formatCurrency(
               avgClosedPrice,
               6,
-              true
+              true,
             )} ${asset}`}</Value>
           </Row>
           <Row>
             <Label>PNL:</Label>
             <PositionPnl color={color}>{`${value} (${Math.abs(
-              Number(pnlPercent)
+              Number(pnlPercent),
             )}%)`}</PositionPnl>
           </Row>
         </Wrapper>
       );
+    }
 
     return <></>;
   }, [

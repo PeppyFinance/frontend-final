@@ -1,12 +1,12 @@
-import { useCallback, useEffect } from "react";
-import styled from "styled-components";
-import { animated } from "react-spring";
 import { useSpring } from "@react-spring/web";
+import { useCallback, useEffect } from "react";
+import { animated } from "react-spring";
+import styled from "styled-components";
 
-import { PopupContent } from "@symmio/frontend-sdk/state/application/reducer";
 import { useRemovePopup } from "@symmio/frontend-sdk/state/application/hooks";
-import TransactionPopup from "./TransactionPopup";
+import { PopupContent } from "@symmio/frontend-sdk/state/application/reducer";
 import NotificationPopup from "./NotificationPopup";
+import TransactionPopup from "./TransactionPopup";
 
 const Wrapper = styled.div`
   display: flex;
@@ -44,11 +44,13 @@ export default function PopupItem({
   const removePopup = useRemovePopup();
   const removeThisPopup = useCallback(
     () => removePopup(popKey),
-    [popKey, removePopup]
+    [popKey, removePopup],
   );
 
   useEffect(() => {
-    if (removeAfterMs === null) return undefined;
+    if (removeAfterMs === null) {
+      return undefined;
+    }
 
     const timeout = setTimeout(() => {
       removeThisPopup();

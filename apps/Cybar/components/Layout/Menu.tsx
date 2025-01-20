@@ -1,7 +1,7 @@
-import React, { useRef } from "react";
-import styled from "styled-components";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
+import { useRef } from "react";
+import styled from "styled-components";
 
 import { RowBetween, RowCenter } from "components/Row";
 

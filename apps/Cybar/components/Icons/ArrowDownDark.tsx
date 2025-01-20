@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function ArrowDownDark({ ...rest }: { [x: string]: any }) {
   return (
     <svg

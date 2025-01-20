@@ -1,17 +1,16 @@
-import React from "react";
 import styled from "styled-components";
 
 import WhitelistUpdater from "components/App/Whitelist/updater";
 
-import Column from "components/Column";
+import AccountOverview from "components/App/AccountData";
 import Chart from "components/App/Chart";
-import UserPanel from "components/App/UserPanel";
+import FavoriteBar from "components/App/FavoriteBar";
 import MarketBar from "components/App/MarketBar";
 import TradePanel from "components/App/TradePanel";
-import FavoriteBar from "components/App/FavoriteBar";
-import AccountOverview from "components/App/AccountData";
-import { UpdaterRoot } from "components/EmptyComponent";
+import UserPanel from "components/App/UserPanel";
 import WrapperBanner from "components/Banner";
+import Column from "components/Column";
+import { UpdaterRoot } from "components/EmptyComponent";
 
 export const Container = styled(Column)`
   background: ${({ theme }) => theme.bg};

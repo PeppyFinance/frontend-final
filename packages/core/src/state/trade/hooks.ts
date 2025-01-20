@@ -1,29 +1,40 @@
 import { useCallback, useMemo } from "react";
-import { useAppDispatch, useAppSelector } from "../declaration";
-import { InputField, OrderType, PositionType } from "../../types/trade";
-import { BN_ZERO, formatPrice } from "../../utils/numbers";
+import BigNumber from "bignumber.js";
+import { useLeverage } from "../user/hooks";
+import { DEFAULT_PRECISION } from "../../../src/constants/misc";
+import { useMarket } from "../../hooks/useMarkets";
 import { Market } from "../../types/market";
+import { InputField, OrderType, PositionType } from "../../types/trade";
+import { makeHttpRequest } from "../../utils/http";
+import {
+  BN_ZERO, formatPrice,
+  RoundMode,
+  toBN,
+} from "../../utils/numbers";
+import { useAppDispatch, useAppSelector } from "../declaration";
 import { useHedgerInfo, useMarketData } from "../hedger/hooks";
 import {
-  updateOrderType,
-  updateLimitPrice,
-  updateMarketId,
-  updateInputField,
-  updateTypedValue,
-  updatePositionType,
-  updateLockedPercentages,
-  updateTpSl,
-  updateTpError,
-  updateSlError,
-  updateTpSlState,
-  updateDelegateTpSl,
-  setTpSlOpened,
   setTpSlConfig,
+  setTpSlOpened,
+  updateDelegateTpSl,
+  updateInputField,
+  updateLimitPrice,
+  updateLockedPercentages,
+  updateMarketId,
+  updateOrderType,
+  updatePositionType,
+  updateSlError,
+  updateTpError,
+  updateTpSl,
+  updateTpSlState,
+  updateTypedValue,
 } from "./actions";
-import { useMarket } from "../../hooks/useMarkets";
-import { makeHttpRequest } from "../../utils/http";
-import { GetLockedParamUrlResponse } from "./types";
-import { TpSlUpdateProcessState, TpSlState, TpSlConfigParams } from "./types";
+import {
+  GetLockedParamUrlResponse,
+  TpSlConfigParams,
+  TpSlState,
+  TpSlUpdateProcessState,
+} from "./types";
 
 export function useActiveMarketId(): number | undefined {
   const marketId = useAppSelector((state) => state.trade.marketId);
@@ -43,7 +54,7 @@ export function useActiveMarketPrice(): string {
       !marketData
         ? BN_ZERO.toString()
         : formatPrice(marketData.markPrice, market?.pricePrecision),
-    [market?.pricePrecision, marketData]
+    [market?.pricePrecision, marketData],
   );
 }
 
@@ -79,7 +90,7 @@ export function useTradeTpSlError() {
 }
 export function useTpSlDelegate(): boolean {
   const delegateStatus = useAppSelector(
-    (state) => state.trade.tpSlDelegateChecker
+    (state) => state.trade.tpSlDelegateChecker,
   );
   return delegateStatus;
 }
@@ -98,7 +109,7 @@ export function useSetTpSlConfig(): (tpSlValue: TpSlConfigParams) => void {
     (tpSlValue: TpSlConfigParams) => {
       dispatch(setTpSlConfig(tpSlValue));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -108,18 +119,18 @@ export function useSetTpSl(): (tpSlValue: TpSlState) => void {
     (tpSlValue: TpSlState) => {
       dispatch(updateTpSl(tpSlValue));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 export function useSetTpSlState(): (
-  tpSlStateValue: TpSlUpdateProcessState
+  tpSlStateValue: TpSlUpdateProcessState,
 ) => void {
   const dispatch = useAppDispatch();
   return useCallback(
     (tpSlStateValue: TpSlUpdateProcessState) => {
       dispatch(updateTpSlState(tpSlStateValue));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 export function useSetDelegateTpSl() {
@@ -128,7 +139,7 @@ export function useSetDelegateTpSl() {
     (delegateStatus: boolean) => {
       dispatch(updateDelegateTpSl(delegateStatus));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -138,7 +149,7 @@ export function useSetTpSlOpened() {
     (tpSlOpened: boolean) => {
       dispatch(setTpSlOpened(tpSlOpened));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 export function useSetTpError(): (tpValue: string) => void {
@@ -147,7 +158,7 @@ export function useSetTpError(): (tpValue: string) => void {
     (tpValue: string) => {
       dispatch(updateTpError(tpValue));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 export function useSetSlError(): (slValue: string) => void {
@@ -156,7 +167,7 @@ export function useSetSlError(): (slValue: string) => void {
     (slValue: string) => {
       dispatch(updateSlError(slValue));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -177,7 +188,7 @@ export function useLockedPercentages(): {
       partyBmm,
       lf,
     }),
-    [cva, lf, partyAmm, partyBmm]
+    [cva, lf, partyAmm, partyBmm],
   );
 }
 
@@ -187,7 +198,7 @@ export function useSetOrderType(): (orderType: OrderType) => void {
     (orderType: OrderType) => {
       dispatch(updateOrderType(orderType));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 export function useSetInputField(): (inputField: InputField) => void {
@@ -196,7 +207,7 @@ export function useSetInputField(): (inputField: InputField) => void {
     (inputField: InputField) => {
       dispatch(updateInputField(inputField));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -206,7 +217,7 @@ export function useSetPositionType() {
     (type: PositionType) => {
       dispatch(updatePositionType(type));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -216,7 +227,7 @@ export function useSetLimitPrice() {
     (price: string) => {
       dispatch(updateLimitPrice(price));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -227,7 +238,7 @@ export function useSetTypedValue() {
       dispatch(updateInputField(inputField));
       dispatch(updateTypedValue(value));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -241,12 +252,12 @@ export function useSetMarketId(): (id: number) => void {
         dispatch(updateMarketId({ id }));
       }
     },
-    [dispatch, marketId]
+    [dispatch, marketId],
   );
 }
 
 export function useGetLockedPercentages(
-  leverage: number
+  leverage: number,
 ): (options: {
   signal: AbortSignal;
   headers: [string, string][];
@@ -258,18 +269,22 @@ export function useGetLockedPercentages(
   return useCallback(
     async (options: { signal: AbortSignal; headers: [string, string][] }) => {
       try {
-        if (!baseUrl || !market) throw new Error("missing parameters");
+        if (!baseUrl || !market) {
+          throw new Error("missing parameters");
+        }
         const { href: url } = new URL(
           `/get_locked_params/${market.name}?leverage=${leverage}`,
-          baseUrl
+          baseUrl,
         );
 
         const response = await makeHttpRequest<GetLockedParamUrlResponse>(
           url,
-          options
+          options,
         );
 
-        if (response) dispatch(updateLockedPercentages({ ...response }));
+        if (response) {
+          dispatch(updateLockedPercentages({ ...response }));
+        }
       } catch (error: unknown) {
         if (error instanceof Error && error.name === "AbortError") {
           console.log("AbortError getLockedParam", error.message);
@@ -278,6 +293,76 @@ export function useGetLockedPercentages(
         }
       }
     },
-    [baseUrl, dispatch, leverage, market]
+    [baseUrl, dispatch, leverage, market],
   );
+}
+
+interface PositionInfo {
+  outputTicker: string;
+  pricePrecision: number;
+  quantityPrecision: number;
+  minAcceptableQuoteValue: number;
+  minPositionValue: string;
+  minPositionQuantity: string;
+}
+
+export function usePositionInfo(): PositionInfo {
+  const market = useActiveMarket();
+  const marketPrice = useActiveMarketPrice();
+  const leverage = useLeverage();
+  const [
+    outputTicker,
+    pricePrecision,
+    quantityPrecision,
+    minAcceptableQuoteValue,
+  ] = useMemo(
+    () =>
+      market
+        ? [
+          market.symbol,
+          market.pricePrecision,
+          market.quantityPrecision,
+          market.minAcceptableQuoteValue,
+          market.maxLeverage,
+        ]
+        : ["", DEFAULT_PRECISION, DEFAULT_PRECISION, 10],
+    [market],
+  );
+  const [minPositionValue, minPositionQuantity] = useMemo(() => {
+    // find maximum quantity between min quote value & minimum value base on quantity precision
+    const quantity = BigNumber.max(
+      toBN(minAcceptableQuoteValue)
+        .div(marketPrice)
+        .times(leverage)
+        .toFixed(quantityPrecision, RoundMode.ROUND_UP),
+      toBN(10)
+        .pow(quantityPrecision * -1)
+        .toFixed(quantityPrecision, RoundMode.ROUND_UP),
+    );
+    const value = toBN(quantity).times(marketPrice).div(leverage);
+
+    if (value.isNaN()) {
+      return ["-", "-"];
+    }
+    return [
+      value.toFixed(pricePrecision, RoundMode.ROUND_UP),
+      quantity.toFixed(quantityPrecision, RoundMode.ROUND_UP),
+    ];
+  }, [
+    leverage,
+    marketPrice,
+    minAcceptableQuoteValue,
+    pricePrecision,
+    quantityPrecision,
+  ]);
+
+
+  return {
+    outputTicker,
+    pricePrecision,
+    quantityPrecision,
+    minAcceptableQuoteValue,
+    minPositionValue,
+    minPositionQuantity,
+  }
 }

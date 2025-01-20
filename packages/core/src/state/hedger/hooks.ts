@@ -9,6 +9,7 @@ import { useSupportedChainId } from "../../lib/hooks/useSupportedChainId";
 import { ApiState, ConnectionStatus } from "../../types/api";
 import { Market } from "../../types/market";
 import { useHedgerAddress } from "../chains/hooks";
+import { useCoinCategories } from "../market/hooks";
 import {
   updateDepth,
   updateFundingRates,
@@ -28,14 +29,14 @@ import {
 
 export function useMarketsStatus(): ApiState {
   const marketsStatus: ApiState = useAppSelector(
-    (state) => state.hedger.marketsStatus
+    (state) => state.hedger.marketsStatus,
   );
   return marketsStatus;
 }
 
 export function useOpenInterestStatus(): ApiState {
   const openInterestStatus: ApiState = useAppSelector(
-    (state) => state.hedger.openInterestStatus
+    (state) => state.hedger.openInterestStatus,
   );
   return openInterestStatus;
 }
@@ -46,7 +47,7 @@ export function useSetWebSocketStatus() {
     (status: ConnectionStatus) => {
       dispatch(updateWebSocketStatus({ status }));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -64,7 +65,7 @@ export function useHedgerInfo() {
       debouncedIsSupportedChainId && chainId && hedgerAddress[chainId]
         ? hedgerAddress[chainId][activeHedgerId]
         : hedgerAddress[SupportedChainId.NOT_SET][activeHedgerId],
-    [activeHedgerId, chainId, debouncedIsSupportedChainId, hedgerAddress]
+    [activeHedgerId, chainId, debouncedIsSupportedChainId, hedgerAddress],
   );
 }
 
@@ -75,7 +76,7 @@ export function useWebSocketUrl() {
 
 export function useWebSocketStatus() {
   const webSocketStatus = useAppSelector(
-    (state) => state.hedger.webSocketStatus
+    (state) => state.hedger.webSocketStatus,
   );
   return webSocketStatus;
 }
@@ -85,14 +86,43 @@ export type Direction = "asc" | "desc";
 export interface OrderMarktesProps {
   orderBy?: OrderMarktes;
   direction?: Direction;
+  coinCategory?: string;
 }
-export function useMarkets({ orderBy, direction }: OrderMarktesProps = {}) {
-  const markets: Market[] = useAppSelector((state) => state.hedger.markets);
+export function useMarkets({
+  orderBy,
+  direction,
+  coinCategory,
+}: OrderMarktesProps = {}) {
+  let markets: Market[] = useAppSelector((state) => state.hedger.markets);
+  const coinCategories = useCoinCategories();
   const { marketsInfo, infoStatus } = useAllMarketsData();
-  // TODO: consider sorting library like fast-sort if too slow
+
   return useMemo(() => {
+    if (infoStatus === ApiState.OK && coinCategory) {
+      // convert coinCategories keys to uppercase to ensure equality
+      // when accessing coinCategories object keys
+      // coinCategories[coinCategory.toUpperCase()]
+      const coinCategoriesUpperCase = Object.fromEntries(
+        Object.entries(coinCategories).map(([key, val]) => [
+          key.toUpperCase(),
+          val,
+        ]),
+      );
+
+      const category = coinCategoriesUpperCase[coinCategory.toUpperCase()]?.map(
+        (symbol) => symbol.toUpperCase(),
+      );
+
+      if (category?.length > 0) {
+        const upperCaseCoinSymbolSet = new Set(category);
+
+        markets = markets.filter((market) =>
+          upperCaseCoinSymbolSet.has(market.symbol.toUpperCase()),
+        );
+      }
+    }
+
     if (infoStatus === ApiState.OK && orderBy) {
-      // TODO: fix tsConfig and use toSorted
       return [...markets].sort((m1, m2) => {
         const mInfo1 = marketsInfo[m1.name];
         const mInfo2 = marketsInfo[m2.name];
@@ -106,7 +136,15 @@ export function useMarkets({ orderBy, direction }: OrderMarktesProps = {}) {
     } else {
       return markets;
     }
-  }, [direction, infoStatus, markets, marketsInfo, orderBy]);
+  }, [
+    direction,
+    infoStatus,
+    markets,
+    marketsInfo,
+    orderBy,
+    coinCategory,
+    coinCategories,
+  ]);
 }
 
 export function useErrorMessages() {
@@ -116,10 +154,10 @@ export function useErrorMessages() {
 
 export function useMarketNotionalCap() {
   const marketNotionalCap = useAppSelector(
-    (state) => state.hedger.marketNotionalCap
+    (state) => state.hedger.marketNotionalCap,
   );
   const marketNotionalCapStatus = useAppSelector(
-    (state) => state.hedger.marketNotionalCapStatus
+    (state) => state.hedger.marketNotionalCapStatus,
   );
   return { marketNotionalCap, marketNotionalCapStatus };
 }
@@ -145,14 +183,14 @@ export function useMarketData(name: string | undefined): MarketData | null {
 }
 
 export function useFundingRateData(
-  name: string | undefined
+  name: string | undefined,
 ): FundingRateData | null {
   const fundingRates = useAppSelector((state) => state.hedger.fundingRates);
   return name ? fundingRates[name] : null;
 }
 
 export function useMarketDepth(
-  name: string | undefined
+  name: string | undefined,
 ): MarketDepthData | null {
   const depths = useAppSelector((state) => state.hedger.depths);
   return name ? depths[name] : null;
@@ -164,7 +202,7 @@ export function useSetPrices() {
     (prices: MarketDataMap) => {
       dispatch(updatePrices({ prices }));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -174,7 +212,7 @@ export function useSetFundingRates() {
     (fundingRates: FundingRateMap) => {
       dispatch(updateFundingRates({ fundingRates }));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -184,7 +222,7 @@ export function useSetDepth() {
     (depth: MarketDepthData, name: string) => {
       dispatch(updateDepth({ name, depth }));
     },
-    [dispatch]
+    [dispatch],
   );
 }
 
@@ -194,6 +232,6 @@ export function useSetNotionalCap() {
     (notionalCap: MarketNotionalCap) => {
       dispatch(updateNotionalCap({ notionalCap }));
     },
-    [dispatch]
+    [dispatch],
   );
 }

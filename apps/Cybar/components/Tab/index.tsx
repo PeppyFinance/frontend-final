@@ -1,6 +1,6 @@
-import styled from "styled-components";
 import { RowCenter, RowStart } from "components/Row";
 import { lighten } from "polished";
+import styled from "styled-components";
 
 export const TabWrapper = styled(RowCenter)`
   width: unset;
@@ -59,8 +59,8 @@ export const TabButton = styled(RowCenter)<TabButtonProps>`
       hideOuterBorder
         ? "transparent"
         : active
-        ? activeProps?.borderColor || theme.text0
-        : borderColor || theme.text4};
+          ? activeProps?.borderColor || theme.text0
+          : borderColor || theme.text4};
 
   &:hover {
     cursor: ${({ active }) => (active ? "default" : "pointer")};

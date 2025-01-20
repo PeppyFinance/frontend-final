@@ -1,12 +1,10 @@
-import React from "react";
 import styled from "styled-components";
 
 import { useUserWhitelist } from "@symmio/frontend-sdk/state/user/hooks";
 
-import { Info } from "components/Icons";
-import { Close as CloseIcon } from "components/Icons";
-import { RowStart } from "components/Row";
+import { Close as CloseIcon, Info } from "components/Icons";
 import { ExternalLinkIcon } from "components/Link";
+import { RowStart } from "components/Row";
 
 const Container = styled.div`
   margin: 0px 8px;
@@ -82,7 +80,9 @@ export default function WrapperBanner() {
       ? false
       : true;
 
-  if (!showBanner) return null;
+  if (!showBanner) {
+    return null;
+  }
 
   return (
     <Container>

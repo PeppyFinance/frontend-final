@@ -13,13 +13,22 @@
     "build": "yarn workspaces run build",
     "test": "yarn workspaces run test",
     "build-and-integrate": ". ./useful_script/build-and-integrate.sh",
-    "lint": "eslint --ext js,ts,tsx ."
+    "lint": "eslint --ext js,ts,tsx .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "devDependencies": {
     "@nighttrax/eslint-config-tsx": "~12.0.0-alpha.2",
+    "@typescript-eslint/eslint-plugin": "^8.22.0",
+    "@typescript-eslint/parser": "^8.22.0",
     "doctoc": "~2.2.0",
     "eslint": "~8.50.0",
+    "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-import": "~2.28.0",
+    "eslint-plugin-prettier": "^5.2.3",
+    "eslint-plugin-unused-imports": "^4.1.4",
+    "prettier": "^3.4.2",
+    "prettier-plugin-organize-imports": "^4.1.0",
     "typescript": "5.2"
   },
   "packageManager": "yarn@1.22.21+sha1.1959a18351b811cdeedbd484a8f86c3cc3bbaf72"

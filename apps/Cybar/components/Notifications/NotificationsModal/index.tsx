@@ -1,19 +1,19 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import styled, { useTheme } from "styled-components";
 import { Z_INDEX } from "theme";
 
-import { NotificationDetails } from "@symmio/frontend-sdk/state/notifications/types";
 import {
   useReadNotifications,
   useUnreadNotifications,
 } from "@symmio/frontend-sdk/state/notifications/hooks";
+import { NotificationDetails } from "@symmio/frontend-sdk/state/notifications/types";
 
-import Column, { ColumnCenter } from "components/Column";
 import { Card } from "components/Card";
+import Column, { ColumnCenter } from "components/Column";
 import { Bell } from "components/Icons";
 import { Modal } from "components/Modal";
-import { RowCenter } from "components/Row";
 import NotificationCardsItems from "components/Notifications/Cards/index";
+import { RowCenter } from "components/Row";
 import OldNotificationsDropdown from "./OldNotificationsDropdown";
 
 const ModalWrapper = styled(Card)`
@@ -83,7 +83,7 @@ const Title = styled.div`
 
 export function newNotificationsFirst(
   a: NotificationDetails,
-  b: NotificationDetails
+  b: NotificationDetails,
 ) {
   return Number(b.modifyTime) - Number(a.modifyTime);
 }
@@ -103,7 +103,7 @@ export default function NotificationsModal({
   const readNotifications = [...useReadNotifications()];
   const emptyNotification = useMemo(
     () => unreadNotifications.length === 0 && readNotifications.length === 0,
-    [readNotifications.length, unreadNotifications.length]
+    [readNotifications.length, unreadNotifications.length],
   );
 
   function getInnerContent() {
@@ -129,14 +129,12 @@ export default function NotificationsModal({
                 </InfoBox>
                 {unreadNotifications
                   .sort(newNotificationsFirst)
-                  .map((notification, index) => {
-                    return (
-                      <NotificationCardsItems
-                        notification={notification}
-                        key={index}
-                      />
-                    );
-                  })}
+                  .map((notification) => (
+                    <NotificationCardsItems
+                      notification={notification}
+                      key={notification.id}
+                    />
+                  ))}
               </Column>
             )}
             {readNotifications.length > 0 && (

@@ -1,22 +1,22 @@
-import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
 import { ApolloClient, NormalizedCacheObject } from "@apollo/client";
-const { createAsyncThunk } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
+import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
+import { Address } from "viem";
 import {
   BALANCE_CHANGES_DATA,
   TOTAL_DEPOSITS_AND_WITHDRAWALS,
 } from "../../apollo/queries";
+import { WEB_SETTING } from "../../config/index";
+import { BALANCE_HISTORY_ITEMS_NUMBER } from "../../constants/misc";
 import { makeHttpRequest } from "../../utils/http";
+import { getAppNameHeader } from "../hedger/thunks";
 import {
   BalanceHistoryData,
   BalanceInfo,
   BalanceInfosType,
   DepositWithdrawalsData,
 } from "./types";
-import { BALANCE_HISTORY_ITEMS_NUMBER } from "../../constants/misc";
-import { getAppNameHeader } from "../hedger/thunks";
-import { WEB_SETTING } from "../../config/index";
-import { Address } from "viem";
+const { createAsyncThunk } = ((toolkitRaw as any).default ??
+  toolkitRaw) as typeof toolkitRaw;
 
 export const getIsWhiteList = createAsyncThunk(
   "user/getWalletWhitelist",
@@ -45,12 +45,14 @@ export const getIsWhiteList = createAsyncThunk(
 
     const { href: isWhiteListUrl } = new URL(
       `/check_in-whitelist/${account}/${multiAccountAddress}`,
-      hedgerUrl
+      hedgerUrl,
     );
 
     let isWhiteList: null | boolean = null;
     try {
-      if (!WEB_SETTING.checkWhiteList) return { isWhiteList: true };
+      if (!WEB_SETTING.checkWhiteList) {
+        return { isWhiteList: true };
+      }
 
       const [whiteListRes] = await Promise.allSettled([
         makeHttpRequest<boolean>(isWhiteListUrl, getAppNameHeader(appName)),
@@ -64,7 +66,7 @@ export const getIsWhiteList = createAsyncThunk(
     }
 
     return { isWhiteList };
-  }
+  },
 );
 
 export const getBalanceHistory = createAsyncThunk(
@@ -114,7 +116,7 @@ export const getBalanceHistory = createAsyncThunk(
       console.error(error);
       throw new Error(`Unable to query balance history data from Client`);
     }
-  }
+  },
 );
 
 export const getTotalDepositsAndWithdrawals = createAsyncThunk(
@@ -147,13 +149,15 @@ export const getTotalDepositsAndWithdrawals = createAsyncThunk(
         fetchPolicy: "no-cache",
       });
 
-      if (accounts.length) return { result: accounts[0] };
+      if (accounts.length) {
+        return { result: accounts[0] };
+      }
       return { result: null };
     } catch (error) {
       console.error(error);
       throw new Error(`Unable to query Deposits And Withdrawals from Client`);
     }
-  }
+  },
 );
 
 export const getBalanceInfo = createAsyncThunk(
@@ -174,7 +178,7 @@ export const getBalanceInfo = createAsyncThunk(
 
     const { href: balanceInfoUrl } = new URL(
       `/get_balance_info/${account}/${multiAccountAddress}`,
-      hedgerUrl
+      hedgerUrl,
     );
 
     const balanceInfos: BalanceInfosType = {};
@@ -210,5 +214,5 @@ export const getBalanceInfo = createAsyncThunk(
     }
 
     return balanceInfos;
-  }
+  },
 );

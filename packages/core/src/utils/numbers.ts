@@ -22,7 +22,7 @@ export function formatPrice(
   number: BigNumber.Value,
   pricePrecision = 2,
   separator = false,
-  roundMode = RoundMode.ROUND_DOWN
+  roundMode = RoundMode.ROUND_DOWN,
 ): string {
   const toFixed = toBN(number).toFixed(pricePrecision, roundMode);
   return separator ? toBN(toFixed).toFormat() : removeTrailingZeros(toFixed);
@@ -31,9 +31,11 @@ export function formatPrice(
 export const formatAmount = (
   amount: BigNumber.Value | undefined | null,
   fixed = 6,
-  separator = false
+  separator = false,
 ): string => {
-  if (amount === null || amount === undefined) return "";
+  if (amount === null || amount === undefined) {
+    return "";
+  }
 
   const bnAmount = toBN(amount);
   if (BN_TEN.pow(fixed - 1).lte(bnAmount)) {
@@ -49,9 +51,11 @@ export const formatAmount = (
 export const formatCurrency = (
   amount: BigNumber.Value | undefined | null,
   fixed = 6,
-  separator = false
+  separator = false,
 ) => {
-  if (amount === undefined || amount === null || amount === "") return "-";
+  if (amount === undefined || amount === null || amount === "") {
+    return "-";
+  }
   const bnAmount = toBN(amount);
   if (bnAmount.isZero()) {
     return "0";
@@ -69,7 +73,7 @@ export const formatCurrency = (
 };
 
 export const formatDollarAmount = (
-  amount: BigNumber.Value | undefined | null
+  amount: BigNumber.Value | undefined | null,
 ) => {
   const formattedAmount = formatCurrency(amount, 4, true);
   if (formattedAmount === "< 0.001") {
@@ -80,16 +84,18 @@ export const formatDollarAmount = (
 
 export function toWei(
   amount: BigNumber.Value | null | bigint,
-  decimals = 18
+  decimals = 18,
 ): bigint {
   return BigInt(toWeiBN(amount?.toString() || "0", decimals).toFixed(0));
 }
 
 export function toWeiBN(
   amount: BigNumber.Value | null,
-  decimals = 18
+  decimals = 18,
 ): BigNumber {
-  if (amount === undefined || amount === null || amount === "") return BN_ZERO;
+  if (amount === undefined || amount === null || amount === "") {
+    return BN_ZERO;
+  }
   if (typeof amount === "string" && isNaN(Number(amount))) {
     return BN_ZERO;
   }
@@ -99,9 +105,11 @@ export function toWeiBN(
 export function fromWei(
   amount: BigNumber.Value | null | undefined,
   decimals = 18,
-  defaultOutput?: string
+  defaultOutput?: string,
 ): string {
-  if (amount === undefined || amount === null || amount === "") return "0";
+  if (amount === undefined || amount === null || amount === "") {
+    return "0";
+  }
   if (typeof amount === "string" && isNaN(Number(amount))) {
     return defaultOutput ?? "0";
   }

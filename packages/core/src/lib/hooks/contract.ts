@@ -10,18 +10,25 @@ export function useContract<T extends Abi>(
     | { [chainId: number]: string }
     | null
     | undefined,
-  ABI?: T
+  ABI?: T,
 ): any {
   const { chainId } = useWagmi();
   const publicClient = usePublicClient();
   const { data: walletClient } = useWalletClient();
 
   return useMemo(() => {
-    if (!addressOrAddressMap || !ABI || !chainId) return null;
+    if (!addressOrAddressMap || !ABI || !chainId) {
+      return null;
+    }
     let address: string | undefined;
-    if (typeof addressOrAddressMap === "string") address = addressOrAddressMap;
-    else address = addressOrAddressMap[chainId];
-    if (!address || address === AddressZero || !publicClient) return null;
+    if (typeof addressOrAddressMap === "string") {
+      address = addressOrAddressMap;
+    } else {
+      address = addressOrAddressMap[chainId];
+    }
+    if (!address || address === AddressZero || !publicClient) {
+      return null;
+    }
     try {
       return getContract({
         address: address as Address,

@@ -1,6 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
 const path = require("path");
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
 const fs = require("fs");
 
 // Recursively get all .ts files
@@ -39,7 +39,7 @@ files.forEach((file) => {
       const targetPath = path.resolve("./", `./${p1}`);
       const relativePath = calculateRelativePath(file, targetPath);
       return `from "${relativePath}"`;
-    }
+    },
   );
 
   fs.writeFileSync(file, content, "utf-8");

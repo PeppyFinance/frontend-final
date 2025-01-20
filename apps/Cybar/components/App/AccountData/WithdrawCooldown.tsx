@@ -1,30 +1,30 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import styled from "styled-components";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
+import styled from "styled-components";
 
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 
-import { TransferTab } from "@symmio/frontend-sdk/types/transfer";
-import { getRemainingTime } from "@symmio/frontend-sdk/utils/time";
 import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
-import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
+import { TransferTab } from "@symmio/frontend-sdk/types/transfer";
 import {
   formatCurrency,
   formatPrice,
   toBN,
 } from "@symmio/frontend-sdk/utils/numbers";
+import { getRemainingTime } from "@symmio/frontend-sdk/utils/time";
+import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
 
+import { useModalOpen } from "@symmio/frontend-sdk/state/application/hooks";
+import { ApplicationModal } from "@symmio/frontend-sdk/state/application/reducer";
 import {
   useAccountPartyAStat,
   useActiveAccountAddress,
 } from "@symmio/frontend-sdk/state/user/hooks";
-import { useModalOpen } from "@symmio/frontend-sdk/state/application/hooks";
-import { ApplicationModal } from "@symmio/frontend-sdk/state/application/reducer";
 
 import { useTransferCollateral } from "@symmio/frontend-sdk/callbacks/useTransferCollateral";
 
-import { RowCenter, RowBetween } from "components/Row";
 import { DotFlashing } from "components/Icons";
+import { RowBetween, RowCenter } from "components/Row";
 
 const RemainingWrap = styled(RowCenter)<{ cursor?: string }>`
   position: relative;
@@ -70,14 +70,14 @@ function Timer() {
   const { withdrawCooldown, cooldownMA } =
     useAccountPartyAStat(activeAccountAddress);
   const { hours, seconds, minutes } = getRemainingTime(
-    toBN(withdrawCooldown).plus(cooldownMA).times(1000).toNumber()
+    toBN(withdrawCooldown).plus(cooldownMA).times(1000).toNumber(),
   );
 
   useEffect(() => {
     // for forcing component to re-render every second
     const interval = setInterval(
       () => setState((prevState) => !prevState),
-      1000
+      1000,
     );
     return () => {
       clearInterval(interval);
@@ -108,12 +108,12 @@ export default function WithdrawCooldown({
   const COLLATERAL_TOKEN = useCollateralToken();
   const collateralCurrency = useGetTokenWithFallbackChainId(
     COLLATERAL_TOKEN,
-    chainId
+    chainId,
   );
   const { callback: transferBalanceCallback, error: transferBalanceError } =
     useTransferCollateral(
       formatPrice(accountBalance, collateralCurrency?.decimals),
-      TransferTab.WITHDRAW
+      TransferTab.WITHDRAW,
     );
   const [awaitingConfirmation, setAwaitingConfirmation] = useState(false);
 
@@ -128,14 +128,16 @@ export default function WithdrawCooldown({
       : null;
   }, [cooldownMA, currentTimestamp, withdrawCooldown]);
   const { diff } = getRemainingTime(
-    toBN(withdrawCooldown).plus(cooldownMA).times(1000).toNumber()
+    toBN(withdrawCooldown).plus(cooldownMA).times(1000).toNumber(),
   );
 
   const showWithdrawBarModal = useModalOpen(ApplicationModal.WITHDRAW_BAR);
   const showWithdrawModal = useModalOpen(ApplicationModal.WITHDRAW);
 
   const handleAction = useCallback(async () => {
-    if (!showWithdrawBarModal && !showWithdrawModal) return;
+    if (!showWithdrawBarModal && !showWithdrawModal) {
+      return;
+    }
 
     if (!transferBalanceCallback) {
       toast.error(transferBalanceError);
@@ -163,7 +165,7 @@ export default function WithdrawCooldown({
 
   const fixedAccountBalance = formatPrice(
     accountBalance,
-    collateralCurrency?.decimals
+    collateralCurrency?.decimals,
   );
 
   if (toBN(fixedAccountBalance).isGreaterThan(0)) {
