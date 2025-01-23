@@ -36,7 +36,7 @@ import {
 } from "../chains/hooks";
 import { useHedgerInfo } from "../hedger/hooks";
 import { getAppNameHeader } from "../hedger/thunks";
-import { useLockedPercentages } from "../trade/hooks";
+import { useLockedPercentages, usePositionType } from "../trade/hooks";
 import {
   addHedger,
   removeHedger,
@@ -51,6 +51,7 @@ import {
   updateUserLeverage,
   updateUserSlippageTolerance,
 } from "./actions";
+import { PositionType } from "../../types/trade";
 
 export function useIsDarkMode(): boolean {
   const { userDarkMode, matchesDarkMode } = useAppSelector(
@@ -126,7 +127,8 @@ export function useLeverage(): number {
 
 export function useLiquidationPrice(
   price: string,
-): { liquidationPriceLong: string; liquidationPriceShort: string } | undefined {
+): string | undefined {
+  const positionType = usePositionType();
   const leverage = useLeverage();
   const { lf, cva } = useLockedPercentages();
 
@@ -146,7 +148,7 @@ export function useLiquidationPrice(
     true,
   );
 
-  return { liquidationPriceLong, liquidationPriceShort };
+  return positionType === PositionType.LONG ? liquidationPriceLong : liquidationPriceShort
 }
 
 export function useSetLeverageCallback() {
