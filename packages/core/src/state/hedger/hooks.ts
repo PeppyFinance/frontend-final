@@ -125,7 +125,6 @@ export function useMarkets({
     }
 
     if (infoStatus === ApiState.OK && orderBy) {
-      // TODO: fix tsConfig and use toSorted
       return [...markets].sort((m1, m2) => {
         const mInfo1 = marketsInfo[m1.name];
         const mInfo2 = marketsInfo[m2.name];
