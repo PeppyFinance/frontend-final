@@ -70,11 +70,11 @@ export function useGetPositions(): {
       isSupportedChainId
         ? activeAccountAddress
           ? [
-              {
-                functionName: "getPartyAOpenPositions",
-                callInputs: [activeAccountAddress, start, size],
-              },
-            ]
+            {
+              functionName: "getPartyAOpenPositions",
+              callInputs: [activeAccountAddress, start, size],
+            },
+          ]
           : []
         : [],
     [isSupportedChainId, activeAccountAddress, start, size],
@@ -93,8 +93,8 @@ export function useGetPositions(): {
   const quotesValue = useMemo(
     () =>
       isQuoteSuccess &&
-      quoteResults?.[0]?.status === "success" &&
-      Array.isArray(quoteResults[0].result)
+        quoteResults?.[0]?.status === "success" &&
+        Array.isArray(quoteResults[0].result)
         ? quoteResults[0].result
         : [],
     [isQuoteSuccess, quoteResults],
@@ -148,17 +148,17 @@ export function useGetQuoteByIds(ids: number[]): {
   const quotesValue = useMemo(
     () =>
       isSuccess &&
-      quoteResults !== undefined &&
-      quoteResults?.[0]?.status === "success"
+        quoteResults !== undefined &&
+        quoteResults?.[0]?.status === "success"
         ? quoteResults?.map((qs) =>
-            qs.result
-              ? qs.result["id"]
-                ? qs.result
-                : qs.result[0]
-                  ? qs.result[0]
-                  : null
-              : null,
-          )
+          qs.result
+            ? qs.result["id"]
+              ? qs.result
+              : qs.result[0]
+                ? qs.result[0]
+                : null
+            : null,
+        )
         : [],
     [isSuccess, quoteResults],
   );
@@ -194,11 +194,11 @@ export function useGetPendingIds(): {
       isSupportedChainId
         ? activeAccountAddress
           ? [
-              {
-                functionName: "getPartyAPendingQuotes",
-                callInputs: [activeAccountAddress],
-              },
-            ]
+            {
+              functionName: "getPartyAPendingQuotes",
+              callInputs: [activeAccountAddress],
+            },
+          ]
           : []
         : [],
     [activeAccountAddress, isSupportedChainId],
@@ -217,8 +217,8 @@ export function useGetPendingIds(): {
   const quoteIdsValue = useMemo(
     () =>
       isSuccess &&
-      quoteResults?.[0]?.status === "success" &&
-      Array.isArray(quoteResults[0].result)
+        quoteResults?.[0]?.status === "success" &&
+        Array.isArray(quoteResults[0].result)
         ? quoteResults[0].result
         : [],
     [isSuccess, quoteResults],
@@ -412,12 +412,12 @@ export function useInstantCloseNotifications(quote: Quote) {
         notification.quoteId === id.toString() &&
         ((notification.notificationType === NotificationType.SUCCESS &&
           notification.lastSeenAction ===
-            LastSeenAction.FILL_ORDER_INSTANT_CLOSE) ||
+          LastSeenAction.FILL_ORDER_INSTANT_CLOSE) ||
           (notification.notificationType === NotificationType.HEDGER_ERROR &&
             (notification.lastSeenAction ===
               LastSeenAction.INSTANT_REQUEST_TO_CLOSE_POSITION ||
               notification.lastSeenAction ===
-                LastSeenAction.FILL_ORDER_INSTANT_CLOSE))) &&
+              LastSeenAction.FILL_ORDER_INSTANT_CLOSE))) &&
         toBN(instantCloseData.timestamp).lt(notification.modifyTime)
       ) {
         if (foundNotification.current !== notification) {
@@ -539,22 +539,26 @@ export function useLockedMargin(quote: Quote): string {
   return toBN(quote.CVA).plus(quote.partyAMM).plus(quote.LF).toString();
 }
 
-export function useLiquidationPrice(quote: Quote): string {
+export function useLiquidationPrice(quote: Quote): string | undefined {
   const leverage = useQuoteLeverage(quote);
   const { openedPrice, CVA, LF, positionType, initialPartyAMM } = quote;
+
+  if (!CVA || !LF) {
+    return undefined;
+  }
 
   const mmr = (Number(CVA) + Number(LF)) / Number(initialPartyAMM);
   return positionType === PositionType.LONG
     ? formatAmount(
-        toBN(openedPrice)
-          .times(1 - 1 / Number(leverage) + mmr / Number(leverage))
-          .toString(),
-        6,
-      )
+      toBN(openedPrice)
+        .times(1 - 1 / Number(leverage) + mmr / Number(leverage))
+        .toString(),
+      6,
+    )
     : formatAmount(
-        toBN(openedPrice)
-          .times(1 + 1 / Number(leverage) - mmr / Number(leverage))
-          .toString(),
-        6,
-      );
+      toBN(openedPrice)
+        .times(1 + 1 / Number(leverage) - mmr / Number(leverage))
+        .toString(),
+      6,
+    );
 }
