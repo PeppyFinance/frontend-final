@@ -36,9 +36,10 @@ const cleanCoinCategoriesParam = (
   param: RouterParam,
   coinCategories: string[],
 ): string | undefined => {
-  coinCategories = coinCategories.map((cat) => cat.toUpperCase());
   if (typeof param === "string") {
-    return coinCategories.find((cat) => cat === param.toUpperCase());
+    coinCategories = coinCategories.map((cat) => cat.toUpperCase());
+    const paramUpper = param.toUpperCase();
+    return coinCategories.find((cat) => cat === paramUpper);
   }
 };
 
