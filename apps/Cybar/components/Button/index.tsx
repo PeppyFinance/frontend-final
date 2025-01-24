@@ -1,5 +1,6 @@
 import { RowCenter } from "components/Row";
 import { lighten } from "polished";
+import { CSSProperties } from "react";
 import styled from "styled-components";
 
 export const BaseButton = styled(RowCenter)<{
@@ -261,7 +262,13 @@ export const PositionActionButton = styled(SecondaryButton)<{
   `};
 `;
 
-export const MarketsHeaderButton = styled.button<{ isActive: boolean }>`
+interface MarketsHeaderButton {
+  isActive: boolean;
+  paddingLeftRight?: CSSProperties["paddingLeft"];
+  paddingTopBottom?: CSSProperties["paddingTop"];
+}
+
+export const MarketsHeaderButton = styled.button<MarketsHeaderButton>`
   all: unset;
   display: inline-flex;
   align-items: center;
@@ -270,5 +277,6 @@ export const MarketsHeaderButton = styled.button<{ isActive: boolean }>`
   background-color: ${({ isActive, theme }) =>
     isActive ? `${theme.bg3}` : "none"};
   border-radius: 4px;
-  padding: 0.2rem 0.4rem;
+  padding: ${({ paddingLeftRight = "0.4rem", paddingTopBottom = "0.2rem" }) =>
+    `${paddingTopBottom} ${paddingLeftRight}`};
 `;

@@ -57,7 +57,7 @@ const TableStructure = styled(RowBetween)`
   }
 `;
 
-const HeaderWrap = styled(TableStructure)`
+export const HeaderWrap = styled(TableStructure)`
   color: ${({ theme }) => theme.text4};
   background-color: ${({ theme }) => theme.bg0};
   padding: 24px 24px 15px 12px;
@@ -79,11 +79,7 @@ interface Props {
   orderedBy: OrderMarktes;
   direction: Direction;
 }
-export default function TableHeader({
-  HEADERS,
-  orderedBy: orderedBy,
-  direction,
-}: Props) {
+export default function TableHeader({ HEADERS, orderedBy, direction }: Props) {
   const router = useRouter();
 
   const onClick = (orderBy: OrderMarktes) => {
