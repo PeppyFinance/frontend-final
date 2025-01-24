@@ -28,6 +28,7 @@ import {
 import { useAnalyticsApolloClient } from "../../apollo/client/balanceHistory";
 import useActiveWagmi from "../../lib/hooks/useActiveWagmi";
 import useDebounce from "../../lib/hooks/useDebounce";
+import { PositionType } from "../../types/trade";
 import { formatAmount, toBN } from "../../utils/numbers";
 import {
   useAnalyticsSubgraphAddress,
@@ -51,7 +52,6 @@ import {
   updateUserLeverage,
   updateUserSlippageTolerance,
 } from "./actions";
-import { PositionType } from "../../types/trade";
 
 export function useIsDarkMode(): boolean {
   const { userDarkMode, matchesDarkMode } = useAppSelector(
@@ -125,9 +125,7 @@ export function useLeverage(): number {
   return leverage;
 }
 
-export function useLiquidationPrice(
-  price: string,
-): string | undefined {
+export function useLiquidationPrice(price: string): string | undefined {
   const positionType = usePositionType();
   const leverage = useLeverage();
   const { lf, cva } = useLockedPercentages();
@@ -148,7 +146,9 @@ export function useLiquidationPrice(
     true,
   );
 
-  return positionType === PositionType.LONG ? liquidationPriceLong : liquidationPriceShort
+  return positionType === PositionType.LONG
+    ? liquidationPriceLong
+    : liquidationPriceShort;
 }
 
 export function useSetLeverageCallback() {
