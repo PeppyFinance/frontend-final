@@ -1,10 +1,15 @@
 import { useCallback, useMemo } from "react";
+import { useAnalyticsApolloClient } from "../../apollo/client/balanceHistory";
 import { useMarket } from "../../hooks/useMarkets";
 import { Market } from "../../types/market";
 import { InputField, OrderType, PositionType } from "../../types/trade";
 import { makeHttpRequest } from "../../utils/http";
 import { BN_ZERO, formatPrice } from "../../utils/numbers";
-import { useAppDispatch, useAppSelector } from "../declaration";
+import {
+  AppThunkDispatch,
+  useAppDispatch,
+  useAppSelector,
+} from "../declaration";
 import { useHedgerInfo, useMarketData } from "../hedger/hooks";
 import {
   setTpSlConfig,
@@ -22,6 +27,7 @@ import {
   updateTpSlState,
   updateTypedValue,
 } from "./actions";
+import { getSymbol } from "./thunks";
 import {
   GetLockedParamUrlResponse,
   TpSlConfigParams,
@@ -283,5 +289,17 @@ export function useGetLockedPercentages(
       }
     },
     [baseUrl, dispatch, leverage, market],
+  );
+}
+
+export function useGetSymionSymbolCallback() {
+  const thunkDispatch: AppThunkDispatch = useAppDispatch();
+  const client = useAnalyticsApolloClient();
+
+  return useCallback(
+    (symbolId: bigint) => {
+      thunkDispatch(getSymbol({ id: symbolId, client }));
+    },
+    [thunkDispatch, client],
   );
 }

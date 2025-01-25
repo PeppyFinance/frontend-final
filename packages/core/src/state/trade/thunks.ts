@@ -7,7 +7,7 @@ const getSymbolFunc = async ({
   id,
   client,
 }: {
-  id: number;
+  id: bigint;
   client: ApolloClient<NormalizedCacheObject>;
 }) => {
   try {
