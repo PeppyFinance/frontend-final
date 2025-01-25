@@ -472,6 +472,10 @@
       "types": "./dist/state/trade/reducer.d.ts",
       "default": "./dist/state/trade/reducer.js"
     },
+    "./state/trade/thunks": {
+      "types": "./dist/state/trade/thunks.d.ts",
+      "default": "./dist/state/trade/thunks.js"
+    },
     "./state/trade/types": {
       "types": "./dist/state/trade/types.d.ts",
       "default": "./dist/state/trade/types.js"

@@ -49,22 +49,20 @@ export const ORDER_HISTORY_DATA = gql`
 `;
 
 export const GET_SYMBOL = gql`
-  query GetSymbol($id: Int!){
-    symbol(
-      where: { id: $id }
-    ) {
-     symbolId
-     name
-     isValid
-     minAcceptableQuoteValue
-     minAcceptablePortionLF
-     tradingFee
-     maxLeverage
-     fundingRateEpochDuration
-     fundingRateWindowTime
+  query GetSymbol($id: Int!) {
+    symbol(where: { id: $id }) {
+      symbolId
+      name
+      isValid
+      minAcceptableQuoteValue
+      minAcceptablePortionLF
+      tradingFee
+      maxLeverage
+      fundingRateEpochDuration
+      fundingRateWindowTime
     }
   }
-`
+`;
 
 export const BALANCE_CHANGES_DATA = gql`
   query BalanceChanges($account: String!, $first: Int!, $skip: Int!) {

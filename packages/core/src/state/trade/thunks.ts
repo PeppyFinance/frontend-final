@@ -1,34 +1,31 @@
 import { ApolloClient, NormalizedCacheObject } from "@apollo/client";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { SymnioSymbol } from "./types";
 import { GET_SYMBOL } from "../../apollo/queries";
+import { SymnioSymbol } from "./types";
 
 const getSymbolFunc = async ({
   id,
-  client
+  client,
 }: {
   id: number;
-  client: ApolloClient<NormalizedCacheObject>
+  client: ApolloClient<NormalizedCacheObject>;
 }) => {
   try {
     const {
-      data: { symnioSymbol }
+      data: { symnioSymbol },
     } = await client.query<{
       // TODO: find better naming
-      symnioSymbol: SymnioSymbol
+      symnioSymbol: SymnioSymbol;
     }>({
       query: GET_SYMBOL,
       variables: { id },
-      fetchPolicy: 'no-cache'
-    })
-    return symnioSymbol
+      fetchPolicy: "no-cache",
+    });
+    return symnioSymbol;
   } catch (err) {
     console.error(err);
-    throw new Error(`Unable to query Symbol with the id ${id}`)
+    throw new Error(`Unable to query Symbol with the id ${id}`);
   }
-}
+};
 
-
-export const getSymbol = createAsyncThunk(
-  "trade/getSymbol",
-  getSymbolFunc);
+export const getSymbol = createAsyncThunk("trade/getSymbol", getSymbolFunc);
