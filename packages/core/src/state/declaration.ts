@@ -51,7 +51,7 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, reducer);
 
 export type RootState = ReturnType<typeof reducer>;
-function makeStore() {
+function makeStore(): Store {
   return configureStore({
     reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>
@@ -68,7 +68,7 @@ function makeStore() {
 
 let store: Store;
 
-export const getOrCreateStore = () => {
+export const getOrCreateStore = (): Store => {
   const _store = store ?? makeStore();
 
   // After navigating to a page with an initial Redux state, merge that state
