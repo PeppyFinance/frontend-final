@@ -303,3 +303,17 @@ export function useGetSymionSymbolCallback() {
     [thunkDispatch, client],
   );
 }
+
+export function useGetCVA(): string | undefined {
+  const cva = useAppSelector((state) => state.trade.cva);
+  return cva;
+}
+export function useGetLF(): string | undefined {
+  const lf = useAppSelector((state) => state.trade.lf);
+  return lf;
+}
+
+export function useGetTypedValue(): string | undefined {
+  const typedValue = useAppSelector((state) => state.trade.typedValue);
+  return typedValue;
+}

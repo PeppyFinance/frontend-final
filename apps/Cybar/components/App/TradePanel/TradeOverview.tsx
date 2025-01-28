@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import styled from "styled-components";
 
 import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
-import { OrderType, PositionType } from "@symmio/frontend-sdk/types/trade";
+import { OrderType } from "@symmio/frontend-sdk/types/trade";
 import {
   BN_ZERO,
   formatAmount,
@@ -11,7 +11,6 @@ import {
 import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
 
 import useTradePage, {
-  useLockedValues,
   useNotionalValue,
 } from "@symmio/frontend-sdk/hooks/useTradePage";
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
@@ -23,6 +22,7 @@ import {
   usePositionType,
 } from "@symmio/frontend-sdk/state/trade/hooks";
 
+import { useLiquidationPrice } from "@symmio/frontend-sdk/hooks/useQuotes";
 import { useLeverage } from "@symmio/frontend-sdk/state/user/hooks";
 import { Column } from "components/Column";
 import InfoItem from "components/InfoItem";
@@ -85,9 +85,9 @@ export default function TradeOverview() {
     [formattedAmounts],
   );
   const notionalValue = useNotionalValue(quantityAsset.toString(), price);
-  const { adjustedCollateralValue, liquidationFeeAmount } =
-    useLockedValues(notionalValue);
   const { cva, lf } = useLockedPercentages();
+
+  const { liquidationPrice, maintenanceMarginCVA } = useLiquidationPrice();
 
   const tradingFee = useMemo(
     () =>
@@ -97,35 +97,15 @@ export default function TradeOverview() {
     [notionalValue, market],
   );
   const userLeverage = useLeverage();
-  const mmr = (Number(cva) + Number(lf)) / 100;
 
   return (
     <>
       <Wrapper>
         <PositionWrap>
-          {/* // TODO: handle NaN */}
           <div>Est. Liquidation Price:</div>
           <PositionValue>
             <div>
-              {`${
-                toBN(formattedAmounts[0]).isNaN() || toBN(userLeverage).isNaN()
-                  ? 0
-                  : positionType === PositionType.LONG
-                    ? formatAmount(
-                        toBN(price).times(
-                          1 - 1 / userLeverage + mmr / userLeverage,
-                        ),
-                        6,
-                        true,
-                      )
-                    : formatAmount(
-                        toBN(price).times(
-                          1 + 1 / userLeverage - mmr / userLeverage,
-                        ),
-                        6,
-                        true,
-                      )
-              } ${collateralCurrency?.symbol}`}
+              {`${liquidationPrice ? formatAmount(liquidationPrice, 6, true) : "0"} ${collateralCurrency?.symbol}`}
             </div>
           </PositionValue>
         </PositionWrap>
@@ -149,14 +129,7 @@ export default function TradeOverview() {
 
         <InfoItem
           label="Maintenance Margin (CVA):"
-          amount={`${
-            !toBN(adjustedCollateralValue).isNaN() &&
-            !toBN(liquidationFeeAmount).isNaN()
-              ? formatAmount(
-                  toBN(adjustedCollateralValue).plus(liquidationFeeAmount),
-                )
-              : "0"
-          } ${collateralCurrency?.symbol}`}
+          amount={`${maintenanceMarginCVA ? formatAmount(maintenanceMarginCVA) : "0"} ${collateralCurrency?.symbol}`}
         />
 
         <InfoItem

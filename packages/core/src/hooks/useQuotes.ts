@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef } from "react";
 import { useSingleContractMultipleMethods } from "../lib/hooks/multicall";
 import { Quote, QuoteStatus } from "../types/quote";
 import { OrderType, PositionType } from "../types/trade";
-import { BN_ZERO, formatAmount, fromWei, toBN } from "../utils/numbers";
+import { BN_ZERO, fromWei, toBN } from "../utils/numbers";
 
 import {
   usePartialFillNotifications,
@@ -19,6 +19,7 @@ import {
   useActiveAccountAddress,
 } from "../state/user/hooks";
 
+import BigNumber from "bignumber.js";
 import { DIAMOND_ABI } from "../constants";
 import useActiveWagmi from "../lib/hooks/useActiveWagmi";
 import { useSupportedChainId } from "../lib/hooks/useSupportedChainId";
@@ -28,9 +29,17 @@ import {
   useUpdateInstantCloseDataCallback,
 } from "../state/quotes/hooks";
 import { InstantCloseStatus } from "../state/quotes/types";
+import {
+  useActiveMarket,
+  useGetCVA,
+  useGetLF,
+  useGetTypedValue,
+} from "../state/trade/hooks";
 import { Market } from "../types/market";
+import useAccountData from "./useAccountData";
 import useBidAskPrice from "./useBidAskPrice";
 import { useMarket } from "./useMarkets";
+import useTradePage from "./useTradePage";
 
 export function getPositionTypeByIndex(x: number): PositionType {
   return PositionType[
@@ -539,26 +548,61 @@ export function useLockedMargin(quote: Quote): string {
   return toBN(quote.CVA).plus(quote.partyAMM).plus(quote.LF).toString();
 }
 
-export function useLiquidationPrice(quote: Quote): string | undefined {
-  const leverage = useQuoteLeverage(quote);
-  const { openedPrice, CVA, LF, positionType, initialPartyAMM } = quote;
+interface LiquidationPrice {
+  liquidationPrice?: BigNumber;
+  maintenanceMarginCVA?: BigNumber;
+}
+export function useLiquidationPrice(): LiquidationPrice {
+  // TODO: check if cva and lf are set
+  const cva = useGetCVA();
+  const lf = useGetLF();
+  const quantitySource = useGetTypedValue();
+  const market = useActiveMarket();
+  const { price: priceSource } = useTradePage();
+  const { availableForOrder: availableForOrderSource } = useAccountData();
 
-  if (!CVA || !LF) {
-    return undefined;
+  if (!market || !lf || !cva) {
+    console.error("market or lf or cva is undefined", { market, lf, cva });
+    return { maintenanceMarginCVA: undefined, liquidationPrice: undefined };
+  }
+  const maintenanceMarginCVA =
+    !toBN(cva).isNaN() && !toBN(lf).isNaN() ? toBN(cva).plus(lf) : undefined;
+
+  const price = toBN(priceSource).isNaN() ? undefined : toBN(priceSource);
+  const availableForOrder = toBN(availableForOrderSource).isNaN()
+    ? undefined
+    : toBN(availableForOrderSource);
+
+  if (
+    !maintenanceMarginCVA ||
+    !price ||
+    !availableForOrder ||
+    !quantitySource
+  ) {
+    console.error(
+      "maintenanceMarginCVA or price or availableForOrder or quantity is undefined",
+      {
+        maintenanceMarginCVA,
+        price,
+        availableForOrder,
+        quantity: quantitySource,
+      },
+    );
+    return { maintenanceMarginCVA: undefined, liquidationPrice: undefined };
   }
 
-  const mmr = (Number(CVA) + Number(LF)) / Number(initialPartyAMM);
-  return positionType === PositionType.LONG
-    ? formatAmount(
-        toBN(openedPrice)
-          .times(1 - 1 / Number(leverage) + mmr / Number(leverage))
-          .toString(),
-        6,
-      )
-    : formatAmount(
-        toBN(openedPrice)
-          .times(1 + 1 / Number(leverage) - mmr / Number(leverage))
-          .toString(),
-        6,
-      );
+  if (toBN(quantitySource).isNaN()) {
+    console.error("quantity is not coercible into BigNumber", {
+      quantity: quantitySource,
+    });
+  }
+  const quantity = toBN(quantitySource);
+
+  // const { minAcceptablePortionLF: maintenanceMarginCVA } = market;
+
+  const liquidationPrice = price.plus(
+    availableForOrder.minus(maintenanceMarginCVA).div(quantity),
+  );
+
+  return { liquidationPrice, maintenanceMarginCVA };
 }
