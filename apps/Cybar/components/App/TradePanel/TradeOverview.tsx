@@ -17,9 +17,7 @@ import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 import {
   useActiveMarket,
   useLimitPrice,
-  useLockedPercentages,
   useOrderType,
-  usePositionType,
 } from "@symmio/frontend-sdk/state/trade/hooks";
 
 import { useLiquidationPrice } from "@symmio/frontend-sdk/hooks/useQuotes";
@@ -69,7 +67,6 @@ export default function TradeOverview() {
   );
   const limitPrice = useLimitPrice();
   const orderType = useOrderType();
-  const positionType = usePositionType();
 
   const { price: markPrice, formattedAmounts } = useTradePage();
 
@@ -85,7 +82,6 @@ export default function TradeOverview() {
     [formattedAmounts],
   );
   const notionalValue = useNotionalValue(quantityAsset.toString(), price);
-  const { cva, lf } = useLockedPercentages();
 
   const { liquidationPrice, maintenanceMarginCVA } = useLiquidationPrice();
 
