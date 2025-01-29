@@ -256,7 +256,9 @@ export default function MultiAccount() {
   }, [accounts, dispatch, previousAccounts]);
 
   useEffect(() => {
-    standardAccountName && setAccountName(standardAccountName);
+    if (standardAccountName) {
+      setAccountName(standardAccountName);
+    }
   }, [standardAccountName]);
 
   const showCallbackError: boolean = useMemo(() => {

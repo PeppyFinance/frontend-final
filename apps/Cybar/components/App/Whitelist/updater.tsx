@@ -53,7 +53,9 @@ export default function Updater() {
           }
         })
         .catch(() => {
-          WEB_SETTING.checkWhiteList && toast.error("Not activated");
+          if (WEB_SETTING.checkWhiteList) {
+            toast.error("Not activated");
+          }
         });
     }
   }, [addInWhitelist, subWhitelist, whitelist, account, subAccount]);

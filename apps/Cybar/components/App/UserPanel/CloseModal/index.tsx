@@ -621,14 +621,17 @@ export function useInstantClosePosition(
       await instantClose();
       setLoading(false);
       const timestamp = Math.floor(new Date().getTime() / 1000);
-      id &&
+      if (id) {
         addInstantCloseData({
           id,
           timestamp,
           amount: size,
           status: InstantCloseStatus.STARTED,
         });
-      closeModal && closeModal();
+      }
+      if (closeModal) {
+        closeModal();
+      }
       toast.success("close sent to hedger");
     } catch (e) {
       setLoading(false);

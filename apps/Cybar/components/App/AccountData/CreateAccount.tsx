@@ -145,7 +145,9 @@ export default function CreateAccount({ onClose }: { onClose?: () => void }) {
       if (txHash) {
         setTxHash(txHash.hash);
       }
-      onClose && onClose();
+      if (onClose) {
+        onClose();
+      }
     } catch (e) {
       if (e instanceof Error) {
         console.error(e);
