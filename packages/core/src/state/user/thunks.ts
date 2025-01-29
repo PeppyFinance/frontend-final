@@ -50,7 +50,9 @@ export const getIsWhiteList = createAsyncThunk(
 
     let isWhiteList: null | boolean = null;
     try {
-      if (!WEB_SETTING.checkWhiteList) return { isWhiteList: true };
+      if (!WEB_SETTING.checkWhiteList) {
+        return { isWhiteList: true };
+      }
 
       const [whiteListRes] = await Promise.allSettled([
         makeHttpRequest<boolean>(isWhiteListUrl, getAppNameHeader(appName)),
@@ -147,7 +149,9 @@ export const getTotalDepositsAndWithdrawals = createAsyncThunk(
         fetchPolicy: "no-cache",
       });
 
-      if (accounts.length) return { result: accounts[0] };
+      if (accounts.length) {
+        return { result: accounts[0] };
+      }
       return { result: null };
     } catch (error) {
       console.error(error);

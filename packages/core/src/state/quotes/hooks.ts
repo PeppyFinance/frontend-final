@@ -135,7 +135,9 @@ export function useSetHistoryCallback() {
 
   return useCallback(
     (quotes: Quote[]) => {
-      if (chainId) dispatch(setHistory({ quotes, chainId }));
+      if (chainId) {
+        dispatch(setHistory({ quotes, chainId }));
+      }
     },
     [dispatch, chainId],
   );
@@ -166,7 +168,9 @@ export function useAddQuoteToHistoryCallback() {
   const { chainId } = useActiveWagmi();
   return useCallback(
     (quote: Quote) => {
-      if (chainId) dispatch(addQuoteToHistory({ quote, chainId }));
+      if (chainId) {
+        dispatch(addQuoteToHistory({ quote, chainId }));
+      }
     },
     [dispatch, chainId],
   );
@@ -209,10 +213,14 @@ export function useGetExistedQuoteByIdsCallback() {
 
   return useCallback(
     (id: string | null) => {
-      if (!id) return null;
+      if (!id) {
+        return null;
+      }
 
       const existedQuote = quotes.find((quote) => quote.id.toString() === id);
-      if (existedQuote) return existedQuote;
+      if (existedQuote) {
+        return existedQuote;
+      }
       return null;
     },
     [quotes],
@@ -232,7 +240,9 @@ export function useGetOrderHistoryCallback() {
       skip: number,
       ItemsPerPage: number,
     ) => {
-      if (!chainId || !account) return;
+      if (!chainId || !account) {
+        return;
+      }
       thunkDispatch(
         getHistory({ account, chainId, client, first, skip, ItemsPerPage }),
       );
@@ -249,7 +259,9 @@ export function useGetOpenInstantClosesCallback() {
   const appName = useAppName();
 
   return useCallback(() => {
-    if (!account) return;
+    if (!account) {
+      return;
+    }
     thunkDispatch(
       getInstantCloses({
         account,

@@ -9,16 +9,21 @@ export default function useGenerateRandomColors(length: number) {
       // It's not the common formula.
       // 0 to 5, not 0 to 15
       const randomValue = Math.floor(Math.random() * 6);
-      if (i !== 4) generatedColor += letters[randomValue];
+      if (i !== 4) {
+        generatedColor += letters[randomValue];
+      }
       // for making color more blue
-      else generatedColor += letters[randomValue + 2];
+      else {
+        generatedColor += letters[randomValue + 2];
+      }
     }
     return generatedColor;
   };
   const generateColor = () => {
     let generatedColor = generateColorString();
-    while (colorList.includes(generatedColor))
+    while (colorList.includes(generatedColor)) {
       generatedColor = generateColorString();
+    }
     setColorList((prevColorList) => [...prevColorList, generatedColor]);
   };
 

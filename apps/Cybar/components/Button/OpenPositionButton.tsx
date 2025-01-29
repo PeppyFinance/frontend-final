@@ -49,7 +49,9 @@ export default function OpenPositionButton({
   const positionType = usePositionType();
 
   const handleClick = useCallback(() => {
-    if (!loading || !disabled) onClick();
+    if (!loading || !disabled) {
+      onClick();
+    }
   }, [disabled, loading, onClick]);
 
   return (

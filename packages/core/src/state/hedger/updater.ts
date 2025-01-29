@@ -66,7 +66,7 @@ export function HedgerUpdater(): null {
 
   //auto update price range per symbol, every 1 hours
   useEffect(() => {
-    if (fetchData && activeMarket)
+    if (fetchData && activeMarket) {
       return autoRefresh(
         () =>
           thunkDispatch(
@@ -78,6 +78,7 @@ export function HedgerUpdater(): null {
           ),
         60 * 60,
       );
+    }
   }, [thunkDispatch, baseUrl, activeMarket, fetchData, appName]);
 
   return null;
@@ -116,12 +117,13 @@ function useFetchMarkets(
 
   //if error occurs it will retry to fetch markets 5 times
   useEffect(() => {
-    if (marketsStatus === ApiState.ERROR)
+    if (marketsStatus === ApiState.ERROR) {
       retry(hedgerMarket, {
         n: 5,
         minWait: 1000,
         maxWait: 10000,
       });
+    }
   }, [marketsStatus, hedgerMarket]);
 }
 
@@ -162,12 +164,13 @@ function useFetchOpenInterest(
 
   //if error occurs it will retry to fetch markets 5 times
   useEffect(() => {
-    if (marketsStatus === ApiState.ERROR)
+    if (marketsStatus === ApiState.ERROR) {
       retry(hedgerOpenInterest, {
         n: 5,
         minWait: 1000,
         maxWait: 10000,
       });
+    }
   }, [marketsStatus, hedgerOpenInterest]);
 }
 
@@ -195,7 +198,9 @@ function useFetchNotionalCap(
   );
   //auto update notional cap per symbol, every 1 hours
   useEffect(() => {
-    if (activeMarket) return autoRefresh(notionalCaps, 60 * 60);
+    if (activeMarket) {
+      return autoRefresh(notionalCaps, 60 * 60);
+    }
   }, [activeMarket, notionalCaps]);
 
   //if error occurs it will retry to fetch markets 5 times
@@ -259,7 +264,9 @@ function usePriceWebSocket() {
       const lastMessage = lastJsonMessage as HedgerWebsocketType;
 
       //don't update anything if user is idle instead of updating to empty prices
-      if (!windowVisible) return;
+      if (!windowVisible) {
+        return;
+      }
 
       if (!lastMessage || isEmpty(lastMessage) || !lastMessage.data) {
         // return
@@ -337,7 +344,9 @@ function useFundingRateWebSocket() {
     try {
       const lastMessage = lastJsonMessage as any;
       //don't update anything if user is idle instead of updating to empty prices
-      if (!windowVisible) return;
+      if (!windowVisible) {
+        return;
+      }
 
       if (!lastMessage || isEmpty(lastMessage)) {
         return;

@@ -31,7 +31,9 @@ function listFiles(dirPath, depth = 0) {
 async function generateExports(entry, noExport) {
   const exports = {};
   for (const file of entry) {
-    if (noExport?.includes(file)) continue;
+    if (noExport?.includes(file)) {
+      continue;
+    }
     const extension = path.extname(file);
     const fileWithoutExtension = file.replace(extension, "");
     const name = fileWithoutExtension

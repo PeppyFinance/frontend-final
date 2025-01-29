@@ -60,7 +60,9 @@ export default function useFetchFundingRate(name?: string) {
     try {
       const lastMessage = lastJsonMessage as any;
       //don't update anything if user is idle instead of updating to empty prices
-      if (!windowVisible) return;
+      if (!windowVisible) {
+        return;
+      }
       const response = (lastMessage ?? {}) as FundingRateMap;
 
       if (Object.values(response).length) {
@@ -71,8 +73,9 @@ export default function useFetchFundingRate(name?: string) {
     }
   }, [lastJsonMessage, connectionStatus, windowVisible]);
 
-  if (activeMarket && activeMarket.name === name && fundingRateData)
+  if (activeMarket && activeMarket.name === name && fundingRateData) {
     return fundingRateData;
+  }
   return fundingRate;
 }
 

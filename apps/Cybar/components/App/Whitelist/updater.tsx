@@ -59,7 +59,7 @@ export default function Updater() {
   }, [addInWhitelist, subWhitelist, whitelist, account, subAccount]);
 
   useEffect(() => {
-    if (subAccount)
+    if (subAccount) {
       getSubAccountWhitelist()
         .then((res) => {
           setSubWhitelist(res);
@@ -67,10 +67,13 @@ export default function Updater() {
         .catch(() => {
           setSubWhitelist(null);
         });
+    }
   }, [getSubAccountWhitelist, subAccount]);
 
   useEffect(() => {
-    if (userIsWhitelist) setWhitelist(true);
+    if (userIsWhitelist) {
+      setWhitelist(true);
+    }
   }, [userIsWhitelist]);
 
   return <></>;

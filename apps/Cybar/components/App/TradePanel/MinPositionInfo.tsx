@@ -64,7 +64,9 @@ export default function MinPositionInfo() {
     );
     const value = toBN(quantity).times(marketPrice).div(leverage);
 
-    if (value.isNaN()) return ["-", "-"];
+    if (value.isNaN()) {
+      return ["-", "-"];
+    }
     return [
       value.toFixed(pricePrecision, RoundMode.ROUND_UP),
       quantity.toFixed(quantityPrecision, RoundMode.ROUND_UP),

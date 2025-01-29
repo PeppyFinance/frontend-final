@@ -262,7 +262,9 @@ export function useGetLockedPercentages(
   return useCallback(
     async (options: { signal: AbortSignal; headers: [string, string][] }) => {
       try {
-        if (!baseUrl || !market) throw new Error("missing parameters");
+        if (!baseUrl || !market) {
+          throw new Error("missing parameters");
+        }
         const { href: url } = new URL(
           `/get_locked_params/${market.name}?leverage=${leverage}`,
           baseUrl,
@@ -273,7 +275,9 @@ export function useGetLockedPercentages(
           options,
         );
 
-        if (response) dispatch(updateLockedPercentages({ ...response }));
+        if (response) {
+          dispatch(updateLockedPercentages({ ...response }));
+        }
       } catch (error: unknown) {
         if (error instanceof Error && error.name === "AbortError") {
           console.log("AbortError getLockedParam", error.message);

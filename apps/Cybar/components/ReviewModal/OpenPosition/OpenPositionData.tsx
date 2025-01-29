@@ -60,7 +60,9 @@ export default function OpenPositionData() {
 
   const tradingFee = useMemo(() => {
     const notionalValueBN = toBN(notionalValue);
-    if (!market || notionalValueBN.isNaN()) return "-";
+    if (!market || notionalValueBN.isNaN()) {
+      return "-";
+    }
     return market.tradingFee
       ? notionalValueBN.times(market.tradingFee).toString()
       : "0";

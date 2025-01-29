@@ -32,11 +32,15 @@ const useIsArcher = () => {
   for (let i = 0; i < closedPnlList.length; i++) {
     const pnl = closedPnlList[i];
 
-    if (marketIdList.length >= 5) break;
+    if (marketIdList.length >= 5) {
+      break;
+    }
 
     if (Number(pnl) > 0) {
       const { marketId } = closed[i];
-      if (!marketIdList.includes(marketId)) marketIdList.push(marketId);
+      if (!marketIdList.includes(marketId)) {
+        marketIdList.push(marketId);
+      }
     }
   }
 

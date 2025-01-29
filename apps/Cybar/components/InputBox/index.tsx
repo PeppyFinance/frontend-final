@@ -157,7 +157,9 @@ export function CustomInputBox({
   const hasMax = max || max === undefined;
 
   const handleClick = useCallback(() => {
-    if (!balanceExact || !onChange || disabled || !hasMax) return;
+    if (!balanceExact || !onChange || disabled || !hasMax) {
+      return;
+    }
     onChange(balanceExact.toString());
   }, [balanceExact, disabled, onChange, hasMax]);
 
@@ -252,12 +254,16 @@ export function CustomInputBox2({
 }) {
   const theme = useTheme();
   const handleClick = useCallback(() => {
-    if (!balanceExact || !onChange || disabled) return;
+    if (!balanceExact || !onChange || disabled) {
+      return;
+    }
     onChange(balanceExact.toString());
   }, [balanceExact, disabled, onChange]);
 
   const minBalanceHandleClick = useCallback(() => {
-    if (!minBalanceExact || !onChange || disabled) return;
+    if (!minBalanceExact || !onChange || disabled) {
+      return;
+    }
     onChange(minBalanceExact.toString());
   }, [minBalanceExact, disabled, onChange]);
 

@@ -25,6 +25,7 @@
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
+    "curly": ["error", "all"],
     "object-shorthand": ["error", "always"],
     "prettier/prettier": [
       "error",

@@ -9,7 +9,9 @@ export default function useBidAskPrice(market?: Market): {
 } {
   const marketDepth = useMarketDepth(market?.name);
 
-  if (!marketDepth || !market) return { ask: "0", bid: "0", spread: "0" };
+  if (!marketDepth || !market) {
+    return { ask: "0", bid: "0", spread: "0" };
+  }
 
   const { hedgerFeeClose, hedgerFeeOpen, pricePrecision } = market;
 

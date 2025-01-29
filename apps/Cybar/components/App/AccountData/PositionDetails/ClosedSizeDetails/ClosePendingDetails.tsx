@@ -75,8 +75,9 @@ export default function ClosePendingDetails({
 
   function getPnlData(value: string) {
     const valueBN = toBN(value);
-    if (!quantityToClose || !openedPrice)
+    if (!quantityToClose || !openedPrice) {
       return [`$${formatAmount(value)}`, "0", theme.text1];
+    }
     const valuePercent = valueBN
       .div(quantityToClose)
       .div(openedPrice)
@@ -84,14 +85,15 @@ export default function ClosePendingDetails({
       .times(100)
       .toFixed(2);
 
-    if (valueBN.isGreaterThan(0))
+    if (valueBN.isGreaterThan(0)) {
       return [`+ $${formatAmount(valueBN)}`, valuePercent, theme.positive];
-    else if (valueBN.isLessThan(0))
+    } else if (valueBN.isLessThan(0)) {
       return [
         `- $${formatAmount(Math.abs(valueBN.toNumber()))}`,
         valuePercent,
         theme.negative,
       ];
+    }
     return [`$${formatAmount(valueBN)}`, valuePercent, theme.text1];
   }
 

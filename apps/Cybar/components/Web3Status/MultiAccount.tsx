@@ -227,7 +227,9 @@ export default function MultiAccount() {
   const { loading: statsLoading } = useAccountPartyAStat(accountAddress);
   const ref = useRef(null);
   useOnOutsideClick(ref, () => {
-    if (!showCreateAccountModal && !showDepositModal) setClickAccounts(false);
+    if (!showCreateAccountModal && !showDepositModal) {
+      setClickAccounts(false);
+    }
   });
 
   const [clickAccounts, setClickAccounts] = useState(false);
@@ -238,7 +240,9 @@ export default function MultiAccount() {
   const { error } = useConnect();
 
   const standardAccountName = (() => {
-    if (name && name.length > 10) return `${name.slice(0, 10)}...`;
+    if (name && name.length > 10) {
+      return `${name.slice(0, 10)}...`;
+    }
     return name;
   })();
   const [accountName, setAccountName] = useState(standardAccountName);
@@ -256,7 +260,9 @@ export default function MultiAccount() {
   }, [standardAccountName]);
 
   const showCallbackError: boolean = useMemo(() => {
-    if (!chainId || !account) return false;
+    if (!chainId || !account) {
+      return false;
+    }
     return !v3_ids.includes(chainId);
   }, [chainId, account, v3_ids]);
 
@@ -264,7 +270,9 @@ export default function MultiAccount() {
 
   const handleNetwork = useCallback(async () => {
     const response = await rpcChangerCallback(FALLBACK_CHAIN_ID);
-    if (response) setFrontEndName(FALLBACK_FE_NAME);
+    if (response) {
+      setFrontEndName(FALLBACK_FE_NAME);
+    }
   }, [rpcChangerCallback, setFrontEndName]);
 
   function getInnerContent() {
