@@ -50,5 +50,12 @@
     "babel-plugin-styled-components": "^2.0.2",
     "rimraf": "~5.0.0",
     "typescript": "5.2"
-  }
+  },
+  "browerslist": [
+    "defaults",
+    "iOS >= 12",
+    "Safari >= 12",
+    "> 1%",
+    "not dead"
+  ]
 }
