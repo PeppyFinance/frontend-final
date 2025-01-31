@@ -11,7 +11,6 @@ import {
 import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
 
 import useTradePage, {
-  useLockedValues,
   useNotionalValue,
 } from "@symmio/frontend-sdk/hooks/useTradePage";
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
@@ -21,6 +20,7 @@ import {
   useOrderType,
 } from "@symmio/frontend-sdk/state/trade/hooks";
 
+import { useLiquidationPrice } from "@symmio/frontend-sdk/hooks/useQuotes";
 import { useLeverage } from "@symmio/frontend-sdk/state/user/hooks";
 import { Column } from "components/Column";
 import InfoItem from "components/InfoItem";
@@ -70,6 +70,7 @@ export default function TradeOverview() {
 
   const { price: markPrice, formattedAmounts } = useTradePage();
 
+  // TODO: is useMemo needed?
   const price = useMemo(
     () => (orderType === OrderType.MARKET ? markPrice : limitPrice),
     [orderType, markPrice, limitPrice],
@@ -81,7 +82,8 @@ export default function TradeOverview() {
     [formattedAmounts],
   );
   const notionalValue = useNotionalValue(quantityAsset.toString(), price);
-  const { cva, lf } = useLockedValues(notionalValue);
+
+  const { liquidationPrice, maintenanceMarginCVA } = useLiquidationPrice();
 
   const tradingFee = useMemo(
     () =>
@@ -95,6 +97,14 @@ export default function TradeOverview() {
   return (
     <>
       <Wrapper>
+        <PositionWrap>
+          <div>Est. Liquidation Price:</div>
+          <PositionValue>
+            <div>
+              {`${liquidationPrice ? formatAmount(liquidationPrice, 6, true) : "0"} ${collateralCurrency?.symbol}`}
+            </div>
+          </PositionValue>
+        </PositionWrap>
         <PositionWrap>
           <div>Position Value:</div>
           <PositionValue>
@@ -115,11 +125,7 @@ export default function TradeOverview() {
 
         <InfoItem
           label="Maintenance Margin (CVA):"
-          amount={`${
-            !toBN(cva).isNaN() && !toBN(lf).isNaN()
-              ? formatAmount(toBN(cva).plus(lf))
-              : "0"
-          } ${collateralCurrency?.symbol}`}
+          amount={`${maintenanceMarginCVA ? formatAmount(maintenanceMarginCVA) : "0"} ${collateralCurrency?.symbol}`}
         />
 
         <InfoItem

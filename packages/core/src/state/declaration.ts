@@ -6,23 +6,19 @@ import {
   ThunkAction,
   ThunkDispatch,
 } from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
-import { createTransform, persistReducer, persistStore } from "redux-persist";
-import storage from "redux-persist/lib/storage";
-const { configureStore } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
-// import { AsyncNodeStorage } from "redux-persist-node-storage";
-// import * as reduxPersisRaw from "redux-persist/lib/integration/react";
-// const { PersistGate } = ((reduxPersisRaw as any).default ??
-//   reduxPersisRaw) as typeof reduxPersisRaw;
 import {
   Provider,
   TypedUseSelectorHook,
   useDispatch,
   useSelector,
 } from "react-redux";
+import { createTransform, persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 import "symbol-observable";
 import { ONE_DAY_IN_MILLISECOND } from "../constants";
 import reducer from "./reducer";
+const { configureStore } = ((toolkitRaw as any).default ??
+  toolkitRaw) as typeof toolkitRaw;
 // import crossBrowserListener from "../utils/reduxPersistListener";
 
 const createExpirationTransform = (expiryTime) => {
@@ -55,7 +51,7 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, reducer);
 
 export type RootState = ReturnType<typeof reducer>;
-function makeStore() {
+function makeStore(): Store {
   return configureStore({
     reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>
@@ -70,9 +66,9 @@ function makeStore() {
   });
 }
 
-let store: Store<RootState, AnyAction>;
+let store: Store;
 
-export const getOrCreateStore = () => {
+export const getOrCreateStore = (): Store => {
   const _store = store ?? makeStore();
 
   // After navigating to a page with an initial Redux state, merge that state
@@ -88,8 +84,8 @@ export const getOrCreateStore = () => {
 };
 
 store = getOrCreateStore();
-export default store;
 export const persistor = persistStore(store);
+export default store;
 
 export type AppState = ReturnType<typeof store.getState>;
 
@@ -104,6 +100,8 @@ export type AppThunkDispatch = ThunkDispatch<unknown, void, AnyAction>;
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<AppState> = useSelector;
+
+// export const persistor = persistStore(store);
 
 // if (typeof window === "object") {
 //   window.addEventListener(

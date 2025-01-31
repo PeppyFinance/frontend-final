@@ -17,8 +17,8 @@ import {
 } from "../state/chains";
 import { UserPartyAStatDetail } from "../types/user";
 
-//TODO why its not covered by useMemo
-//we converted all BigNumbers to string to avoid spurious rerenders
+// TODO: why its not covered by useMemo
+// we converted all BigNumbers to string to avoid spurious rerenders
 export function usePartyAStats(
   account: string | null | undefined,
 ): UserPartyAStatDetail {

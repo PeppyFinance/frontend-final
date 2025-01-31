@@ -1,5 +1,17 @@
 import { InputField, OrderType, PositionType } from "../../types/trade";
 
+export interface SymnioSymbol {
+  symbolId: number;
+  name: string;
+  isValid: boolean;
+  minAcceptableQuoteValue: number;
+  minAcceptablePortionLF: number;
+  tradingFee: number;
+  maxLeverage: number;
+  fundingRateEpochDuration: number;
+  fundingRateWindowTime: number;
+}
+
 export interface TradeState {
   marketId: number | undefined;
   inputField: InputField;
