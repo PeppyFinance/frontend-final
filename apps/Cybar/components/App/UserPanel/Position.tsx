@@ -515,7 +515,7 @@ function QuoteRow({
   const quoteDetail = useQuoteDetail();
   const setQuoteDetail = useSetQuoteDetailCallback();
 
-  const liquidationPrice = useLiquidationPrice(quote);
+  const { liquidationPrice } = useLiquidationPrice();
   const activeDetail = id === quoteDetail?.id;
 
   // usage: we should know change of quote for position details

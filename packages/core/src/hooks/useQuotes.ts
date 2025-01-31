@@ -79,11 +79,11 @@ export function useGetPositions(): {
       isSupportedChainId
         ? activeAccountAddress
           ? [
-            {
-              functionName: "getPartyAOpenPositions",
-              callInputs: [activeAccountAddress, start, size],
-            },
-          ]
+              {
+                functionName: "getPartyAOpenPositions",
+                callInputs: [activeAccountAddress, start, size],
+              },
+            ]
           : []
         : [],
     [isSupportedChainId, activeAccountAddress, start, size],
@@ -102,8 +102,8 @@ export function useGetPositions(): {
   const quotesValue = useMemo(
     () =>
       isQuoteSuccess &&
-        quoteResults?.[0]?.status === "success" &&
-        Array.isArray(quoteResults[0].result)
+      quoteResults?.[0]?.status === "success" &&
+      Array.isArray(quoteResults[0].result)
         ? quoteResults[0].result
         : [],
     [isQuoteSuccess, quoteResults],
@@ -157,17 +157,17 @@ export function useGetQuoteByIds(ids: number[]): {
   const quotesValue = useMemo(
     () =>
       isSuccess &&
-        quoteResults !== undefined &&
-        quoteResults?.[0]?.status === "success"
+      quoteResults !== undefined &&
+      quoteResults?.[0]?.status === "success"
         ? quoteResults?.map((qs) =>
-          qs.result
-            ? qs.result["id"]
-              ? qs.result
-              : qs.result[0]
-                ? qs.result[0]
-                : null
-            : null,
-        )
+            qs.result
+              ? qs.result["id"]
+                ? qs.result
+                : qs.result[0]
+                  ? qs.result[0]
+                  : null
+              : null,
+          )
         : [],
     [isSuccess, quoteResults],
   );
@@ -203,11 +203,11 @@ export function useGetPendingIds(): {
       isSupportedChainId
         ? activeAccountAddress
           ? [
-            {
-              functionName: "getPartyAPendingQuotes",
-              callInputs: [activeAccountAddress],
-            },
-          ]
+              {
+                functionName: "getPartyAPendingQuotes",
+                callInputs: [activeAccountAddress],
+              },
+            ]
           : []
         : [],
     [activeAccountAddress, isSupportedChainId],
@@ -226,8 +226,8 @@ export function useGetPendingIds(): {
   const quoteIdsValue = useMemo(
     () =>
       isSuccess &&
-        quoteResults?.[0]?.status === "success" &&
-        Array.isArray(quoteResults[0].result)
+      quoteResults?.[0]?.status === "success" &&
+      Array.isArray(quoteResults[0].result)
         ? quoteResults[0].result
         : [],
     [isSuccess, quoteResults],
@@ -421,12 +421,12 @@ export function useInstantCloseNotifications(quote: Quote) {
         notification.quoteId === id.toString() &&
         ((notification.notificationType === NotificationType.SUCCESS &&
           notification.lastSeenAction ===
-          LastSeenAction.FILL_ORDER_INSTANT_CLOSE) ||
+            LastSeenAction.FILL_ORDER_INSTANT_CLOSE) ||
           (notification.notificationType === NotificationType.HEDGER_ERROR &&
             (notification.lastSeenAction ===
               LastSeenAction.INSTANT_REQUEST_TO_CLOSE_POSITION ||
               notification.lastSeenAction ===
-              LastSeenAction.FILL_ORDER_INSTANT_CLOSE))) &&
+                LastSeenAction.FILL_ORDER_INSTANT_CLOSE))) &&
         toBN(instantCloseData.timestamp).lt(notification.modifyTime)
       ) {
         if (foundNotification.current !== notification) {
@@ -562,7 +562,12 @@ export function useLiquidationPrice(): LiquidationPrice {
   const { availableForOrder: availableForOrderSource } = useAccountData();
 
   if (!market || !lf || !cva || !quantitySource) {
-    console.error("market or lf or cva  or quantitySource is undefined", { market, lf, cva, quantitySource });
+    console.error("market or lf or cva  or quantitySource is undefined", {
+      market,
+      lf,
+      cva,
+      quantitySource,
+    });
     return { maintenanceMarginCVA: undefined, liquidationPrice: undefined };
   }
   const maintenanceMarginCVA =
@@ -573,23 +578,18 @@ export function useLiquidationPrice(): LiquidationPrice {
     ? undefined
     : toBN(availableForOrderSource);
 
+  const quantity = toBN(quantitySource).isNaN()
+    ? undefined
+    : toBN(quantitySource);
 
-  const quantity = toBN(quantitySource).isNaN() ? undefined : toBN(quantitySource);
-
-
-  if (
-    !maintenanceMarginCVA ||
-    !price ||
-    !availableForOrder ||
-    !quantity
-  ) {
+  if (!maintenanceMarginCVA || !price || !availableForOrder || !quantity) {
     console.error(
       "maintenanceMarginCVA or price or availableForOrder or quantity is undefined",
       {
         maintenanceMarginCVA,
         price,
         availableForOrder,
-        quantity
+        quantity,
       },
     );
     return { maintenanceMarginCVA, liquidationPrice: undefined };
