@@ -114,7 +114,9 @@ export default function BaseCard({
   };
 
   const onClickItem = () => {
-    onClick && onClick();
+    if (onClick) {
+      onClick();
+    }
   };
 
   return (

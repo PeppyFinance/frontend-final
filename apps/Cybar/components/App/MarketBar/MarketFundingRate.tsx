@@ -118,7 +118,11 @@ function useColor(value: string) {
   const theme = useTheme();
   const valueBN = toBN(value);
 
-  if (valueBN.isEqualTo(0)) return theme.text0;
-  else if (valueBN.isGreaterThan(0)) return theme.positive;
-  else return theme.negative;
+  if (valueBN.isEqualTo(0)) {
+    return theme.text0;
+  } else if (valueBN.isGreaterThan(0)) {
+    return theme.positive;
+  } else {
+    return theme.negative;
+  }
 }

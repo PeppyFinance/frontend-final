@@ -39,7 +39,9 @@ export default function Cards({
       ? quotes[0]
       : ({} as Quote);
 
-  if (!subAccount) return <></>;
+  if (!subAccount) {
+    return <></>;
+  }
 
   switch (notificationType) {
     case NotificationType.TRANSFER_COLLATERAL:

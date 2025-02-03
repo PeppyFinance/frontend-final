@@ -82,8 +82,9 @@ export default function BalanceHistory() {
 
   useEffect(() => {
     if (!isLoaded) {
-      if (balanceHistory && Object.values(balanceHistory).length)
+      if (balanceHistory && Object.values(balanceHistory).length) {
         setIsLoaded(true);
+      }
     }
   }, [balanceHistory, isLoaded]);
 

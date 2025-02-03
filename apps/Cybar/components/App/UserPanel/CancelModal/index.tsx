@@ -72,8 +72,9 @@ export default function CloseModal({
 
   const [notFilledAmount, filledAmount, notFilledPercent, filledPercent] =
     useMemo(() => {
-      if (!quantity || !quantityToClose || !closedAmount)
+      if (!quantity || !quantityToClose || !closedAmount) {
         return [BN_ZERO, BN_ZERO, BN_ZERO, BN_ZERO];
+      }
 
       const fillAmountBN = toBN(fillAmount ?? 0);
       if (fillAmountBN.isEqualTo(0)) {
@@ -120,9 +121,13 @@ export default function CloseModal({
   const { callback: closeCallback, error } = useCancelQuote(quote, closeQuote);
 
   const handleManage = useCallback(async () => {
-    if (error) console.debug({ error });
+    if (error) {
+      console.debug({ error });
+    }
 
-    if (!closeCallback) return;
+    if (!closeCallback) {
+      return;
+    }
     try {
       setAwaitingCancelConfirmation(true);
       const txHash = await closeCallback();
@@ -147,8 +152,9 @@ export default function CloseModal({
   );
 
   function getActionButton(): JSX.Element | null {
-    if (!chainId || !account) return <ConnectWallet />;
-    else if (isPendingTxs) {
+    if (!chainId || !account) {
+      return <ConnectWallet />;
+    } else if (isPendingTxs) {
       return (
         <MainButton disabled>
           Transacting <DotFlashing />

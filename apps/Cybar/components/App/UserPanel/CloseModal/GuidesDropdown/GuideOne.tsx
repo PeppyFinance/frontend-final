@@ -75,7 +75,9 @@ export default function GuideOne({
     const active = onClick ? true : false;
 
     const handleClick = () => {
-      if (!onClick || !value) return;
+      if (!onClick || !value) {
+        return;
+      }
       onClick(value);
     };
     return (

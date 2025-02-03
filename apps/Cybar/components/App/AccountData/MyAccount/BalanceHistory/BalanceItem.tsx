@@ -93,7 +93,7 @@ export default function BalanceItem({
     [BalanceHistoryType.WITHDRAW_PARTY_A]: WITHDRAW_ICON,
   };
 
-  if (chainId && !loading)
+  if (chainId && !loading) {
     return (
       <ExplorerLink
         type={ExplorerDataType.TRANSACTION}
@@ -129,6 +129,7 @@ export default function BalanceItem({
         </Container>
       </ExplorerLink>
     );
+  }
   return (
     <Container>
       <Row gap="14px">

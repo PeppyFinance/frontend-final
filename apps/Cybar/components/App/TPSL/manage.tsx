@@ -262,7 +262,9 @@ export async function handleSignManageAndDeleteTpSlRequest(
   if (conditional_order === "") {
     return;
   }
-  if (!signMessageCallback) return;
+  if (!signMessageCallback) {
+    return;
+  }
   const message = createDeleteRequestBody(conditional_order, quoteId);
   try {
     setLoading(true);
@@ -367,7 +369,9 @@ export async function handleSignManageAndTpSlRequest(
   if (targetTp === "" && targetSl === "") {
     return;
   }
-  if (!signMessageCallback) return;
+  if (!signMessageCallback) {
+    return;
+  }
   const message = createRequestBody(
     targetTp,
     targetSl,
@@ -392,7 +396,9 @@ export async function handleSignManageAndTpSlRequest(
       let tempMessage = "";
 
       for (const field1 of arrayConditionalOrder) {
-        if (tempMessage.length) tempMessage += " and ";
+        if (tempMessage.length) {
+          tempMessage += " and ";
+        }
         tempMessage +=
           field1.conditional_order_type === "take_profit"
             ? `Take Profit to ${field1.conditional_price}`
@@ -644,7 +650,9 @@ export default function ManageTpSlModal({
   ]);
 
   function getActionButtonConfirm(): JSX.Element | null {
-    if (!chainId || !account) return <ConnectWallet />;
+    if (!chainId || !account) {
+      return <ConnectWallet />;
+    }
 
     return (
       <PrimaryButton onClick={onClickConfirmButton} disabled={disableLogic}>
@@ -656,7 +664,9 @@ export default function ManageTpSlModal({
   function getActionButtonCancel(
     callBackButton: () => void,
   ): JSX.Element | null {
-    if (!chainId || !account) return <ConnectWallet />;
+    if (!chainId || !account) {
+      return <ConnectWallet />;
+    }
     return <CancelButton onClick={callBackButton}>Cancel</CancelButton>;
   }
 

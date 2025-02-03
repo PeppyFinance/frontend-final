@@ -141,7 +141,9 @@ export default createReducer(initialState, (builder) =>
       getBalanceHistory.fulfilled,
       (state, { payload: { hasMore, result } }) => {
         const history = { ...state.balanceHistory };
-        if (!result) return;
+        if (!result) {
+          return;
+        }
 
         result.forEach((d) => {
           history[d.transaction] = d;

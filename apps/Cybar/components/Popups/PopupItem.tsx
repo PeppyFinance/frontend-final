@@ -48,7 +48,9 @@ export default function PopupItem({
   );
 
   useEffect(() => {
-    if (removeAfterMs === null) return undefined;
+    if (removeAfterMs === null) {
+      return undefined;
+    }
 
     const timeout = setTimeout(() => {
       removeThisPopup();

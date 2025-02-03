@@ -29,17 +29,21 @@ export default function PositionDetails({
   const mobileVersion = useIsMobile();
 
   const platformFee = (() => {
-    if (!quantity || !marketPrice || !tradingFee || !requestedOpenPrice)
+    if (!quantity || !marketPrice || !tradingFee || !requestedOpenPrice) {
       return "0";
-    if (orderType === OrderType.LIMIT)
+    }
+    if (orderType === OrderType.LIMIT) {
       return toBN(quantity)
         .times(requestedOpenPrice)
         .times(tradingFee)
         .toString();
+    }
     return toBN(quantity).times(marketPrice).times(tradingFee).toString();
   })();
 
-  if (!quote) return <EmptyDetails />;
+  if (!quote) {
+    return <EmptyDetails />;
+  }
 
   switch (quoteStatus) {
     case QuoteStatus.PENDING:

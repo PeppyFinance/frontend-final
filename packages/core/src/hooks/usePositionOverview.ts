@@ -30,7 +30,9 @@ export function usePositionValue(quotes: Quote[]): IQuotesInfo {
     const quoteByMarketValues: IQuotesInfo = [];
 
     quotes.forEach((quote) => {
-      if (checkedMarkets[quote.positionType].includes(quote.marketId)) return;
+      if (checkedMarkets[quote.positionType].includes(quote.marketId)) {
+        return;
+      }
       checkedMarkets[quote.positionType].push(quote.marketId);
 
       const { name, symbol, asset } =

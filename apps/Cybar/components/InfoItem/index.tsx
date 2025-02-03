@@ -67,7 +67,9 @@ export default function InfoItem({
   loading?: boolean;
 }): JSX.Element {
   const handleClick = useCallback(() => {
-    if (!balanceExact || !onClick) return;
+    if (!balanceExact || !onClick) {
+      return;
+    }
     onClick(balanceExact.toString());
   }, [balanceExact, onClick]);
 

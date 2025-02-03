@@ -169,7 +169,9 @@ export default function MarketRow({
       >
         <span>
           {(() => {
-            if (!priceChangePercent) return "-";
+            if (!priceChangePercent) {
+              return "-";
+            }
             return `${
               toBN(priceChangePercent).isGreaterThan(0) ? "+" : ""
             }${priceChangePercent}%`;

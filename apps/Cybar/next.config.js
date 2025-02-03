@@ -40,7 +40,9 @@ module.exports = {
     domains: ["raw.githubusercontent.com"],
   },
   webpack: (config) => {
-    if (isNext12(config)) return updateNextGreaterThan12Config(config);
+    if (isNext12(config)) {
+      return updateNextGreaterThan12Config(config);
+    }
     return updateNextLessThan12Config(config);
   },
 };

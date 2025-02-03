@@ -105,8 +105,11 @@ export default function InputPanel({
 
   const onMaxValueClick = () => {
     const maxValueBN = toBN(maxValue);
-    if (!precision) onChange(maxValueBN.toFixed());
-    else if (maxValueBN.gt(0)) onChange(toBN(maxValue).toFixed(precision, 1));
+    if (!precision) {
+      onChange(maxValueBN.toFixed());
+    } else if (maxValueBN.gt(0)) {
+      onChange(toBN(maxValue).toFixed(precision, 1));
+    }
   };
 
   return (

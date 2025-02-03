@@ -57,7 +57,9 @@ export default function GuideTwo({
   }
 
   const clickOnAmount = (value: string) => {
-    if (toBN(maxPartiallyClose).isEqualTo(0)) return undefined;
+    if (toBN(maxPartiallyClose).isEqualTo(0)) {
+      return undefined;
+    }
     return setSize(value);
   };
 
@@ -70,7 +72,9 @@ export default function GuideTwo({
   ) {
     const active = onClick ? true : false;
     const handleClick = () => {
-      if (!onClick) return;
+      if (!onClick) {
+        return;
+      }
       onClick(value);
     };
     return (

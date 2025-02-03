@@ -13,7 +13,9 @@ const MIN_NATIVE_CURRENCY_FOR_GAS: JSBI = JSBI.exponentiate(
 export function maxAmountSpend(
   currencyAmount?: CurrencyAmount<Currency>,
 ): CurrencyAmount<Currency> | undefined {
-  if (!currencyAmount) return undefined;
+  if (!currencyAmount) {
+    return undefined;
+  }
   if (currencyAmount.currency.isNative) {
     if (
       JSBI.greaterThan(currencyAmount.quotient, MIN_NATIVE_CURRENCY_FOR_GAS)

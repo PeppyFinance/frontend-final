@@ -132,8 +132,12 @@ export const NumericalInput = ({
         precision !== undefined ? makeRegex(precision, calculational) : "";
       if (regex) {
         const result = nextUserInput.match(regex);
-        if (result) onUserInput(result[0]);
-      } else onUserInput(nextUserInput);
+        if (result) {
+          onUserInput(result[0]);
+        }
+      } else {
+        onUserInput(nextUserInput);
+      }
     } else if (nextUserInput === "") {
       onUserInput(nextUserInput);
     }

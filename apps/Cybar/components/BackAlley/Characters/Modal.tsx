@@ -138,7 +138,9 @@ export const CharacterModal = () => {
       onClose();
     }
   };
-  if (!characterState.character) return null;
+  if (!characterState.character) {
+    return null;
+  }
 
   return (
     <DialogWindow>

@@ -135,13 +135,19 @@ export default function CreateAccount({ onClose }: { onClose?: () => void }) {
     useAddAccountToContract(name);
 
   const onAddAccount = useCallback(async () => {
-    if (!addAccountToContractCallback) return;
+    if (!addAccountToContractCallback) {
+      return;
+    }
     try {
       setAwaitingConfirmation(true);
       const txHash = await addAccountToContractCallback();
       setAwaitingConfirmation(false);
-      if (txHash) setTxHash(txHash.hash);
-      onClose && onClose();
+      if (txHash) {
+        setTxHash(txHash.hash);
+      }
+      if (onClose) {
+        onClose();
+      }
     } catch (e) {
       if (e instanceof Error) {
         console.error(e);

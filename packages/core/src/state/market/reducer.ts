@@ -7,9 +7,8 @@ export const initialState: MarketState = {
 };
 
 export const marketReducer = createReducer(initialState, (build) =>
-  build
-    .addCase(setCoinCategories, (market, { payload }) => {
-      market.coinCategories = payload;
-      return market;
-    }),
+  build.addCase(setCoinCategories, (market, { payload }) => {
+    market.coinCategories = payload;
+    return market;
+  }),
 );

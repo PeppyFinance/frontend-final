@@ -173,8 +173,12 @@ export function useAccountPartyAStat(
   const accountsPartyAStat = useAppSelector(
     (state) => state.user.accountsPartyAStat,
   );
-  if (!address || !accountsPartyAStat) return initialUserPartyAStatDetail;
-  if (!accountsPartyAStat[address]) return initialUserPartyAStatDetail;
+  if (!address || !accountsPartyAStat) {
+    return initialUserPartyAStatDetail;
+  }
+  if (!accountsPartyAStat[address]) {
+    return initialUserPartyAStatDetail;
+  }
   return accountsPartyAStat[address];
 }
 
@@ -219,7 +223,9 @@ export function useGetBalanceHistoryCallback() {
       skip?: number,
       first?: number,
     ) => {
-      if (!chainId || !account) return;
+      if (!chainId || !account) {
+        return;
+      }
       thunkDispatch(
         getBalanceHistory({
           account,

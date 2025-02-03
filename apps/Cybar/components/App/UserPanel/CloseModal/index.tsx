@@ -197,7 +197,9 @@ export default function CloseModal({
               priceRangeUrl,
               getAppNameHeader(appName),
             );
-          if (!tempResponse) return;
+          if (!tempResponse) {
+            return;
+          }
           const priceRangeRes = tempResponse;
 
           const priceRange: PriceRange = {
@@ -231,7 +233,9 @@ export default function CloseModal({
 
   const outOfRangePrice = useMemo(() => {
     // check limit price range)
-    if (!priceRange || !quote) return false;
+    if (!priceRange || !quote) {
+      return false;
+    }
     const { name, maxPrice, minPrice } = priceRange;
     if (activeTab === OrderType.LIMIT && marketName === name) {
       if (quote.positionType === PositionType.LONG) {
@@ -244,7 +248,9 @@ export default function CloseModal({
   }, [priceRange, marketName, quote, activeTab, price]);
 
   const balanceTitle = useMemo(() => {
-    if (!quote) return;
+    if (!quote) {
+      return;
+    }
     if (quote.positionType === PositionType.LONG) {
       return "Bid Price:";
     } else {
@@ -253,7 +259,9 @@ export default function CloseModal({
   }, [quote]);
 
   const availableToClose = useMemo(() => {
-    if (!minAcceptableQuoteValue) return BN_ZERO.toString();
+    if (!minAcceptableQuoteValue) {
+      return BN_ZERO.toString();
+    }
 
     const amount = toBN(
       formatPrice(
@@ -273,7 +281,9 @@ export default function CloseModal({
   ]);
 
   function getPnlData(value: string) {
-    if (!quote) return [`$${formatAmount(value)}`, "0", theme.text1];
+    if (!quote) {
+      return [`$${formatAmount(value)}`, "0", theme.text1];
+    }
     const valueBN = toBN(value);
     const valuePercent = valueBN
       .div(availableAmount)
@@ -282,14 +292,15 @@ export default function CloseModal({
       .times(100)
       .toFixed(2);
 
-    if (valueBN.isGreaterThan(0))
+    if (valueBN.isGreaterThan(0)) {
       return [`+ $${formatAmount(valueBN)}`, valuePercent, theme.positive];
-    else if (valueBN.isLessThan(0))
+    } else if (valueBN.isLessThan(0)) {
       return [
         `- $${formatAmount(Math.abs(valueBN.toNumber()))}`,
         valuePercent,
         theme.negative,
       ];
+    }
     return [`$${formatAmount(valueBN)}`, "0"];
   }
 
@@ -366,8 +377,9 @@ export default function CloseModal({
   useInstantCloseNotifications(quote ?? ({} as Quote));
 
   function getActionButton(): JSX.Element | null {
-    if (!chainId || !account) return <ConnectWallet />;
-    else if (isPendingTxs) {
+    if (!chainId || !account) {
+      return <ConnectWallet />;
+    } else if (isPendingTxs) {
       return (
         <MainButton disabled>
           Transacting <DotFlashing />
@@ -579,8 +591,11 @@ export function useInstantClosePosition(
   const addInstantCloseData = useInstantCloseDataCallback();
 
   useEffect(() => {
-    if (isAccessDelegated) setText("Instant Close");
-    else setText("Delegate Access");
+    if (isAccessDelegated) {
+      setText("Instant Close");
+    } else {
+      setText("Delegate Access");
+    }
   }, [isAccessDelegated]);
 
   const handleInstantClose = useCallback(async () => {
@@ -606,14 +621,17 @@ export function useInstantClosePosition(
       await instantClose();
       setLoading(false);
       const timestamp = Math.floor(new Date().getTime() / 1000);
-      id &&
+      if (id) {
         addInstantCloseData({
           id,
           timestamp,
           amount: size,
           status: InstantCloseStatus.STARTED,
         });
-      closeModal && closeModal();
+      }
+      if (closeModal) {
+        closeModal();
+      }
       toast.success("close sent to hedger");
     } catch (e) {
       setLoading(false);

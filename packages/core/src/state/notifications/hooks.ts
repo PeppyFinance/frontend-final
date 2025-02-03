@@ -78,10 +78,14 @@ export function useNotificationAdderCallback(): (
   return useCallback(
     (notification: NotificationDetails, readOrUnread: "read" | "unread") => {
       const { notificationType } = notification;
-      if (!notificationType) return;
-      if (readOrUnread === "read")
+      if (!notificationType) {
+        return;
+      }
+      if (readOrUnread === "read") {
         dispatch(addReadNotification({ notification }));
-      else dispatch(addUnreadNotification({ notification }));
+      } else {
+        dispatch(addUnreadNotification({ notification }));
+      }
     },
     [dispatch],
   );
@@ -99,7 +103,9 @@ export function useMarkAsReadNotificationCallback(): (
         quoteId,
         notificationType,
       });
-      if (!quoteId) return;
+      if (!quoteId) {
+        return;
+      }
       if (existedNotification) {
         return;
       }

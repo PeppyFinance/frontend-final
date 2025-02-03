@@ -96,7 +96,7 @@ export function UserUpdater(): null {
       account &&
       Object.keys(MULTI_ACCOUNT_ADDRESS).length &&
       chainId
-    )
+    ) {
       thunkDispatch(
         getIsWhiteList({
           baseUrl,
@@ -105,6 +105,7 @@ export function UserUpdater(): null {
           appName,
         }),
       );
+    }
   }, [
     thunkDispatch,
     baseUrl,
@@ -116,7 +117,7 @@ export function UserUpdater(): null {
   ]);
 
   useEffect(() => {
-    if (chainId)
+    if (chainId) {
       thunkDispatch(
         getTotalDepositsAndWithdrawals({
           account: activeAccountAddress,
@@ -124,6 +125,7 @@ export function UserUpdater(): null {
           client,
         }),
       );
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeAccountAddress, chainId, subgraphAddress, thunkDispatch]);
 

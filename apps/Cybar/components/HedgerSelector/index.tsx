@@ -22,7 +22,9 @@ export default function HedgerSelector() {
   const ref = useRef(null);
   useAddedHedgersData();
   useOnOutsideClick(ref, () => {
-    if (!isMobile) setModalOpen(false);
+    if (!isMobile) {
+      setModalOpen(false);
+    }
   });
   const [modalOpen, setModalOpen] = useState(false);
 

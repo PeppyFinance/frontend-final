@@ -135,7 +135,9 @@ export default function WithdrawCooldown({
   const showWithdrawModal = useModalOpen(ApplicationModal.WITHDRAW);
 
   const handleAction = useCallback(async () => {
-    if (!showWithdrawBarModal && !showWithdrawModal) return;
+    if (!showWithdrawBarModal && !showWithdrawModal) {
+      return;
+    }
 
     if (!transferBalanceCallback) {
       toast.error(transferBalanceError);

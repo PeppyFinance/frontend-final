@@ -13,10 +13,12 @@ export function useCheckQuoteIsExpired(quote: Quote): {
 
   return useMemo(() => {
     const checkDeadline = currentTimestamp > Number(deadline);
-    if (quoteStatus === QuoteStatus.PENDING && checkDeadline)
+    if (quoteStatus === QuoteStatus.PENDING && checkDeadline) {
       return { expired: checkDeadline, expiredColor: theme.bgWarning };
-    if (quoteStatus === QuoteStatus.CLOSE_PENDING)
+    }
+    if (quoteStatus === QuoteStatus.CLOSE_PENDING) {
       return { expired: checkDeadline, expiredColor: undefined };
+    }
     return { expired: false, expiredColor: undefined };
   }, [currentTimestamp, deadline, quoteStatus, theme.bgWarning]);
 }

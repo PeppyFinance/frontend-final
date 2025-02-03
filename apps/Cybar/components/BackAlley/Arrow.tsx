@@ -75,7 +75,9 @@ type Props = {
 };
 
 export const NavigationArrow = ({ href, display = true }: Props) => {
-  if (!display) return null;
+  if (!display) {
+    return null;
+  }
   return (
     <NavigationArrowRight href={href}>
       <ArrowIcon>

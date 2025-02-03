@@ -20,7 +20,7 @@ export function MarketUpdater(): null {
 async function getCoinCategories() {
   const url = process.env.NEXT_PUBLIC_COIN_CATEGORIES_URL;
   if (!url) {
-    return null
+    return null;
   }
 
   try {

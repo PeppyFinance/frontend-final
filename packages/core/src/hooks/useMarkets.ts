@@ -59,7 +59,9 @@ export function useMarket(id: number | undefined): Market | undefined {
   const markets = useMarkets();
 
   return useMemo(() => {
-    if (!id) return undefined;
+    if (!id) {
+      return undefined;
+    }
     return find(markets, { id });
   }, [id, markets]);
 }
@@ -132,7 +134,9 @@ export function useNeutralMarkets(): Market[] {
 export function useErrorMessage(code: number | null): string | undefined {
   const messages = useErrorMessages();
   return useMemo(() => {
-    if (!code) return undefined;
+    if (!code) {
+      return undefined;
+    }
     return messages[code];
   }, [code, messages]);
 }

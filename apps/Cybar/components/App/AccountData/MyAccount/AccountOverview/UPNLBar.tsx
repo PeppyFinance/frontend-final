@@ -75,13 +75,14 @@ function usePnlValues(currency: Token) {
     depositWithdrawalsState === ApiState.LOADING ||
     !depositWithdrawalsData ||
     loading
-  )
+  ) {
     return {
       value: "0",
       color: undefined,
       bgColor: theme.bg3,
       isLoading: true,
     };
+  }
 
   const { deposit: totalDeposit, withdraw: totalWithdraw } =
     depositWithdrawalsData;
@@ -90,20 +91,21 @@ function usePnlValues(currency: Token) {
     .plus(fromWei(totalWithdraw, currency.decimals))
     .minus(fromWei(totalDeposit, currency.decimals));
 
-  if (pnlBN.isGreaterThan(0))
+  if (pnlBN.isGreaterThan(0)) {
     return {
       value: `+ ${formatAmount(pnlBN)}`,
       color: theme.positive,
       bgColor: theme.bgWin,
       isLoading: false,
     };
-  else if (pnlBN.isLessThan(0))
+  } else if (pnlBN.isLessThan(0)) {
     return {
       value: `- ${formatAmount(Math.abs(pnlBN.toNumber()))}`,
       color: theme.negative,
       bgColor: theme.bgLoose,
       isLoading: false,
     };
+  }
   return {
     value: `${formatAmount(pnlBN)}`,
     color: undefined,

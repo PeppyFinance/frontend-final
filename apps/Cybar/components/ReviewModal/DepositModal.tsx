@@ -255,13 +255,15 @@ export default function DepositModal() {
       );
     }
 
-    if (allowedDepositAmount.isLessThan(typedAmount))
+    if (allowedDepositAmount.isLessThan(typedAmount)) {
       return (
         <PrimaryButton disabled>Amount exceeds deposit limit</PrimaryButton>
       );
+    }
 
-    if (insufficientBalance)
+    if (insufficientBalance) {
       return <PrimaryButton disabled>Insufficient Balance</PrimaryButton>;
+    }
 
     if (showApproveLoader) {
       return (

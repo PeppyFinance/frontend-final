@@ -19,10 +19,14 @@
   },
   "devDependencies": {
     "@nighttrax/eslint-config-tsx": "~12.0.0-alpha.2",
+    "@typescript-eslint/eslint-plugin": "^8.22.0",
+    "@typescript-eslint/parser": "^8.22.0",
     "doctoc": "~2.2.0",
     "eslint": "~8.50.0",
+    "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-import": "~2.28.0",
-    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "eslint-plugin-unused-imports": "^4.1.4",
     "prettier": "^3.4.2",
     "prettier-plugin-organize-imports": "^4.1.0",
     "typescript": "5.2"

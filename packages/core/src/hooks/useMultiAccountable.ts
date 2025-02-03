@@ -31,8 +31,9 @@ export function useMultiAccountable(
   const wagmiConfig = useWagmiConfig();
 
   return useCallback(async (): ConstructCallReturnType => {
-    if (disable || GLOBAL_MULTI_ACCOUNTABLE_PAUSED)
+    if (disable || GLOBAL_MULTI_ACCOUNTABLE_PAUSED) {
       return await constructCall();
+    }
 
     let callData: any = null;
     try {
@@ -48,7 +49,9 @@ export function useMultiAccountable(
       }
 
       const call = await constructCall();
-      if ("error" in call) throw call;
+      if ("error" in call) {
+        throw call;
+      }
       const { config, args: preArgs, functionName } = call;
       callData = { config, args: preArgs, functionName }; // Store the call data
 
@@ -89,9 +92,13 @@ export function useMultiAccountable(
           throw error;
         }
       }
-      if (error && typeof error === "string") throw new Error(error);
+      if (error && typeof error === "string") {
+        throw new Error(error);
+      }
 
-      if (callData) return { ...callData, error };
+      if (callData) {
+        return { ...callData, error };
+      }
 
       throw new Error("error3");
     }

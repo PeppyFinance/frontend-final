@@ -117,11 +117,12 @@ export default function AmountsPanel() {
 
   useEffect(() => {
     const controller = new AbortController();
-    if (market && lockedParamsLeverage)
+    if (market && lockedParamsLeverage) {
       getLockedPercentages({
         signal: controller.signal,
         headers: [["App-Name", APP_NAME]],
       });
+    }
     return () => {
       controller.abort();
     };
@@ -134,14 +135,18 @@ export default function AmountsPanel() {
       if (market) {
         const { symbol, pricePrecision, quantityPrecision, maxLeverage } =
           market;
-        if (userExpertMode) return [symbol, undefined, undefined, maxLeverage];
+        if (userExpertMode) {
+          return [symbol, undefined, undefined, maxLeverage];
+        }
         return [symbol, pricePrecision, quantityPrecision, maxLeverage];
       }
       return ["", DEFAULT_PRECISION, DEFAULT_PRECISION, MAX_LEVERAGE_VALUE];
     }, [userExpertMode, market]);
 
   useEffect(() => {
-    if (leverage > maxLeverage) setLeverage(5);
+    if (leverage > maxLeverage) {
+      setLeverage(5);
+    }
   }, [market, maxLeverage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -230,7 +235,9 @@ export default function AmountsPanel() {
             onChange={(e) => handleCustomLeverage(e)}
             placeholder={customLeverage ? customLeverage.toString() : "1"}
             onBlur={() => {
-              if (!customLeverage) setCustomLeverage(MIN_LEVERAGE_VALUE);
+              if (!customLeverage) {
+                setCustomLeverage(MIN_LEVERAGE_VALUE);
+              }
             }}
           />
           <LeverageIcon width={10} height={10} color={theme.text2} />

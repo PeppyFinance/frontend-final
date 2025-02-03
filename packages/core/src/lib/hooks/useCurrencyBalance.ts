@@ -54,11 +54,12 @@ export function useNativeCurrencyBalances(
         [address: string]: CurrencyAmount<Currency>;
       }>((memo, [address], i) => {
         const value = getSingleWagmiResult(results, i);
-        if (value && chainId)
+        if (value && chainId) {
           memo[address] = CurrencyAmount.fromRawAmount(
             nativeOnChain(chainId),
             JSBI.BigInt(value.toString()),
           );
+        }
         return memo;
       }, {}),
     [validAddressInputs, chainId, results],
@@ -127,7 +128,9 @@ export function useTokenBalance(
   token?: Token,
 ): CurrencyAmount<Token> | undefined {
   const tokenBalances = useTokenBalances(account, [token]);
-  if (!token) return undefined;
+  if (!token) {
+    return undefined;
+  }
   return tokenBalances[token.address];
 }
 
@@ -155,9 +158,15 @@ export function useCurrencyBalances(
   return useMemo(
     () =>
       currencies?.map((currency) => {
-        if (!account || !currency) return undefined;
-        if (currency.isToken) return tokenBalances[currency.address];
-        if (currency.isNative) return ethBalance[account];
+        if (!account || !currency) {
+          return undefined;
+        }
+        if (currency.isToken) {
+          return tokenBalances[currency.address];
+        }
+        if (currency.isNative) {
+          return ethBalance[account];
+        }
         return undefined;
       }) ?? [],
     [account, currencies, ethBalance, tokenBalances],

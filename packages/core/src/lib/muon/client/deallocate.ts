@@ -19,10 +19,15 @@ export class DeallocateClient extends MuonClient {
     chainId?: number,
     contractAddress?: string,
   ): string[][] | Error {
-    if (!account) return new Error("Param `account` is missing.");
-    if (!chainId) return new Error("Param `chainId` is missing.");
-    if (!contractAddress)
+    if (!account) {
+      return new Error("Param `account` is missing.");
+    }
+    if (!chainId) {
+      return new Error("Param `chainId` is missing.");
+    }
+    if (!contractAddress) {
       return new Error("Param `contractAddress` is missing.");
+    }
 
     return [
       ["partyA", account],
@@ -44,8 +49,9 @@ export class DeallocateClient extends MuonClient {
         chainId,
         contractAddress,
       );
-      if (requestParams instanceof Error)
+      if (requestParams instanceof Error) {
         throw new Error(requestParams.message);
+      }
       console.info("Requesting data from Muon: ", requestParams);
 
       const toastId = toast.loading("requesting data from Muon...");

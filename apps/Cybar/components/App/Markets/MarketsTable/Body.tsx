@@ -42,9 +42,13 @@ export default function TableBody({
 
   const onPageChange = (newCalculatedPage: number) => {
     let newPage;
-    if (newCalculatedPage > pageCount) newPage = pageCount;
-    else if (newCalculatedPage < 1) newPage = 1;
-    else newPage = newCalculatedPage;
+    if (newCalculatedPage > pageCount) {
+      newPage = pageCount;
+    } else if (newCalculatedPage < 1) {
+      newPage = 1;
+    } else {
+      newPage = newCalculatedPage;
+    }
     setPage(newPage);
   };
 

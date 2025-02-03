@@ -80,7 +80,9 @@ export default function WrapperBanner() {
       ? false
       : true;
 
-  if (!showBanner) return null;
+  if (!showBanner) {
+    return null;
+  }
 
   return (
     <Container>

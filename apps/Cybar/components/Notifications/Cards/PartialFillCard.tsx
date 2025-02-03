@@ -40,8 +40,9 @@ export default function PartiallyFillCard({
     if (
       quoteStatus === QuoteStatus.CLOSE_PENDING ||
       quoteStatus === QuoteStatus.CANCEL_CLOSE_PENDING
-    )
+    ) {
       return quantityToClose;
+    }
     return quantity;
   }, [quantityToClose, quantity, quoteStatus]);
   // const text = lastSeenAction === LastSeenAction.SEND_QUOTE ? 'Position Opened' : 'Position Closed'

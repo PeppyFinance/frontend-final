@@ -58,6 +58,7 @@ const tokenNames = [
 const LogoMap: { [token: string]: any } = {};
 
 tokenNames.forEach((token) => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
   LogoMap[token] = require(`/public/static/images/tokens/${token}.svg`);
 });
 

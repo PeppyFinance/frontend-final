@@ -101,7 +101,9 @@ function ActionButton({ isTermsAccepted }: { isTermsAccepted: boolean }) {
   const { callback: writeSignCallback } = useWriteSign();
 
   const onSignMessage = useCallback(async () => {
-    if (!signMessageCallback) return;
+    if (!signMessageCallback) {
+      return;
+    }
     try {
       const sign = await signMessageCallback(message);
       return sign;
@@ -117,7 +119,9 @@ function ActionButton({ isTermsAccepted }: { isTermsAccepted: boolean }) {
 
   const onWriteSignCb = useCallback(
     async (sign: string) => {
-      if (!writeSignCallback || !sign) return;
+      if (!writeSignCallback || !sign) {
+        return;
+      }
       try {
         await writeSignCallback(sign);
       } catch (e) {

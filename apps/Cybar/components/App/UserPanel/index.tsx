@@ -61,15 +61,20 @@ export default function UserPanel(): JSX.Element | null {
   const getOpenInstantCloses = useGetOpenInstantClosesCallback();
 
   useEffect(() => {
-    if (positions.length) getOpenInstantCloses();
+    if (positions.length) {
+      getOpenInstantCloses();
+    }
   }, [getOpenInstantCloses, positions.length]);
 
   function getHistoryQuotes() {
     const skip = page * ItemsPerPage;
     const first = ItemsPerPage + 1;
-    if (skip + first < closed.length) return;
-    if (account && chainId && hasMoreHistory)
+    if (skip + first < closed.length) {
+      return;
+    }
+    if (account && chainId && hasMoreHistory) {
       getHistory(account, chainId, first, skip, ItemsPerPage);
+    }
   }
 
   const positionQuotes: Quote[] = useMemo(() => {
@@ -130,13 +135,17 @@ export default function UserPanel(): JSX.Element | null {
         getHistoryQuotes();
       }
     } else {
-      if (value >= 1) setPage(value);
+      if (value >= 1) {
+        setPage(value);
+      }
     }
   };
 
   const activeNext = (() => {
     const itemsLengthCondition = page * ItemsPerPage < currentOrders.length;
-    if (selectedTab === StateTabs.POSITIONS) return itemsLengthCondition;
+    if (selectedTab === StateTabs.POSITIONS) {
+      return itemsLengthCondition;
+    }
     return hasMoreHistory || itemsLengthCondition;
   })();
 

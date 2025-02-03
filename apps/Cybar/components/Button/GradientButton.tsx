@@ -58,7 +58,9 @@ export default function GradientButton({
   disabled?: boolean;
 }): JSX.Element {
   const handleClick = useCallback(() => {
-    if (!disabled && onClick) onClick();
+    if (!disabled && onClick) {
+      onClick();
+    }
   }, [disabled, onClick]);
 
   return (
