@@ -10,7 +10,7 @@ import Logos from "components/Notifications/Logos";
 import { Row, RowCenter, RowEnd, RowStart } from "components/Row";
 import ShimmerAnimation from "components/ShimmerAnimation";
 
-const Container = styled(Row)<{
+const Container = styled(Row) <{
   bg?: string;
   border?: string;
   report?: boolean;
@@ -33,7 +33,7 @@ const Wrapper = styled(Column)`
   overflow: hidden;
 `;
 
-const LogoWrapper = styled(RowCenter)<{ rotate?: number }>`
+const LogoWrapper = styled(RowCenter) <{ rotate?: number }>`
   width: unset;
   min-width: 54px;
   padding: 8px 0px 8px 8px;
@@ -46,7 +46,7 @@ const TextRow = styled(Row)`
   color: ${({ theme }) => theme.text0};
 `;
 
-const AccountName = styled(RowEnd)<{ alert?: string }>`
+const AccountName = styled(RowEnd) <{ alert?: string }>`
   font-weight: 400;
   font-size: 12px;
   width: unset;
@@ -54,7 +54,6 @@ const AccountName = styled(RowEnd)<{ alert?: string }>`
 `;
 
 const Timestamp = styled(AccountName)`
-  margin-left: 6px;
   color: ${({ theme, alert }) => (alert ? alert : theme.text3)};
 `;
 
@@ -157,14 +156,16 @@ export default function BaseCard({
               <AccountName
                 alert={!!border ? theme.text1 : undefined}
               >{`[${accountName}]`}</AccountName>
-              <Timestamp alert={!!border ? theme.text0 : undefined}>
-                {time}
-              </Timestamp>
             </RowEnd>
           </TextRow>
-          <TextRow>
+          <TextRow style={{ marginBottom: "8px" }}>
             {text}
             {status && <RowEnd>{status}</RowEnd>}
+          </TextRow>
+          <TextRow>
+            <Timestamp alert={!!border ? theme.text0 : undefined}>
+              {time}
+            </Timestamp>
           </TextRow>
         </Wrapper>
       </Container>
