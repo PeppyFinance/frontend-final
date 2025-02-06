@@ -129,14 +129,12 @@ export default function NotificationsModal({
                 </InfoBox>
                 {unreadNotifications
                   .sort(newNotificationsFirst)
-                  .map((notification) => {
-                    return (
-                      <NotificationCardsItems
-                        notification={notification}
-                        key={notification.id}
-                      />
-                    );
-                  })}
+                  .map((notification) => (
+                    <NotificationCardsItems
+                      notification={notification}
+                      key={notification.id}
+                    />
+                  ))}
               </Column>
             )}
             {readNotifications.length > 0 && (
