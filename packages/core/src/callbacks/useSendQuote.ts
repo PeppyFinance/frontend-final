@@ -125,8 +125,6 @@ export function useSentQuoteCallback(): {
     [openPriceFinal, pricePrecision],
   );
 
-  // console.log({ openPrice, openPriceFinal, openPriceWied, pricePrecision });
-
   const quantityAsset = useMemo(
     () => (toBN(formattedAmounts[1]).isNaN() ? "0" : formattedAmounts[1]),
     [formattedAmounts],

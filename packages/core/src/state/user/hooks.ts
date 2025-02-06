@@ -28,6 +28,8 @@ import {
 import { useAnalyticsApolloClient } from "../../apollo/client/balanceHistory";
 import useActiveWagmi from "../../lib/hooks/useActiveWagmi";
 import useDebounce from "../../lib/hooks/useDebounce";
+import { PositionType } from "../../types/trade";
+import { formatAmount, toBN } from "../../utils/numbers";
 import {
   useAnalyticsSubgraphAddress,
   useAppName,
@@ -35,6 +37,7 @@ import {
 } from "../chains/hooks";
 import { useHedgerInfo } from "../hedger/hooks";
 import { getAppNameHeader } from "../hedger/thunks";
+import { useLockedPercentages, usePositionType } from "../trade/hooks";
 import {
   addHedger,
   removeHedger,
@@ -120,6 +123,32 @@ export function useUserWhitelist(): null | boolean {
 export function useLeverage(): number {
   const leverage = useAppSelector((state) => state.user.leverage);
   return leverage;
+}
+
+export function useLiquidationPrice(price: string): string | undefined {
+  const positionType = usePositionType();
+  const leverage = useLeverage();
+  const { lf, cva } = useLockedPercentages();
+
+  if (!lf || !cva) {
+    return undefined;
+  }
+  const mmr = (Number(cva) + Number(lf)) / 100;
+
+  const liquidationPriceLong = formatAmount(
+    toBN(price).times(1 - 1 / leverage + mmr / leverage),
+    6,
+    true,
+  );
+  const liquidationPriceShort = formatAmount(
+    toBN(price).times(1 + 1 / leverage - mmr / leverage),
+    6,
+    true,
+  );
+
+  return positionType === PositionType.LONG
+    ? liquidationPriceLong
+    : liquidationPriceShort;
 }
 
 export function useSetLeverageCallback() {

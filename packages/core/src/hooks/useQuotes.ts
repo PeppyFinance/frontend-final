@@ -19,6 +19,7 @@ import {
   useActiveAccountAddress,
 } from "../state/user/hooks";
 
+import BigNumber from "bignumber.js";
 import { DIAMOND_ABI } from "../constants";
 import useActiveWagmi from "../lib/hooks/useActiveWagmi";
 import { useSupportedChainId } from "../lib/hooks/useSupportedChainId";
@@ -28,9 +29,17 @@ import {
   useUpdateInstantCloseDataCallback,
 } from "../state/quotes/hooks";
 import { InstantCloseStatus } from "../state/quotes/types";
+import {
+  useActiveMarket,
+  useGetCVA,
+  useGetLF,
+  useGetTypedValue,
+} from "../state/trade/hooks";
 import { Market } from "../types/market";
+import useAccountData from "./useAccountData";
 import useBidAskPrice from "./useBidAskPrice";
 import { useMarket } from "./useMarkets";
+import useTradePage from "./useTradePage";
 
 export function getPositionTypeByIndex(x: number): PositionType {
   return PositionType[
@@ -537,4 +546,58 @@ function toQuote(quote: any) {
 
 export function useLockedMargin(quote: Quote): string {
   return toBN(quote.CVA).plus(quote.partyAMM).plus(quote.LF).toString();
+}
+
+interface LiquidationPrice {
+  liquidationPrice?: BigNumber;
+  maintenanceMarginCVA?: BigNumber;
+}
+export function useLiquidationPrice(): LiquidationPrice {
+  // TODO: check if cva and lf are set
+  const cva = useGetCVA();
+  const lf = useGetLF();
+  const quantitySource = useGetTypedValue();
+  const market = useActiveMarket();
+  const { price: priceSource } = useTradePage();
+  const { availableForOrder: availableForOrderSource } = useAccountData();
+
+  if (!market || !lf || !cva || !quantitySource) {
+    console.error("market or lf or cva  or quantitySource is undefined", {
+      market,
+      lf,
+      cva,
+      quantitySource,
+    });
+    return { maintenanceMarginCVA: undefined, liquidationPrice: undefined };
+  }
+  const maintenanceMarginCVA =
+    !toBN(cva).isNaN() && !toBN(lf).isNaN() ? toBN(cva).plus(lf) : undefined;
+
+  const price = toBN(priceSource).isNaN() ? undefined : toBN(priceSource);
+  const availableForOrder = toBN(availableForOrderSource).isNaN()
+    ? undefined
+    : toBN(availableForOrderSource);
+
+  const quantity = toBN(quantitySource).isNaN()
+    ? undefined
+    : toBN(quantitySource);
+
+  if (!maintenanceMarginCVA || !price || !availableForOrder || !quantity) {
+    console.error(
+      "maintenanceMarginCVA or price or availableForOrder or quantity is undefined",
+      {
+        maintenanceMarginCVA,
+        price,
+        availableForOrder,
+        quantity,
+      },
+    );
+    return { maintenanceMarginCVA, liquidationPrice: undefined };
+  }
+
+  const liquidationPrice = price.plus(
+    availableForOrder.minus(maintenanceMarginCVA).div(quantity),
+  );
+
+  return { liquidationPrice, maintenanceMarginCVA };
 }

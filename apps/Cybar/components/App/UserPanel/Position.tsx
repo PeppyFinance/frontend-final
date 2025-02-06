@@ -18,6 +18,7 @@ import { titleCase } from "@symmio/frontend-sdk/utils/string";
 import {
   useClosingLastMarketPrice,
   useInstantCloseNotifications,
+  useLiquidationPrice,
   useOpeningLastMarketPrice,
   useQuoteFillAmount,
   useQuoteLeverage,
@@ -203,6 +204,7 @@ const HEADERS1 = [
   "Position Value",
   "Market price",
   "Open Price",
+  "Est Liq Price",
   "Status/uPNL",
   "Actions",
 ];
@@ -212,6 +214,7 @@ const HEADERS2 = [
   "Position Value",
   "Market price",
   "Open Price",
+  "Est Liq Price",
   "Status/uPNL",
   "tp/sl",
   "Actions",
@@ -512,6 +515,7 @@ function QuoteRow({
   const quoteDetail = useQuoteDetail();
   const setQuoteDetail = useSetQuoteDetailCallback();
 
+  const { liquidationPrice } = useLiquidationPrice();
   const activeDetail = id === quoteDetail?.id;
 
   // usage: we should know change of quote for position details
@@ -549,46 +553,49 @@ function QuoteRow({
     return null;
   }, [closedAmount, fillAmount, quantity, quantityToClose, quoteStatus]);
 
-  const [quoteSize, quoteMarketPrice, quoteOpenPrice] = useMemo(() => {
-    if (
-      quoteStatus === QuoteStatus.CLOSE_PENDING ||
-      quoteStatus === QuoteStatus.CANCEL_CLOSE_PENDING
-    ) {
+  const [quoteSize, quoteMarketPrice, quoteOpenPrice, quoteLiquidationPrice] =
+    useMemo(() => {
+      if (
+        quoteStatus === QuoteStatus.CLOSE_PENDING ||
+        quoteStatus === QuoteStatus.CANCEL_CLOSE_PENDING
+      ) {
+        return [
+          formatAmount(quoteAvailableAmount, 6, true),
+          closeLastMarketPrice,
+          `$${formatAmount(openedPrice, 6, true)}`,
+        ];
+      } else if (
+        quoteStatus === QuoteStatus.PENDING ||
+        quoteStatus === QuoteStatus.LOCKED ||
+        quoteStatus === QuoteStatus.CANCEL_PENDING
+      ) {
+        return [
+          formatAmount(quantity, 6, true),
+          openLastMarketPrice,
+          orderType === OrderType.LIMIT
+            ? `$${formatAmount(requestedOpenPrice, 6, true)}`
+            : "Market Price",
+        ];
+      }
       return [
         formatAmount(quoteAvailableAmount, 6, true),
-        closeLastMarketPrice,
+        formatPrice(marketData?.markPrice ?? "0", pricePrecision),
         `$${formatAmount(openedPrice, 6, true)}`,
+        formatAmount(liquidationPrice, 6, true),
       ];
-    } else if (
-      quoteStatus === QuoteStatus.PENDING ||
-      quoteStatus === QuoteStatus.LOCKED ||
-      quoteStatus === QuoteStatus.CANCEL_PENDING
-    ) {
-      return [
-        formatAmount(quantity, 6, true),
-        openLastMarketPrice,
-        orderType === OrderType.LIMIT
-          ? `$${formatAmount(requestedOpenPrice, 6, true)}`
-          : "Market Price",
-      ];
-    }
-    return [
-      formatAmount(quoteAvailableAmount, 6, true),
-      formatPrice(marketData?.markPrice ?? "0", pricePrecision),
-      `$${formatAmount(openedPrice, 6, true)}`,
-    ];
-  }, [
-    closeLastMarketPrice,
-    marketData?.markPrice,
-    openLastMarketPrice,
-    openedPrice,
-    orderType,
-    pricePrecision,
-    quantity,
-    quoteAvailableAmount,
-    quoteStatus,
-    requestedOpenPrice,
-  ]);
+    }, [
+      closeLastMarketPrice,
+      marketData?.markPrice,
+      openLastMarketPrice,
+      openedPrice,
+      orderType,
+      pricePrecision,
+      quantity,
+      quoteAvailableAmount,
+      quoteStatus,
+      requestedOpenPrice,
+      liquidationPrice,
+    ]);
 
   const [upnl] = useQuoteUpnlAndPnl(
     quote,
@@ -674,17 +681,19 @@ function QuoteRow({
           ) : (
             <div>{quoteSize}</div>
           )}
-
+          {/* Position Value */}
           <div>
             {toBN(notionalValue).isEqualTo(0)
               ? "-"
               : `${formatDollarAmount(notionalValue)}`}
           </div>
+          {/* Market Price */}
           <div>
             {toBN(quoteMarketPrice).isEqualTo(0)
               ? "-"
               : `$${formatPrice(quoteMarketPrice, pricePrecision, true)}`}
           </div>
+          {/* Open Price */}
           {quoteStatus === QuoteStatus.CLOSE_PENDING ? (
             <TwoColumn>
               <div>{quoteOpenPrice}</div>
@@ -700,11 +709,21 @@ function QuoteRow({
           {instantCloseStatusInfo.isInstantClose && (
             <InstantCloseText>{instantCloseStatusInfo.text}</InstantCloseText>
           )}
+          {/* Estimated Liquidation Price */}
+          {quoteLiquidationPrice}
+          {/* Status */}
           {fillAmountPercent === null ? (
             liquidatePending ? (
               <LiquidatedStatusValue>Liquidation...</LiquidatedStatusValue>
             ) : quoteStatus === QuoteStatus.OPENED ? (
-              <PnlValue color={color} style={{ width: "15%" }}>
+              <PnlValue
+                color={color}
+                style={{
+                  width: "15%",
+                  marginLeft: "10px",
+                  textAlign: "center",
+                }}
+              >
                 {value === "-"
                   ? value
                   : `${value} (${Math.abs(Number(upnlPercent))})%`}
@@ -751,7 +770,7 @@ function QuoteRow({
               ) : (
                 <Row gap="5px">
                   <Row width="unset">
-                    <div>{tp} /</div>
+                    <div>{tp ? `${tp}/` : ""}</div>
                     <div>{sl}</div>
                   </Row>
                   <Row style={{ width: "unset", gap: "5px" }}>
@@ -852,6 +871,7 @@ function QuoteRow({
       tpOpenPrice,
       slOpenPrice,
       setQuoteDetail,
+      quoteLiquidationPrice,
     ],
   );
 }
