@@ -3,7 +3,9 @@ export function autoRefresh(
   seconds: number,
   instantCall = true,
 ): () => void {
-  if (instantCall) callback();
+  if (instantCall) {
+    callback();
+  }
   const interval = setInterval(() => {
     callback();
   }, seconds * 1000);
@@ -82,7 +84,9 @@ export function retry<T>(
   return {
     promise,
     cancel: () => {
-      if (completed) return;
+      if (completed) {
+        return;
+      }
       completed = true;
       rejectCancelled(new CancelledError());
     },

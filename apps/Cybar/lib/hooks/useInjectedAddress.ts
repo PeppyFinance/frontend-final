@@ -9,9 +9,11 @@ export function useInjectedAddress() {
   const setInjectedAddress = useSetInjectedAddressCallback();
 
   useEffect(() => {
-    if (WalletAddress && isAddress(WalletAddress.toString()))
+    if (WalletAddress && isAddress(WalletAddress.toString())) {
       setInjectedAddress(WalletAddress.toString());
-    else setInjectedAddress("");
+    } else {
+      setInjectedAddress("");
+    }
   }, [WalletAddress, setInjectedAddress]);
 
   return useMemo(

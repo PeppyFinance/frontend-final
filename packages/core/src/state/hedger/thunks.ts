@@ -311,7 +311,9 @@ export const getMarketsInfo = createAsyncThunk(
       }
     } catch (error) {
       console.error(error, "happened in getMarketsInfo");
-      if (error && typeof error === "string") throw new Error(error);
+      if (error && typeof error === "string") {
+        throw new Error(error);
+      }
       throw new Error("error3");
     }
 
@@ -385,7 +387,9 @@ export const getPaidAmount = createAsyncThunk(
         variables: { id: `${quoteId}` },
         fetchPolicy: "no-cache",
       });
-      if (resultEntities.length) return { fee: resultEntities[0].fee };
+      if (resultEntities.length) {
+        return { fee: resultEntities[0].fee };
+      }
       return { fee: "" };
     } catch (error) {
       console.error(error);

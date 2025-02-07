@@ -33,7 +33,9 @@ export const formatAmount = (
   fixed = 6,
   separator = false,
 ): string => {
-  if (amount === null || amount === undefined) return "";
+  if (amount === null || amount === undefined) {
+    return "";
+  }
 
   const bnAmount = toBN(amount);
   if (BN_TEN.pow(fixed - 1).lte(bnAmount)) {
@@ -51,7 +53,9 @@ export const formatCurrency = (
   fixed = 6,
   separator = false,
 ) => {
-  if (amount === undefined || amount === null || amount === "") return "-";
+  if (amount === undefined || amount === null || amount === "") {
+    return "-";
+  }
   const bnAmount = toBN(amount);
   if (bnAmount.isZero()) {
     return "0";
@@ -89,7 +93,9 @@ export function toWeiBN(
   amount: BigNumber.Value | null,
   decimals = 18,
 ): BigNumber {
-  if (amount === undefined || amount === null || amount === "") return BN_ZERO;
+  if (amount === undefined || amount === null || amount === "") {
+    return BN_ZERO;
+  }
   if (typeof amount === "string" && isNaN(Number(amount))) {
     return BN_ZERO;
   }
@@ -101,7 +107,9 @@ export function fromWei(
   decimals = 18,
   defaultOutput?: string,
 ): string {
-  if (amount === undefined || amount === null || amount === "") return "0";
+  if (amount === undefined || amount === null || amount === "") {
+    return "0";
+  }
   if (typeof amount === "string" && isNaN(Number(amount))) {
     return defaultOutput ?? "0";
   }

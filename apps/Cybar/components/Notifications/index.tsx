@@ -47,8 +47,12 @@ export default function Notifications() {
   const theme = useTheme();
   const ref = useRef(null);
   useOnOutsideClick(ref, () => {
-    if (!isMobile) setModalOpen(false);
-    if (modalOpen) readAllNotifications();
+    if (!isMobile) {
+      setModalOpen(false);
+    }
+    if (modalOpen) {
+      readAllNotifications();
+    }
   });
   const [modalOpen, setModalOpen] = useState(false);
   const readAllNotifications = useMarkAsReadAllNotificationsCallback();
@@ -59,7 +63,9 @@ export default function Notifications() {
   );
 
   const closeOnClick = () => {
-    if (modalOpen) readAllNotifications();
+    if (modalOpen) {
+      readAllNotifications();
+    }
     setModalOpen(!modalOpen);
   };
 

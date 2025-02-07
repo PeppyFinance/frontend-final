@@ -10,7 +10,9 @@ export function useMax20ClosedQuotes() {
 }
 
 export function useQuotesPnl(quotes: Quote[]) {
-  if (!quotes.length) return [];
+  if (!quotes.length) {
+    return [];
+  }
 
   const PNLsList: string[] = quotes.map((quote) => {
     const { avgClosedPrice, openedPrice, closedAmount, positionType } = quote;

@@ -109,10 +109,9 @@ export function useMarkets({
         ]),
       );
 
-      const category = coinCategoriesUpperCase[coinCategory.toUpperCase()]
-        ?.map(
-          (symbol) => symbol.toUpperCase(),
-        );
+      const category = coinCategoriesUpperCase[coinCategory.toUpperCase()]?.map(
+        (symbol) => symbol.toUpperCase(),
+      );
 
       if (category?.length > 0) {
         const upperCaseCoinSymbolSet = new Set(category);
@@ -120,7 +119,6 @@ export function useMarkets({
         markets = markets.filter((market) =>
           upperCaseCoinSymbolSet.has(market.symbol.toUpperCase()),
         );
-
       }
     }
 

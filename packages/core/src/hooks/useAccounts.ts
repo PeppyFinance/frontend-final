@@ -36,7 +36,9 @@ export function useUserAccounts() {
   });
 
   const accountsUnsorted = useMemo(() => {
-    if (!accounts || !isSuccess || isError) return [];
+    if (!accounts || !isSuccess || isError) {
+      return [];
+    }
 
     const accountsArray = accounts as Account[];
 

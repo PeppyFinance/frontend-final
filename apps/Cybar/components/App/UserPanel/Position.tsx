@@ -224,7 +224,9 @@ function TableHeader({
 }): JSX.Element | null {
   const tpSlAvailable = useTpSlAvailable();
 
-  if (mobileVersion) return null;
+  if (mobileVersion) {
+    return null;
+  }
   let HEADERS = HEADERS1;
   if (tpSlAvailable) {
     HEADERS = HEADERS2;
@@ -326,7 +328,9 @@ function TableRow({
       quoteStatus === QuoteStatus.PENDING ||
       quoteStatus === QuoteStatus.LOCKED
     ) {
-      if (expired) return ["Unlock", false];
+      if (expired) {
+        return ["Unlock", false];
+      }
       return ["Cancel", false];
     } else if (
       quoteStatus === QuoteStatus.CANCEL_PENDING ||
@@ -362,10 +366,15 @@ function TableRow({
 
   function onClickCloseButton(event: React.MouseEvent<HTMLDivElement>) {
     event.stopPropagation();
-    if (disableButton) return;
-    else if (instantCloseStatusInfo.isInstantClose) handleCancelClose();
-    else if (quoteStatus === QuoteStatus.OPENED) toggleCloseModal();
-    else toggleCancelModal();
+    if (disableButton) {
+      return;
+    } else if (instantCloseStatusInfo.isInstantClose) {
+      handleCancelClose();
+    } else if (quoteStatus === QuoteStatus.OPENED) {
+      toggleCloseModal();
+    } else {
+      toggleCancelModal();
+    }
     setQuote(quote);
   }
 
@@ -516,7 +525,9 @@ function QuoteRow({
 
   // usage: we should know change of quote for position details
   useEffect(() => {
-    if (activeDetail) setQuoteDetail(quote);
+    if (activeDetail) {
+      setQuoteDetail(quote);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [quote]);
   const pendingQuote =
@@ -599,15 +610,17 @@ function QuoteRow({
 
   const [value, color] = useMemo(() => {
     const upnlBN = toBN(upnl);
-    if (!quoteMarketPrice || quoteMarketPrice === "0")
+    if (!quoteMarketPrice || quoteMarketPrice === "0") {
       return ["-", theme.text0];
-    if (upnlBN.isGreaterThan(0))
+    }
+    if (upnlBN.isGreaterThan(0)) {
       return [`+ $${formatAmount(upnlBN)}`, theme.positive];
-    else if (upnlBN.isLessThan(0))
+    } else if (upnlBN.isLessThan(0)) {
       return [
         `- $${formatAmount(Math.abs(upnlBN.toNumber()))}`,
         theme.negative,
       ];
+    }
     return [`$${formatAmount(upnlBN)}`, theme.text1];
   }, [
     quoteMarketPrice,

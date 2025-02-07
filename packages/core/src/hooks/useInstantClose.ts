@@ -67,7 +67,9 @@ export default function useInstantClose(
 
   const onSignMessage = useCallback(
     async (message: string) => {
-      if (!signMessageCallback || !message) return "";
+      if (!signMessageCallback || !message) {
+        return "";
+      }
 
       try {
         const sign = await signMessageCallback(message);
@@ -88,7 +90,9 @@ export default function useInstantClose(
   const getNonce = useCallback(async () => {
     const nonceUrl = new URL(`nonce/${activeAddress}`, baseUrl).href;
     const nonceResponse = await makeHttpRequest<NonceResponseType>(nonceUrl);
-    if (nonceResponse) return nonceResponse.nonce;
+    if (nonceResponse) {
+      return nonceResponse.nonce;
+    }
     return "";
   }, [activeAddress, baseUrl]);
 
@@ -142,7 +146,9 @@ export default function useInstantClose(
   );
 
   const checkAccessToken = useCallback(async () => {
-    if (!account || !chainId) return;
+    if (!account || !chainId) {
+      return;
+    }
 
     const token = localStorage.getItem("access_token");
     const sub_account_address = localStorage.getItem("active_address");
@@ -185,7 +191,9 @@ export default function useInstantClose(
   ]);
 
   const cancelClose = useCallback(async () => {
-    if (!quoteId) throw new Error("quote id is required");
+    if (!quoteId) {
+      throw new Error("quote id is required");
+    }
 
     const cancelCloseUrl = new URL(`instant_close/${quoteId}`, baseUrl).href;
     try {
@@ -224,8 +232,12 @@ export default function useInstantClose(
   ]);
 
   const instantClose = useCallback(async () => {
-    if (!quoteId || !closePrice) throw new Error("missing props");
-    if (!quantityToClose) throw new Error("Amount is too low");
+    if (!quoteId || !closePrice) {
+      throw new Error("missing props");
+    }
+    if (!quantityToClose) {
+      throw new Error("Amount is too low");
+    }
     const instantCloseUrl = new URL("instant_close", baseUrl).href;
 
     const body = {
@@ -247,7 +259,9 @@ export default function useInstantClose(
           },
         },
       );
-      if (res.status === 200) GetOpenInstantCloses();
+      if (res.status === 200) {
+        GetOpenInstantCloses();
+      }
     } catch (error: any) {
       if (axios.isAxiosError(error)) {
         console.error("Axios error:", error.response?.data);

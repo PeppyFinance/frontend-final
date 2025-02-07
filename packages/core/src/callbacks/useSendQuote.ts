@@ -106,7 +106,9 @@ export function useSentQuoteCallback(): {
   const MuonData = useMuonData();
 
   const openPriceFinal = useMemo(() => {
-    if (orderType === OrderType.LIMIT) return openPrice;
+    if (orderType === OrderType.LIMIT) {
+      return openPrice;
+    }
 
     if (slippage === "auto") {
       return positionType === PositionType.SHORT
@@ -186,7 +188,9 @@ export function useSentQuoteCallback(): {
       total_cap: number;
       used: number;
     }>(notionalCapUrl, getAppNameHeader(appName));
-    if (!tempResponse) return;
+    if (!tempResponse) {
+      return;
+    }
     const { total_cap, used }: { total_cap: number; used: number } =
       tempResponse;
 
@@ -194,7 +198,9 @@ export function useSentQuoteCallback(): {
     const notionalValue = toBN(openPrice).times(quantityAsset);
     updateNotionalCap({ name: market.name, used, totalCap: total_cap });
 
-    if (freeCap.minus(notionalValue).lte(0)) throw new Error("Cap is reached.");
+    if (freeCap.minus(notionalValue).lte(0)) {
+      throw new Error("Cap is reached.");
+    }
   }, [appName, baseUrl, market, openPrice, quantityAsset, updateNotionalCap]);
 
   const preConstructCall = useCallback(async (): ConstructCallReturnType => {
@@ -260,7 +266,9 @@ export function useSentQuoteCallback(): {
         },
       };
     } catch (error) {
-      if (error && typeof error === "string") throw new Error(error);
+      if (error && typeof error === "string") {
+        throw new Error(error);
+      }
       throw new Error("error3");
     }
   }, [
