@@ -208,40 +208,19 @@ export function CustomInputBox({
   );
 }
 
-export function CustomInputBox2({
-  value,
-  title,
-  placeholder,
-  symbol,
-  balanceTitle,
-  balanceDisplay,
-  balanceExact,
-  minBalanceTitle,
-  minBalanceDisplay,
-  minBalanceExact,
-  onChange,
-  disabled,
-  autoFocus,
-  precision,
-  calculationMode = false,
-  calculationEnabled,
-  calculationLoading,
-  onEnterPress,
-  max,
-  minBalanceMax,
-}: {
-  title: string | undefined;
+interface CustomInputBox2Props {
   value: string;
+  onChange(values: string): void;
+  title?: string;
   placeholder?: string;
   symbol?: string;
   balanceTitle?: string;
-  balanceDisplay: string | number | undefined;
-  balanceExact: string | number | undefined;
+  balanceDisplay?: string | number;
+  balanceExact?: string | number;
   minBalanceTitle?: string;
   minBalanceDisplay?: string | number;
   minBalanceExact?: string | number;
   icon?: string | StaticImageData;
-  onChange(values: string): void;
   disabled?: boolean;
   autoFocus?: boolean;
   precision?: number;
@@ -251,7 +230,30 @@ export function CustomInputBox2({
   onEnterPress?: () => void;
   max?: boolean;
   minBalanceMax?: boolean;
-}) {
+}
+
+export function CustomInputBox2({
+  value,
+  onChange,
+  title,
+  placeholder,
+  symbol,
+  balanceTitle,
+  balanceDisplay,
+  balanceExact,
+  minBalanceTitle,
+  minBalanceDisplay,
+  minBalanceExact,
+  disabled,
+  autoFocus,
+  precision,
+  calculationMode = false,
+  calculationEnabled,
+  calculationLoading,
+  onEnterPress,
+  max,
+  minBalanceMax,
+}: CustomInputBox2Props) {
   const theme = useTheme();
   const handleClick = useCallback(() => {
     if (!balanceExact || !onChange || disabled) {
