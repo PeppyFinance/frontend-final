@@ -208,6 +208,30 @@ export function CustomInputBox({
   );
 }
 
+const AvailableBalanceMaxSpan = styled.span`
+  display: inline-block;
+  text-transform: uppercase;
+  -webkit-background-clip: text;
+  padding-left: 6px;
+  font-weight: 500;
+  font-size: 13px;
+`;
+
+const AvailableBalanceButton = styled.button`
+  display: flex;
+  width: fit-content;
+  padding: 2px;
+  color: ${({ theme }) => theme.text3};
+  background-color: ${({ theme }) => theme.bg6};
+  border: ${({ theme }) => `1px solid ${theme.border2}`};
+  border-radius: 3px;
+  font-size: 0.8rem;
+  &:hover {
+    color: ${({ theme }) => theme.text2};
+    background-color: ${({ theme }) => theme.bg7};
+  }
+`;
+
 interface CustomInputBox2Props {
   value: string;
   onChange(values: string): void;
@@ -274,11 +298,12 @@ export function CustomInputBox2({
       <RowBetween>
         <div>{title}</div>
         <RowEnd>
-          <Balance disabled={disabled} onClick={handleClick}>
+          <AvailableBalanceButton disabled={disabled} onClick={handleClick}>
             <BalanceTitle>{balanceTitle || "Balance:"} </BalanceTitle>{" "}
             {balanceDisplay ? balanceDisplay : "0.00"}{" "}
-            {max && <MaxButton>MAX</MaxButton>}
-          </Balance>
+            {max && <AvailableBalanceMaxSpan>max</AvailableBalanceMaxSpan>}
+          </AvailableBalanceButton>
+
           {minBalanceTitle && (
             <MinBalance disabled={disabled} onClick={minBalanceHandleClick}>
               <BalanceTitle>{minBalanceTitle || "Balance:"} </BalanceTitle>{" "}
