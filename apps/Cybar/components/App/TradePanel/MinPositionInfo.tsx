@@ -16,7 +16,7 @@ import {
 import InfoItem from "components/InfoItem";
 import { TradeValueButton } from "components/InputBox";
 
-export default function MinPositionInfo() {
+export default function MinAmountInfo() {
   const { chainId } = useActiveWagmi();
   const setTypedValue = useSetTypedValue();
   const COLLATERAL_TOKEN = useCollateralToken();
@@ -25,18 +25,18 @@ export default function MinPositionInfo() {
     chainId,
   );
   const {
-    minPositionValue,
+    minPositionValue: minAmountValue,
     pricePrecision,
     minPositionQuantity,
     outputTicker,
   } = usePositionInfo();
 
-  const amount = `${minPositionValue} ${collateralCurrency?.symbol} (${
+  const amount = `${minAmountValue} ${collateralCurrency?.symbol} (${
     toBN(minPositionQuantity).eq(0) ? "-" : minPositionQuantity
   } ${outputTicker})`;
 
   const balanceExact = formatPrice(
-    minPositionValue,
+    minAmountValue,
     pricePrecision,
     false,
     RoundMode.ROUND_UP,
@@ -44,7 +44,7 @@ export default function MinPositionInfo() {
 
   return (
     <InfoItem
-      label={"Minimum position size:"}
+      label={"Minimum amount:"}
       balanceExact={balanceExact}
       amount={""}
       onClick={(value) => setTypedValue(value, InputField.PRICE)}
