@@ -2,6 +2,7 @@ import { useCallback } from "react";
 import styled from "styled-components";
 
 import { Info as InfoIcon } from "components/Icons";
+import { TradeValueButton } from "components/InputBox";
 import { RowBetween, RowStart } from "components/Row";
 import ShimmerAnimation from "components/ShimmerAnimation";
 import { ToolTip } from "components/ToolTip";
@@ -89,14 +90,9 @@ export default function InfoItem({
       {loading ? (
         <ShimmerAnimation width="68px" height="17px" />
       ) : (
-        <Value
-          onClick={handleClick}
-          color={valueColor}
-          cursor={cursor}
-          size={fontSize}
-        >
+        <TradeValueButton>
           {amount} {ticker && ` ${ticker}`}
-        </Value>
+        </TradeValueButton>
       )}
     </DataRow>
   );

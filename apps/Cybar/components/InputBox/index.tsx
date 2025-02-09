@@ -217,7 +217,7 @@ const AvailableBalanceMaxSpan = styled.span`
   font-size: 13px;
 `;
 
-const TradeValueButton = styled.button`
+export const TradeValueButton = styled.button`
   display: flex;
   width: fit-content;
   padding: 2px;
