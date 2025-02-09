@@ -217,7 +217,7 @@ export default function AmountsPanel() {
           balanceExact={
             toBN(balance).gt(0) ? formatPrice(balance, pricePrecision) : "0"
           }
-          max={true}
+          max
           calculationEnabled={WEB_SETTING.calculationalInput}
           calculationMode={calculationMode}
           calculationLoading={calculationLoading}
