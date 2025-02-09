@@ -11,7 +11,11 @@ import {
 } from "@symmio/frontend-sdk/constants/misc";
 import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
 import { InputField, OrderType } from "@symmio/frontend-sdk/types/trade";
-import { formatPrice, toBN } from "@symmio/frontend-sdk/utils/numbers";
+import {
+  RoundMode,
+  formatPrice,
+  toBN,
+} from "@symmio/frontend-sdk/utils/numbers";
 import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
 import { APP_NAME } from "constants/chains/misc";
 import { calculateString, calculationPattern } from "utils/calculationalString";
@@ -20,6 +24,7 @@ import {
   useActiveMarket,
   useGetLockedPercentages,
   useOrderType,
+  usePositionInfo,
   useSetTypedValue,
 } from "@symmio/frontend-sdk/state/trade/hooks";
 import {
@@ -199,11 +204,19 @@ export default function AmountsPanel() {
     setCalculationLoading(false);
   }
 
+  const { minPositionValue } = usePositionInfo();
+  const minPositionValuePlaceholder = formatPrice(
+    minPositionValue,
+    pricePrecision,
+    false,
+    RoundMode.ROUND_UP,
+  );
   return (
     <>
       {orderType == OrderType.LIMIT ? <LimitPriceBox /> : <MarketPriceBox />}
       <CollateralWrap>
         <CollateralInput
+          placeholder={`Minimum: ${minPositionValuePlaceholder}`}
           value={formattedAmounts[0]}
           precision={pricePrecision}
           title="Amount"
