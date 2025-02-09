@@ -217,7 +217,7 @@ const AvailableBalanceMaxSpan = styled.span`
   font-size: 13px;
 `;
 
-const AvailableBalanceButton = styled.button`
+const TradeValueButton = styled.button`
   display: flex;
   width: fit-content;
   padding: 2px;
@@ -298,11 +298,11 @@ export function CustomInputBox2({
       <RowBetween>
         <div>{title}</div>
         <RowEnd>
-          <AvailableBalanceButton disabled={disabled} onClick={handleClick}>
+          <TradeValueButton disabled={disabled} onClick={handleClick}>
             <BalanceTitle>{balanceTitle || "Balance:"} </BalanceTitle>{" "}
             {balanceDisplay ? balanceDisplay : "0.00"}{" "}
             {max && <AvailableBalanceMaxSpan>max</AvailableBalanceMaxSpan>}
-          </AvailableBalanceButton>
+          </TradeValueButton>
 
           {minBalanceTitle && (
             <MinBalance disabled={disabled} onClick={minBalanceHandleClick}>
