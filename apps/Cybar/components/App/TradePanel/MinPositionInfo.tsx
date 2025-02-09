@@ -14,6 +14,7 @@ import {
 } from "@symmio/frontend-sdk/state/trade/hooks";
 
 import InfoItem from "components/InfoItem";
+import { TradeValueButton } from "components/InputBox";
 
 export default function MinPositionInfo() {
   const { chainId } = useActiveWagmi();
@@ -30,19 +31,29 @@ export default function MinPositionInfo() {
     outputTicker,
   } = usePositionInfo();
 
+  const amount = `${minPositionValue} ${collateralCurrency?.symbol} (${
+    toBN(minPositionQuantity).eq(0) ? "-" : minPositionQuantity
+  } ${outputTicker})`;
+
+  const balanceExact = formatPrice(
+    minPositionValue,
+    pricePrecision,
+    false,
+    RoundMode.ROUND_UP,
+  );
+
   return (
     <InfoItem
       label={"Minimum position size:"}
-      balanceExact={formatPrice(
-        minPositionValue,
-        pricePrecision,
-        false,
-        RoundMode.ROUND_UP,
-      )}
-      amount={`${minPositionValue} ${collateralCurrency?.symbol} (${
-        toBN(minPositionQuantity).eq(0) ? "-" : minPositionQuantity
-      } ${outputTicker})`}
+      balanceExact={balanceExact}
+      amount={""}
       onClick={(value) => setTypedValue(value, InputField.PRICE)}
-    />
+    >
+      <TradeValueButton
+        onClick={() => setTypedValue(balanceExact, InputField.PRICE)}
+      >
+        {amount}
+      </TradeValueButton>
+    </InfoItem>
   );
 }
