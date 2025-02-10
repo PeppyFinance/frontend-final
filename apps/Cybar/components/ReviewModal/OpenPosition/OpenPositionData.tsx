@@ -1,6 +1,3 @@
-import React, { useMemo } from "react";
-import styled, { useTheme } from "styled-components";
-import { Star } from "components/Icons";
 import {
   DEFAULT_PRECISION,
   MARKET_ORDER_DEADLINE,
@@ -16,13 +13,20 @@ import {
   useOrderType,
   useTradeTpSl,
 } from "@symmio/frontend-sdk/state/trade/hooks";
-import { useFavorites, useLeverage, useToggleUserFavoriteCallback } from "@symmio/frontend-sdk/state/user/hooks";
+import {
+  useFavorites,
+  useLeverage,
+  useToggleUserFavoriteCallback,
+} from "@symmio/frontend-sdk/state/user/hooks";
 import { OrderType } from "@symmio/frontend-sdk/types/trade";
 import { formatAmount, toBN } from "@symmio/frontend-sdk/utils/numbers";
 import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
 import Column from "components/Column";
+import { Star } from "components/Icons";
 import InfoItem from "components/InfoItem";
 import { DisplayLabel } from "components/InputLabel";
+import React, { useMemo } from "react";
+import styled, { useTheme } from "styled-components";
 import ActionButton from "./ActionButton";
 
 const LabelsWrapper = styled(Column)`
@@ -37,23 +41,22 @@ const FavoriteButton = styled.button`
   color: ${({ theme }) => theme.text3};
   background-color: ${({ theme }) => theme.bg6};
   border: ${({ theme }) => `1px solid ${theme.border2}`};
-border-radius: 2px;
+  border-radius: 2px;
   &:hover {
     color: ${({ theme }) => theme.text2};
     background-color: ${({ theme }) => theme.bg7};
   }
-`
+`;
 
 const FavoriteSpan = styled.span`
-  text-align: center; 
+  text-align: center;
   width: 100%;
-`
+`;
 
 export default function OpenPositionData() {
   const theme = useTheme();
   const { chainId } = useActiveWagmi();
   const favorites = useFavorites();
-
 
   const orderType = useOrderType();
   const market = useActiveMarket();
@@ -66,8 +69,9 @@ export default function OpenPositionData() {
   const { price, formattedAmounts } = useTradePage();
 
   const isFavorite = market ? favorites?.includes(market.id) : false;
-  const toggleFavorite = market ? useToggleUserFavoriteCallback(market.id) : undefined;
-
+  const toggleFavorite = market
+    ? useToggleUserFavoriteCallback(market.id)
+    : undefined;
 
   const [symbol, pricePrecision] = useMemo(
     () =>
@@ -98,36 +102,39 @@ export default function OpenPositionData() {
     const basedInfo = [
       {
         title: "Locked Value:",
-        value: `${lockedValueBN.isNaN() ? "0" : lockedValueBN.toFixed(pricePrecision)
-          } ${collateralCurrency?.symbol}`,
+        value: `${
+          lockedValueBN.isNaN() ? "0" : lockedValueBN.toFixed(pricePrecision)
+        } ${collateralCurrency?.symbol}`,
       },
       { title: "Leverage:", value: `${userLeverage} X` },
       {
         title: "Open Price:",
-        value: `${price === "" ? "-" : orderType === OrderType.MARKET ? "Market" : price
-          }`,
+        value: `${
+          price === "" ? "-" : orderType === OrderType.MARKET ? "Market" : price
+        }`,
         valueColor: theme.primary0,
       },
       {
         title: "Platform Fee:",
         value: !toBN(tradingFee).isNaN()
           ? `${formatAmount(
-            toBN(tradingFee).div(2),
-            3,
-            true,
-          )} (OPEN) / ${formatAmount(
-            toBN(tradingFee).div(2),
-            3,
-            true,
-          )} (CLOSE) ${collateralCurrency?.symbol}`
+              toBN(tradingFee).div(2),
+              3,
+              true,
+            )} (OPEN) / ${formatAmount(
+              toBN(tradingFee).div(2),
+              3,
+              true,
+            )} (CLOSE) ${collateralCurrency?.symbol}`
           : `0 (OPEN) / 0 (CLOSE) ${collateralCurrency?.symbol}`,
       },
       {
         title: "Order Expire Time:",
-        value: `${orderType === OrderType.MARKET
-          ? `${MARKET_ORDER_DEADLINE} seconds`
-          : "Unlimited"
-          }`,
+        value: `${
+          orderType === OrderType.MARKET
+            ? `${MARKET_ORDER_DEADLINE} seconds`
+            : "Unlimited"
+        }`,
       },
     ];
     if (tp || sl) {
@@ -171,19 +178,22 @@ export default function OpenPositionData() {
           valueColor={info?.valueColor}
           key={info.title}
         />
-      )
-      )}
-      {toggleFavorite &&
+      ))}
+      {toggleFavorite && (
         <FavoriteButton onClick={toggleFavorite}>
           <Star
             size={16}
             isFavorite={isFavorite}
             style={{
-              marginLeft: "8px"
+              marginLeft: "8px",
             }}
           />
-          <FavoriteSpan> {isFavorite ? "Remove from favorites" : "Add to favorites"}</FavoriteSpan>
-        </FavoriteButton>}
+          <FavoriteSpan>
+            {" "}
+            {isFavorite ? "Remove from favorites" : "Add to favorites"}
+          </FavoriteSpan>
+        </FavoriteButton>
+      )}
       <ActionButton />
     </React.Fragment>
   );
