@@ -87,7 +87,7 @@ export default function BalanceItem({
   const { chainId } = useActiveWagmi();
   const COLLATERAL_DECIMALS = useCollateralDecimal();
   const isDeposit = type === BalanceHistoryType.DEPOSIT_PARTY_A;
-  const iconMap: { [type: string]: any } = {
+  const iconMap = {
     [BalanceHistoryType.DEPOSIT_PARTY_A]: DEPOSIT_ICON,
     [BalanceHistoryType.DEALLOCATE_PARTY_A]: DEALLOCATE_ICON,
     [BalanceHistoryType.WITHDRAW_PARTY_A]: WITHDRAW_ICON,
@@ -102,9 +102,11 @@ export default function BalanceItem({
       >
         <Container>
           <Action>
-            <Icon>
-              <Image src={iconMap[type]} alt="balance-history" />
-            </Icon>
+            {iconMap[type] && (
+              <Icon>
+                <Image src={iconMap[type]} alt="balance-history" />
+              </Icon>
+            )}
             <Label>{BalanceHistoryName[type]}</Label>
           </Action>
           <Amount deposit={isDeposit}>
