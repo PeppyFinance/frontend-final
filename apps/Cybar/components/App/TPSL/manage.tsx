@@ -126,11 +126,37 @@ const ErrorTpSlText = styled.div`
   font-size: 10px;
 `;
 const TriggerPriceWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
   width: 90%;
   background-color: ${({ theme }) => theme.bg4};
   padding: 0px 8px;
   border-radius: 6px;
   margin-top: 8px;
+  &:focus {
+    outline: 1px solid white;
+  }
+`;
+
+const TriggerPriceNumericInput = styled(NumericalInput)`
+  flex-grow: 2;
+  border: none;
+  &:focus {
+    outline: none;
+  }
+`;
+const CurrentPriceButton = styled.button`
+  margin: 10px 0;
+  padding: 0 3px;
+  color: ${({ theme }) => theme.text3};
+  background-color: ${({ theme }) => theme.bg6};
+  border: ${({ theme }) => `1px solid ${theme.border2}`};
+  border-radius: 3px;
+  font-size: 0.8rem;
+  &:hover {
+    color: ${({ theme }) => theme.text2};
+    background-color: ${({ theme }) => theme.bg7};
+  }
 `;
 
 const CancelButton = styled.div`
@@ -670,6 +696,18 @@ export default function ManageTpSlModal({
     return <CancelButton onClick={callBackButton}>Cancel</CancelButton>;
   }
 
+  const setTPCurrentPrice = () => {
+    if (marketData) {
+      setTp(marketData.markPrice);
+    }
+  };
+
+  const setSLCurrentPrice = () => {
+    if (marketData) {
+      setSl(marketData.markPrice);
+    }
+  };
+
   return (
     <CustomModal
       isOpen={quote ? modalOpen : false}
@@ -720,7 +758,7 @@ export default function ManageTpSlModal({
         <InfoItem label="Take Profit Price:" amount={``} />
         <Row gap="10px">
           <TriggerPriceWrapper>
-            <NumericalInput
+            <TriggerPriceNumericInput
               placeholder=""
               precision={pricePrecision}
               onUserInput={(valueSelected) => {
@@ -730,6 +768,9 @@ export default function ManageTpSlModal({
               height={"20px"}
               className="CustomInputTP"
             />
+            <CurrentPriceButton onClick={setTPCurrentPrice}>
+              Current Price
+            </CurrentPriceButton>
           </TriggerPriceWrapper>
           {prevTp &&
             getActionButtonCancel(() => {
@@ -782,6 +823,9 @@ export default function ManageTpSlModal({
               height={"20px"}
               className="CustomInputSL"
             />
+            <CurrentPriceButton onClick={setSLCurrentPrice}>
+              Current Price
+            </CurrentPriceButton>
           </TriggerPriceWrapper>
           {prevSl &&
             getActionButtonCancel(() => {
