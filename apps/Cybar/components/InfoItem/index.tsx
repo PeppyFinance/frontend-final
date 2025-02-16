@@ -5,7 +5,6 @@ import { Info as InfoIcon } from "components/Icons";
 import { RowBetween, RowStart } from "components/Row";
 import ShimmerAnimation from "components/ShimmerAnimation";
 import { ToolTip } from "components/ToolTip";
-import { Pick } from "react-spring";
 
 const StyledInfoIcon = styled(InfoIcon)`
   color: ${({ theme }) => theme.text2};
