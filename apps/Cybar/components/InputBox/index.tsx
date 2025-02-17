@@ -208,40 +208,43 @@ export function CustomInputBox({
   );
 }
 
-export function CustomInputBox2({
-  value,
-  title,
-  placeholder,
-  symbol,
-  balanceTitle,
-  balanceDisplay,
-  balanceExact,
-  minBalanceTitle,
-  minBalanceDisplay,
-  minBalanceExact,
-  onChange,
-  disabled,
-  autoFocus,
-  precision,
-  calculationMode = false,
-  calculationEnabled,
-  calculationLoading,
-  onEnterPress,
-  max,
-  minBalanceMax,
-}: {
-  title: string | undefined;
+const AvailableBalanceMaxSpan = styled.span`
+  display: inline-block;
+  text-transform: uppercase;
+  -webkit-background-clip: text;
+  padding-left: 6px;
+  font-weight: 500;
+  font-size: 13px;
+`;
+
+export const TradeValueButton = styled.button`
+  display: flex;
+  width: fit-content;
+  padding: 2px;
+  color: ${({ theme }) => theme.text3};
+  background-color: ${({ theme }) => theme.bg6};
+  border: ${({ theme }) => `1px solid ${theme.border2}`};
+  border-radius: 3px;
+  font-size: 0.8rem;
+  &:hover {
+    color: ${({ theme }) => theme.text2};
+    background-color: ${({ theme }) => theme.bg7};
+  }
+`;
+
+interface CustomInputBox2Props {
   value: string;
+  onChange(values: string): void;
+  title?: string;
   placeholder?: string;
   symbol?: string;
   balanceTitle?: string;
-  balanceDisplay: string | number | undefined;
-  balanceExact: string | number | undefined;
+  balanceDisplay?: string | number;
+  balanceExact?: string | number;
   minBalanceTitle?: string;
   minBalanceDisplay?: string | number;
   minBalanceExact?: string | number;
   icon?: string | StaticImageData;
-  onChange(values: string): void;
   disabled?: boolean;
   autoFocus?: boolean;
   precision?: number;
@@ -251,7 +254,30 @@ export function CustomInputBox2({
   onEnterPress?: () => void;
   max?: boolean;
   minBalanceMax?: boolean;
-}) {
+}
+
+export function CustomInputBox2({
+  value,
+  onChange,
+  title,
+  placeholder,
+  symbol,
+  balanceTitle,
+  balanceDisplay,
+  balanceExact,
+  minBalanceTitle,
+  minBalanceDisplay,
+  minBalanceExact,
+  disabled,
+  autoFocus,
+  precision,
+  calculationMode = false,
+  calculationEnabled,
+  calculationLoading,
+  onEnterPress,
+  max,
+  minBalanceMax,
+}: CustomInputBox2Props) {
   const theme = useTheme();
   const handleClick = useCallback(() => {
     if (!balanceExact || !onChange || disabled) {
@@ -272,11 +298,12 @@ export function CustomInputBox2({
       <RowBetween>
         <div>{title}</div>
         <RowEnd>
-          <Balance disabled={disabled} onClick={handleClick}>
+          <TradeValueButton disabled={disabled} onClick={handleClick}>
             <BalanceTitle>{balanceTitle || "Balance:"} </BalanceTitle>{" "}
             {balanceDisplay ? balanceDisplay : "0.00"}{" "}
-            {max && <MaxButton>MAX</MaxButton>}
-          </Balance>
+            {max && <AvailableBalanceMaxSpan>max</AvailableBalanceMaxSpan>}
+          </TradeValueButton>
+
           {minBalanceTitle && (
             <MinBalance disabled={disabled} onClick={minBalanceHandleClick}>
               <BalanceTitle>{minBalanceTitle || "Balance:"} </BalanceTitle>{" "}

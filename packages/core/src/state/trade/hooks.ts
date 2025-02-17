@@ -1,9 +1,16 @@
 import { useCallback, useMemo } from "react";
+import BigNumber from "bignumber.js";
+import { useLeverage } from "../user/hooks";
+import { DEFAULT_PRECISION } from "../../../src/constants/misc";
 import { useMarket } from "../../hooks/useMarkets";
 import { Market } from "../../types/market";
 import { InputField, OrderType, PositionType } from "../../types/trade";
 import { makeHttpRequest } from "../../utils/http";
-import { BN_ZERO, formatPrice } from "../../utils/numbers";
+import {
+  BN_ZERO, formatPrice,
+  RoundMode,
+  toBN,
+} from "../../utils/numbers";
 import { useAppDispatch, useAppSelector } from "../declaration";
 import { useHedgerInfo, useMarketData } from "../hedger/hooks";
 import {
@@ -288,4 +295,74 @@ export function useGetLockedPercentages(
     },
     [baseUrl, dispatch, leverage, market],
   );
+}
+
+interface PositionInfo {
+  outputTicker: string;
+  pricePrecision: number;
+  quantityPrecision: number;
+  minAcceptableQuoteValue: number;
+  minPositionValue: string;
+  minPositionQuantity: string;
+}
+
+export function usePositionInfo(): PositionInfo {
+  const market = useActiveMarket();
+  const marketPrice = useActiveMarketPrice();
+  const leverage = useLeverage();
+  const [
+    outputTicker,
+    pricePrecision,
+    quantityPrecision,
+    minAcceptableQuoteValue,
+  ] = useMemo(
+    () =>
+      market
+        ? [
+          market.symbol,
+          market.pricePrecision,
+          market.quantityPrecision,
+          market.minAcceptableQuoteValue,
+          market.maxLeverage,
+        ]
+        : ["", DEFAULT_PRECISION, DEFAULT_PRECISION, 10],
+    [market],
+  );
+  const [minPositionValue, minPositionQuantity] = useMemo(() => {
+    // find maximum quantity between min quote value & minimum value base on quantity precision
+    const quantity = BigNumber.max(
+      toBN(minAcceptableQuoteValue)
+        .div(marketPrice)
+        .times(leverage)
+        .toFixed(quantityPrecision, RoundMode.ROUND_UP),
+      toBN(10)
+        .pow(quantityPrecision * -1)
+        .toFixed(quantityPrecision, RoundMode.ROUND_UP),
+    );
+    const value = toBN(quantity).times(marketPrice).div(leverage);
+
+    if (value.isNaN()) {
+      return ["-", "-"];
+    }
+    return [
+      value.toFixed(pricePrecision, RoundMode.ROUND_UP),
+      quantity.toFixed(quantityPrecision, RoundMode.ROUND_UP),
+    ];
+  }, [
+    leverage,
+    marketPrice,
+    minAcceptableQuoteValue,
+    pricePrecision,
+    quantityPrecision,
+  ]);
+
+
+  return {
+    outputTicker,
+    pricePrecision,
+    quantityPrecision,
+    minAcceptableQuoteValue,
+    minPositionValue,
+    minPositionQuantity,
+  }
 }
