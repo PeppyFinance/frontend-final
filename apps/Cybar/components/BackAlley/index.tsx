@@ -12,7 +12,6 @@ import SwiperCore from "swiper";
 import { Pagination, Parallax } from "swiper/modules";
 import {
   Swiper,
-  SwiperSlide,
   SwiperSlide as SwiperSlideImport,
 } from "swiper/react";
 
