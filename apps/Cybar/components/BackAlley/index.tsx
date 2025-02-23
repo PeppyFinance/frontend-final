@@ -53,7 +53,6 @@ const SwiperContainer = styled(Swiper)`
   bottom: auto;
 `;
 
-// TODO: is flex needed?
 const SwiperSlide = styled(SwiperSlideImport)`
   display: flex;
   width: 100vw;
