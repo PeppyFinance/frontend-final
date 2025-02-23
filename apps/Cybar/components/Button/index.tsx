@@ -63,7 +63,7 @@ export const PrimaryButton = styled(BaseButton)<{
 
   &:focus,
   &:hover {
-    background: ${({ theme }) => theme.primary1};
+    background: ${({ theme, disabled }) => !disabled && theme.primary1};
   }
   ${({ disabled }) =>
     disabled &&
