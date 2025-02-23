@@ -11,6 +11,8 @@ import { PrimaryButton } from ".";
 const MainButton = styled(PrimaryButton).attrs({
   height: "48px",
 })`
+  display: flex;
+  gap: 10px;
   border-radius: 8px;
   font-weight: 700;
 `;
@@ -29,10 +31,7 @@ const LiquidationButton = styled(PrimaryButton).attrs({
   }
 `;
 
-const IconWrap = styled.div`
-  position: absolute;
-  right: 10px;
-`;
+const IconWrap = styled.div``;
 
 export default function ErrorButton({
   customText,
@@ -98,17 +97,17 @@ export default function ErrorButton({
     </LiquidationButton>
   ) : (
     <MainButton disabled={disabled}>
-      {text}
+      <span>{text}</span>
       <IconWrap>
         {tooltip && (
           <a data-tip data-for={state}>
-            <ExclamationMark />
+            <ExclamationMark color="white" />
             <ToolTipLeft id={`${state}`} aria-haspopup="true">
               {text}
             </ToolTipLeft>
           </a>
         )}
-        {!tooltip && exclamationMark && <ExclamationMark />}
+        {!tooltip && exclamationMark && <ExclamationMark color={theme.text0} />}
       </IconWrap>
     </MainButton>
   );
