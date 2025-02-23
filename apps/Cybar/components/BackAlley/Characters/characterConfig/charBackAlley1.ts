@@ -7,10 +7,10 @@ export const charBackAlley1: CharacterProps = {
   bottom: "120px",
   height: "240px",
   mobilePositions: {
-    bottom: "60px",
-    height: "280px",
+    bottom: "0px",
+    height: "300px",
     left: "calc(45vw- 120px)",
-    focusedBottom: "80px",
+    focusedBottom: "190px",
     focusedLeft: "calc(45vw- 120px)",
     focusedHeight: "417px",
   },

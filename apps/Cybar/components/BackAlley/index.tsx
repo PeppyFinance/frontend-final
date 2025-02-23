@@ -111,10 +111,7 @@ export const BackAlley = () => {
             onClick={onClickCharacter}
             isActive={characterState.character?.id === "charBackAlley1"}
             {...charBackAlley1}
-            left={"80px"}
-            bottom={"0px"}
-            height={"300px"}
-            focusedLeft={"-30px"}
+            {...charBackAlley1.mobilePositions}
           />
         </SwiperSlide>
         <SwiperSlide>
@@ -122,12 +119,7 @@ export const BackAlley = () => {
             onClick={onClickCharacter}
             isActive={characterState.character?.id === "charBackAlley2"}
             {...charBackAlley2}
-            left={"110px"}
-            bottom={"40px"}
-            height={"400px"}
-            focusedHeight={"700px"}
-            focusedBottom={"70px"}
-            focusedLeft={"90px"}
+            {...charBackAlley2.mobilePositions}
           />
         </SwiperSlide>
         <SwiperSlide>
@@ -135,9 +127,7 @@ export const BackAlley = () => {
             onClick={onClickCharacter}
             isActive={characterState.character?.id === "charBackAlley3"}
             {...charBackAlley3}
-            left={"80px"}
-            bottom={"0px"}
-            height={"300px"}
+            {...charBackAlley3.mobilePositions}
           />
           <NavigationArrow
             isDesktop={false}
