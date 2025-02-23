@@ -49,7 +49,9 @@ export const NavButton = styled(BaseButton)<{ width?: number | string }>`
   `};
 `;
 
-export const PrimaryButton = styled(BaseButton)<{ height?: string | number }>`
+export const PrimaryButton = styled(BaseButton)<{
+  height?: React.CSSProperties["height"];
+}>`
   z-index: 0;
   width: 100%;
   font-size: 14px;
@@ -61,7 +63,7 @@ export const PrimaryButton = styled(BaseButton)<{ height?: string | number }>`
 
   &:focus,
   &:hover {
-    background: ${({ theme }) => theme.primary1};
+    background: ${({ theme, disabled }) => !disabled && theme.primary1};
   }
   ${({ disabled }) =>
     disabled &&
