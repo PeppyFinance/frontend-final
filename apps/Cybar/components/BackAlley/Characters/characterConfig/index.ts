@@ -3,6 +3,7 @@ import { CharacterId } from "../characterIds.type";
 import { charBackAlley1 } from "./charBackAlley1";
 import { charBackAlley2 } from "./charBackAlley2";
 import { charBackAlley3 } from "./charBackAlley3";
+import { CSSProperties } from "react";
 
 interface DialogContent {
   text: string;
@@ -17,14 +18,13 @@ export interface Dialog extends DialogContent {
 }
 
 interface CharacterPositions {
-  left: string;
-  bottom: string;
-  height: string;
-  zIndex?: string;
-  focusedBottom?: string;
-  focusedLeft?: string;
-  focusedHeight?: string;
-
+  left: CSSProperties['left'];
+  bottom: CSSProperties['left'];
+  height: CSSProperties['bottom'];
+  zIndex?: CSSProperties['zIndex'];
+  focusedBottom?: CSSProperties['bottom'];
+  focusedLeft?: CSSProperties['left'];
+  focusedHeight?: CSSProperties['height'];
 }
 export interface CharacterProps extends CharacterPositions {
   id: CharacterId;
