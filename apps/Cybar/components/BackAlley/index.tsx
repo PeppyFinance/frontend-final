@@ -5,20 +5,18 @@ import { CharacterId } from "components/BackAlley/Characters/characterIds.type";
 import { useMediaQuery } from "hooks/useMediaQuery";
 import styled from "styled-components";
 import { NavigationArrow } from "./Arrow";
-import { useCharacterContext } from "./characterContext";
 import { charBackAlley1 } from "./Characters/characterConfig/charBackAlley1";
 import { charBackAlley2 } from "./Characters/characterConfig/charBackAlley2";
 import { charBackAlley3 } from "./Characters/characterConfig/charBackAlley3";
+import { useCharacterContext } from "./characterContext";
 
 // import Swiper core and required modules
-import SwiperCore from "swiper";
 import { Pagination, Parallax } from "swiper/modules";
 import { Swiper, SwiperSlide as SwiperSlideImport } from "swiper/react";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
-
 
 const BackAlleyContainer = styled.div`
   position: relative;
@@ -47,7 +45,7 @@ const SliderBackground = styled.div<{ backgroundImage: string }>`
 `;
 
 const SwiperContainer = styled(Swiper)`
-position: absolute;
+  position: absolute;
   height: 100%;
   width: 100%;
   overflow: hidden;
@@ -55,6 +53,7 @@ position: absolute;
   bottom: auto;
 `;
 
+// TODO: is flex needed?
 const SwiperSlide = styled(SwiperSlideImport)`
   display: flex;
   width: 100vw;
@@ -95,18 +94,27 @@ export const BackAlley = () => {
   return (
     <>
       <SwiperContainer
-        backgroundImage="/images/backgrounds/backalley.webp"
         initialSlide={1}
-        modules={[Pagination, Parallax]} slidesPerView={1} onSlideChange={() => null} parallax>
+        modules={[Pagination, Parallax]}
+        slidesPerView={1}
+        onSlideChange={() => null}
+        parallax
+      >
         <CharacterModal />
         <SliderBackground
           data-swiper-parallax-x="-45%"
-          slot="container-start" backgroundImage="/images/backgrounds/backalley.webp" />
+          slot="container-start"
+          backgroundImage="/images/backgrounds/backalley.webp"
+        />
         <SwiperSlide>
           <Character
             onClick={onClickCharacter}
             isActive={characterState.character?.id === "charBackAlley1"}
             {...charBackAlley1}
+            left={"80px"}
+            bottom={"0px"}
+            height={"300px"}
+            focusedLeft={"-30px"}
           />
         </SwiperSlide>
         <SwiperSlide>
@@ -114,6 +122,12 @@ export const BackAlley = () => {
             onClick={onClickCharacter}
             isActive={characterState.character?.id === "charBackAlley2"}
             {...charBackAlley2}
+            left={"110px"}
+            bottom={"40px"}
+            height={"400px"}
+            focusedHeight={"700px"}
+            focusedBottom={"70px"}
+            focusedLeft={"90px"}
           />
         </SwiperSlide>
         <SwiperSlide>
@@ -121,6 +135,9 @@ export const BackAlley = () => {
             onClick={onClickCharacter}
             isActive={characterState.character?.id === "charBackAlley3"}
             {...charBackAlley3}
+            left={"80px"}
+            bottom={"0px"}
+            height={"300px"}
           />
         </SwiperSlide>
       </SwiperContainer>
