@@ -32,23 +32,24 @@ const BackAlleyContainer = styled.div`
 `;
 
 const SliderBackground = styled.div<{ backgroundImage: string }>`
-  position: relative;
+  height: 100%;
   background-image: url(${(props) => props.backgroundImage});
   background-size: 2560px;
-  background-position: center bottom;
+  position: absolute;
   left: -300px;
+  top: 0;
+  -webkit-background-size: cover;
+  background-size: cover;
+  background-position: center;
+  background-position: center bottom;
   width: 1800px;
-  height: 100%;
   overflow: hidden;
 `;
 
-const SwiperContainer = styled(Swiper) <{ backgroundImage: string }>`
+const SwiperContainer = styled(Swiper)`
+position: absolute;
   height: 100%;
-  left: -300px;
-  width: 1800px;
-  background-image: url(${(props) => props.backgroundImage});
-  background-size: 2560px;
-  background-position: center bottom;
+  width: 100%;
   overflow: hidden;
   position: absolute;
   bottom: auto;
@@ -95,10 +96,12 @@ export const BackAlley = () => {
     <>
       <SwiperContainer
         backgroundImage="/images/backgrounds/backalley.webp"
-        slot="container-start"
-        data-swiper-parallax="-45%"
+        initialSlide={1}
         modules={[Pagination, Parallax]} slidesPerView={1} onSlideChange={() => null} parallax>
         <CharacterModal />
+        <SliderBackground
+          data-swiper-parallax-x="-45%"
+          slot="container-start" backgroundImage="/images/backgrounds/backalley.webp" />
         <SwiperSlide>
           <Character
             onClick={onClickCharacter}
