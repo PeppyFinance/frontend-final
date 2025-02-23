@@ -11,6 +11,15 @@ const slideDesktopArrowBackalley = keyframes`
   }
 `;
 
+const slideMobileArrowBackalley = keyframes`
+  50% {
+    right: 130px;
+  }
+  100% {
+    right: 20px;
+  }
+`;
+
 const glow = keyframes`
     0% {
         filter: drop-shadow(0px 0px 0px #6bdbd6)
@@ -23,12 +32,14 @@ const glow = keyframes`
     }
 `;
 
-const NavigationArrowRight = styled(Link)`
+const NavigationArrowRight = styled(Link)<
+  Pick<NavigationArrowProps, "isDesktop">
+>`
   position: absolute;
   right: -100px;
   width: 75px;
   height: 75px;
-  animation: ${slideDesktopArrowBackalley} 1s forwards, ${glow} 4s ${pulseAnimation}; 
+  animation: ${({ isDesktop }) => (isDesktop ? slideDesktopArrowBackalley : slideMobileArrowBackalley)} 1s forwards, ${glow} 4s ${pulseAnimation}; 
   animation-delay: 0.5s;
   top: 50%;
   translateY(-50%);
@@ -69,17 +80,22 @@ const DoubleArrowIcon = () => {
   );
 };
 
-type Props = {
+type NavigationArrowProps = {
   href: string;
   display: boolean;
+  isDesktop?: boolean;
 };
 
-export const NavigationArrow = ({ href, display = true }: Props) => {
+export const NavigationArrow = ({
+  href,
+  display = true,
+  isDesktop = true,
+}: NavigationArrowProps) => {
   if (!display) {
     return null;
   }
   return (
-    <NavigationArrowRight href={href}>
+    <NavigationArrowRight href={href} isDesktop={isDesktop}>
       <ArrowIcon>
         <DoubleArrowIcon />
       </ArrowIcon>

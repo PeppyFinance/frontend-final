@@ -139,6 +139,11 @@ export const BackAlley = () => {
             bottom={"0px"}
             height={"300px"}
           />
+          <NavigationArrow
+            isDesktop={false}
+            href="/clubentrance"
+            display={!characterState.character}
+          />
         </SwiperSlide>
       </SwiperContainer>
     </>
