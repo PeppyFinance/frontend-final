@@ -29,7 +29,7 @@ const NavigationArrowRight = styled(Link)`
   width: 75px;
   height: 75px;
   animation: ${slideDesktopArrowBackalley} 1s forwards, ${glow} 4s ${pulseAnimation}; 
-  animation-delay: 2s;
+  animation-delay: 0.5s;
   top: 50%;
   translateY(-50%);
 `;
