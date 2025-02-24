@@ -151,7 +151,7 @@ export default function MarketRow({
   return (
     <RowWrap recommendation={!!market.recommendation}>
       <StarWrapper onClick={toggleFavorite}>
-        <Star size={12.44} isFavorite={isFavorite} />
+        <Star isRecommendation={isRecommendation} size={12.44} isFavorite={isFavorite} />
       </StarWrapper>
       <RowStart gap={"5px"} >
         <Image src={icon} alt={symbol} width={28} height={28} />
