@@ -5,3 +5,7 @@ export interface MarketState {
 export interface CoinCategories {
   [name: string]: string[];
 }
+
+export interface CoinRecommendations {
+  [coinSymbol: string]: string;
+}
