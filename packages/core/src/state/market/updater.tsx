@@ -25,7 +25,6 @@ export function MarketUpdater(): null {
 }
 
 async function getCoinData(url: string) {
-
   try {
     const { status, result }: { status: number; result: any } =
       await makeHttpRequestV2(url);
