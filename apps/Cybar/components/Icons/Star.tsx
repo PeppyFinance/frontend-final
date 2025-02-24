@@ -6,8 +6,8 @@ export default function Star({
   ...rest
 }: {
   size?: number;
-  isFavorite: boolean;
-  isRecommendation: boolean;
+  isFavorite?: boolean;
+  isRecommendation?: boolean;
   [x: string]: any;
 }) {
   const theme = useTheme();
