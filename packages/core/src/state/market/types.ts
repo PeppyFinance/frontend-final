@@ -1,5 +1,6 @@
 export interface MarketState {
   coinCategories?: CoinCategories;
+  coinRecommendations?: CoinRecommendations;
 }
 
 export interface CoinCategories {
