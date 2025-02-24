@@ -62,10 +62,11 @@ const TableStructure = styled(RowBetween)`
   }
 `;
 
-const RowWrap = styled(TableStructure)`
+const RowWrap = styled(TableStructure)<{ isRecommendation: boolean }>`
   height: 56px;
   color: ${({ theme }) => theme.text0};
-  background: ${({ theme }) => theme.bg0};
+  background: ${({ theme, isRecommendation }) =>
+    isRecommendation ? theme.bgMarketRecommendation : theme.bg0};
   padding: 12px 24px 12px 12px;
   border-bottom: 1px solid ${({ theme }) => theme.bg};
 
@@ -82,12 +83,16 @@ const StarWrapper = styled(RowCenter)`
   }
 `;
 
-const Symbol = styled.div`
+const Symbol = styled.div<{ isRecommendation: boolean }>`
   margin-bottom: 4px;
+  ${({ isRecommendation, theme }) =>
+    isRecommendation && `color: ${theme.textMarketRecommendation} `}
 `;
 
-const MarketName = styled.span`
+const MarketName = styled.span<{ isRecommendation: boolean }>`
   font-size: 10px;
+  ${({ isRecommendation, theme }) =>
+    isRecommendation && `color: ${theme.textMarketRecommendation} `}
 `;
 
 const ColorLabel = styled(Row)<{ color: "green" | "red" | "gray" }>`
@@ -99,13 +104,16 @@ const ColorLabel = styled(Row)<{ color: "green" | "red" | "gray" }>`
         : theme.text2};
 `;
 
-const ActionBtn = styled.button`
+const ActionBtn = styled.button<{ isRecommendation: boolean }>`
   box-sizing: border-box;
   width: 80px;
   height: 30px;
   padding: 8px 24px;
-  color: ${({ theme }) => theme.primary0};
-  border: 1px solid ${({ theme }) => theme.primary0};
+  color: ${({ theme, isRecommendation }) =>
+    isRecommendation ? theme.borderMarketRecommendation : theme.primary0};
+  border: 1px solid
+    ${({ theme, isRecommendation }) =>
+      isRecommendation ? theme.borderMarketRecommendation : theme.primary0};
   border-radius: 6px;
   font-weight: 600;
 
@@ -114,6 +122,11 @@ const ActionBtn = styled.button`
     color: ${({ theme }) => theme.bg};
     transition: all 0.3s;
   }
+`;
+
+const RowItem = styled.div<{ isRecommendation: boolean }>`
+  ${({ isRecommendation, theme }) =>
+    isRecommendation && `color: ${theme.textMarketRecommendation} `}
 `;
 
 export default function MarketRow({
@@ -142,21 +155,32 @@ export default function MarketRow({
     router.push(`/trade/${id}`);
   };
 
+  const isRecommendation = !!market.recommendation;
+
   return (
-    <RowWrap>
+    <RowWrap isRecommendation={isRecommendation}>
       <StarWrapper onClick={toggleFavorite}>
-        <Star size={12.44} isFavorite={isFavorite} />
+        <Star
+          isRecommendation={isRecommendation}
+          size={12.44}
+          isFavorite={isFavorite}
+        />
       </StarWrapper>
-      <RowStart gap={"8px"}>
+      <RowStart gap={"5px"}>
         <Image src={icon} alt={symbol} width={28} height={28} />
         <div>
-          <Symbol>{symbol}</Symbol>
+          <Symbol isRecommendation={isRecommendation}>
+            {symbol}
+            {isRecommendation && ` (${market.recommendation})`}
+          </Symbol>
           <ColorLabel color={"gray"}>
-            <MarketName>{name}</MarketName>
+            <MarketName isRecommendation={isRecommendation}>{name}</MarketName>
           </ColorLabel>
         </div>
       </RowStart>
-      <div>{price ? `$${parseFloat(price).toFixed(pricePrecision)}` : "-"}</div>
+      <RowItem isRecommendation={isRecommendation}>
+        {price ? `$${parseFloat(price).toFixed(pricePrecision)}` : "-"}
+      </RowItem>
       <ColorLabel
         color={
           priceChangePercent
@@ -178,9 +202,15 @@ export default function MarketRow({
           })()}
         </span>
       </ColorLabel>
-      <div>{formatDollarAmount(tradeVolume)}</div>
-      <div>{formatDollarAmount(notionalCap)}</div>
-      <ActionBtn onClick={onTradeClick}>Trade</ActionBtn>
+      <RowItem isRecommendation={isRecommendation}>
+        {formatDollarAmount(tradeVolume)}
+      </RowItem>
+      <RowItem isRecommendation={isRecommendation}>
+        {formatDollarAmount(notionalCap)}
+      </RowItem>
+      <ActionBtn isRecommendation={isRecommendation} onClick={onTradeClick}>
+        Trade
+      </ActionBtn>
     </RowWrap>
   );
 }

@@ -16,6 +16,7 @@ export interface Colors {
   text3: Color;
   text4: Color;
   text5: Color;
+  textMarketRecommendation: Color;
 
   // backgrounds
   bg: Color;
@@ -27,11 +28,13 @@ export interface Colors {
   bg5: Color;
   bg6: Color;
   bg7: Color;
+  bgMarketRecommendation: Color;
 
   // borders
   border1: Color;
   border2: Color;
   border3: Color;
+  borderMarketRecommendation: Color;
 
   // primary
   primary0: Color;
@@ -56,6 +59,7 @@ export interface Colors {
   // trading
   negative: Color;
   positive: Color;
+  iconRecommendation: Color;
 
   // other
   black2: Color;

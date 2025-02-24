@@ -124,7 +124,7 @@ export default function FavoriteBar() {
   return (
     <Wrapper>
       <Star
-        isFavorite={true}
+        isFavorite
         style={{
           zIndex: 99,
           marginLeft: "16px",

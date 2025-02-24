@@ -9,7 +9,7 @@ import { useSupportedChainId } from "../../lib/hooks/useSupportedChainId";
 import { ApiState, ConnectionStatus } from "../../types/api";
 import { Market } from "../../types/market";
 import { useHedgerAddress } from "../chains/hooks";
-import { useCoinCategories } from "../market/hooks";
+import { useCoinCategories, useCoinRecommendations } from "../market/hooks";
 import {
   updateDepth,
   updateFundingRates,
@@ -95,10 +95,14 @@ export function useMarkets({
 }: OrderMarktesProps = {}) {
   let markets: Market[] = useAppSelector((state) => state.hedger.markets);
   const coinCategories = useCoinCategories();
+  const coinRecommendations = useCoinRecommendations();
   const { marketsInfo, infoStatus } = useAllMarketsData();
 
   return useMemo(() => {
-    if (infoStatus === ApiState.OK && coinCategory) {
+    if (infoStatus !== ApiState.OK) {
+      return markets;
+    }
+    if (coinCategory) {
       // convert coinCategories keys to uppercase to ensure equality
       // when accessing coinCategories object keys
       // coinCategories[coinCategory.toUpperCase()]
@@ -121,8 +125,31 @@ export function useMarkets({
         );
       }
     }
+    if (coinRecommendations) {
+      const coinRecommendationsUpperCase = Object.fromEntries(
+        Object.entries(coinRecommendations).map(([key, val]) => [
+          key.toUpperCase(),
+          val,
+        ]),
+      );
 
-    if (infoStatus === ApiState.OK && orderBy) {
+      const upperCaseCoinSymbolSet = new Set(
+        Object.keys(coinRecommendationsUpperCase),
+      );
+      markets = markets.map((market) => {
+        if (upperCaseCoinSymbolSet.has(market.symbol.toUpperCase())) {
+          return {
+            ...market,
+            recommendation:
+              coinRecommendationsUpperCase[market.symbol.toUpperCase()],
+          };
+        } else {
+          return market;
+        }
+      });
+    }
+
+    if (orderBy) {
       return [...markets].sort((m1, m2) => {
         const mInfo1 = marketsInfo[m1.name];
         const mInfo2 = marketsInfo[m2.name];
@@ -133,9 +160,8 @@ export function useMarkets({
           ? Number(mInfo1[orderBy]) - Number(mInfo2[orderBy])
           : Number(mInfo2[orderBy]) - Number(mInfo1[orderBy]);
       });
-    } else {
-      return markets;
     }
+    return markets;
   }, [
     direction,
     infoStatus,

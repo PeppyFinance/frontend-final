@@ -2,10 +2,12 @@ import { useTheme } from "styled-components";
 export default function Star({
   size,
   isFavorite,
+  isRecommendation,
   ...rest
 }: {
   size?: number;
-  isFavorite: boolean;
+  isFavorite?: boolean;
+  isRecommendation?: boolean;
   [x: string]: any;
 }) {
   const theme = useTheme();
@@ -21,7 +23,7 @@ export default function Star({
     >
       <path
         d="M15.322 5.56856H10.221L8.64357 0.48928C8.44089 -0.163093 7.5584 -0.163093 7.35572 0.48928L5.77958 5.56856H0.678527C0.0226414 5.56856 -0.250534 6.44763 0.28072 6.85091L4.40738 9.99021L2.83124 15.0695C2.62856 15.7219 3.34235 16.2649 3.87361 15.8616L8.00028 12.7223L12.1269 15.8616C12.6582 16.2649 13.372 15.7219 13.1693 15.0695L11.5932 9.99021L15.7198 6.85091C16.2498 6.44763 15.9779 5.56856 15.322 5.56856Z"
-        fill={theme.primary0}
+        fill={isRecommendation ? theme.iconRecommendation : theme.primary0}
       />
     </svg>
   ) : (

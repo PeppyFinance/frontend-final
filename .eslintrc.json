@@ -15,9 +15,7 @@
     "plugin:prettier/recommended",
     "prettier"
   ],
-  "plugins": [
-    "unused-imports"
-  ],
+  "plugins": ["unused-imports"],
   "rules": {
     "@typescript-eslint/no-unused-vars": [
       "warn",
@@ -34,14 +32,8 @@
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
-    "curly": [
-      "error",
-      "all"
-    ],
-    "object-shorthand": [
-      "error",
-      "always"
-    ],
+    "curly": ["error", "all"],
+    "object-shorthand": ["error", "always"],
     "prettier/prettier": [
       "error",
       {
