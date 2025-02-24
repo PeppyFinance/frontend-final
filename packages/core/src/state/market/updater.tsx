@@ -1,15 +1,18 @@
+import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 import { useEffect } from "react";
 import { makeHttpRequestV2 } from "../../utils/http";
 import { useAppDispatch } from "../declaration";
 import { setCoinCategories, setCoinRecommendations } from "./actions";
-import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 import { CoinCategories, CoinRecommendations } from "./types";
-type Action = ActionCreatorWithPayload<CoinCategories, string> | ActionCreatorWithPayload<CoinRecommendations, string>;
+type Action =
+  | ActionCreatorWithPayload<CoinCategories, string>
+  | ActionCreatorWithPayload<CoinRecommendations, string>;
 
 export function MarketUpdater(): null {
   const dispatch = useAppDispatch();
   const coinCategoriesURL = process.env.NEXT_PUBLIC_COIN_CATEGORIES_URL;
-  const coinReccommendationsURL = process.env.NEXT_PUBLIC_COIN_RECOMMENDATIONS_URL
+  const coinReccommendationsURL =
+    process.env.NEXT_PUBLIC_COIN_RECOMMENDATIONS_URL;
 
   useEffect(() => {
     const fetchData = async (url: string, action: Action) => {
@@ -18,8 +21,12 @@ export function MarketUpdater(): null {
         dispatch(action(res));
       }
     };
-    if (coinCategoriesURL) { fetchData(coinCategoriesURL, setCoinCategories); }
-    if (coinReccommendationsURL) { fetchData(coinReccommendationsURL, setCoinRecommendations); }
+    if (coinCategoriesURL) {
+      fetchData(coinCategoriesURL, setCoinCategories);
+    }
+    if (coinReccommendationsURL) {
+      fetchData(coinReccommendationsURL, setCoinRecommendations);
+    }
   }, [dispatch]);
   return null;
 }

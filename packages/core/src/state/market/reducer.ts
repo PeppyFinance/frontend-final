@@ -16,5 +16,5 @@ export const marketReducer = createReducer(initialState, (build) =>
     .addCase(setCoinRecommendations, (market, { payload }) => {
       market.coinRecommendations = payload;
       return market;
-    })
+    }),
 );
