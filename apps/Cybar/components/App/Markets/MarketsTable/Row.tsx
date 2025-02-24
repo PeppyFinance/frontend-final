@@ -62,10 +62,10 @@ const TableStructure = styled(RowBetween)`
   }
 `;
 
-const RowWrap = styled(TableStructure)`
+const RowWrap = styled(TableStructure) <{ recommendation: boolean }>`
   height: 56px;
   color: ${({ theme }) => theme.text0};
-  background: ${({ theme }) => theme.bg0};
+  background: ${({ theme, recommendation }) => recommendation ? theme.bgMarketRecommendation : theme.bg0};
   padding: 12px 24px 12px 12px;
   border-bottom: 1px solid ${({ theme }) => theme.bg};
 
@@ -82,15 +82,17 @@ const StarWrapper = styled(RowCenter)`
   }
 `;
 
-const Symbol = styled.div`
+const Symbol = styled.div<{ recommendation: boolean }>`
   margin-bottom: 4px;
+${({ recommendation, theme }) => recommendation && `color: ${theme.textMarketRecommendation} `}
 `;
 
-const MarketName = styled.span`
+const MarketName = styled.span<{ recommendation: boolean }>`
   font-size: 10px;
+${({ recommendation, theme }) => recommendation && `color: ${theme.textMarketRecommendation} `}
 `;
 
-const ColorLabel = styled(Row)<{ color: "green" | "red" | "gray" }>`
+const ColorLabel = styled(Row) <{ color: "green" | "red" | "gray" }>`
   color: ${({ color, theme }) =>
     color === "green"
       ? theme.positive
@@ -99,13 +101,13 @@ const ColorLabel = styled(Row)<{ color: "green" | "red" | "gray" }>`
         : theme.text2};
 `;
 
-const ActionBtn = styled.button`
+const ActionBtn = styled.button<{ recommendation: boolean }>`
   box-sizing: border-box;
   width: 80px;
   height: 30px;
   padding: 8px 24px;
-  color: ${({ theme }) => theme.primary0};
-  border: 1px solid ${({ theme }) => theme.primary0};
+  color: ${({ theme, recommendation }) => recommendation ? theme.borderMarketRecommendation : theme.primary0};
+  border: 1px solid ${({ theme, recommendation }) => recommendation ? theme.borderMarketRecommendation : theme.primary0};
   border-radius: 6px;
   font-weight: 600;
 
@@ -115,6 +117,10 @@ const ActionBtn = styled.button`
     transition: all 0.3s;
   }
 `;
+
+const RowItem = styled.div<{ recommendation: boolean }>`
+${({ recommendation, theme }) => recommendation && `color: ${theme.textMarketRecommendation} `}
+`
 
 export default function MarketRow({
   market,
@@ -143,20 +149,20 @@ export default function MarketRow({
   };
 
   return (
-    <RowWrap>
+    <RowWrap recommendation={!!market.recommendation}>
       <StarWrapper onClick={toggleFavorite}>
         <Star size={12.44} isFavorite={isFavorite} />
       </StarWrapper>
-      <RowStart gap={"8px"}>
+      <RowStart gap={"5px"} >
         <Image src={icon} alt={symbol} width={28} height={28} />
         <div>
-          <Symbol>{symbol}</Symbol>
+          <Symbol recommendation={!!market.recommendation}>{symbol}{market.recommendation && ` (${market.recommendation})`}</Symbol>
           <ColorLabel color={"gray"}>
-            <MarketName>{name}</MarketName>
+            <MarketName recommendation={!!market.recommendation}>{name}</MarketName>
           </ColorLabel>
         </div>
       </RowStart>
-      <div>{price ? `$${parseFloat(price).toFixed(pricePrecision)}` : "-"}</div>
+      <RowItem recommendation={!!market.recommendation}>{price ? `$${parseFloat(price).toFixed(pricePrecision)}` : "-"}</RowItem>
       <ColorLabel
         color={
           priceChangePercent
@@ -172,15 +178,14 @@ export default function MarketRow({
             if (!priceChangePercent) {
               return "-";
             }
-            return `${
-              toBN(priceChangePercent).isGreaterThan(0) ? "+" : ""
-            }${priceChangePercent}%`;
+            return `${toBN(priceChangePercent).isGreaterThan(0) ? "+" : ""
+              }${priceChangePercent}%`;
           })()}
         </span>
       </ColorLabel>
-      <div>{formatDollarAmount(tradeVolume)}</div>
-      <div>{formatDollarAmount(notionalCap)}</div>
-      <ActionBtn onClick={onTradeClick}>Trade</ActionBtn>
+      <RowItem recommendation={!!market.recommendation}>{formatDollarAmount(tradeVolume)}</RowItem>
+      <RowItem recommendation={!!market.recommendation}>{formatDollarAmount(notionalCap)}</RowItem>
+      <ActionBtn recommendation={!!market.recommendation} onClick={onTradeClick}>Trade</ActionBtn>
     </RowWrap>
   );
 }
