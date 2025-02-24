@@ -16,6 +16,7 @@ export interface Market {
   hedgerFeeOpen: string;
   hedgerFeeClose: string;
   autoSlippage: number;
+  recommendation?: string;
 }
 
 export interface MarketResponseType {
