@@ -67,6 +67,7 @@ function colors(): Colors {
       text3: "#8B8E9F",
       text4: "#5F606F",
       text5: "#333344",
+      textMarketRecommendation: "#56f3eb",
 
       // backgrounds / greys
       bg: "#01030B",
@@ -78,11 +79,13 @@ function colors(): Colors {
       bg5: "#292C3B",
       bg6: "#323847",
       bg7: "#383C4B",
+      bgMarketRecommendation: "#022d35",
 
       // borders
       border1: "#3F434C",
       border2: "#303540",
       border3: "#2A2E39",
+      borderMarketRecommendation: "#0896e1",
 
       // primary colors
       primary0: "#565CF3",
@@ -107,6 +110,7 @@ function colors(): Colors {
       // trading
       negative: "#EA5E5E",
       positive: "#7DD485",
+      iconRecommendation: "#09a6f8",
 
       //gradient colors
       gradLight:
