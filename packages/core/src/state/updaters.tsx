@@ -4,6 +4,7 @@ import { NotificationUpdater } from "./notifications/updater";
 import { TransactionUpdater } from "./transactions/updater";
 import { UserUpdater } from "./user/updater";
 
+import { MarketUpdater } from "./market/updater";
 import { QuotesUpdater, TpSlUpdater, UpdaterListeners } from "./quotes/updater";
 import { UpdaterUserContract } from "./user/updaterUserContract";
 
@@ -19,6 +20,7 @@ export default function Updaters() {
       <HedgerUpdater />
       <TpSlUpdater />
       <NotificationUpdater />
+      <MarketUpdater />
     </>
   );
 }

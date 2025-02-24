@@ -21,7 +21,9 @@ export default function ActionButton() {
       toast.error(tradeCallbackError);
       return;
     }
-    if (modalState === ModalState.LOADING) return;
+    if (modalState === ModalState.LOADING) {
+      return;
+    }
 
     setState(ModalState.LOADING);
     setTradeTpSl({
@@ -31,8 +33,11 @@ export default function ActionButton() {
     const tx = await tradeCallback();
 
     console.log("tx", tx);
-    if (tx) setTxHash(tx.hash);
-    else setState(ModalState.START);
+    if (tx) {
+      setTxHash(tx.hash);
+    } else {
+      setState(ModalState.START);
+    }
   }, [
     modalState,
     setState,

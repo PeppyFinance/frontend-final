@@ -74,7 +74,9 @@ export function useClosePosition(
   const autoSlippage = market ? market.autoSlippage : MARKET_PRICE_COEFFICIENT;
 
   const markPriceBN = useMemo(() => {
-    if (!marketData || !marketData.markPrice) return BN_ZERO;
+    if (!marketData || !marketData.markPrice) {
+      return BN_ZERO;
+    }
     return toWeiBN(
       toBN(marketData.markPrice).toFixed(pricePrecision, RoundMode.ROUND_DOWN),
     );
@@ -92,7 +94,9 @@ export function useClosePosition(
   );
 
   const closePriceFinal = useMemo(() => {
-    if (orderType === OrderType.LIMIT) return closePriceBN;
+    if (orderType === OrderType.LIMIT) {
+      return closePriceBN;
+    }
 
     if (slippage === "auto") {
       return positionType === PositionType.SHORT
@@ -159,7 +163,9 @@ export function useClosePosition(
         },
       };
     } catch (error) {
-      if (error && typeof error === "string") throw new Error(error);
+      if (error && typeof error === "string") {
+        throw new Error(error);
+      }
       throw new Error("error3");
     }
   }, [

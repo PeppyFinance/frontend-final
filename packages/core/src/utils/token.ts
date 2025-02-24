@@ -45,7 +45,9 @@ export function useGetTokenWithFallbackChainId(
 ): Token {
   const v3_ids = useV3Ids();
   const FALLBACK_CHAIN_ID = useFallbackChainId();
-  if (chainId && v3_ids.includes(chainId)) return tokenMap[chainId];
+  if (chainId && v3_ids.includes(chainId)) {
+    return tokenMap[chainId];
+  }
   return tokenMap[FALLBACK_CHAIN_ID];
 }
 
@@ -83,14 +85,18 @@ class BscNativeCurrency extends NativeCurrency {
   }
 
   get wrapped(): Token {
-    if (!isBSC(this.chainId)) throw new Error("Not bnb");
+    if (!isBSC(this.chainId)) {
+      throw new Error("Not bnb");
+    }
     const wrapped = WRAPPED_NATIVE_CURRENCY[this.chainId];
     invariant(wrapped instanceof Token);
     return wrapped;
   }
 
   public constructor(chainId: number) {
-    if (!isBSC(chainId)) throw new Error("Not bnb");
+    if (!isBSC(chainId)) {
+      throw new Error("Not bnb");
+    }
     super(chainId, 18, "BNB", "BNB");
   }
 }
@@ -101,14 +107,18 @@ class MantleNativeCurrency extends NativeCurrency {
   }
 
   get wrapped(): Token {
-    if (!isMantle(this.chainId)) throw new Error("Not Mantle");
+    if (!isMantle(this.chainId)) {
+      throw new Error("Not Mantle");
+    }
     const wrapped = WRAPPED_NATIVE_CURRENCY[this.chainId];
     invariant(wrapped instanceof Token);
     return wrapped;
   }
 
   public constructor(chainId: number) {
-    if (!isMantle(chainId)) throw new Error("Not Mantle");
+    if (!isMantle(chainId)) {
+      throw new Error("Not Mantle");
+    }
     super(chainId, 18, "MANTLE", "MANTLE");
   }
 }
@@ -119,14 +129,18 @@ class FtmNativeCurrency extends NativeCurrency {
   }
 
   get wrapped(): Token {
-    if (!isFTM(this.chainId)) throw new Error("Not FTM");
+    if (!isFTM(this.chainId)) {
+      throw new Error("Not FTM");
+    }
     const wrapped = WRAPPED_NATIVE_CURRENCY[this.chainId];
     invariant(wrapped instanceof Token);
     return wrapped;
   }
 
   public constructor(chainId: number) {
-    if (!isFTM(chainId)) throw new Error("Not FTM");
+    if (!isFTM(chainId)) {
+      throw new Error("Not FTM");
+    }
     super(chainId, 18, "FTM", "FTM");
   }
 }
@@ -137,14 +151,18 @@ class PolygonNativeCurrency extends NativeCurrency {
   }
 
   get wrapped(): Token {
-    if (!isPolygon(this.chainId)) throw new Error("Not Matic");
+    if (!isPolygon(this.chainId)) {
+      throw new Error("Not Matic");
+    }
     const wrapped = WRAPPED_NATIVE_CURRENCY[this.chainId];
     invariant(wrapped instanceof Token);
     return wrapped;
   }
 
   public constructor(chainId: number) {
-    if (!isPolygon(chainId)) throw new Error("Not Matic");
+    if (!isPolygon(chainId)) {
+      throw new Error("Not Matic");
+    }
     super(chainId, 18, "Matic", "Matic");
   }
 }
@@ -155,14 +173,18 @@ class BaseNativeCurrency extends NativeCurrency {
   }
 
   get wrapped(): Token {
-    if (!isBASE(this.chainId)) throw new Error("Not Eth");
+    if (!isBASE(this.chainId)) {
+      throw new Error("Not Eth");
+    }
     const wrapped = WRAPPED_NATIVE_CURRENCY[this.chainId];
     invariant(wrapped instanceof Token);
     return wrapped;
   }
 
   public constructor(chainId: number) {
-    if (!isBASE(chainId)) throw new Error("Not Eth");
+    if (!isBASE(chainId)) {
+      throw new Error("Not Eth");
+    }
     super(chainId, 18, "ETH", "ETH");
   }
 }
@@ -173,14 +195,18 @@ class BlastNativeCurrency extends NativeCurrency {
   }
 
   get wrapped(): Token {
-    if (!isBLAST(this.chainId)) throw new Error("Not Eth");
+    if (!isBLAST(this.chainId)) {
+      throw new Error("Not Eth");
+    }
     const wrapped = WRAPPED_NATIVE_CURRENCY[this.chainId];
     invariant(wrapped instanceof Token);
     return wrapped;
   }
 
   public constructor(chainId: number) {
-    if (!isBLAST(chainId)) throw new Error("Not Eth");
+    if (!isBLAST(chainId)) {
+      throw new Error("Not Eth");
+    }
     super(chainId, 18, "ETH", "ETH");
   }
 }
@@ -188,7 +214,9 @@ class BlastNativeCurrency extends NativeCurrency {
 class ExtendedEther extends Ether {
   public get wrapped(): Token {
     const wrapped = WRAPPED_NATIVE_CURRENCY[this.chainId];
-    if (wrapped) return wrapped;
+    if (wrapped) {
+      return wrapped;
+    }
     throw new Error("Unsupported chain ID");
   }
 }

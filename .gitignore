@@ -12,6 +12,9 @@ results
 yarn-debug.log*
 yarn-error.log*
 
+# Local tsserver settings
+.nlsp-settings/
+
 # Dependency directories
 node_modules/
 

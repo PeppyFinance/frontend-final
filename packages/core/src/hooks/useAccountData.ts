@@ -75,13 +75,13 @@ export default function useAccountData(): AccountData {
     .toString();
 
   const availableForOrder = useMemo(() => {
-    if (upnl >= 0)
+    if (upnl >= 0) {
       return toBN(allocatedBalance)
         .plus(upnl)
         .minus(totalLocked)
         .minus(totalPendingLocked)
         .toString();
-    else {
+    } else {
       const considering_mm = toBN(upnl).times(-1).minus(lockedPartyAMM).gt(0)
         ? toBN(upnl).times(-1)
         : lockedPartyAMM;
@@ -116,7 +116,9 @@ export default function useAccountData(): AccountData {
 
 function getAccountColor(accountHealth: string, isLiquidated: boolean) {
   const accountHealthBN = toBN(accountHealth);
-  if (isLiquidated) return "#EA5E5E";
+  if (isLiquidated) {
+    return "#EA5E5E";
+  }
   if (!WEB_SETTING.showColorfulAccountHealth) {
     return "";
   } else if (accountHealthBN.lt(10)) {

@@ -22,11 +22,18 @@ export class QuotesClient extends MuonClient {
     contractAddress?: string,
     marketId?: number,
   ): string[][] | Error {
-    if (!account) return new Error("Param `account` is missing.");
-    if (!chainId) return new Error("Param `chainId` is missing.");
-    if (!contractAddress)
+    if (!account) {
+      return new Error("Param `account` is missing.");
+    }
+    if (!chainId) {
+      return new Error("Param `chainId` is missing.");
+    }
+    if (!contractAddress) {
       return new Error("Param `contractAddress` is missing.");
-    if (!marketId) return new Error("Param `marketId` is missing.");
+    }
+    if (!marketId) {
+      return new Error("Param `marketId` is missing.");
+    }
 
     return [
       ["partyA", account],
@@ -51,8 +58,9 @@ export class QuotesClient extends MuonClient {
         contractAddress,
         marketId,
       );
-      if (requestParams instanceof Error)
+      if (requestParams instanceof Error) {
         throw new Error(requestParams.message);
+      }
       console.info("Requesting data from Muon: ", requestParams);
 
       const toastId = toast.loading("requesting data from Muon...");

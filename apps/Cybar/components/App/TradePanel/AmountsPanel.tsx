@@ -11,7 +11,11 @@ import {
 } from "@symmio/frontend-sdk/constants/misc";
 import { useCollateralToken } from "@symmio/frontend-sdk/constants/tokens";
 import { InputField, OrderType } from "@symmio/frontend-sdk/types/trade";
-import { formatPrice, toBN } from "@symmio/frontend-sdk/utils/numbers";
+import {
+  RoundMode,
+  formatPrice,
+  toBN,
+} from "@symmio/frontend-sdk/utils/numbers";
 import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token";
 import { APP_NAME } from "constants/chains/misc";
 import { calculateString, calculationPattern } from "utils/calculationalString";
@@ -20,6 +24,7 @@ import {
   useActiveMarket,
   useGetLockedPercentages,
   useOrderType,
+  usePositionInfo,
   useSetTypedValue,
 } from "@symmio/frontend-sdk/state/trade/hooks";
 import {
@@ -117,11 +122,12 @@ export default function AmountsPanel() {
 
   useEffect(() => {
     const controller = new AbortController();
-    if (market && lockedParamsLeverage)
+    if (market && lockedParamsLeverage) {
       getLockedPercentages({
         signal: controller.signal,
         headers: [["App-Name", APP_NAME]],
       });
+    }
     return () => {
       controller.abort();
     };
@@ -134,14 +140,18 @@ export default function AmountsPanel() {
       if (market) {
         const { symbol, pricePrecision, quantityPrecision, maxLeverage } =
           market;
-        if (userExpertMode) return [symbol, undefined, undefined, maxLeverage];
+        if (userExpertMode) {
+          return [symbol, undefined, undefined, maxLeverage];
+        }
         return [symbol, pricePrecision, quantityPrecision, maxLeverage];
       }
       return ["", DEFAULT_PRECISION, DEFAULT_PRECISION, MAX_LEVERAGE_VALUE];
     }, [userExpertMode, market]);
 
   useEffect(() => {
-    if (leverage > maxLeverage) setLeverage(5);
+    if (leverage > maxLeverage) {
+      setLeverage(5);
+    }
   }, [market, maxLeverage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -194,11 +204,19 @@ export default function AmountsPanel() {
     setCalculationLoading(false);
   }
 
+  const { minPositionValue } = usePositionInfo();
+  const minPositionValuePlaceholder = formatPrice(
+    minPositionValue,
+    pricePrecision,
+    false,
+    RoundMode.ROUND_UP,
+  );
   return (
     <>
       {orderType == OrderType.LIMIT ? <LimitPriceBox /> : <MarketPriceBox />}
       <CollateralWrap>
         <CollateralInput
+          placeholder={`Minimum: ${minPositionValuePlaceholder}`}
           value={formattedAmounts[0]}
           precision={pricePrecision}
           title="Amount"
@@ -212,7 +230,7 @@ export default function AmountsPanel() {
           balanceExact={
             toBN(balance).gt(0) ? formatPrice(balance, pricePrecision) : "0"
           }
-          max={true}
+          max
           calculationEnabled={WEB_SETTING.calculationalInput}
           calculationMode={calculationMode}
           calculationLoading={calculationLoading}
@@ -230,7 +248,9 @@ export default function AmountsPanel() {
             onChange={(e) => handleCustomLeverage(e)}
             placeholder={customLeverage ? customLeverage.toString() : "1"}
             onBlur={() => {
-              if (!customLeverage) setCustomLeverage(MIN_LEVERAGE_VALUE);
+              if (!customLeverage) {
+                setCustomLeverage(MIN_LEVERAGE_VALUE);
+              }
             }}
           />
           <LeverageIcon width={10} height={10} color={theme.text2} />

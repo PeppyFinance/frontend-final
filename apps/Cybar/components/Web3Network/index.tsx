@@ -66,7 +66,9 @@ export default function Web3Network() {
   }, [MULTI_ACCOUNT_ADDRESS, chainId, setFrontEndName]);
 
   const onClickButton = () => {
-    if (isMultiChain) toggleNetworksModal(!networksModal);
+    if (isMultiChain) {
+      toggleNetworksModal(!networksModal);
+    }
   };
 
   const Chain = useMemo(() => {

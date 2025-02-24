@@ -94,7 +94,9 @@ export default function WithdrawModal() {
       subAccountAllocatedBalance,
     );
     const insufficientBalance = deallocateAmount.isLessThan(typedAmount);
-    if (deallocateAmount.isLessThan(0)) return ["0", insufficientBalance];
+    if (deallocateAmount.isLessThan(0)) {
+      return ["0", insufficientBalance];
+    }
     return [deallocateAmount.toString(), insufficientBalance];
   }, [availableForOrder, subAccountAllocatedBalance, typedAmount]);
 
@@ -149,8 +151,9 @@ export default function WithdrawModal() {
       );
     }
 
-    if (insufficientBalance)
+    if (insufficientBalance) {
       return <PrimaryButton disabled>Insufficient Balance</PrimaryButton>;
+    }
 
     return <PrimaryButton onClick={handleAction}>Withdraw</PrimaryButton>;
   }

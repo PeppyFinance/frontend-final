@@ -54,7 +54,6 @@ const AccountName = styled(RowEnd)<{ alert?: string }>`
 `;
 
 const Timestamp = styled(AccountName)`
-  margin-left: 6px;
   color: ${({ theme, alert }) => (alert ? alert : theme.text3)};
 `;
 
@@ -68,6 +67,23 @@ const Report = styled(RowCenter)`
   color: ${({ theme }) => theme.text0};
   background: ${({ theme }) => theme.bg6};
 `;
+
+interface BaseCardProps {
+  title: string | JSX.Element;
+  text: string | JSX.Element;
+  icon?: string | StaticImageData;
+  token1?: string | StaticImageData;
+  token2?: string | StaticImageData;
+  rotate?: number;
+  status?: string | JSX.Element;
+  timestamp: string;
+  accountName: string;
+  bg?: string;
+  border?: string;
+  report?: string;
+  onClick?: () => void;
+  loading?: boolean;
+}
 
 export default function BaseCard({
   title,
@@ -84,22 +100,7 @@ export default function BaseCard({
   report,
   onClick,
   loading,
-}: {
-  title: string | JSX.Element;
-  text: string | JSX.Element;
-  icon?: string | StaticImageData;
-  token1?: string | StaticImageData;
-  token2?: string | StaticImageData;
-  rotate?: number;
-  status?: string | JSX.Element;
-  timestamp: string;
-  accountName: string;
-  bg?: string;
-  border?: string;
-  report?: string;
-  onClick?: () => void;
-  loading?: boolean;
-}): JSX.Element {
+}: BaseCardProps): JSX.Element {
   const theme = useTheme();
 
   const timeFormat = useMemo(() => {
@@ -114,7 +115,9 @@ export default function BaseCard({
   };
 
   const onClickItem = () => {
-    onClick && onClick();
+    if (onClick) {
+      onClick();
+    }
   };
 
   return (
@@ -155,14 +158,16 @@ export default function BaseCard({
               <AccountName
                 alert={!!border ? theme.text1 : undefined}
               >{`[${accountName}]`}</AccountName>
-              <Timestamp alert={!!border ? theme.text0 : undefined}>
-                {time}
-              </Timestamp>
             </RowEnd>
           </TextRow>
-          <TextRow>
+          <TextRow style={{ marginBottom: "8px" }}>
             {text}
             {status && <RowEnd>{status}</RowEnd>}
+          </TextRow>
+          <TextRow>
+            <Timestamp alert={!!border ? theme.text0 : undefined}>
+              {time}
+            </Timestamp>
           </TextRow>
         </Wrapper>
       </Container>

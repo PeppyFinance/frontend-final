@@ -50,10 +50,14 @@ export default function Overviews() {
   const mobileVersion = useIsMobile();
 
   useEffect(() => {
-    if (quoteDetail) setPanelType(PanelType.POSITION_OVERVIEW);
+    if (quoteDetail) {
+      setPanelType(PanelType.POSITION_OVERVIEW);
+    }
   }, [quoteDetail]);
   useEffect(() => {
-    if (mobileVersion) setPanelType(PanelType.ACCOUNT_OVERVIEW);
+    if (mobileVersion) {
+      setPanelType(PanelType.ACCOUNT_OVERVIEW);
+    }
   }, [mobileVersion]);
   return (
     <Wrapper>
@@ -63,7 +67,9 @@ export default function Overviews() {
           activeOption={panelType}
           onChange={(option: string) => {
             setPanelType(option as PanelType);
-            if (option === PanelType.ACCOUNT_OVERVIEW) setQuoteDetail(null);
+            if (option === PanelType.ACCOUNT_OVERVIEW) {
+              setQuoteDetail(null);
+            }
           }}
           hideOuterBorder
         />

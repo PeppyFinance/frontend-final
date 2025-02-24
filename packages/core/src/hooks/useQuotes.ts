@@ -279,7 +279,9 @@ export function useQuoteUpnlAndPnl(
   } else if (quoteStatus === QuoteStatus.CLOSED) {
     return [BN_ZERO.toString(), pnl];
   } else if (quoteStatus === QuoteStatus.LIQUIDATED) {
-    if (quantityToClose) return [BN_ZERO.toString(), pnl];
+    if (quantityToClose) {
+      return [BN_ZERO.toString(), pnl];
+    }
 
     const averagePrice = toBN(liquidatePrice)
       .times(liquidateAmount)
@@ -306,8 +308,9 @@ export function useQuoteSize(quote: Quote): string {
       quoteStatus === QuoteStatus.CLOSED ||
       quoteStatus === QuoteStatus.LIQUIDATED ||
       quoteStatus === QuoteStatus.CANCELED
-    )
+    ) {
       return quantity;
+    }
     return toBN(quantity)
       .minus(closedAmount)
       .toFixed(quantityPrecision || 6);
@@ -466,12 +469,13 @@ export function useOpeningLastMarketPrice(
   // market price for opening position
   const { bid, ask } = useBidAskPrice(market);
 
-  if (quote)
+  if (quote) {
     if (quote.positionType === PositionType.LONG) {
       return ask;
     } else {
       return bid;
     }
+  }
 
   return "0";
 }

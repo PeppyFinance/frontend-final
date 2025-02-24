@@ -11,6 +11,8 @@ import { PrimaryButton } from ".";
 const MainButton = styled(PrimaryButton).attrs({
   height: "48px",
 })`
+  display: flex;
+  gap: 10px;
   border-radius: 8px;
   font-weight: 700;
 `;
@@ -29,10 +31,7 @@ const LiquidationButton = styled(PrimaryButton).attrs({
   }
 `;
 
-const IconWrap = styled.div`
-  position: absolute;
-  right: 10px;
-`;
+const IconWrap = styled.div``;
 
 export default function ErrorButton({
   customText,
@@ -51,25 +50,32 @@ export default function ErrorButton({
 }) {
   const theme = useTheme();
   const text = useMemo(() => {
-    if (customText) return customText;
-    if (state === ErrorState.INSUFFICIENT_BALANCE)
+    if (customText) {
+      return customText;
+    }
+    if (state === ErrorState.INSUFFICIENT_BALANCE) {
       return "Insufficient Balance";
-    else if (state === ErrorState.LESS_THAN_MIN_ACCEPTABLE_QUOTE_VALUE)
+    } else if (state === ErrorState.LESS_THAN_MIN_ACCEPTABLE_QUOTE_VALUE) {
       return "Amount is too low";
-    else if (state === ErrorState.OUT_OF_RANGE_PRICE)
+    } else if (state === ErrorState.OUT_OF_RANGE_PRICE) {
       return "Price is out of range";
-    else if (state === ErrorState.REMAINING_AMOUNT_UNDER_10)
+    } else if (state === ErrorState.REMAINING_AMOUNT_UNDER_10) {
       return "Amount is too high";
-    else if (state === ErrorState.PARTIAL_CLOSE_WITH_SLIPPAGE)
+    } else if (state === ErrorState.PARTIAL_CLOSE_WITH_SLIPPAGE) {
       return "Liquidation after close!";
-    else if (state === ErrorState.INVALID_PRICE) return "Price is out of range";
-    else if (state === ErrorState.INVALID_QUANTITY) return "Invalid quantity";
-    else if (state === ErrorState.CAP_REACHED) return "Cap reached";
-    else if (state === ErrorState.HIGHER_THAN_MAX_NOTIONAL_VALUE)
+    } else if (state === ErrorState.INVALID_PRICE) {
+      return "Price is out of range";
+    } else if (state === ErrorState.INVALID_QUANTITY) {
+      return "Invalid quantity";
+    } else if (state === ErrorState.CAP_REACHED) {
+      return "Cap reached";
+    } else if (state === ErrorState.HIGHER_THAN_MAX_NOTIONAL_VALUE) {
       return "Higher than max notional value";
-    else if (state === ErrorState.MAX_PENDING_POSITIONS_REACHED)
+    } else if (state === ErrorState.MAX_PENDING_POSITIONS_REACHED) {
       return `Max pending positions reached (${MAX_PENDINGS_POSITIONS_NUMBER})`;
-    else return "unhandled";
+    } else {
+      return "unhandled";
+    }
   }, [customText, state]);
 
   return liquidationButton ? (
@@ -91,17 +97,17 @@ export default function ErrorButton({
     </LiquidationButton>
   ) : (
     <MainButton disabled={disabled}>
-      {text}
+      <span>{text}</span>
       <IconWrap>
         {tooltip && (
           <a data-tip data-for={state}>
-            <ExclamationMark />
+            <ExclamationMark color="white" />
             <ToolTipLeft id={`${state}`} aria-haspopup="true">
               {text}
             </ToolTipLeft>
           </a>
         )}
-        {!tooltip && exclamationMark && <ExclamationMark />}
+        {!tooltip && exclamationMark && <ExclamationMark color={theme.text0} />}
       </IconWrap>
     </MainButton>
   );

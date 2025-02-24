@@ -68,7 +68,9 @@ export default function useTradePage(): {
 
   const [pricePrecision, quantityPrecision] = useMemo(() => {
     if (market) {
-      if (userExpertMode) return [15, 15];
+      if (userExpertMode) {
+        return [15, 15];
+      }
       return [market.pricePrecision, market.quantityPrecision];
     }
     return [DEFAULT_PRECISION, DEFAULT_PRECISION];
@@ -100,7 +102,9 @@ export default function useTradePage(): {
   ]);
 
   const independentValue = useMemo(() => {
-    if (!typedValue || toBN(price).isZero()) return null;
+    if (!typedValue || toBN(price).isZero()) {
+      return null;
+    }
 
     return inputField === InputField.PRICE
       ? toBN(typedValue).times(leverage).div(price)
@@ -133,7 +137,9 @@ export default function useTradePage(): {
   ]);
 
   const balance = useMemo(() => {
-    if (!market) return "0";
+    if (!market) {
+      return "0";
+    }
     return toBN(availableForOrder)
       .times(toBN(1).minus(toBN(leverage).times(market.tradingFee)))
       .toString();

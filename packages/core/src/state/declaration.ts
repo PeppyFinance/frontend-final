@@ -34,7 +34,9 @@ const createExpirationTransform = (expiryTime) => {
       };
     },
     (outboundState) => {
-      if (!outboundState) return undefined;
+      if (!outboundState) {
+        return undefined;
+      }
 
       const now = Date.now();
       const expired = now - outboundState.timestamp > expiryTime;
@@ -79,10 +81,14 @@ export const getOrCreateStore = () => {
   // with the current state in the store, and create a new store
 
   // For SSG and SSR always create a new store
-  if (typeof window === "undefined") return _store;
+  if (typeof window === "undefined") {
+    return _store;
+  }
 
   // Create the store once in the client
-  if (!store) store = _store;
+  if (!store) {
+    store = _store;
+  }
 
   return _store;
 };

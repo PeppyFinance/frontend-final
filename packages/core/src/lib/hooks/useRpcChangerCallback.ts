@@ -11,9 +11,15 @@ export default function useRpcChangerCallback() {
 
   return useCallback(
     async (targetChainId: SupportedChainId) => {
-      if (!chainId) return false;
-      if (!targetChainId || !ChainInfo[targetChainId]) return false;
-      if (targetChainId === chainId) return true;
+      if (!chainId) {
+        return false;
+      }
+      if (!targetChainId || !ChainInfo[targetChainId]) {
+        return false;
+      }
+      if (targetChainId === chainId) {
+        return true;
+      }
 
       try {
         await switchChainAsync?.({ chainId: targetChainId });

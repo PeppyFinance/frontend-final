@@ -1,6 +1,3 @@
-import React, { useMemo } from "react";
-import styled, { useTheme } from "styled-components";
-
 import {
   DEFAULT_PRECISION,
   MARKET_ORDER_DEADLINE,
@@ -23,7 +20,10 @@ import { useGetTokenWithFallbackChainId } from "@symmio/frontend-sdk/utils/token
 import Column from "components/Column";
 import InfoItem from "components/InfoItem";
 import { DisplayLabel } from "components/InputLabel";
+import React, { useMemo } from "react";
+import styled, { useTheme } from "styled-components";
 import ActionButton from "./ActionButton";
+import { FavoriteButton } from "./FavoriteButton";
 
 const LabelsWrapper = styled(Column)`
   gap: 12px;
@@ -41,7 +41,6 @@ export default function OpenPositionData() {
     COLLATERAL_TOKEN,
     chainId,
   );
-
   const { price, formattedAmounts } = useTradePage();
 
   const [symbol, pricePrecision] = useMemo(
@@ -60,7 +59,9 @@ export default function OpenPositionData() {
 
   const tradingFee = useMemo(() => {
     const notionalValueBN = toBN(notionalValue);
-    if (!market || notionalValueBN.isNaN()) return "-";
+    if (!market || notionalValueBN.isNaN()) {
+      return "-";
+    }
     return market.tradingFee
       ? notionalValueBN.times(market.tradingFee).toString()
       : "0";
@@ -140,16 +141,15 @@ export default function OpenPositionData() {
           symbol={symbol}
         />
       </LabelsWrapper>
-      {info.map((info, index) => {
-        return (
-          <InfoItem
-            label={info.title}
-            amount={info.value}
-            valueColor={info?.valueColor}
-            key={index}
-          />
-        );
-      })}
+      {info.map((info) => (
+        <InfoItem
+          label={info.title}
+          amount={info.value}
+          valueColor={info?.valueColor}
+          key={info.title}
+        />
+      ))}
+      {market && <FavoriteButton marketId={market.id} />}
       <ActionButton />
     </React.Fragment>
   );

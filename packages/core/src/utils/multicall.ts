@@ -3,7 +3,9 @@ import { ReadContractsData } from "wagmi/query";
 import { toBN } from "./numbers";
 
 export function getMultipleBN(result: unknown): BigNumber[] {
-  if (!Array.isArray(result)) return [];
+  if (!Array.isArray(result)) {
+    return [];
+  }
   return result.map((r: bigint) => toBN(r.toString()));
 }
 

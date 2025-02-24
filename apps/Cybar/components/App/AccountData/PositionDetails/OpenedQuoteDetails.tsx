@@ -123,15 +123,18 @@ export default function OpenedQuoteDetails({
       .times(leverage)
       .times(100)
       .toFixed(2);
-    if (!marketData?.markPrice) return ["-", "-", theme.text0];
-    if (valueBN.isGreaterThan(0))
+    if (!marketData?.markPrice) {
+      return ["-", "-", theme.text0];
+    }
+    if (valueBN.isGreaterThan(0)) {
       return [`+ $${formatAmount(valueBN)}`, valuePercent, theme.positive];
-    else if (valueBN.isLessThan(0))
+    } else if (valueBN.isLessThan(0)) {
       return [
         `- $${formatAmount(Math.abs(valueBN.toNumber()))}`,
         valuePercent,
         theme.negative,
       ];
+    }
     return [`$${formatAmount(valueBN)}`, valuePercent, theme.text1];
   }
 

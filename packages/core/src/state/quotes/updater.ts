@@ -58,14 +58,17 @@ export function QuotesUpdater(): null {
   const setTpSlFunc = useSetTpSlDataCallback();
 
   useEffect(() => {
-    if (account && chainId)
+    if (account && chainId) {
       return autoRefresh(() => getHistory(account, chainId, 8, 0, 7), 3000);
+    }
   }, [account, chainId, getHistory]);
 
   useEffect(() => {
     if (!isEqual(prevPositions.quotes, positions ?? [])) {
       dispatch(setPositions({ quotes: positions ?? [] }));
-      if (positions === undefined) return;
+      if (positions === undefined) {
+        return;
+      }
       for (const position_i of positions) {
         const tpSl_i = tpSlQuoteData[position_i.id];
         if (!tpSl_i) {
@@ -397,7 +400,9 @@ export function UpdaterListeners(): null {
       const unpendingIds = prevPendingIds?.filter(
         (id) => !pendingIds.includes(id),
       );
-      if (!unpendingIds?.length) return;
+      if (!unpendingIds?.length) {
+        return;
+      }
       for (let i = 0; i < unpendingIds?.length; i++) {
         addQuoteToListenerCallback(unpendingIds[i]);
       }
@@ -409,7 +414,9 @@ export function UpdaterListeners(): null {
       const unPositionsId = prevPositions
         ?.filter((id) => !find(positions, { id }))
         .map((p) => p.id);
-      if (!unPositionsId?.length) return;
+      if (!unPositionsId?.length) {
+        return;
+      }
       for (let i = 0; i < unPositionsId?.length; i++) {
         addQuoteToListenerCallback(unPositionsId[i]);
       }

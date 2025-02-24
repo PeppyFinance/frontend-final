@@ -23,8 +23,12 @@ export function useTransactionAdder(): (
 
   return useCallback(
     (hash: string, info: TransactionInfo, summary?: string) => {
-      if (!account) return;
-      if (!chainId) return;
+      if (!account) {
+        return;
+      }
+      if (!chainId) {
+        return;
+      }
 
       if (!hash) {
         throw Error("No transaction hash found.");
@@ -67,7 +71,9 @@ export function isTransactionRecent(tx: TransactionDetails): boolean {
 export function useIsTransactionPending(transactionHash?: string): boolean {
   const transactions = useAllTransactions();
 
-  if (!transactionHash || !transactions[transactionHash]) return false;
+  if (!transactionHash || !transactions[transactionHash]) {
+    return false;
+  }
 
   return !transactions[transactionHash].receipt;
 }
@@ -75,7 +81,9 @@ export function useIsTransactionPending(transactionHash?: string): boolean {
 export function useIsTransactionConfirmed(transactionHash?: string): boolean {
   const transactions = useAllTransactions();
 
-  if (!transactionHash || !transactions[transactionHash]) return false;
+  if (!transactionHash || !transactions[transactionHash]) {
+    return false;
+  }
 
   return Boolean(transactions[transactionHash].receipt);
 }
@@ -92,11 +100,15 @@ export function useHasPendingApproval(
       typeof spender === "string" &&
       Object.keys(allTransactions).some((hash) => {
         const tx = allTransactions[hash];
-        if (!tx) return false;
+        if (!tx) {
+          return false;
+        }
         if (tx.receipt) {
           return false;
         } else {
-          if (tx.info.type !== TransactionType.APPROVAL) return false;
+          if (tx.info.type !== TransactionType.APPROVAL) {
+            return false;
+          }
           return (
             tx.info.spender === spender &&
             tx.info.tokenAddress === token.address &&
@@ -125,8 +137,11 @@ export function useIsHavePendingTransaction(transactionType?: TransactionType) {
 
   const pending = sortedRecentTransactions
     .filter((tx) => {
-      if (!transactionType) return !tx.receipt;
-      else return !tx.receipt && tx.info.type === transactionType;
+      if (!transactionType) {
+        return !tx.receipt;
+      } else {
+        return !tx.receipt && tx.info.type === transactionType;
+      }
     })
     .map((tx) => tx.hash);
   return useMemo(() => pending.length > 0, [pending.length]);

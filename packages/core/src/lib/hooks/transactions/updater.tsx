@@ -13,10 +13,16 @@ interface Transaction {
 }
 
 export function shouldCheck(lastBlockNumber: number, tx: Transaction): boolean {
-  if (tx.receipt) return false;
-  if (!tx.lastCheckedBlockNumber) return true;
+  if (tx.receipt) {
+    return false;
+  }
+  if (!tx.lastCheckedBlockNumber) {
+    return true;
+  }
   const blocksSinceCheck = lastBlockNumber - tx.lastCheckedBlockNumber;
-  if (blocksSinceCheck < 1) return false;
+  if (blocksSinceCheck < 1) {
+    return false;
+  }
   const minutesPending = (new Date().getTime() - tx.addedTime) / 60_000;
   if (minutesPending > 60) {
     // every 10 blocks if pending longer than an hour
@@ -53,7 +59,9 @@ export default function Updater({
   const getReceipt = useCallback(
     async (hash: string) => {
       try {
-        if (!provider || !chainId) throw new Error("No provider or chainId");
+        if (!provider || !chainId) {
+          throw new Error("No provider or chainId");
+        }
         return await waitForTransactionReceipt(wagmiConfig, {
           hash: hash as Address,
           onReplaced: (transaction) => console.log("OnReplace", transaction),
@@ -68,7 +76,9 @@ export default function Updater({
   );
 
   useEffect(() => {
-    if (!chainId || !provider || !lastBlockNumber) return;
+    if (!chainId || !provider || !lastBlockNumber) {
+      return;
+    }
     const cancels = Object.keys(pendingTransactions)
       .filter((hash) => shouldCheck(lastBlockNumber, pendingTransactions[hash]))
       .map((hash) => {

@@ -43,7 +43,9 @@ export default createReducer(initialState, (builder) =>
     .addCase(
       updateTransaction,
       (state, { payload: { chainId, ...restParameter } }) => {
-        if (!chainId) return;
+        if (!chainId) {
+          return;
+        }
 
         const txs = state[chainId];
         const hash = restParameter["hash"];
@@ -51,7 +53,9 @@ export default createReducer(initialState, (builder) =>
       },
     )
     .addCase(clearAllTransactions, (transactions, { payload: { chainId } }) => {
-      if (!transactions[chainId]) return;
+      if (!transactions[chainId]) {
+        return;
+      }
       transactions[chainId] = {};
     })
     .addCase(

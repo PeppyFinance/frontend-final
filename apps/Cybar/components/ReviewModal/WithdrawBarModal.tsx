@@ -172,7 +172,9 @@ function CancelWithdraw() {
       const allocatableAmount =
         toBN(accountBalanceLimit).minus(allocatedBalance);
 
-      if (allocatableAmount.isLessThan(0)) return "0";
+      if (allocatableAmount.isLessThan(0)) {
+        return "0";
+      }
       return allocatableAmount.toString();
     } else {
       return accountBalance;
