@@ -133,7 +133,9 @@ export function useMarkets({
         ]),
       );
 
-      const upperCaseCoinSymbolSet = new Set(Object.keys(coinRecommendationsUpperCase));
+      const upperCaseCoinSymbolSet = new Set(
+        Object.keys(coinRecommendationsUpperCase),
+      );
       markets = markets.map((market) => {
         if (upperCaseCoinSymbolSet.has(market.symbol.toUpperCase())) {
           return {
