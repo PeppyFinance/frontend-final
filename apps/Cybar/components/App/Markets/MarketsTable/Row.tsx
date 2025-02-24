@@ -62,10 +62,11 @@ const TableStructure = styled(RowBetween)`
   }
 `;
 
-const RowWrap = styled(TableStructure) <{ recommendation: boolean }>`
+const RowWrap = styled(TableStructure)<{ isRecommendation: boolean }>`
   height: 56px;
   color: ${({ theme }) => theme.text0};
-  background: ${({ theme, recommendation }) => recommendation ? theme.bgMarketRecommendation : theme.bg0};
+  background: ${({ theme, isRecommendation }) =>
+    isRecommendation ? theme.bgMarketRecommendation : theme.bg0};
   padding: 12px 24px 12px 12px;
   border-bottom: 1px solid ${({ theme }) => theme.bg};
 
@@ -82,17 +83,19 @@ const StarWrapper = styled(RowCenter)`
   }
 `;
 
-const Symbol = styled.div<{ recommendation: boolean }>`
+const Symbol = styled.div<{ isRecommendation: boolean }>`
   margin-bottom: 4px;
-${({ recommendation, theme }) => recommendation && `color: ${theme.textMarketRecommendation} `}
+  ${({ isRecommendation, theme }) =>
+    isRecommendation && `color: ${theme.textMarketRecommendation} `}
 `;
 
-const MarketName = styled.span<{ recommendation: boolean }>`
+const MarketName = styled.span<{ isRecommendation: boolean }>`
   font-size: 10px;
-${({ recommendation, theme }) => recommendation && `color: ${theme.textMarketRecommendation} `}
+  ${({ isRecommendation, theme }) =>
+    isRecommendation && `color: ${theme.textMarketRecommendation} `}
 `;
 
-const ColorLabel = styled(Row) <{ color: "green" | "red" | "gray" }>`
+const ColorLabel = styled(Row)<{ color: "green" | "red" | "gray" }>`
   color: ${({ color, theme }) =>
     color === "green"
       ? theme.positive
@@ -101,13 +104,16 @@ const ColorLabel = styled(Row) <{ color: "green" | "red" | "gray" }>`
         : theme.text2};
 `;
 
-const ActionBtn = styled.button<{ recommendation: boolean }>`
+const ActionBtn = styled.button<{ isRecommendation: boolean }>`
   box-sizing: border-box;
   width: 80px;
   height: 30px;
   padding: 8px 24px;
-  color: ${({ theme, recommendation }) => recommendation ? theme.borderMarketRecommendation : theme.primary0};
-  border: 1px solid ${({ theme, recommendation }) => recommendation ? theme.borderMarketRecommendation : theme.primary0};
+  color: ${({ theme, isRecommendation }) =>
+    isRecommendation ? theme.borderMarketRecommendation : theme.primary0};
+  border: 1px solid
+    ${({ theme, isRecommendation }) =>
+      isRecommendation ? theme.borderMarketRecommendation : theme.primary0};
   border-radius: 6px;
   font-weight: 600;
 
@@ -118,9 +124,10 @@ const ActionBtn = styled.button<{ recommendation: boolean }>`
   }
 `;
 
-const RowItem = styled.div<{ recommendation: boolean }>`
-${({ recommendation, theme }) => recommendation && `color: ${theme.textMarketRecommendation} `}
-`
+const RowItem = styled.div<{ isRecommendation: boolean }>`
+  ${({ isRecommendation, theme }) =>
+    isRecommendation && `color: ${theme.textMarketRecommendation} `}
+`;
 
 export default function MarketRow({
   market,
@@ -148,21 +155,32 @@ export default function MarketRow({
     router.push(`/trade/${id}`);
   };
 
+  const isRecommendation = !!market.recommendation;
+
   return (
-    <RowWrap recommendation={!!market.recommendation}>
+    <RowWrap isRecommendation={isRecommendation}>
       <StarWrapper onClick={toggleFavorite}>
-        <Star isRecommendation={isRecommendation} size={12.44} isFavorite={isFavorite} />
+        <Star
+          isRecommendation={isRecommendation}
+          size={12.44}
+          isFavorite={isFavorite}
+        />
       </StarWrapper>
-      <RowStart gap={"5px"} >
+      <RowStart gap={"5px"}>
         <Image src={icon} alt={symbol} width={28} height={28} />
         <div>
-          <Symbol recommendation={!!market.recommendation}>{symbol}{market.recommendation && ` (${market.recommendation})`}</Symbol>
+          <Symbol isRecommendation={isRecommendation}>
+            {symbol}
+            {isRecommendation && ` (${market.recommendation})`}
+          </Symbol>
           <ColorLabel color={"gray"}>
-            <MarketName recommendation={!!market.recommendation}>{name}</MarketName>
+            <MarketName isRecommendation={isRecommendation}>{name}</MarketName>
           </ColorLabel>
         </div>
       </RowStart>
-      <RowItem recommendation={!!market.recommendation}>{price ? `$${parseFloat(price).toFixed(pricePrecision)}` : "-"}</RowItem>
+      <RowItem isRecommendation={isRecommendation}>
+        {price ? `$${parseFloat(price).toFixed(pricePrecision)}` : "-"}
+      </RowItem>
       <ColorLabel
         color={
           priceChangePercent
@@ -178,14 +196,21 @@ export default function MarketRow({
             if (!priceChangePercent) {
               return "-";
             }
-            return `${toBN(priceChangePercent).isGreaterThan(0) ? "+" : ""
-              }${priceChangePercent}%`;
+            return `${
+              toBN(priceChangePercent).isGreaterThan(0) ? "+" : ""
+            }${priceChangePercent}%`;
           })()}
         </span>
       </ColorLabel>
-      <RowItem recommendation={!!market.recommendation}>{formatDollarAmount(tradeVolume)}</RowItem>
-      <RowItem recommendation={!!market.recommendation}>{formatDollarAmount(notionalCap)}</RowItem>
-      <ActionBtn recommendation={!!market.recommendation} onClick={onTradeClick}>Trade</ActionBtn>
+      <RowItem isRecommendation={isRecommendation}>
+        {formatDollarAmount(tradeVolume)}
+      </RowItem>
+      <RowItem isRecommendation={isRecommendation}>
+        {formatDollarAmount(notionalCap)}
+      </RowItem>
+      <ActionBtn isRecommendation={isRecommendation} onClick={onTradeClick}>
+        Trade
+      </ActionBtn>
     </RowWrap>
   );
 }
