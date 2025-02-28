@@ -8,12 +8,14 @@ import quotes from "./quotes/reducer";
 import trade from "./trade/reducer";
 import transactions from "./transactions/reducer";
 import user from "./user/reducer";
+import { characterReducer as character } from "./character/reducer";
 const { combineReducers } = ((toolkitRaw as any).default ??
   toolkitRaw) as typeof toolkitRaw;
 
 const reducer = combineReducers({
   application,
   chains,
+  character,
   market,
   transactions,
   user,
