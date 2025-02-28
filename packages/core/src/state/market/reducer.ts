@@ -1,10 +1,16 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { setCoinCategories, setCoinRecommendations } from "./actions";
-import { MarketState } from "./types";
+import { CoinRecommendations, MarketState } from "./types";
 
+const coinRecommendations: CoinRecommendations = {
+  btc: "Most traded",
+  eth: "Most Bullish",
+  sol: "Most useless",
+};
 export const initialState: MarketState = {
   coinCategories: undefined,
-  coinRecommendations: undefined,
+  coinRecommendations,
+  // coinRecommendations: undefined,
 };
 
 export const marketReducer = createReducer(initialState, (build) =>
