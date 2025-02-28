@@ -97,4 +97,3 @@ export const charBackAlley2: Character = {
     },
   ],
 };
-

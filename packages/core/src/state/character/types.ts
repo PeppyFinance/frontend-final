@@ -2,7 +2,7 @@ import { CSSProperties } from "react";
 
 export type CharacterState = {
   character?: Character;
-}
+};
 
 type DialogContent = {
   text: string;
@@ -10,7 +10,7 @@ type DialogContent = {
   endsDialog?: boolean;
   // FIX: add redux action
   // action?: CharacterContextValue["characterDispatch"];
-}
+};
 
 type Dialog = {
   id: number;
@@ -25,7 +25,7 @@ type CharacterPositions = {
   focusedBottom?: CSSProperties["bottom"];
   focusedLeft?: CSSProperties["left"];
   focusedHeight?: CSSProperties["height"];
-}
+};
 
 export type Character = {
   id: CharacterId;
@@ -33,7 +33,6 @@ export type Character = {
   mobilePositions?: CharacterPositions;
   dialogs?: Dialog[];
 } & CharacterPositions;
-
 
 export const CharacterId = {
   charBackAlley1: "charBackAlley1",
