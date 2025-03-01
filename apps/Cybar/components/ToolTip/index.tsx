@@ -43,6 +43,7 @@ export const ToolTipLeft = styled(ReactTooltip).attrs({
     margin-top: -3px !important;
   }
 `;
+
 export const ToolTipBottom = styled(ReactTooltip).attrs({
   place: "bottom",
   type: "info",
@@ -62,4 +63,28 @@ export const ToolTipBottom = styled(ReactTooltip).attrs({
     transform: translateX(50%);
     margin-top: 2px !important;
   }
+`;
+
+
+export const ToolTipTop = styled(ReactTooltip).attrs({
+  place: "top",
+  type: "info",
+  effect: "float",
+  multiline: true,
+})`
+  color: ${({ theme }) => theme.textMarketRecommendation} !important;
+  background: ${({ theme }) => theme.bgMarketRecommendation} !important;
+  // opacity: 1 !important;
+  border: 1px solid ${({ theme }) => theme.borderMarketRecommendation} !important; 
+  border-radius: 3px;
+  padding: 10px 7px !important;
+  font-size: 1rem !important;
+  // &::after {
+  //   background-color: #788795 !important;
+  //   width: 6px !important;
+  //   height: 6px !important;
+  //   left: 50% !important;
+  //   transform: translateX(50%);
+  //   margin-top: 2px !important;
+  // }
 `;
