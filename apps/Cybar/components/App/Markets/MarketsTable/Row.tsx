@@ -127,7 +127,7 @@ const ActionBtn = styled.button<{ isRecommendation: boolean }>`
 `;
 
 const EmojiWrapper = styled.a`
-  font-size: 20px;
+  font-size: 15px;
 `;
 
 const RowItem = styled.div<{ isRecommendation: boolean }>`
