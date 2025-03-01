@@ -10,7 +10,8 @@ export function isEmoji(char: string): boolean {
   }
 
   // Regular expression for common emoji ranges
-  const emojiRegex = /^(?:[\p{Emoji_Presentation}|\p{Emoji}\p{Emoji_Modifier}]+|\p{Regional_Indicator}{2})$/u;
+  const emojiRegex =
+    /^(?:[\p{Emoji_Presentation}|\p{Emoji}\p{Emoji_Modifier}]+|\p{Regional_Indicator}{2})$/u;
 
   // Test if the entire string matches the emoji pattern
   return emojiRegex.test(char);

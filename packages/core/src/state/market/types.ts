@@ -12,4 +12,7 @@ export interface CoinRecommendations {
 }
 
 // TODO: is name the best label? Maybe reason or recommendationReason
-export interface CoinRecommendation { name: string, emoji: string }
+export interface CoinRecommendation {
+  name: string;
+  emoji: string;
+}

@@ -13,8 +13,8 @@ import useCurrencyLogo from "lib/hooks/useCurrencyLogo";
 
 import { Star } from "components/Icons";
 import { Row, RowBetween, RowCenter, RowStart } from "components/Row";
-import { isEmoji } from "utils/market";
 import { ToolTipTop } from "components/ToolTip";
+import { isEmoji } from "utils/market";
 
 const TableStructure = styled(RowBetween)`
   font-size: 12px;
@@ -64,7 +64,7 @@ const TableStructure = styled(RowBetween)`
   }
 `;
 
-const RowWrap = styled(TableStructure) <{ isRecommendation: boolean }>`
+const RowWrap = styled(TableStructure)<{ isRecommendation: boolean }>`
   height: 56px;
   color: ${({ theme }) => theme.text0};
   background: ${({ theme, isRecommendation }) =>
@@ -81,8 +81,8 @@ const RowWrap = styled(TableStructure) <{ isRecommendation: boolean }>`
 
 const StarRecommendationWrapper = styled(RowCenter)`
   display: grid;
-  grid-template-columns: 1fr auto 1fr; 
-`
+  grid-template-columns: 1fr auto 1fr;
+`;
 
 const StarWrapper = styled(RowCenter)`
   grid-column: 2;
@@ -111,8 +111,7 @@ const MarketName = styled.span<{ isRecommendation: boolean }>`
     isRecommendation && `color: ${theme.textMarketRecommendation} `}
 `;
 
-
-const ColorLabel = styled(Row) <{ color: "green" | "red" | "gray" }>`
+const ColorLabel = styled(Row)<{ color: "green" | "red" | "gray" }>`
   color: ${({ color, theme }) =>
     color === "green"
       ? theme.positive
@@ -130,7 +129,7 @@ const ActionBtn = styled.button<{ isRecommendation: boolean }>`
     isRecommendation ? theme.borderMarketRecommendation : theme.primary0};
   border: 1px solid
     ${({ theme, isRecommendation }) =>
-    isRecommendation ? theme.borderMarketRecommendation : theme.primary0};
+      isRecommendation ? theme.borderMarketRecommendation : theme.primary0};
   border-radius: 6px;
   font-weight: 600;
 
@@ -146,19 +145,27 @@ const RowItem = styled.div<{ isRecommendation: boolean }>`
     isRecommendation && `color: ${theme.textMarketRecommendation} `}
 `;
 
-const Emoji = ({ recommendation }: { recommendation: Market['recommendation'] }) => {
-  if (!recommendation) { return null; }
+const Emoji = ({
+  recommendation,
+}: {
+  recommendation: Market["recommendation"];
+}) => {
+  if (!recommendation) {
+    return null;
+  }
   const { emoji, name } = recommendation;
   if (!isEmoji(emoji)) {
     return null;
   }
-  return (<>
-    <a data-tip data-for={`recommendation-${name}`}>
-      {emoji}
-    </a>
-    <ToolTipTop id={`recommendation-${name}`}  >{name}</ToolTipTop>
-  </>)
-}
+  return (
+    <>
+      <a data-tip data-for={`recommendation-${name}`}>
+        {emoji}
+      </a>
+      <ToolTipTop id={`recommendation-${name}`}>{name}</ToolTipTop>
+    </>
+  );
+};
 
 export default function MarketRow({
   market,
@@ -186,7 +193,8 @@ export default function MarketRow({
     router.push(`/trade/${id}`);
   };
 
-  const isRecommendation = !!market.recommendation && isEmoji(market.recommendation.emoji);
+  const isRecommendation =
+    !!market.recommendation && isEmoji(market.recommendation.emoji);
 
   return (
     <RowWrap isRecommendation={isRecommendation}>
@@ -205,9 +213,7 @@ export default function MarketRow({
       <RowStart gap={"5px"}>
         <Image src={icon} alt={symbol} width={28} height={28} />
         <div>
-          <Symbol isRecommendation={isRecommendation}>
-            {symbol}
-          </Symbol>
+          <Symbol isRecommendation={isRecommendation}>{symbol}</Symbol>
           <ColorLabel color={"gray"}>
             <MarketName isRecommendation={isRecommendation}>{name}</MarketName>
           </ColorLabel>
@@ -231,8 +237,9 @@ export default function MarketRow({
             if (!priceChangePercent) {
               return "-";
             }
-            return `${toBN(priceChangePercent).isGreaterThan(0) ? "+" : ""
-              }${priceChangePercent}%`;
+            return `${
+              toBN(priceChangePercent).isGreaterThan(0) ? "+" : ""
+            }${priceChangePercent}%`;
           })()}
         </span>
       </ColorLabel>
@@ -245,6 +252,6 @@ export default function MarketRow({
       <ActionBtn isRecommendation={isRecommendation} onClick={onTradeClick}>
         Trade
       </ActionBtn>
-    </RowWrap >
+    </RowWrap>
   );
 }

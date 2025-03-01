@@ -65,7 +65,6 @@ export const ToolTipBottom = styled(ReactTooltip).attrs({
   }
 `;
 
-
 export const ToolTipTop = styled(ReactTooltip).attrs({
   place: "top",
   type: "info",
@@ -75,7 +74,7 @@ export const ToolTipTop = styled(ReactTooltip).attrs({
   color: ${({ theme }) => theme.textMarketRecommendation} !important;
   background: ${({ theme }) => theme.bgMarketRecommendation} !important;
   // opacity: 1 !important;
-  border: 1px solid ${({ theme }) => theme.borderMarketRecommendation} !important; 
+  border: 1px solid ${({ theme }) => theme.borderMarketRecommendation} !important;
   border-radius: 3px;
   padding: 10px 7px !important;
   font-size: 1rem !important;

@@ -3,9 +3,9 @@ import { setCoinCategories, setCoinRecommendations } from "./actions";
 import { CoinRecommendations, MarketState } from "./types";
 
 const coinRecommendations: CoinRecommendations = {
-  btc: "Most traded",
-  eth: "Most Bullish",
-  sol: "Most useless",
+  btc: { name: "most traded", emoji: "💪" },
+  eth: { name: "most bullish", emoji: "🚀" },
+  sol: { name: "most useless", emoji: "🤡" },
 };
 export const initialState: MarketState = {
   coinCategories: undefined,
