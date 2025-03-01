@@ -1,3 +1,5 @@
+import { CoinRecommendation } from "../state/market/types";
+
 export interface Market {
   id: number;
   name: string;
@@ -16,7 +18,7 @@ export interface Market {
   hedgerFeeOpen: string;
   hedgerFeeClose: string;
   autoSlippage: number;
-  recommendation?: string;
+  recommendation?: CoinRecommendation;
 }
 
 export interface MarketResponseType {
