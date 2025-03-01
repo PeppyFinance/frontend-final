@@ -79,21 +79,7 @@ const RowWrap = styled(TableStructure)<{ isRecommendation: boolean }>`
   }
 `;
 
-const StarRecommendationWrapper = styled(RowCenter)`
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-`;
-
 const StarWrapper = styled(RowCenter)`
-  grid-column: 2;
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-const EmojiWrapper = styled(RowCenter)`
-  grid-column: 3;
-  padding-left: 15px;
   &:hover {
     cursor: pointer;
   }
@@ -140,6 +126,10 @@ const ActionBtn = styled.button<{ isRecommendation: boolean }>`
   }
 `;
 
+const EmojiWrapper = styled.a`
+  font-size: 20px;
+`;
+
 const RowItem = styled.div<{ isRecommendation: boolean }>`
   ${({ isRecommendation, theme }) =>
     isRecommendation && `color: ${theme.textMarketRecommendation} `}
@@ -159,9 +149,9 @@ const Emoji = ({
   }
   return (
     <>
-      <a data-tip data-for={`recommendation-${name}`}>
+      <EmojiWrapper data-tip data-for={`recommendation-${name}`}>
         {emoji}
-      </a>
+      </EmojiWrapper>
       <ToolTipTop id={`recommendation-${name}`}>{name}</ToolTipTop>
     </>
   );
@@ -198,18 +188,13 @@ export default function MarketRow({
 
   return (
     <RowWrap isRecommendation={isRecommendation}>
-      <StarRecommendationWrapper>
-        <StarWrapper onClick={toggleFavorite}>
-          <Star
-            isRecommendation={isRecommendation}
-            size={12.44}
-            isFavorite={isFavorite}
-          />
-        </StarWrapper>
-        <EmojiWrapper>
-          <Emoji recommendation={market.recommendation} />
-        </EmojiWrapper>
-      </StarRecommendationWrapper>
+      <StarWrapper onClick={toggleFavorite}>
+        <Star
+          isRecommendation={isRecommendation}
+          size={12.44}
+          isFavorite={isFavorite}
+        />
+      </StarWrapper>
       <RowStart gap={"5px"}>
         <Image src={icon} alt={symbol} width={28} height={28} />
         <div>
@@ -218,6 +203,7 @@ export default function MarketRow({
             <MarketName isRecommendation={isRecommendation}>{name}</MarketName>
           </ColorLabel>
         </div>
+        <Emoji recommendation={market.recommendation} />
       </RowStart>
       <RowItem isRecommendation={isRecommendation}>
         {price ? `$${parseFloat(price).toFixed(pricePrecision)}` : "-"}
