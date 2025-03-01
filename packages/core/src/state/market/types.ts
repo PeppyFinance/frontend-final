@@ -8,5 +8,5 @@ export interface CoinCategories {
 }
 
 export interface CoinRecommendations {
-  [coinSymbol: string]: string;
+  [coinSymbol: string]: { name: string, emojy: string };
 }
