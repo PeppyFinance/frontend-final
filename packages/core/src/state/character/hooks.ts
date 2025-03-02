@@ -35,6 +35,5 @@ export function useSetDialog() {
 
 export function useCharacterState(): CharacterState {
   const state = useAppSelector((state) => state.character);
-  console.log({ state });
   return state;
 }
