@@ -1,8 +1,10 @@
+import {
+  CharacterId,
+  Character as CharacterProps,
+} from "@symmio/frontend-sdk/state/character/types";
 import { useCallback } from "react";
-import styled, { css, DefaultTheme, keyframes } from "styled-components";
+import styled, { DefaultTheme, css, keyframes } from "styled-components";
 import { Z_INDEX } from "theme";
-import { CharacterProps } from "./characterConfig";
-import { CharacterId } from "./characterIds.type";
 
 export interface CharacterInteractiveProps extends CharacterProps {
   onClick?: (name: CharacterId) => void;

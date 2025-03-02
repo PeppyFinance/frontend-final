@@ -1,8 +1,8 @@
 import {
+  useCharacterState,
   useSetCharacterInactive,
   useSetDialog,
 } from "@symmio/frontend-sdk/state/character/hooks";
-import { useCharacterContext } from "components/BackAlley/characterContext";
 import styled, { keyframes } from "styled-components";
 import { Z_INDEX } from "theme";
 import { DialogButton, DialogButtonText } from "./DialogButton";
@@ -110,30 +110,21 @@ const ButtonWrapper = styled.div`
 `;
 
 export const CharacterModal = () => {
-  const { characterState, characterDispatch } = useCharacterContext();
+  const characterState = useCharacterState();
   const setCharacterInactive = useSetCharacterInactive();
   const setDialog = useSetDialog();
   const onClose = () => {
-    characterDispatch({ type: "SET_INACTIVE" });
     setCharacterInactive();
   };
 
   const onAnswer = (dialogId: number | undefined) => {
     if (dialogId) {
-      characterDispatch({
-        type: "SET_DIALOG",
-        dialogId,
-      });
       setDialog(dialogId);
     }
   };
 
   const onNextDialog = () => {
     if (characterState.dialog?.nextDialog) {
-      characterDispatch({
-        type: "SET_DIALOG",
-        dialogId: characterState.dialog.nextDialog,
-      });
       setDialog(characterState.dialog.nextDialog);
     } else {
       if (
