@@ -1,6 +1,6 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { setCharaterActive, setCharaterInactive, setDialog } from "./actions";
-import { Characters } from "./character";
+import { Characters } from "./characters";
 import { CharacterState } from "./types";
 
 const initialState: CharacterState = {

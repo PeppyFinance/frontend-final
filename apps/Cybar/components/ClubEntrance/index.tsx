@@ -1,4 +1,4 @@
-import { ClubEntranceChars } from "@symmio/frontend-sdk/state/character/character";
+import { ClubEntranceChars } from "@symmio/frontend-sdk/state/character/characters";
 import { DefaultContainer } from "components/App/AccountData/MyAccount/styles";
 import { Character } from "components/BackAlley/Characters/character";
 import styled from "styled-components";

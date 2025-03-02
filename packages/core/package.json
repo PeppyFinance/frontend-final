@@ -404,57 +404,57 @@
       "types": "./dist/state/character/types.d.ts",
       "default": "./dist/state/character/types.js"
     },
-    "./state/character/character/bouncer1": {
-      "types": "./dist/state/character/character/bouncer1.d.ts",
-      "default": "./dist/state/character/character/bouncer1.js"
+    "./state/character/characters/bouncer1": {
+      "types": "./dist/state/character/characters/bouncer1.d.ts",
+      "default": "./dist/state/character/characters/bouncer1.js"
     },
-    "./state/character/character/bouncer2": {
-      "types": "./dist/state/character/character/bouncer2.d.ts",
-      "default": "./dist/state/character/character/bouncer2.js"
+    "./state/character/characters/bouncer2": {
+      "types": "./dist/state/character/characters/bouncer2.d.ts",
+      "default": "./dist/state/character/characters/bouncer2.js"
     },
-    "./state/character/character/characterBackAlley1": {
-      "types": "./dist/state/character/character/characterBackAlley1.d.ts",
-      "default": "./dist/state/character/character/characterBackAlley1.js"
+    "./state/character/characters/characterBackAlley1": {
+      "types": "./dist/state/character/characters/characterBackAlley1.d.ts",
+      "default": "./dist/state/character/characters/characterBackAlley1.js"
     },
-    "./state/character/character/characterBackAlley2": {
-      "types": "./dist/state/character/character/characterBackAlley2.d.ts",
-      "default": "./dist/state/character/character/characterBackAlley2.js"
+    "./state/character/characters/characterBackAlley2": {
+      "types": "./dist/state/character/characters/characterBackAlley2.d.ts",
+      "default": "./dist/state/character/characters/characterBackAlley2.js"
     },
-    "./state/character/character/characterBackAlley3": {
-      "types": "./dist/state/character/character/characterBackAlley3.d.ts",
-      "default": "./dist/state/character/character/characterBackAlley3.js"
+    "./state/character/characters/characterBackAlley3": {
+      "types": "./dist/state/character/characters/characterBackAlley3.d.ts",
+      "default": "./dist/state/character/characters/characterBackAlley3.js"
     },
-    "./state/character/character": {
-      "types": "./dist/state/character/character/index.d.ts",
-      "default": "./dist/state/character/character/index.js"
+    "./state/character/characters": {
+      "types": "./dist/state/character/characters/index.d.ts",
+      "default": "./dist/state/character/characters/index.js"
     },
-    "./state/character/character/visitor1": {
-      "types": "./dist/state/character/character/visitor1.d.ts",
-      "default": "./dist/state/character/character/visitor1.js"
+    "./state/character/characters/visitor1": {
+      "types": "./dist/state/character/characters/visitor1.d.ts",
+      "default": "./dist/state/character/characters/visitor1.js"
     },
-    "./state/character/character/visitor2": {
-      "types": "./dist/state/character/character/visitor2.d.ts",
-      "default": "./dist/state/character/character/visitor2.js"
+    "./state/character/characters/visitor2": {
+      "types": "./dist/state/character/characters/visitor2.d.ts",
+      "default": "./dist/state/character/characters/visitor2.js"
     },
-    "./state/character/character/visitor3": {
-      "types": "./dist/state/character/character/visitor3.d.ts",
-      "default": "./dist/state/character/character/visitor3.js"
+    "./state/character/characters/visitor3": {
+      "types": "./dist/state/character/characters/visitor3.d.ts",
+      "default": "./dist/state/character/characters/visitor3.js"
     },
-    "./state/character/character/visitor4": {
-      "types": "./dist/state/character/character/visitor4.d.ts",
-      "default": "./dist/state/character/character/visitor4.js"
+    "./state/character/characters/visitor4": {
+      "types": "./dist/state/character/characters/visitor4.d.ts",
+      "default": "./dist/state/character/characters/visitor4.js"
     },
-    "./state/character/character/visitor5": {
-      "types": "./dist/state/character/character/visitor5.d.ts",
-      "default": "./dist/state/character/character/visitor5.js"
+    "./state/character/characters/visitor5": {
+      "types": "./dist/state/character/characters/visitor5.d.ts",
+      "default": "./dist/state/character/characters/visitor5.js"
     },
-    "./state/character/character/visitor6": {
-      "types": "./dist/state/character/character/visitor6.d.ts",
-      "default": "./dist/state/character/character/visitor6.js"
+    "./state/character/characters/visitor6": {
+      "types": "./dist/state/character/characters/visitor6.d.ts",
+      "default": "./dist/state/character/characters/visitor6.js"
     },
-    "./state/character/character/visitor7": {
-      "types": "./dist/state/character/character/visitor7.d.ts",
-      "default": "./dist/state/character/character/visitor7.js"
+    "./state/character/characters/visitor7": {
+      "types": "./dist/state/character/characters/visitor7.d.ts",
+      "default": "./dist/state/character/characters/visitor7.js"
     },
     "./state/hedger/actions": {
       "types": "./dist/state/hedger/actions.d.ts",

@@ -2,7 +2,7 @@ import {
   charBackAlley1,
   charBackAlley2,
   charBackAlley3,
-} from "@symmio/frontend-sdk/state/character/character/index";
+} from "@symmio/frontend-sdk/state/character/characters";
 import {
   useCharacterState,
   useSetCharacterActive,
