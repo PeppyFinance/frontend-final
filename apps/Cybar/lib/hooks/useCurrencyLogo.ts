@@ -4,8 +4,9 @@ import { SupportedChainId } from "@symmio/frontend-sdk/constants/chains";
 import useActiveWagmi from "@symmio/frontend-sdk/lib/hooks/useActiveWagmi";
 import DefaultToken from "/public/static/images/tokens/default-token.svg";
 
-// TODO: Add Fartcoin, Blur, JTO, Dusk, MANTA, ATA, DYM, BEAMX, RDNT, LEVER, AI, SSV, ai16z, bigtime, ntrn, CHR, RENDER, PENGU, JOE, XAI, THE, AGLD, GRASS, NEIRO, ZETA, 1000RATS, STG, AERO, CHZ, MYRO, 1000LUNC, REZ, GRIFFAIN, GMX, AIXBT, SKL, TOKEN, CETUS, ARKM, RARE, XVS
-// TODO: Change background for WLD, NEAR, SEI, ONDO, CFX, AR, GALA, ALT, CKB, TAO
+// TODO: Add Fartcoin, Blur, JTO, Dusk, MANTA, ATA, DYM, BEAMX, RDNT, LEVER, AI, SSV, ai16z, bigtime, ntrn, CHR, RENDER, PENGU, JOE, XAI, THE, AGLD, GRASS, NEIRO, ZETA, 1000RATS, STG, AERO, CHZ, MYRO, 1000LUNC, REZ, GRIFFAIN, GMX, AIXBT, SKL, TOKEN, CETUS, ARKM, RARE, XVS, SPELL, ZRO, PEOPLE, SXP, MORPHO, ACX, PHB, GMT, USUAL, HIGH, T, SPX, NEIROETH, MAV, ACE, OM, ZEREBRO, AUCTION,
+// UXLINK, BERA, TRU, NFP, ONG, IO, ZEN, ILV, BADGER, POL, MOODENG
+// TODO: Change background for WLD, NEAR, SEI, ONDO, CFX, AR, GALA, ALT, CKB, TAO, QNT, SFP, LSK, GOAT, ACH, NKN, NMR
 const tokenNames = [
   "BTC",
   "USDT",
@@ -118,9 +119,50 @@ const tokenNames = [
   "ASTR",
   "ANKR",
   "WOO",
+  "ENJ",
+  "LRC",
+  "HIVE",
+  "TRB",
+  "QNT",
+  "ETHFI",
+  "STORJ",
+  "ARK",
+  "KSM",
+  "RONIN",
+  "1INCH",
+  "MAGIC",
+  "RSR",
+  "METIS",
+  "CAKE",
+  "ID",
+  "SFP",
+  "BAL",
+  "LQTY",
+  "MEW",
+  "CELO",
+  "ARPA",
+  "BICO",
+  "LSK",
+  "GOAT",
+  "OGN",
+  "BAKE",
+  "C98",
   "1000FLOKI",
+  "MTL",
+  "AEVO",
+  "1000SATS",
+  "BRETT",
+  "AKT",
+  "ACH",
+  "MOVR",
+  "ALPHA",
+  "RVN",
+  "NKN",
+  "JASMY",
   "1000BONK",
   "1000PEPE",
+  "BAN",
+  "NMR",
 ];
 
 const LogoMap: { [token: string]: any } = {};
