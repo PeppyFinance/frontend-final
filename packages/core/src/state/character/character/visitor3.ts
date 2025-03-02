@@ -1,6 +1,6 @@
-import { CharacterProps } from "components/BackAlley/Characters/characterConfig";
+import { Character } from "../types";
 
-export const visitor3: CharacterProps = {
+export const visitor3: Character = {
   name: "visitor3",
   id: "visitor3",
   left: "calc(20vw + 280px)",
