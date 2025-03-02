@@ -1,4 +1,7 @@
-import { useSetCharacterActive } from "@symmio/frontend-sdk/state/character/hooks";
+import {
+  useCharacterState,
+  useSetCharacterActive,
+} from "@symmio/frontend-sdk/state/character/hooks";
 import { CharacterModal } from "components/BackAlley/Characters/Modal";
 import { Character } from "components/BackAlley/Characters/character";
 import { BackAlleyChars } from "components/BackAlley/Characters/characterConfig";
@@ -63,7 +66,8 @@ const SwiperSlide = styled(SwiperSlideImport)`
 `;
 
 export const BackAlley = () => {
-  const { characterState, characterDispatch } = useCharacterContext();
+  const { characterDispatch } = useCharacterContext();
+  const characterState = useCharacterState();
   const setCharacerActive = useSetCharacterActive();
   const isDesktop = useMediaQuery("(min-width: 600px)");
   const onClickCharacter = (characterId: CharacterId) => {
@@ -73,6 +77,7 @@ export const BackAlley = () => {
     });
     setCharacerActive(characterId);
   };
+  // console.log(characterStateTest)
 
   if (isDesktop) {
     return (
