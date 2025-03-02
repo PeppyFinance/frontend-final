@@ -1,6 +1,6 @@
-import { CharacterProps } from ".";
+import { Character } from "../types";
 
-export const charBackAlley1: CharacterProps = {
+export const charBackAlley1: Character = {
   name: "dansel2099",
   id: "charBackAlley1",
   left: "calc(45vw - 370px)",

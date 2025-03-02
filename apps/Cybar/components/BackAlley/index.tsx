@@ -1,20 +1,24 @@
-import { CharacterModal } from "components/BackAlley/Characters/Modal";
-import { Character } from "components/BackAlley/Characters/character";
-import { BackAlleyChars } from "components/BackAlley/Characters/characterConfig";
-import { CharacterId } from "components/BackAlley/Characters/characterIds.type";
+import {
+  charBackAlley1,
+  charBackAlley2,
+  charBackAlley3,
+} from "@symmio/frontend-sdk/state/character/characters";
+import {
+  useCharacterState,
+  useSetCharacterActive,
+} from "@symmio/frontend-sdk/state/character/hooks";
 import { useMediaQuery } from "hooks/useMediaQuery";
 import styled from "styled-components";
 import { NavigationArrow } from "./Arrow";
-import { charBackAlley1 } from "./Characters/characterConfig/charBackAlley1";
-import { charBackAlley2 } from "./Characters/characterConfig/charBackAlley2";
-import { charBackAlley3 } from "./Characters/characterConfig/charBackAlley3";
-import { useCharacterContext } from "./characterContext";
 
 // import Swiper core and required modules
 import { Pagination, Parallax } from "swiper/modules";
 import { Swiper, SwiperSlide as SwiperSlideImport } from "swiper/react";
 
 // Import Swiper styles
+import { CharacterId } from "@symmio/frontend-sdk/state/character/types";
+import { CharacterModal } from "components/Characters/Modal";
+import { Character } from "components/Characters/character";
 import "swiper/css";
 import "swiper/css/pagination";
 
@@ -62,20 +66,18 @@ const SwiperSlide = styled(SwiperSlideImport)`
 `;
 
 export const BackAlley = () => {
-  const { characterState, characterDispatch } = useCharacterContext();
+  const characterState = useCharacterState();
+  const setCharacerActive = useSetCharacterActive();
   const isDesktop = useMediaQuery("(min-width: 600px)");
   const onClickCharacter = (characterId: CharacterId) => {
-    characterDispatch({
-      type: "SET_ACTIVE",
-      characterId,
-    });
+    setCharacerActive(characterId);
   };
 
   if (isDesktop) {
     return (
       <BackAlleyContainer>
         <CharacterModal />
-        {BackAlleyChars.map((props) => (
+        {[charBackAlley1, charBackAlley2, charBackAlley3].map((props) => (
           <Character
             key={props.id}
             onClick={onClickCharacter}
