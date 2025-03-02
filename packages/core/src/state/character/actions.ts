@@ -4,6 +4,6 @@ import { CharacterId } from "./types";
 export const setCharaterActive = createAction<CharacterId>(
   "character/setCharaterActive",
 );
-export const setCharaterInactive = createAction<CharacterId>(
+export const setCharaterInactive = createAction(
   "character/setCharaterInactive",
 );

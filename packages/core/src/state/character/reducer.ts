@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { setCharaterActive } from "./actions";
+import { setCharaterActive, setCharaterInactive } from "./actions";
 import { Characters } from "./character";
 import { CharacterState } from "./types";
 
@@ -8,10 +8,15 @@ const initialState: CharacterState = {
 };
 
 export const characterReducer = createReducer(initialState, (build) =>
-  build.addCase(setCharaterActive, (characterState, { payload }) => {
-    characterState.character = Characters.find(
-      (character) => character.id === payload,
-    );
-    return characterState;
-  }),
+  build
+    .addCase(setCharaterActive, (state, { payload }) => {
+      state.character = Characters.find(
+        (character) => character.id === payload,
+      );
+      return state;
+    })
+    .addCase(setCharaterInactive, (state) => {
+      state.character = undefined;
+      return state;
+    }),
 );
