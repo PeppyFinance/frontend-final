@@ -2,6 +2,7 @@ import { CSSProperties } from "react";
 
 export type CharacterState = {
   character?: Character;
+  dialog?: Dialog;
 };
 
 type DialogContent = {

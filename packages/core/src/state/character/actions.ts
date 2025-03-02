@@ -7,3 +7,5 @@ export const setCharaterActive = createAction<CharacterId>(
 export const setCharaterInactive = createAction(
   "character/setCharaterInactive",
 );
+
+export const setDialog = createAction<number>("character/setDialog");
