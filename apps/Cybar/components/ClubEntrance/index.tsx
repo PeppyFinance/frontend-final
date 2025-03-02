@@ -1,6 +1,6 @@
 import { ClubEntranceChars } from "@symmio/frontend-sdk/state/character/characters";
 import { DefaultContainer } from "components/App/AccountData/MyAccount/styles";
-import { Character } from "components/BackAlley/Characters/character";
+import { Character } from "components/Characters/character";
 import styled from "styled-components";
 import { NavigationArrow } from "./Arrow";
 

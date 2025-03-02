@@ -7,9 +7,6 @@ import {
   useCharacterState,
   useSetCharacterActive,
 } from "@symmio/frontend-sdk/state/character/hooks";
-import { CharacterModal } from "components/BackAlley/Characters/Modal";
-import { Character } from "components/BackAlley/Characters/character";
-import { CharacterId } from "components/BackAlley/Characters/characterIds.type";
 import { useMediaQuery } from "hooks/useMediaQuery";
 import styled from "styled-components";
 import { NavigationArrow } from "./Arrow";
@@ -19,6 +16,9 @@ import { Pagination, Parallax } from "swiper/modules";
 import { Swiper, SwiperSlide as SwiperSlideImport } from "swiper/react";
 
 // Import Swiper styles
+import { CharacterId } from "@symmio/frontend-sdk/state/character/types";
+import { CharacterModal } from "components/Characters/Modal";
+import { Character } from "components/Characters/character";
 import "swiper/css";
 import "swiper/css/pagination";
 
@@ -72,7 +72,6 @@ export const BackAlley = () => {
   const onClickCharacter = (characterId: CharacterId) => {
     setCharacerActive(characterId);
   };
-  // console.log(characterStateTest)
 
   if (isDesktop) {
     return (
