@@ -1,3 +1,4 @@
+import { useSetCharacterInactive } from "@symmio/frontend-sdk/state/character/hooks";
 import { useCharacterContext } from "components/BackAlley/characterContext";
 import styled, { keyframes } from "styled-components";
 import { Z_INDEX } from "theme";
@@ -107,8 +108,10 @@ const ButtonWrapper = styled.div`
 
 export const CharacterModal = () => {
   const { characterState, characterDispatch } = useCharacterContext();
+  const setCharacterInactive = useSetCharacterInactive();
   const onClose = () => {
     characterDispatch({ type: "SET_INACTIVE" });
+    setCharacterInactive();
   };
 
   const onAnswer = (dialogId: number | undefined) => {
