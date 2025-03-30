@@ -46,7 +46,7 @@ export type Popup = {
 export type PopupList = Array<Popup>;
 
 export interface ApplicationState {
-  chainConnectivityWarning: boolean;
+  readonly chainConnectivityWarning: boolean;
   readonly popupList: PopupList;
   readonly openModal: ApplicationModal | null;
   injectedAddress: string;
@@ -61,8 +61,7 @@ const initialState: ApplicationState = {
 export const applicationReducer = createReducer(initialState, (builder) =>
   builder
     .addCase(setChainConnectivityWarning, (state, { payload }) => {
-      const { chainConnectivityWarning } = payload;
-      state.chainConnectivityWarning = chainConnectivityWarning;
+      return { ...state, ...payload };
     })
     .addCase(setOpenModal, (state, { payload }) => {
       state.openModal = payload;
