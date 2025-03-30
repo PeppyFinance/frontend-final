@@ -1,7 +1,7 @@
+import { createReducer, nanoid } from "@reduxjs/toolkit";
 import { SupportedChainId } from "../../constants/chains";
 import { NotificationDetails } from "../notifications/types";
 import { TransactionInfo } from "../transactions/types";
-import { createReducer, nanoid } from "@reduxjs/toolkit";
 
 import {
   addPopup,
@@ -24,16 +24,16 @@ export enum ApplicationModal {
 
 export type PopupContent =
   | {
-    txn: {
-      hash: string;
-      success: boolean;
-      summary?: string;
-      info?: TransactionInfo;
-    };
-  }
+      txn: {
+        hash: string;
+        success: boolean;
+        summary?: string;
+        info?: TransactionInfo;
+      };
+    }
   | {
-    failedSwitchNetwork: SupportedChainId;
-  }
+      failedSwitchNetwork: SupportedChainId;
+    }
   | NotificationDetails;
 
 export type Popup = {
@@ -59,7 +59,6 @@ const initialState: ApplicationState = {
   injectedAddress: "",
 };
 export const applicationReducer = createReducer(initialState, (builder) =>
-
   builder
     .addCase(setChainConnectivityWarning, (state, { payload }) => {
       const { chainConnectivityWarning } = payload;

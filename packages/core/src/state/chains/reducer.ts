@@ -1,8 +1,8 @@
+import { createReducer } from "@reduxjs/toolkit";
 import { Config } from "@wagmi/core";
 import { SupportedChainId } from "../../constants/chains";
 import { HedgerInfoMap } from "../../types/hedger";
 import { setChains } from "./actions";
-import { createReducer } from "@reduxjs/toolkit";
 
 /// original import but not working with TS
 // import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
@@ -55,7 +55,7 @@ export const chainReducer = createReducer(initialState, (builder) =>
   builder.addCase(setChains, (state, { payload }) => {
     return {
       ...state,
-      ...payload
-    }
+      ...payload,
+    };
   }),
 );

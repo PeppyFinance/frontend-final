@@ -5,6 +5,7 @@ import remove from "lodash/remove.js";
 // const { createReducer } = ((toolkitRaw as any).default ??
 //   toolkitRaw) as typeof toolkitRaw;
 
+import { createReducer } from "@reduxjs/toolkit";
 import { ApiState } from "../../types/api";
 import {
   addReadNotification,
@@ -17,7 +18,6 @@ import {
 } from "./actions";
 import { getNotifications } from "./thunks";
 import { NotificationDetails, NotificationType } from "./types";
-import { createReducer } from "@reduxjs/toolkit";
 
 export interface NotificationState {
   unreadNotification: NotificationDetails[];

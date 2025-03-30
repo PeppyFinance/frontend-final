@@ -1,11 +1,15 @@
 import {
   Action,
-  Store,
   AnyAction,
   ThunkAction,
   ThunkDispatch,
 } from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
-import { PersistConfig, createTransform, persistReducer, persistStore } from "redux-persist";
+import {
+  PersistConfig,
+  createTransform,
+  persistReducer,
+  persistStore,
+} from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 // import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
@@ -15,6 +19,7 @@ import storage from "redux-persist/lib/storage";
 // import * as reduxPersisRaw from "redux-persist/lib/integration/react";
 // const { PersistGate } = ((reduxPersisRaw as any).default ??
 //   reduxPersisRaw) as typeof reduxPersisRaw;
+import { configureStore } from "@reduxjs/toolkit";
 import {
   Provider,
   TypedUseSelectorHook,
@@ -24,7 +29,6 @@ import {
 import "symbol-observable";
 import { ONE_DAY_IN_MILLISECOND } from "../constants";
 import reducer from "./reducer";
-import { configureStore } from "@reduxjs/toolkit";
 // import crossBrowserListener from "../utils/reduxPersistListener";
 
 const createExpirationTransform = (expiryTime: number) => {
@@ -73,8 +77,9 @@ function makeStore() {
     devTools: process.env.NODE_ENV === "development",
   });
 }
+type ReturnMakeStore = ReturnType<typeof makeStore>;
 
-let store: ReturnType<typeof makeStore> | undefined;
+let store: ReturnMakeStore;
 
 export const getOrCreateStore = () => {
   const _store = store ?? makeStore();

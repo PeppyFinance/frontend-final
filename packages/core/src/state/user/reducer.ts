@@ -5,6 +5,7 @@ import { AddedHedger, TermsStatus, UserState } from "./types";
 // const { createReducer } = ((toolkitRaw as any).default ??
 //   toolkitRaw) as typeof toolkitRaw;
 
+import { createReducer } from "@reduxjs/toolkit";
 import find from "lodash/find.js";
 import { AccountUpnl } from "../../types/user";
 import {
@@ -32,7 +33,6 @@ import {
   getIsWhiteList,
   getTotalDepositsAndWithdrawals,
 } from "./thunks";
-import { createReducer } from "@reduxjs/toolkit";
 
 const currentTimestamp = () => new Date().getTime();
 

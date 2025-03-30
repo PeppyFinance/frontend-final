@@ -1,5 +1,5 @@
-import { ApplicationModal, PopupContent } from "./reducer";
 import { createAction } from "@reduxjs/toolkit";
+import { ApplicationModal, PopupContent } from "./reducer";
 
 export const setChainConnectivityWarning = createAction<{
   chainConnectivityWarning: boolean;

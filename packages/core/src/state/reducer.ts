@@ -1,3 +1,4 @@
+import { combineReducers } from "@reduxjs/toolkit";
 import { applicationReducer as application } from "./application/reducer";
 import { chainReducer as chains } from "./chains/reducer";
 import { characterReducer as character } from "./character/reducer";
@@ -8,7 +9,6 @@ import { quotesReducer as quotes } from "./quotes/reducer";
 import { tradeReducer as trade } from "./trade/reducer";
 import { transactionReducer as transactions } from "./transactions/reducer";
 import { userReduer as user } from "./user/reducer";
-import { combineReducers } from '@reduxjs/toolkit';
 
 // import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
 // const { combineReducers } = ((toolkitRaw as any).default ??

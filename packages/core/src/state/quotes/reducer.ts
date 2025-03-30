@@ -8,6 +8,7 @@ import unionBy from "lodash/unionBy.js";
 import { Quote } from "../../types/quote";
 import { InstantCloseResponse, InstantCloseStatus, QuotesState } from "./types";
 
+import { createReducer } from "@reduxjs/toolkit";
 import { ApiState } from "../../types/api";
 import {
   addPending,
@@ -25,7 +26,6 @@ import {
   updateQuoteInstantCloseStatus,
 } from "./actions";
 import { getHistory, getInstantCloses } from "./thunks";
-import { createReducer } from "@reduxjs/toolkit";
 
 export const initialState: QuotesState = {
   history: {},
@@ -111,7 +111,7 @@ export const quotesReducer = createReducer(initialState, (builder) =>
     })
 
     .addCase(addQuoteToHistory, (state, { payload: { quote, chainId } }) => {
-      const history = (state.history[chainId]) ?? [];
+      const history = state.history[chainId] ?? [];
 
       if (find(history, { id: quote.id })) {
         return;
