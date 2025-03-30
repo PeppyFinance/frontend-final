@@ -65,7 +65,7 @@ export default function MarketFundingRate() {
     <>
       <ColumnCenter>
         <Name>
-          Funding (8 hs)
+          Funding (8 hs) Long/Short
           <a data-tip data-for={"funding"}>
             <StyledInfoIcon />
             <ToolTip id={"funding"} aria-haspopup="true">
