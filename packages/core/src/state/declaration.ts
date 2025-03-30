@@ -7,7 +7,7 @@ import {
   ThunkDispatch,
 } from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
 import { createTransform, persistReducer, persistStore } from "redux-persist";
-// import storage from "redux-persist/lib/storage";
+import storage from "redux-persist/lib/storage";
 const { configureStore } = ((toolkitRaw as any).default ??
   toolkitRaw) as typeof toolkitRaw;
 // import { AsyncNodeStorage } from "redux-persist-node-storage";
@@ -23,7 +23,6 @@ import {
 import "symbol-observable";
 import { ONE_DAY_IN_MILLISECOND } from "../constants";
 import reducer from "./reducer";
-import storage from "./noopStorage";
 // import crossBrowserListener from "../utils/reduxPersistListener";
 
 const createExpirationTransform = (expiryTime) => {
