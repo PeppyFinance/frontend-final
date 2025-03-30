@@ -134,7 +134,7 @@ export function NetworksModal({
     return (
       <div>
         {" "}
-        {frontEnds.map((chain: IFrontEndsInfo, index) => {          
+        {frontEnds.map((chain: IFrontEndsInfo, index) => {
           const Chain = ChainInfo[chain.chainId];
           const active =
             chain.chainId === chainId && frontEndName === chain.name;

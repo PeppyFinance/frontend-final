@@ -47,10 +47,8 @@ export default function Web3Network() {
 
   const isMultiChain = useMemo(() => {
     if (chainId && Object.keys(MULTI_ACCOUNT_ADDRESS).length > 0) {
-
       return (
-        MULTI_ACCOUNT_ADDRESS &&
-        Object.keys(MULTI_ACCOUNT_ADDRESS).length > 1
+        MULTI_ACCOUNT_ADDRESS && Object.keys(MULTI_ACCOUNT_ADDRESS).length > 1
       );
     }
     return false;

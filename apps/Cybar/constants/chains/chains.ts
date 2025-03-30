@@ -25,8 +25,11 @@ const iotaEvm: Chain = {
     public: { http: ["https://json-rpc.evm.iotaledger.net"] }, // TODO Replace with Cybar's public RPC URL later
   },
   blockExplorers: {
-    default: { name: "IOTA EVM explorer", url: "https://explorer.evm.iota.org/tx/" },
-  }
+    default: {
+      name: "IOTA EVM explorer",
+      url: "https://explorer.evm.iota.org/tx/",
+    },
+  },
 };
 
 const supportedWagmiChain = {
@@ -38,7 +41,7 @@ const supportedWagmiChain = {
   [SupportedChainId.MAINNET]: mainnet,
   [SupportedChainId.MANTLE]: mantle,
   [SupportedChainId.BLAST]: blast,
-  iotaEvm, 
+  iotaEvm,
 };
 
 function getWagmiChain(supportChainList: number[]): Chain[] {

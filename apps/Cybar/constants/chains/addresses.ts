@@ -239,7 +239,6 @@ export const BaseChainCybarFE: ChainType = {
     "https://api.studio.thegraph.com/query/62454/fundingrate_base_8_2/version/latest",
 };
 
-
 export const IotaEvmChainCybarFE: ChainType = {
   COLLATERAL_SYMBOL: "USDCE",
   COLLATERAL_DECIMALS: 6,
@@ -264,7 +263,6 @@ export const IotaEvmChainCybarFE: ChainType = {
   FUNDING_RATE_SUBGRAPH_ADDRESS:
     "https://api.studio.thegraph.com/query/62454/fundingrate_base_8_2/version/latest",
 };
-
 
 export const ArbitrumChainPearFE: ChainType = {
   COLLATERAL_SYMBOL: "USDC",
