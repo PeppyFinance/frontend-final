@@ -3,9 +3,9 @@ import { Character } from "../types";
 export const charBackAlley2: Character = {
   name: "Coomer",
   id: "charBackAlley2",
-  left: "calc(45vw + 80px)",
-  bottom: "120px",
-  height: "333px",
+  left: "45%",
+  bottom: "3.15%",
+  height: "52.4%",
   mobilePositions: {
     left: "100px",
     bottom: "40px",
