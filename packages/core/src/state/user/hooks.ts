@@ -52,7 +52,12 @@ import {
 
 export function useIsDarkMode(): boolean {
   const { userDarkMode = true, matchesDarkMode = true } = useAppSelector(
-    ({ user: { matchesDarkMode, userDarkMode } = { matchesDarkMode: true, userDarkMode: true } }) => ({
+    ({
+      user: { matchesDarkMode, userDarkMode } = {
+        matchesDarkMode: true,
+        userDarkMode: true,
+      },
+    }) => ({
       userDarkMode,
       matchesDarkMode,
     }),
