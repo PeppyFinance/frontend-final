@@ -1,4 +1,3 @@
-import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
 import {
   Action,
   Store,
@@ -6,10 +5,12 @@ import {
   ThunkAction,
   ThunkDispatch,
 } from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
-import { createTransform, persistReducer, persistStore } from "redux-persist";
+import { PersistConfig, createTransform, persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-const { configureStore } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
+
+// import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
+// const { configureStore } = ((toolkitRaw as any).default ??
+//   toolkitRaw) as typeof toolkitRaw;
 // import { AsyncNodeStorage } from "redux-persist-node-storage";
 // import * as reduxPersisRaw from "redux-persist/lib/integration/react";
 // const { PersistGate } = ((reduxPersisRaw as any).default ??
@@ -23,7 +24,7 @@ import {
 import "symbol-observable";
 import { ONE_DAY_IN_MILLISECOND } from "../constants";
 import reducer from "./reducer";
-import { ConfigureStoreOptions } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 // import crossBrowserListener from "../utils/reduxPersistListener";
 
 const createExpirationTransform = (expiryTime: number) => {
@@ -48,7 +49,7 @@ const createExpirationTransform = (expiryTime: number) => {
 };
 
 const PERSISTED_KEYS: string[] = ["user"];
-const persistConfig = {
+const persistConfig: PersistConfig<RootState> = {
   key: "root",
   storage,
   whitelist: PERSISTED_KEYS,
@@ -70,10 +71,10 @@ function makeStore() {
         },
       }),
     devTools: process.env.NODE_ENV === "development",
-  } as ConfigureStoreOptions);
+  });
 }
 
-let store: Store<RootState, AnyAction>;
+let store: ReturnType<typeof makeStore> | undefined;
 
 export const getOrCreateStore = () => {
   const _store = store ?? makeStore();
