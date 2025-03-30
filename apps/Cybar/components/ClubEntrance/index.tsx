@@ -1,4 +1,4 @@
-import { ClubEntranceChars } from "@symmio/frontend-sdk/state/character/characters";
+import { ClubEntranceCharacters } from "@symmio/frontend-sdk/state/character/characters";
 import { Character as CharacterType } from "@symmio/frontend-sdk/state/character/types";
 import { DefaultContainer } from "components/App/AccountData/MyAccount/styles";
 import { Character } from "components/Characters/character";
@@ -64,14 +64,14 @@ export const ClubEntrance = () => {
 
   // Group characters into sets of 3
   const characterGroups: CharacterType[][] = [];
-  for (let i = 0; i < ClubEntranceChars.length; i += 3) {
-    characterGroups.push(ClubEntranceChars.slice(i, i + 3));
+  for (let i = 0; i < ClubEntranceCharacters.length; i += 3) {
+    characterGroups.push(ClubEntranceCharacters.slice(i, i + 3));
   }
 
   if (isDesktop) {
     return (
       <ClubEntranceContainer>
-        {ClubEntranceChars.map((props) => (
+        {ClubEntranceCharacters.map((props) => (
           <Character key={props.id} {...props} isActive={false} />
         ))}
         <NavigationArrow href="/" display />
@@ -105,7 +105,7 @@ export const ClubEntrance = () => {
                 />
               ))}
             </CharactersContainer>
-            {groupIndex === characterGroups.length - 1 && (
+            {groupIndex === 0 && (
               <NavigationArrow href="/" display />
             )}
           </SwiperSlide>
