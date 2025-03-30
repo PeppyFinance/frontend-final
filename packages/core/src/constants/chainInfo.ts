@@ -133,6 +133,19 @@ export const ChainInfo: { [chainId: number]: Info } = {
     blockExplorerUrl: "https://basescan.org/",
     WRAPPED_NATIVE_ADDRESS: "0x4200000000000000000000000000000000000006",
   },
+  [SupportedChainId.IOTAEVM]: {
+    chainId: "0x2276",
+    chainName: "IOTA EVM",
+    label: "IOTA-EVM",
+    nativeCurrency: {
+      name: "IOTA",
+      symbol: "IOTA",
+      decimals: 18,
+    },
+    rpcUrl: "https://json-rpc.evm.iotaledger.net",
+    blockExplorerUrl: "https://explorer.evm.iota.org/tx/",
+    WRAPPED_NATIVE_ADDRESS: "0x160345fC359604fC6e70E3c5fAcbdE5F7A9342d8",
+  },
   [SupportedChainId.MANTLE]: {
     chainId: "0x1388",
     chainName: "Mantle",

@@ -239,6 +239,33 @@ export const BaseChainCybarFE: ChainType = {
     "https://api.studio.thegraph.com/query/62454/fundingrate_base_8_2/version/latest",
 };
 
+
+export const IotaEvmChainCybarFE: ChainType = {
+  COLLATERAL_SYMBOL: "USDCE",
+  COLLATERAL_DECIMALS: 6,
+  COLLATERAL_ADDRESS: "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6",
+
+  DIAMOND_ADDRESS: "0xc258535aaF6ad3cEd5D2E03e2B66C35262488309",
+  MULTI_ACCOUNT_ADDRESS: "0xdfC2a55a44aD3d3aAbFe8D1C498Ea923c6D39526",
+
+  WRAPPED_NATIVE_ADDRESS: "0x160345fC359604fC6e70E3c5fAcbdE5F7A9342d8",
+
+  // TODO Double check following properties
+  PARTY_B_WHITELIST: "0x9206D9d8F7F1B212A4183827D20De32AF3A23c59",
+  SIGNATURE_STORE_ADDRESS: "0xC19e66D08350Eb88A41377b16C8Ab93EE0FB4996",
+  TP_SL_WALLET_ADDRESS: "0x1De09355907249e18eeD89557a2c7fBd58bdCC63",
+
+  MULTICALL3_ADDRESS: "0x66EC85c6d1971Ea15472754F733fA3F956a0Ec30",
+  USDC_ADDRESS: "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
+  ANALYTICS_SUBGRAPH_ADDRESS:
+    "https://api.studio.thegraph.com/query/62454/analytics_base_8_2/version/latest",
+  ORDER_HISTORY_SUBGRAPH_ADDRESS:
+    "https://api.studio.thegraph.com/query/62454/main_base_8_2/version/latest",
+  FUNDING_RATE_SUBGRAPH_ADDRESS:
+    "https://api.studio.thegraph.com/query/62454/fundingrate_base_8_2/version/latest",
+};
+
+
 export const ArbitrumChainPearFE: ChainType = {
   COLLATERAL_SYMBOL: "USDC",
   COLLATERAL_DECIMALS: 6,
@@ -301,7 +328,9 @@ export const contractInfo: {
   [SupportedChainId.BASE]: {
     [FrontEndsName.CYBAR]: BaseChainCybarFE,
   },
-
+  [SupportedChainId.IOTAEVM]: {
+    [FrontEndsName.CYBAR]: IotaEvmChainCybarFE,
+  },
   [SupportedChainId.ARBITRUM]: {
     [FrontEndsName.PEAR]: ArbitrumChainPearFE,
     [FrontEndsName.CYBAR]: ArbitrumChainCybarFE,
