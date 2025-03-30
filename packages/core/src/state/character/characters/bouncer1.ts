@@ -12,5 +12,5 @@ export const bouncer1: Character = {
     bottom: "30px",
     height: "380px",
     left: "15px",
-  }
+  },
 };

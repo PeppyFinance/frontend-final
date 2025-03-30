@@ -105,9 +105,7 @@ export const ClubEntrance = () => {
                 />
               ))}
             </CharactersContainer>
-            {groupIndex === 0 && (
-              <NavigationArrow href="/" display />
-            )}
+            {groupIndex === 0 && <NavigationArrow href="/" display />}
           </SwiperSlide>
         ))}
       </SwiperContainer>

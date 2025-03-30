@@ -11,5 +11,5 @@ export const visitor1: Character = {
     bottom: "65px",
     height: "285px",
     left: "calc(3.5vw + 250px)",
-  }
+  },
 };
