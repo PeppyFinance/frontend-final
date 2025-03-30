@@ -232,7 +232,7 @@ function useUpnlWebSocket(dispatch: AppDispatch) {
           updateAccountUpnl({
             upnl: 0,
             timestamp: 0,
-            available_balance: 0,
+            // available_balance: 0,
           }),
         );
         return;
@@ -251,7 +251,7 @@ function useUpnlWebSocket(dispatch: AppDispatch) {
         updateAccountUpnl({
           upnl: 0,
           timestamp: 0,
-          available_balance: 0,
+          // available_balance: 0,
         }),
       );
     }

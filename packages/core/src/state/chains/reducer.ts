@@ -1,10 +1,13 @@
-import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
 import { Config } from "@wagmi/core";
 import { SupportedChainId } from "../../constants/chains";
 import { HedgerInfoMap } from "../../types/hedger";
 import { setChains } from "./actions";
-const { createReducer } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
+import { createReducer } from "@reduxjs/toolkit";
+
+/// original import but not working with TS
+// import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
+// const { createReducer } = ((toolkitRaw as any).default ??
+//   toolkitRaw) as typeof toolkitRaw;
 
 export interface ChainType {
   readonly COLLATERAL_SYMBOL: string;
@@ -48,23 +51,11 @@ const initialState: ChainsState = {
   wagmiConfig: {} as Config,
 };
 
-export default createReducer(initialState, (builder) =>
+export const chainReducer = createReducer(initialState, (builder) =>
   builder.addCase(setChains, (state, { payload }) => {
-    const {
-      chains,
-      V3_CHAIN_IDS,
-      FALLBACK_CHAIN_ID,
-      hedgers,
-      appName,
-      MuonData,
-      wagmiConfig,
-    } = payload;
-    state.chains = chains;
-    state.V3_CHAIN_IDS = V3_CHAIN_IDS;
-    state.FALLBACK_CHAIN_ID = FALLBACK_CHAIN_ID;
-    state.hedgers = hedgers;
-    state.appName = appName;
-    state.MuonData = MuonData;
-    state.wagmiConfig = wagmiConfig;
+    return {
+      ...state,
+      ...payload
+    }
   }),
 );

@@ -383,7 +383,9 @@ export function useAddHedgerCallback() {
 
   return useCallback(
     (name: string, address: string) => {
-      dispatch(addHedger({ name, address, chainId }));
+      if (chainId) {
+        dispatch(addHedger({ name, address, chainId }));
+      }
     },
     [chainId, dispatch],
   );
@@ -395,7 +397,9 @@ export function useSelectOrUnselectHedgerCallback() {
 
   return useCallback(
     (hedger: AddedHedger) => {
-      dispatch(selectOrUnselectHedger({ hedger, chainId }));
+      if (chainId) {
+        dispatch(selectOrUnselectHedger({ hedger, chainId }));
+      }
     },
     [chainId, dispatch],
   );
@@ -418,7 +422,9 @@ export function useRemoveHedgerCallback() {
 
   return useCallback(
     (address: string) => {
-      dispatch(removeHedger({ address, chainId }));
+      if (chainId) {
+        dispatch(removeHedger({ address, chainId }));
+      }
     },
     [chainId, dispatch],
   );

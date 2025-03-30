@@ -1,8 +1,8 @@
 import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
 import {
   Action,
-  AnyAction,
   Store,
+  AnyAction,
   ThunkAction,
   ThunkDispatch,
 } from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
@@ -23,9 +23,10 @@ import {
 import "symbol-observable";
 import { ONE_DAY_IN_MILLISECOND } from "../constants";
 import reducer from "./reducer";
+import { ConfigureStoreOptions } from "@reduxjs/toolkit";
 // import crossBrowserListener from "../utils/reduxPersistListener";
 
-const createExpirationTransform = (expiryTime) => {
+const createExpirationTransform = (expiryTime: number) => {
   return createTransform(
     (inboundState) => {
       return {
@@ -69,7 +70,7 @@ function makeStore() {
         },
       }),
     devTools: process.env.NODE_ENV === "development",
-  });
+  } as ConfigureStoreOptions);
 }
 
 let store: Store<RootState, AnyAction>;

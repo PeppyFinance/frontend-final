@@ -1,9 +1,7 @@
-import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
 import { SupportedChainId } from "../../constants/chains";
 import { NotificationDetails } from "../notifications/types";
 import { TransactionInfo } from "../transactions/types";
-const { createReducer, nanoid } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
+import { createReducer, nanoid } from "@reduxjs/toolkit";
 
 import {
   addPopup,
@@ -26,16 +24,16 @@ export enum ApplicationModal {
 
 export type PopupContent =
   | {
-      txn: {
-        hash: string;
-        success: boolean;
-        summary?: string;
-        info?: TransactionInfo;
-      };
-    }
+    txn: {
+      hash: string;
+      success: boolean;
+      summary?: string;
+      info?: TransactionInfo;
+    };
+  }
   | {
-      failedSwitchNetwork: SupportedChainId;
-    }
+    failedSwitchNetwork: SupportedChainId;
+  }
   | NotificationDetails;
 
 export type Popup = {
@@ -48,7 +46,7 @@ export type Popup = {
 export type PopupList = Array<Popup>;
 
 export interface ApplicationState {
-  readonly chainConnectivityWarning: boolean;
+  chainConnectivityWarning: boolean;
   readonly popupList: PopupList;
   readonly openModal: ApplicationModal | null;
   injectedAddress: string;
@@ -60,11 +58,11 @@ const initialState: ApplicationState = {
   popupList: [],
   injectedAddress: "",
 };
+export const applicationReducer = createReducer(initialState, (builder) =>
 
-export default createReducer(initialState, (builder) =>
   builder
-    .addCase(setChainConnectivityWarning, (state, action) => {
-      const { chainConnectivityWarning } = action.payload;
+    .addCase(setChainConnectivityWarning, (state, { payload }) => {
+      const { chainConnectivityWarning } = payload;
       state.chainConnectivityWarning = chainConnectivityWarning;
     })
     .addCase(setOpenModal, (state, { payload }) => {

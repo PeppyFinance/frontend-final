@@ -1,4 +1,4 @@
-import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
+import { createReducer } from "@reduxjs/toolkit";
 import {
   addTransaction,
   checkedTransaction,
@@ -7,8 +7,10 @@ import {
   updateTransaction,
 } from "./actions";
 import { TransactionDetails } from "./types";
-const { createReducer } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
+
+// import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
+// const { createReducer } = ((toolkitRaw as any).default ??
+//   toolkitRaw) as typeof toolkitRaw;
 
 const now = () => new Date().getTime();
 
@@ -20,7 +22,7 @@ export interface TransactionState {
 
 export const initialState: TransactionState = {};
 
-export default createReducer(initialState, (builder) =>
+export const transactionReducer = createReducer(initialState, (builder) =>
   builder
     .addCase(
       addTransaction,

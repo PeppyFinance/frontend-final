@@ -1,4 +1,4 @@
-import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
+import { createReducer } from "@reduxjs/toolkit";
 import { DEFAULT_SLIPPAGE } from "../../constants";
 import { InputField, OrderType, PositionType } from "../../types/trade";
 import {
@@ -19,8 +19,10 @@ import {
   updateTypedValue,
 } from "./actions";
 import { TpSlConfigState, TpSlProcessState, TradeState } from "./types";
-const { createReducer } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
+
+// import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
+// const { createReducer } = ((toolkitRaw as any).default ??
+//   toolkitRaw) as typeof toolkitRaw;
 
 export const initialState: TradeState = {
   marketId: undefined,
@@ -57,7 +59,7 @@ export const initialState: TradeState = {
   },
 };
 
-export default createReducer(initialState, (builder) =>
+export const tradeReducer = createReducer(initialState, (builder) =>
   builder
     .addCase(setTradeState, (state, action) => {
       return action.payload;

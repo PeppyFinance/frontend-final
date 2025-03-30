@@ -1,7 +1,9 @@
-import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
 import { HedgerState } from "./types";
-const { createReducer, current } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
+
+
+// import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
+// const { createReducer, current } = ((toolkitRaw as any).default ??
+//   toolkitRaw) as typeof toolkitRaw;
 
 import { ApiState, ConnectionStatus } from "../../types/api";
 import {
@@ -20,6 +22,7 @@ import {
   getOpenInterest,
   getPriceRange,
 } from "./thunks";
+import { createReducer, current } from "@reduxjs/toolkit";
 
 const initialState: HedgerState = {
   hedgerId: "",
@@ -38,7 +41,7 @@ const initialState: HedgerState = {
   errorMessages: {},
 };
 
-export default createReducer(initialState, (builder) =>
+export const hedgerReducer = createReducer(initialState, (builder) =>
   builder
     .addCase(updateWebSocketStatus, (state, { payload }) => {
       state.webSocketStatus = payload.status;
