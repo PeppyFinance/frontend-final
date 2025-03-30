@@ -65,7 +65,7 @@ export default function MarketFundingRate() {
     <>
       <ColumnCenter>
         <Name>
-          Funding Long/Short
+          Funding (8 hs)
           <a data-tip data-for={"funding"}>
             <StyledInfoIcon />
             <ToolTip id={"funding"} aria-haspopup="true">
@@ -80,16 +80,16 @@ export default function MarketFundingRate() {
             <Value size={"12px"} color={longColor}>
               {fundingRate
                 ? `${formatAmount(
-                    nextFundingRateLongBN.times(100).toFixed(4),
-                  )}%`
+                  nextFundingRateLongBN.times(100).toFixed(4),
+                )}%`
                 : "-"}
             </Value>
             /
             <Value size={"12px"} color={shortColor}>
               {fundingRate
                 ? `${formatAmount(
-                    nextFundingRateShortBN.times(100).toFixed(4),
-                  )}%`
+                  nextFundingRateShortBN.times(100).toFixed(4),
+                )}%`
                 : "-"}
             </Value>
           </DataRow>
@@ -101,12 +101,11 @@ export default function MarketFundingRate() {
         <Name>Next funding</Name>
         <Value size={"12px"}>
           {fundingRate && !nextFundingRateLongBN.isNaN()
-            ? `${
-                diff > 0 &&
-                ` ${hours.toString().padStart(2, "0")}:${minutes
-                  .toString()
-                  .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
-              }`
+            ? `${diff > 0 &&
+            ` ${hours.toString().padStart(2, "0")}:${minutes
+              .toString()
+              .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
+            }`
             : "-"}
         </Value>
       </ColumnCenter>
