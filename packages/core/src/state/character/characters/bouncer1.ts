@@ -6,5 +6,11 @@ export const bouncer1: Character = {
   left: "3vw",
   height: "380px",
   bottom: "40px",
-  zIndex: "1",
+  zIndex: "2",
+  mobilePositions: {
+    zIndex: "2",
+    bottom: "30px",
+    height: "380px",
+    left: "15px",
+  },
 };

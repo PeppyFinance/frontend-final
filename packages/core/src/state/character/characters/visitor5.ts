@@ -6,4 +6,10 @@ export const visitor5: Character = {
   left: "calc(50vw + 180px)",
   height: "285px",
   bottom: "65px",
+  mobilePositions: {
+    zIndex: "1",
+    height: "285px",
+    bottom: "65px",
+    left: "0px",
+  },
 };
