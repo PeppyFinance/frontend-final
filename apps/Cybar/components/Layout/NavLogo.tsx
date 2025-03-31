@@ -28,7 +28,6 @@ const TextWrapper = styled(RowStart)`
 `;
 
 export default function NavLogo() {
-
   return (
     <Wrapper>
       <TextWrapper>
