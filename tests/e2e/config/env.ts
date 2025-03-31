@@ -1,3 +1,3 @@
 export const TEST_CONFIG = {
-  baseUrl: process.env.LOCALHOST_URL || "http://localhost:3000",
+  baseUrl: process.env.NEXT_PUBLIC_LOCALHOST_URL || "http://localhost:3000",
 };
