@@ -1,4 +1,4 @@
-import { pulseAnimation } from "components/BackAlley/Characters/character";
+import { pulseAnimation } from "components/Characters/character";
 import Link from "next/link";
 import styled, { keyframes, useTheme } from "styled-components";
 

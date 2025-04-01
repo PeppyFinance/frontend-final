@@ -1,18 +1,14 @@
-import { useCallback, useMemo } from "react";
 import BigNumber from "bignumber.js";
-import { useLeverage } from "../user/hooks";
+import { useCallback, useMemo } from "react";
 import { DEFAULT_PRECISION } from "../../../src/constants/misc";
 import { useMarket } from "../../hooks/useMarkets";
 import { Market } from "../../types/market";
 import { InputField, OrderType, PositionType } from "../../types/trade";
 import { makeHttpRequest } from "../../utils/http";
-import {
-  BN_ZERO, formatPrice,
-  RoundMode,
-  toBN,
-} from "../../utils/numbers";
+import { BN_ZERO, RoundMode, formatPrice, toBN } from "../../utils/numbers";
 import { useAppDispatch, useAppSelector } from "../declaration";
 import { useHedgerInfo, useMarketData } from "../hedger/hooks";
+import { useLeverage } from "../user/hooks";
 import {
   setTpSlConfig,
   setTpSlOpened,
@@ -319,12 +315,12 @@ export function usePositionInfo(): PositionInfo {
     () =>
       market
         ? [
-          market.symbol,
-          market.pricePrecision,
-          market.quantityPrecision,
-          market.minAcceptableQuoteValue,
-          market.maxLeverage,
-        ]
+            market.symbol,
+            market.pricePrecision,
+            market.quantityPrecision,
+            market.minAcceptableQuoteValue,
+            market.maxLeverage,
+          ]
         : ["", DEFAULT_PRECISION, DEFAULT_PRECISION, 10],
     [market],
   );
@@ -356,7 +352,6 @@ export function usePositionInfo(): PositionInfo {
     quantityPrecision,
   ]);
 
-
   return {
     outputTicker,
     pricePrecision,
@@ -364,5 +359,5 @@ export function usePositionInfo(): PositionInfo {
     minAcceptableQuoteValue,
     minPositionValue,
     minPositionQuantity,
-  }
+  };
 }
