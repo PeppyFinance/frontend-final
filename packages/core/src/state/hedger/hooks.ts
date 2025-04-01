@@ -99,6 +99,11 @@ export function useMarkets({
 
   return useMemo(() => {
     if (infoStatus === ApiState.OK && coinCategory) {
+      // NOTE: this is a temporary hack because we get all marktes twice with different ids
+      // hopefully this is resolved soon
+      markets = [...new Set(markets.map((m) => m.symbol))].map(
+        (symbol) => markets.find((m) => m.symbol === symbol) as Market,
+      );
       // convert coinCategories keys to uppercase to ensure equality
       // when accessing coinCategories object keys
       // coinCategories[coinCategory.toUpperCase()]
