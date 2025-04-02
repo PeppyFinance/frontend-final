@@ -144,7 +144,7 @@ export const ChainInfo: { [chainId: number]: Info } = {
     },
     rpcUrl: "https://json-rpc.evm.iotaledger.net",
     blockExplorerUrl: "https://explorer.evm.iota.org/tx/",
-    WRAPPED_NATIVE_ADDRESS: "0x160345fC359604fC6e70E3c5fAcbdE5F7A9342d8",
+    WRAPPED_NATIVE_ADDRESS: "0x6e47f8d48a01b44DF3fFF35d258A10A3AEdC114c",
   },
   [SupportedChainId.MANTLE]: {
     chainId: "0x1388",

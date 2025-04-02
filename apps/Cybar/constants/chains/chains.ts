@@ -12,25 +12,25 @@ import {
 } from "wagmi/chains";
 import { FrontEndsName } from "./addresses";
 
-const iotaEvm: Chain = {
+const iotaEvm = {
   id: 8822,
-  name: "IOTA EVM",
+  name: "Wrapped IOTA",
   nativeCurrency: {
-    name: "IOTA",
-    symbol: "IOTA",
+    name: "WIOTA",
+    symbol: "WIOTA",
     decimals: 18,
   },
   rpcUrls: {
     default: { http: ["https://json-rpc.evm.iotaledger.net"] },
-    public: { http: ["https://json-rpc.evm.iotaledger.net"] }, // TODO Replace with Cybar's public RPC URL later
   },
   blockExplorers: {
     default: {
       name: "IOTA EVM explorer",
-      url: "https://explorer.evm.iota.org/tx/",
+      url: "https://explorer.evm.iota.org/",
+      apiUrl: "https://explorer.evm.iota.org/api",
     },
   },
-};
+} as const satisfies Chain;
 
 const supportedWagmiChain = {
   [SupportedChainId.FANTOM]: fantom,
