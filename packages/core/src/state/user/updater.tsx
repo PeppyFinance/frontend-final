@@ -1,16 +1,8 @@
 import isEmpty from "lodash/isEmpty.js";
 import { useEffect, useMemo, useRef } from "react";
 import { useWebSocket } from "react-use-websocket/dist/lib/use-websocket.js";
+import { ReadyState } from 'react-use-websocket'
 import { AppDispatch, AppThunkDispatch, useAppDispatch } from "../declaration";
-
-// TODO: fix this { ReadyState } from "react-use-websocket"
-enum ReadyState {
-  UNINSTANTIATED = -1,
-  CONNECTING = 0,
-  OPEN = 1,
-  CLOSING = 2,
-  CLOSED = 3,
-}
 
 import useActiveWagmi from "../../lib/hooks/useActiveWagmi";
 import useIsWindowVisible from "../../lib/hooks/useIsWindowVisible";
