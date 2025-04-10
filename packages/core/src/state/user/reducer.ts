@@ -1,9 +1,11 @@
-import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
 import { ApiState, ConnectionStatus } from "../../types/api";
 import { AddedHedger, TermsStatus, UserState } from "./types";
-const { createReducer } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
 
+// import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
+// const { createReducer } = ((toolkitRaw as any).default ??
+//   toolkitRaw) as typeof toolkitRaw;
+
+import { createReducer } from "@reduxjs/toolkit";
 import find from "lodash/find.js";
 import { AccountUpnl } from "../../types/user";
 import {
@@ -69,7 +71,7 @@ export const initialState: UserState = {
   isDefaultHedgerSelected: true,
 };
 
-export default createReducer(initialState, (builder) =>
+export const userReduer = createReducer(initialState, (builder) =>
   builder
     .addCase(updateUserDarkMode, (state, action) => {
       state.userDarkMode = action.payload.userDarkMode;

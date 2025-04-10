@@ -1,9 +1,11 @@
-import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
+import { createAction } from "@reduxjs/toolkit";
 import { ConnectionStatus } from "../../types/api";
 import { Account, AccountUpnl, UserPartyAStatDetail } from "../../types/user";
 import { AddedHedger, AddedHedgersData, TermsStatus } from "./types";
-const { createAction } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
+
+// import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
+// const { createAction } = ((toolkitRaw as any).default ??
+//   toolkitRaw) as typeof toolkitRaw;
 
 export const updateMatchesDarkMode = createAction<{ matchesDarkMode: boolean }>(
   "user/updateMatchesDarkMode",
@@ -14,7 +16,7 @@ export const updateUserDarkMode = createAction<{ userDarkMode: boolean }>(
 export const updateUserExpertMode = createAction<{ userExpertMode: boolean }>(
   "user/updateUserExpertMode",
 );
-export const updateUserFavorites = createAction<string[]>(
+export const updateUserFavorites = createAction<number[]>(
   "user/updateUserFavorites",
 );
 export const updateUserLeverage = createAction<number>(

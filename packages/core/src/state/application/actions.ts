@@ -1,7 +1,5 @@
-import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
+import { createAction } from "@reduxjs/toolkit";
 import { ApplicationModal, PopupContent } from "./reducer";
-const { createAction } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
 
 export const setChainConnectivityWarning = createAction<{
   chainConnectivityWarning: boolean;

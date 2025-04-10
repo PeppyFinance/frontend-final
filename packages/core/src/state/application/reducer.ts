@@ -1,9 +1,7 @@
-import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
+import { createReducer, nanoid } from "@reduxjs/toolkit";
 import { SupportedChainId } from "../../constants/chains";
 import { NotificationDetails } from "../notifications/types";
 import { TransactionInfo } from "../transactions/types";
-const { createReducer, nanoid } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
 
 import {
   addPopup,
@@ -60,12 +58,10 @@ const initialState: ApplicationState = {
   popupList: [],
   injectedAddress: "",
 };
-
-export default createReducer(initialState, (builder) =>
+export const applicationReducer = createReducer(initialState, (builder) =>
   builder
-    .addCase(setChainConnectivityWarning, (state, action) => {
-      const { chainConnectivityWarning } = action.payload;
-      state.chainConnectivityWarning = chainConnectivityWarning;
+    .addCase(setChainConnectivityWarning, (state, { payload }) => {
+      return { ...state, ...payload };
     })
     .addCase(setOpenModal, (state, { payload }) => {
       state.openModal = payload;

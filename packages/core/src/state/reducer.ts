@@ -1,16 +1,18 @@
-import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
-import application from "./application/reducer";
-import chains from "./chains/reducer";
+import { combineReducers } from "@reduxjs/toolkit";
+import { applicationReducer as application } from "./application/reducer";
+import { chainReducer as chains } from "./chains/reducer";
 import { characterReducer as character } from "./character/reducer";
-import hedger from "./hedger/reducer";
+import { hedgerReducer as hedger } from "./hedger/reducer";
 import { marketReducer as market } from "./market/reducer";
-import notifications from "./notifications/reducer";
-import quotes from "./quotes/reducer";
-import trade from "./trade/reducer";
-import transactions from "./transactions/reducer";
-import user from "./user/reducer";
-const { combineReducers } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
+import { notificationReducer as notifications } from "./notifications/reducer";
+import { quotesReducer as quotes } from "./quotes/reducer";
+import { tradeReducer as trade } from "./trade/reducer";
+import { transactionReducer as transactions } from "./transactions/reducer";
+import { userReduer as user } from "./user/reducer";
+
+// import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
+// const { combineReducers } = ((toolkitRaw as any).default ??
+// toolkitRaw) as typeof toolkitRaw;
 
 const reducer = combineReducers({
   application,
