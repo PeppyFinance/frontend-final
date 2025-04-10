@@ -1,6 +1,6 @@
+import { pulseAnimation } from "components/Characters/character";
 import Link from "next/link";
 import styled, { keyframes, useTheme } from "styled-components";
-import { pulseAnimation } from "./Characters/character";
 
 const slideDesktopArrowBackalley = keyframes`
   50% {

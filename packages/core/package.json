@@ -388,6 +388,74 @@
       "types": "./dist/state/chains/reducer.d.ts",
       "default": "./dist/state/chains/reducer.js"
     },
+    "./state/character/actions": {
+      "types": "./dist/state/character/actions.d.ts",
+      "default": "./dist/state/character/actions.js"
+    },
+    "./state/character/hooks": {
+      "types": "./dist/state/character/hooks.d.ts",
+      "default": "./dist/state/character/hooks.js"
+    },
+    "./state/character/reducer": {
+      "types": "./dist/state/character/reducer.d.ts",
+      "default": "./dist/state/character/reducer.js"
+    },
+    "./state/character/types": {
+      "types": "./dist/state/character/types.d.ts",
+      "default": "./dist/state/character/types.js"
+    },
+    "./state/character/characters/bouncer1": {
+      "types": "./dist/state/character/characters/bouncer1.d.ts",
+      "default": "./dist/state/character/characters/bouncer1.js"
+    },
+    "./state/character/characters/bouncer2": {
+      "types": "./dist/state/character/characters/bouncer2.d.ts",
+      "default": "./dist/state/character/characters/bouncer2.js"
+    },
+    "./state/character/characters/characterBackAlley1": {
+      "types": "./dist/state/character/characters/characterBackAlley1.d.ts",
+      "default": "./dist/state/character/characters/characterBackAlley1.js"
+    },
+    "./state/character/characters/characterBackAlley2": {
+      "types": "./dist/state/character/characters/characterBackAlley2.d.ts",
+      "default": "./dist/state/character/characters/characterBackAlley2.js"
+    },
+    "./state/character/characters/characterBackAlley3": {
+      "types": "./dist/state/character/characters/characterBackAlley3.d.ts",
+      "default": "./dist/state/character/characters/characterBackAlley3.js"
+    },
+    "./state/character/characters": {
+      "types": "./dist/state/character/characters/index.d.ts",
+      "default": "./dist/state/character/characters/index.js"
+    },
+    "./state/character/characters/visitor1": {
+      "types": "./dist/state/character/characters/visitor1.d.ts",
+      "default": "./dist/state/character/characters/visitor1.js"
+    },
+    "./state/character/characters/visitor2": {
+      "types": "./dist/state/character/characters/visitor2.d.ts",
+      "default": "./dist/state/character/characters/visitor2.js"
+    },
+    "./state/character/characters/visitor3": {
+      "types": "./dist/state/character/characters/visitor3.d.ts",
+      "default": "./dist/state/character/characters/visitor3.js"
+    },
+    "./state/character/characters/visitor4": {
+      "types": "./dist/state/character/characters/visitor4.d.ts",
+      "default": "./dist/state/character/characters/visitor4.js"
+    },
+    "./state/character/characters/visitor5": {
+      "types": "./dist/state/character/characters/visitor5.d.ts",
+      "default": "./dist/state/character/characters/visitor5.js"
+    },
+    "./state/character/characters/visitor6": {
+      "types": "./dist/state/character/characters/visitor6.d.ts",
+      "default": "./dist/state/character/characters/visitor6.js"
+    },
+    "./state/character/characters/visitor7": {
+      "types": "./dist/state/character/characters/visitor7.d.ts",
+      "default": "./dist/state/character/characters/visitor7.js"
+    },
     "./state/hedger/actions": {
       "types": "./dist/state/hedger/actions.d.ts",
       "default": "./dist/state/hedger/actions.js"
@@ -411,6 +479,26 @@
     "./state/hedger/updater": {
       "types": "./dist/state/hedger/updater.d.ts",
       "default": "./dist/state/hedger/updater.js"
+    },
+    "./state/market/actions": {
+      "types": "./dist/state/market/actions.d.ts",
+      "default": "./dist/state/market/actions.js"
+    },
+    "./state/market/hooks": {
+      "types": "./dist/state/market/hooks.d.ts",
+      "default": "./dist/state/market/hooks.js"
+    },
+    "./state/market/reducer": {
+      "types": "./dist/state/market/reducer.d.ts",
+      "default": "./dist/state/market/reducer.js"
+    },
+    "./state/market/types": {
+      "types": "./dist/state/market/types.d.ts",
+      "default": "./dist/state/market/types.js"
+    },
+    "./state/market/updater": {
+      "types": "./dist/state/market/updater.d.ts",
+      "default": "./dist/state/market/updater.js"
     },
     "./state/notifications/actions": {
       "types": "./dist/state/notifications/actions.d.ts",

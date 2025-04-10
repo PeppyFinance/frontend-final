@@ -1,6 +1,7 @@
 import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
 import application from "./application/reducer";
 import chains from "./chains/reducer";
+import { characterReducer as character } from "./character/reducer";
 import hedger from "./hedger/reducer";
 import { marketReducer as market } from "./market/reducer";
 import notifications from "./notifications/reducer";
@@ -14,6 +15,7 @@ const { combineReducers } = ((toolkitRaw as any).default ??
 const reducer = combineReducers({
   application,
   chains,
+  character,
   market,
   transactions,
   user,

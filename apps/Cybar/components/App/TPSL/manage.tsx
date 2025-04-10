@@ -562,7 +562,7 @@ export default function ManageTpSlModal({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prevSl]);
 
-  console.log("tpError-SlError", tpError, slError);
+  console.error("tpError-SlError", tpError, slError);
   const onClickConfirmButton = useCallback(() => {
     if (disableLogic) {
       return;
