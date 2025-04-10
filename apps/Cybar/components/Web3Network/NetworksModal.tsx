@@ -152,7 +152,7 @@ export function NetworksModal({
                   height={28}
                 />
               </Logo>
-              {Chain.chainName} - {chain.name}
+              {Chain.chainName}
             </Network>
           );
         })}
