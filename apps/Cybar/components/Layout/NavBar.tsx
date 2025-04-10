@@ -241,5 +241,6 @@ export default function NavBar() {
   }
 
   const isMobile = useIsMobile();
-  return isMobile ? getMobileContent() : getDefaultContent();
+  const Content = isMobile ? getMobileContent() : getDefaultContent();
+  return <nav>{Content}</nav>;
 }
