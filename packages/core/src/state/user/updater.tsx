@@ -232,18 +232,14 @@ function useUpnlWebSocket(dispatch: AppDispatch) {
           updateAccountUpnl({
             upnl: 0,
             timestamp: 0,
-            // available_balance: 0,
           }),
         );
         return;
       }
 
-      // TODO: we should add type checking here
-
       const lastMessage: AccountUpnl = upnlWebSocketMessage ?? {
         upnl: 0,
         timestamp: 0,
-        available_balance: 0,
       };
       dispatch(updateAccountUpnl(lastMessage));
     } catch (error) {
@@ -251,7 +247,6 @@ function useUpnlWebSocket(dispatch: AppDispatch) {
         updateAccountUpnl({
           upnl: 0,
           timestamp: 0,
-          // available_balance: 0,
         }),
       );
     }
