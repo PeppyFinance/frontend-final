@@ -98,7 +98,7 @@ export function useMarkets({
   const { marketsInfo, infoStatus } = useAllMarketsData();
 
   return useMemo(() => {
-    if (infoStatus === ApiState.OK && coinCategory) {
+    if (infoStatus === ApiState.OK && coinCategory && coinCategories) {
       // convert coinCategories keys to uppercase to ensure equality
       // when accessing coinCategories object keys
       // coinCategories[coinCategory.toUpperCase()]
