@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-// import WrapperBanner from "components/Banner";
 import { RowCenter } from "components/Row";
 import MarketsTable, { MarketsTableProps } from "./MarketsTable";
 
