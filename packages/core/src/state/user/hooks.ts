@@ -391,7 +391,9 @@ export function useAddHedgerCallback() {
       if (chainId) {
         dispatch(addHedger({ name, address, chainId }));
       } else {
-        console.error(`No chainId in useAddHedgerCallback. Could not add hedger`)
+        console.error(
+          `No chainId in useAddHedgerCallback. Could not add hedger`,
+        );
       }
     },
     [chainId, dispatch],
@@ -432,7 +434,9 @@ export function useRemoveHedgerCallback() {
       if (chainId) {
         dispatch(removeHedger({ address, chainId }));
       } else {
-        console.error(`No chainId in useRemoveHedgerCallback. Could not remove hedger`)
+        console.error(
+          `No chainId in useRemoveHedgerCallback. Could not remove hedger`,
+        );
       }
     },
     [chainId, dispatch],
