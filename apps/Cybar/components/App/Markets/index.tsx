@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import WrapperBanner from "components/Banner";
+// import WrapperBanner from "components/Banner";
 import { RowCenter } from "components/Row";
 import MarketsTable, { MarketsTableProps } from "./MarketsTable";
 
@@ -46,7 +46,6 @@ const HiddenText = styled.span`
 export default function Markets(props: MarketsTableProps) {
   return (
     <Container>
-      <WrapperBanner />
       <BigMarketsLabel>
         <HiddenText>.</HiddenText>
       </BigMarketsLabel>

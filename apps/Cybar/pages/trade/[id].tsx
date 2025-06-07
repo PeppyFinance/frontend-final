@@ -1,14 +1,11 @@
 import styled from "styled-components";
 
-import WhitelistUpdater from "components/App/Whitelist/updater";
-
 import AccountOverview from "components/App/AccountData";
 import Chart from "components/App/Chart";
 import FavoriteBar from "components/App/FavoriteBar";
 import MarketBar from "components/App/MarketBar";
 import TradePanel from "components/App/TradePanel";
 import UserPanel from "components/App/UserPanel";
-import WrapperBanner from "components/Banner";
 import Column from "components/Column";
 import { UpdaterRoot } from "components/EmptyComponent";
 
@@ -55,9 +52,7 @@ export const LeftColumn = styled(Column)<{ gap?: string }>`
 export default function ID() {
   return (
     <Container>
-      <WrapperBanner />
       <UpdaterRoot />
-      <WhitelistUpdater />
       <ItemsRow>
         <LeftColumn>
           <FavoriteBar />
