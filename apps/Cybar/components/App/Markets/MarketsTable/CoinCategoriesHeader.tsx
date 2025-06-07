@@ -52,7 +52,11 @@ export const CoinCategoriesHeader = ({
   const coinCategories = useCoinCategories();
 
   // Only display CoinCategoriesHeader if there are categories
-  if (!coinCategories ?? Object.keys(coinCategories).length === 0) {
+  if (
+    coinCategories === undefined ??
+    // ! because if coinCategories === undefined it is caught in the line above
+    Object.keys(coinCategories!).length === 0
+  ) {
     return null;
   }
 
@@ -61,15 +65,16 @@ export const CoinCategoriesHeader = ({
       <CategoryButton isActive={!coinCategory} onClick={() => onClick()}>
         All Coins
       </CategoryButton>
-      {Object.entries(coinCategories).map(([key]) => (
-        <CategoryButton
-          isActive={coinCategory?.toUpperCase() === key.toUpperCase()}
-          key={key}
-          onClick={() => onClick(key)}
-        >
-          {key}
-        </CategoryButton>
-      ))}
+      {!!coinCategories &&
+        Object.entries(coinCategories).map(([key]) => (
+          <CategoryButton
+            isActive={coinCategory?.toUpperCase() === key.toUpperCase()}
+            key={key}
+            onClick={() => onClick(key)}
+          >
+            {key}
+          </CategoryButton>
+        ))}
     </HeaderWrap>
   );
 };
