@@ -1,26 +1,14 @@
 import { SupportedChainId } from "@symmio/frontend-sdk/constants/chains";
 import {
   Chain,
-  arbitrum,
   base,
-  blast,
-  bsc,
-  fantom,
-  mainnet,
-  mantle,
-  polygon,
 } from "wagmi/chains";
 import { FrontEndsName } from "./addresses";
+import { iotaEvm } from "./iota";
 
 const supportedWagmiChain = {
-  [SupportedChainId.FANTOM]: fantom,
-  [SupportedChainId.BSC]: bsc,
   [SupportedChainId.BASE]: base,
-  [SupportedChainId.POLYGON]: polygon,
-  [SupportedChainId.ARBITRUM]: arbitrum,
-  [SupportedChainId.MAINNET]: mainnet,
-  [SupportedChainId.MANTLE]: mantle,
-  [SupportedChainId.BLAST]: blast,
+  [iotaEvm.id]: iotaEvm
 };
 
 function getWagmiChain(supportChainList: number[]): Chain[] {
