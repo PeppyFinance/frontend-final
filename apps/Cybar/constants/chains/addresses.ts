@@ -2,15 +2,7 @@ import { SupportedChainId } from "@symmio/frontend-sdk/constants/chains";
 import { ChainType } from "@symmio/frontend-sdk/state/chains/reducer";
 
 export enum FrontEndsName {
-  ALPHA = "Alpha",
-  INTENT_X = "IntentX",
-  CORE = "Core",
-  MORPHEX = "Morphex",
-  BASED = "Based",
   CYBAR = "Cybar",
-  BEFI = "Befi",
-  VIBE = "Vibe",
-  PEAR = "Pear",
 }
 
 export const FantomChain: ChainType = {
@@ -294,8 +286,6 @@ export const contractInfo: {
     [FrontEndsName.CYBAR]: PolygonChain,
   },
   [SupportedChainId.MANTLE]: {
-    [FrontEndsName.INTENT_X]: MantleChainIntentXFE,
-    [FrontEndsName.VIBE]: MantleChainVibeFE,
     [FrontEndsName.CYBAR]: MantleChainCybarFE,
   },
   [SupportedChainId.BASE]: {
@@ -303,7 +293,6 @@ export const contractInfo: {
   },
 
   [SupportedChainId.ARBITRUM]: {
-    [FrontEndsName.PEAR]: ArbitrumChainPearFE,
     [FrontEndsName.CYBAR]: ArbitrumChainCybarFE,
   },
 };
