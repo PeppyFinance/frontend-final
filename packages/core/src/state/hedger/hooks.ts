@@ -26,6 +26,7 @@ import {
   MarketNotionalCap,
   MarketsInfo,
 } from "./types";
+import { objectIsEmpty } from "../../utils/objectIsEmpty";
 
 export function useMarketsStatus(): ApiState {
   const marketsStatus: ApiState = useAppSelector(
@@ -98,7 +99,7 @@ export function useMarkets({
   const { marketsInfo, infoStatus } = useAllMarketsData();
 
   return useMemo(() => {
-    if (infoStatus === ApiState.OK && coinCategory && coinCategories) {
+    if (infoStatus === ApiState.OK && coinCategory && coinCategories && !objectIsEmpty(coinCategories)) {
       // convert coinCategories keys to uppercase to ensure equality
       // when accessing coinCategories object keys
       // coinCategories[coinCategory.toUpperCase()]
