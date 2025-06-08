@@ -11,9 +11,12 @@ const supportedWagmiChain = {
   [iotaEvm.id]: iotaEvm
 };
 
+// TODO: check if chainIds are in correct format
 function getWagmiChain(supportChainList: number[]): Chain[] {
   return supportChainList.map((chainId) => supportedWagmiChain[chainId]);
 }
+
+export const isSupportedChain = (id: number): boolean => Object.keys(supportedWagmiChain).includes(String(id));
 
 export const ClientChain = [SupportedChainId.BASE];
 
