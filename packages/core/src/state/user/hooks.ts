@@ -163,12 +163,19 @@ export function useToggleUserFavoriteCallback(id: number): () => void {
 }
 
 export function useActiveAccount(): Account | null {
-  const activeAccount = useAppSelector((state) => state.user.activeAccount);
-  return activeAccount;
+  const user = useAppSelector((state) => state.user);
+  if (!user) {
+    return null
+  }
+  return user.activeAccount;
 }
 
 export function useActiveAccountAddress(): string | null {
-  const activeAccount = useAppSelector((state) => state.user.activeAccount);
+  const user = useAppSelector((state) => state.user);
+  if (!user) {
+    return null
+  }
+  const activeAccount = user.activeAccount;
   return activeAccount && activeAccount.accountAddress;
 }
 
