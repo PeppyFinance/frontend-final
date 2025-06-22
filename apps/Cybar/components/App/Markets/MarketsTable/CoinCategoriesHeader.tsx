@@ -52,7 +52,7 @@ export const CoinCategoriesHeader = ({
   const coinCategories = useCoinCategories();
 
   // Only display CoinCategoriesHeader if there are categories
-  if (!coinCategories ?? Object.keys(coinCategories).length === 0) {
+  if (!coinCategories || Object.keys(coinCategories).length === 0) {
     return null;
   }
 
