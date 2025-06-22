@@ -61,15 +61,16 @@ export const CoinCategoriesHeader = ({
       <CategoryButton isActive={!coinCategory} onClick={() => onClick()}>
         All Coins
       </CategoryButton>
-      {Object.entries(coinCategories).map(([key]) => (
-        <CategoryButton
-          isActive={coinCategory?.toUpperCase() === key.toUpperCase()}
-          key={key}
-          onClick={() => onClick(key)}
-        >
-          {key}
-        </CategoryButton>
-      ))}
+      {!!coinCategories &&
+        Object.entries(coinCategories).map(([key]) => (
+          <CategoryButton
+            isActive={coinCategory?.toUpperCase() === key.toUpperCase()}
+            key={key}
+            onClick={() => onClick(key)}
+          >
+            {key}
+          </CategoryButton>
+        ))}
     </HeaderWrap>
   );
 };
