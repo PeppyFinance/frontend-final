@@ -1,9 +1,11 @@
-import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
 import find from "lodash/find.js";
 import remove from "lodash/remove.js";
-const { createReducer } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
 
+// import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
+// const { createReducer } = ((toolkitRaw as any).default ??
+//   toolkitRaw) as typeof toolkitRaw;
+
+import { createReducer } from "@reduxjs/toolkit";
 import { ApiState } from "../../types/api";
 import {
   addReadNotification,
@@ -33,7 +35,7 @@ export const initialState: NotificationState = {
   isNewNotification: false,
 };
 
-export default createReducer(initialState, (builder) =>
+export const notificationReducer = createReducer(initialState, (builder) =>
   builder
     .addCase(addUnreadNotification, (state, { payload: { notification } }) => {
       const { readNotification, unreadNotification } = state;

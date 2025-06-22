@@ -1,12 +1,14 @@
-import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
 import find from "lodash/find.js";
 import unionBy from "lodash/unionBy.js";
-const { createReducer } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
+
+// import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
+// const { createReducer } = ((toolkitRaw as any).default ??
+//   toolkitRaw) as typeof toolkitRaw;
 
 import { Quote } from "../../types/quote";
 import { InstantCloseResponse, InstantCloseStatus, QuotesState } from "./types";
 
+import { createReducer } from "@reduxjs/toolkit";
 import { ApiState } from "../../types/api";
 import {
   addPending,
@@ -38,7 +40,7 @@ export const initialState: QuotesState = {
   openInstantClosesState: ApiState.LOADING,
 };
 
-export default createReducer(initialState, (builder) =>
+export const quotesReducer = createReducer(initialState, (builder) =>
   builder
 
     .addCase(addQuote, (state, { payload: { id } }) => {
@@ -109,7 +111,7 @@ export default createReducer(initialState, (builder) =>
     })
 
     .addCase(addQuoteToHistory, (state, { payload: { quote, chainId } }) => {
-      const history = (state.history[chainId] as unknown as Quote[]) ?? [];
+      const history = state.history[chainId] ?? [];
 
       if (find(history, { id: quote.id })) {
         return;
@@ -169,9 +171,10 @@ export default createReducer(initialState, (builder) =>
         openInstantCloses.forEach((d: InstantCloseResponse) => {
           const data = instantClosesStates[d.quote_id];
 
-          if (!data || data.amount !== d.quantity_to_close) {
+          const amount = Number(data.amount);
+          if (!Number.isNaN(amount) || amount !== d.quantity_to_close) {
             instantClosesStates[d.quote_id] = {
-              amount: d.quantity_to_close,
+              amount: String(d.quantity_to_close),
               timestamp: Math.floor(new Date().getTime() / 1000),
               status: InstantCloseStatus.FAILED,
             };

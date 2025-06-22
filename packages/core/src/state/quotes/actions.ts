@@ -1,8 +1,10 @@
-import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
+import { createAction } from "@reduxjs/toolkit";
 import { Quote } from "../../types/quote";
 import { InstantCloseStatus, TpSlContent } from "./types";
-const { createAction } = ((toolkitRaw as any).default ??
-  toolkitRaw) as typeof toolkitRaw;
+
+// import * as toolkitRaw from "@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js";
+// const { createAction } = ((toolkitRaw as any).default ??
+//   toolkitRaw) as typeof toolkitRaw;
 
 export const addQuote = createAction<{ id: number }>("quotes/addQuote");
 export const removeQuote = createAction<{ id: number }>("quotes/removeQuote");

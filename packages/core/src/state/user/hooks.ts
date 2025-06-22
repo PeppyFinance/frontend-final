@@ -52,7 +52,12 @@ import {
 
 export function useIsDarkMode(): boolean {
   const { userDarkMode = true, matchesDarkMode = true } = useAppSelector(
-    ({ user: { matchesDarkMode, userDarkMode } }) => ({
+    ({
+      user: { matchesDarkMode, userDarkMode } = {
+        matchesDarkMode: true,
+        userDarkMode: true,
+      },
+    }) => ({
       userDarkMode,
       matchesDarkMode,
     }),
@@ -158,12 +163,19 @@ export function useToggleUserFavoriteCallback(id: number): () => void {
 }
 
 export function useActiveAccount(): Account | null {
-  const activeAccount = useAppSelector((state) => state.user.activeAccount);
-  return activeAccount;
+  const user = useAppSelector((state) => state.user);
+  if (!user) {
+    return null
+  }
+  return user.activeAccount;
 }
 
 export function useActiveAccountAddress(): string | null {
-  const activeAccount = useAppSelector((state) => state.user.activeAccount);
+  const user = useAppSelector((state) => state.user);
+  if (!user) {
+    return null
+  }
+  const activeAccount = user.activeAccount;
   return activeAccount && activeAccount.accountAddress;
 }
 
@@ -383,7 +395,13 @@ export function useAddHedgerCallback() {
 
   return useCallback(
     (name: string, address: string) => {
-      dispatch(addHedger({ name, address, chainId }));
+      if (chainId) {
+        dispatch(addHedger({ name, address, chainId }));
+      } else {
+        console.error(
+          `No chainId in useAddHedgerCallback. Could not add hedger`,
+        );
+      }
     },
     [chainId, dispatch],
   );
@@ -395,7 +413,9 @@ export function useSelectOrUnselectHedgerCallback() {
 
   return useCallback(
     (hedger: AddedHedger) => {
-      dispatch(selectOrUnselectHedger({ hedger, chainId }));
+      if (chainId) {
+        dispatch(selectOrUnselectHedger({ hedger, chainId }));
+      }
     },
     [chainId, dispatch],
   );
@@ -418,7 +438,13 @@ export function useRemoveHedgerCallback() {
 
   return useCallback(
     (address: string) => {
-      dispatch(removeHedger({ address, chainId }));
+      if (chainId) {
+        dispatch(removeHedger({ address, chainId }));
+      } else {
+        console.error(
+          `No chainId in useRemoveHedgerCallback. Could not remove hedger`,
+        );
+      }
     },
     [chainId, dispatch],
   );
