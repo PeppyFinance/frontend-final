@@ -8,7 +8,6 @@ const nextConfig = {
       ssr: true,
     },
   },
-  swcMinify: true,
   images: {
     domains: ["raw.githubusercontent.com"],
   },
