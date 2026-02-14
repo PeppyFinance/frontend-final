@@ -66,11 +66,18 @@ export async function createTransactionCallback(
     return hash;
   } catch (error) {
     if (error instanceof Error) {
-      console.log("Error", { error });
+      if (
+        error instanceof UserRejectedRequestError ||
+        error.message.includes("User rejected the request")
+      ) {
+        throw new Error("Transaction rejected by user");
+      }
 
-      if (expertMode && !error.message.includes("User rejected the request")) {
-        console.log(
-          "Proceeding with transaction despite the error due to expert mode",
+      if (expertMode && call?.config) {
+        console.warn(
+          "Expert mode: bypassing gas estimation failure for",
+          functionName,
+          error.message,
         );
 
         const config = call.config;
@@ -92,23 +99,16 @@ export async function createTransactionCallback(
       }
 
       if (error instanceof BaseError) {
-        if (error instanceof UserRejectedRequestError) {
-          // TODO: error.cause
-          console.log("UserRejectedRequestError", { error });
-          // TODO: handle error in client
-        } else if (error instanceof ContractFunctionRevertedError) {
-          // TODO: error.cause
-          console.log("ContractFunctionRevertedError", { error });
-          // TODO: handle error in client
-        } else {
-          console.log("Error Else", { error });
-          // TODO: handle error in client
+        if (error instanceof ContractFunctionRevertedError) {
+          throw new Error(
+            `Transaction reverted: ${error.shortMessage || error.message}`,
+          );
         }
-      } else {
-        console.error("constructCall error :", error.message);
+        throw new Error(error.shortMessage || error.message);
       }
-    } else {
-      console.error("Unexpected error. Could not construct calldata. ", error);
+
+      throw error;
     }
+    throw new Error("Unexpected error constructing transaction");
   }
 }

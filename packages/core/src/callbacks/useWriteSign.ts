@@ -70,7 +70,10 @@ export function useWriteSign(): {
         if (error && typeof error === "string") {
           throw new Error(error);
         }
-        throw new Error("error3");
+        if (error instanceof Error) {
+          throw error;
+        }
+        throw new Error("Failed to construct storeSignature call");
       }
     },
     [SIGNATURE_STORE_ADDRESS, account, chainId, isSupportedChainId],

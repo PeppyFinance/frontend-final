@@ -71,14 +71,16 @@ export function useMintCollateral(): {
       if (error && typeof error === "string") {
         throw new Error(error);
       }
-      throw new Error("error3");
+      if (error instanceof Error) {
+        throw error;
+      }
+      throw new Error("Failed to construct mint call");
     }
   }, [account, chainId, COLLATERAL_ADDRESS, isSupportedChainId]);
 
   return useMemo(() => {
     if (
       !account ||
-      !chainId ||
       !chainId ||
       !Object.keys(COLLATERAL_ADDRESS).length
     ) {

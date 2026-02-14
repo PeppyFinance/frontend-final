@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
 
 import { Market } from "@symmio/frontend-sdk/types/market";
@@ -66,22 +66,19 @@ export default function BlinkingPrice({
     [marketData, pricePrecision, data],
   );
 
-  const [markPrice, setMarkPrice] = useState(mark);
+  const prevMarkRef = useRef(mark);
   const [visible, setVisible] = useState(true);
 
-  const [upOrDown] = useMemo(() => {
-    setMarkPrice(mark);
-    return [markPrice > mark];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mark]);
+  const upOrDown = mark < prevMarkRef.current;
 
   useEffect(() => {
+    prevMarkRef.current = mark;
     setVisible(false);
     const timer = setTimeout(() => {
       setVisible(true);
     }, 10);
     return () => clearTimeout(timer);
-  }, [markPrice]);
+  }, [mark]);
 
   return (
     <Price

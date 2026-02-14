@@ -1,44 +1,93 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 interface ErrorBoundaryProps {
   children: React.ReactNode;
 }
-const ErrorBoundary: React.FC<ErrorBoundaryProps> = ({ children }) => {
-  useEffect(() => {
-    const handleRuntimeError = (event: Event | string) => {
-      console.log("Runtime error occurred:", event);
-    };
 
-    const handleRejection = (event: PromiseRejectionEvent) => {
-      const error = event.reason;
-      //check for specific errors
-      if (
-        error.name === "TransactionNotFoundError" ||
-        error.name === "BlockNotFoundError"
-      ) {
-        console.log("TransactionNotFound or BlockNotFound error:", error);
-        event.preventDefault();
-        event.stopPropagation();
-      } else {
-        // Handle other types of promise rejections (e.g., log the error)
-        console.log("Unhandled promise rejection:", error);
-        event.preventDefault();
-        event.stopPropagation();
-      }
+interface ErrorBoundaryState {
+  hasError: boolean;
+}
 
+class ErrorBoundary extends React.Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(): ErrorBoundaryState {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
+    console.error("React ErrorBoundary caught an error:", error, errorInfo);
+  }
+
+  componentDidMount(): void {
+    window.addEventListener("unhandledrejection", this.handleRejection);
+  }
+
+  componentWillUnmount(): void {
+    window.removeEventListener("unhandledrejection", this.handleRejection);
+  }
+
+  handleRejection = (event: PromiseRejectionEvent): void => {
+    const error = event.reason;
+    if (
+      error?.name === "TransactionNotFoundError" ||
+      error?.name === "BlockNotFoundError"
+    ) {
       event.preventDefault();
-    };
+      event.stopPropagation();
+    }
+  };
 
-    window.addEventListener("unhandledrejection", handleRejection);
-    window.onerror = handleRuntimeError;
+  render(): React.ReactNode {
+    if (this.state.hasError) {
+      return (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "100vh",
+            background: "#151A1F",
+            color: "#AEE3FA",
+            fontFamily: "monospace",
+          }}
+        >
+          <h1>Something went wrong</h1>
+          <p style={{ color: "#8a8a8a" }}>
+            An unexpected error occurred. Please refresh the page.
+          </p>
+          <button
+            onClick={() => {
+              this.setState({ hasError: false });
+              window.location.reload();
+            }}
+            style={{
+              marginTop: "16px",
+              padding: "10px 24px",
+              background: "#AEE3FA",
+              color: "#151A1F",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
+              fontFamily: "monospace",
+              fontSize: "14px",
+            }}
+          >
+            Refresh Page
+          </button>
+        </div>
+      );
+    }
 
-    return () => {
-      window.removeEventListener("unhandledrejection", handleRejection);
-      window.onerror = null;
-    };
-  }, []);
-
-  return <>{children}</>;
-};
+    return this.props.children;
+  }
+}
 
 export default ErrorBoundary;

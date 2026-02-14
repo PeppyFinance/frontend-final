@@ -249,8 +249,6 @@ export function useSentQuoteCallback(): {
         BigInt(deadline),
         signature,
       ];
-      console.log(args);
-
       return {
         args,
         functionName,
@@ -269,7 +267,10 @@ export function useSentQuoteCallback(): {
       if (error && typeof error === "string") {
         throw new Error(error);
       }
-      throw new Error("error3");
+      if (error instanceof Error) {
+        throw error;
+      }
+      throw new Error("Failed to construct sendQuote call");
     }
   }, [
     chainId,
