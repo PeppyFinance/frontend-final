@@ -1,1 +1,2 @@
-console.log("log");
+// @symmio/frontend-sdk entry point
+export {};

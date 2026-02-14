@@ -52,8 +52,6 @@ export class DeallocateClient extends MuonClient {
       if (requestParams instanceof Error) {
         throw new Error(requestParams.message);
       }
-      console.info("Requesting data from Muon: ", requestParams);
-
       const toastId = toast.loading("requesting data from Muon...");
       let result, success;
 
@@ -67,18 +65,27 @@ export class DeallocateClient extends MuonClient {
 
           break; // Exit the loop if successful
         } catch (error) {
-          console.log("Retrying with the next URL...");
+          // Continue to next URL on failure
         }
+      }
+
+      if (!success || !result) {
+        toast.error("Muon request failed", { id: toastId });
+        throw new Error("Muon oracle request failed: no successful response");
       }
 
       toast.success("Muon responded", {
         id: toastId,
       });
 
-      console.info("Response from Muon: ", result);
-
-      if (!success) {
-        throw new Error("");
+      if (
+        !result["reqId"] ||
+        !result["data"]?.["timestamp"] ||
+        !result["data"]?.["result"] ||
+        !result["nodeSignature"] ||
+        !result["signatures"]?.[0]
+      ) {
+        throw new Error("Muon response missing required fields");
       }
 
       const reqId = result["reqId"] as Address;

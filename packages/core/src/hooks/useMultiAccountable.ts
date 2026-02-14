@@ -88,7 +88,6 @@ export function useMultiAccountable(
           (err) => err instanceof ContractFunctionRevertedError,
         );
         if (revertError instanceof ContractFunctionRevertedError) {
-          console.log(revertError.reason?.toString() || "");
           throw error;
         }
       }
@@ -100,7 +99,7 @@ export function useMultiAccountable(
         return { ...callData, error };
       }
 
-      throw new Error("error3");
+      throw new Error("Failed to construct multi-account call");
     }
   }, [
     DIAMOND_ADDRESS,

@@ -97,7 +97,7 @@ export function useMintCollateral(): {
       amount: "50000",
     } as MintTransactionInfo;
 
-    const summary = `&#34;Mint&#34; ${txInfo.amount} ${collateralSymbol} {status}`;
+    const summary = `"Mint" ${txInfo.amount} ${collateralSymbol}`;
 
     return {
       state: TransactionCallbackState.VALID,
