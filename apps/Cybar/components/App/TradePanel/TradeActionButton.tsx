@@ -67,8 +67,7 @@ export default function TradeActionButtons(): JSX.Element | null {
     }
     try {
       setDelegateLoading(true);
-      const txHash = await setDelegateAccessCallBack();
-      console.log({ txHash });
+      await setDelegateAccessCallBack();
     } catch (e) {
       console.error(e);
     }

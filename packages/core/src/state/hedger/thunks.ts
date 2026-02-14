@@ -314,7 +314,7 @@ export const getMarketsInfo = createAsyncThunk(
       if (error && typeof error === "string") {
         throw new Error(error);
       }
-      throw new Error("error3");
+      throw new Error("Failed to fetch markets info");
     }
 
     return { marketsInfo };
@@ -332,7 +332,6 @@ export const getFundingRate = createAsyncThunk(
     markets: string[] | undefined;
     appName: string;
   }) => {
-    console.log("in the thunks");
     if (!hedgerUrl) {
       throw new Error("hedgerUrl is empty");
     }
@@ -344,7 +343,8 @@ export const getFundingRate = createAsyncThunk(
     markets.forEach((m) => {
       fundingRateUrl.searchParams.append("symbols", m);
     });
-    console.log(fundingRateUrl, fundingRateUrl.href);
+
+    const fundingRateData: Record<string, string> = {};
 
     try {
       const [fundingRateRes] = await Promise.allSettled([
@@ -354,13 +354,16 @@ export const getFundingRate = createAsyncThunk(
         ),
       ]);
 
-      if (fundingRateRes.status === "fulfilled") {
+      if (fundingRateRes.status === "fulfilled" && fundingRateRes.value) {
+        Object.entries(fundingRateRes.value).forEach(([symbol, data]) => {
+          fundingRateData[symbol] = String(data);
+        });
       }
     } catch (error) {
       console.error(error, "happened in getFundingRate");
     }
 
-    return {};
+    return { fundingRateData };
   },
 );
 

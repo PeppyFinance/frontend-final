@@ -26,13 +26,16 @@ export const makeHttpRequest = async function <T>(
 export const makeHttpRequestV2 = async function <T>(
   url: string,
   options: {
-    [x: string]: any;
+    [x: string]: unknown;
   } = {
     cache: "no-cache",
   },
 ): Promise<{ result: T | null; status: number }> {
   try {
     const response = await fetch(url, options);
+    if (!response.ok) {
+      return { result: null, status: response.status };
+    }
     return { result: await response.json(), status: response.status };
   } catch (err) {
     console.error(`Error fetching ${url}: `, err);
