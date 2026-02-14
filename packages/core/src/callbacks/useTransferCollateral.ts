@@ -242,7 +242,10 @@ export function useTransferCollateral(
       if (error && typeof error === "string") {
         throw new Error(error);
       }
-      throw new Error("error3");
+      if (error instanceof Error) {
+        throw error;
+      }
+      throw new Error("Failed to construct transferCollateral call");
     }
   }, [
     chainId,

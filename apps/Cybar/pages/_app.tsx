@@ -22,6 +22,16 @@ import { WagmiProvider } from "wagmi";
 import ConfigSDKComponent from "./configSDK";
 
 const { wagmiConfig, initialChain } = getWagmiConfig();
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60 * 1000,
+      retry: 2,
+    },
+  },
+});
+
 export default function MyApp({ Component, pageProps }: AppProps) {
   if (process.env.NODE_ENV === "development") {
     setUseWhatChange(true);
@@ -36,11 +46,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     return null;
   }
 
-  if (typeof window === undefined) {
+  if (typeof window === "undefined") {
     return <></>;
   }
-
-  const queryClient = new QueryClient({});
 
   return (
     <ErrorBoundary>

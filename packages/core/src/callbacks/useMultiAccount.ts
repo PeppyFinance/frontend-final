@@ -66,7 +66,10 @@ export function useAddAccountToContract(accountName: string): {
       if (error && typeof error === "string") {
         throw new Error(error);
       }
-      throw new Error("error3");
+      if (error instanceof Error) {
+        throw error;
+      }
+      throw new Error("Failed to construct addAccount call");
     }
   }, [
     MULTI_ACCOUNT_ADDRESS,
@@ -95,7 +98,7 @@ export function useAddAccountToContract(accountName: string): {
       name: accountName,
     } as AddAccountTransactionInfo;
 
-    const summary = `Add new account [${txInfo.name}]}`;
+    const summary = `Add new account [${txInfo.name}]`;
 
     return {
       state: TransactionCallbackState.VALID,

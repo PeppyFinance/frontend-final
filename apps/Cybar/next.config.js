@@ -2,9 +2,11 @@ const withTM = require("next-transpile-modules")(["@symmio/frontend-sdk"]);
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
+  compress: true,
   compiler: {
     styledComponents: {
-      displayName: false,
+      displayName: process.env.NODE_ENV !== "production",
       ssr: true,
     },
   },
