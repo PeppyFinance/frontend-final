@@ -5,7 +5,6 @@ import AccountOverview from "components/App/AccountData/MyAccount/AccountOvervie
 import AccountPositions from "components/App/AccountData/MyAccount/AccountPositions";
 import BalanceHistory from "components/App/AccountData/MyAccount/BalanceHistory";
 import WithdrawBar from "components/App/AccountData/MyAccount/WithdrawBar";
-import WrapperBanner from "components/Banner";
 import { Container } from "pages/trade/[id]";
 
 const Wrapper = styled(Container)`
@@ -39,7 +38,6 @@ const Layout = styled.div`
 export default function MyAccount() {
   return (
     <Wrapper>
-      <WrapperBanner />
       <WithdrawRow>
         <WithdrawBar />
       </WithdrawRow>
