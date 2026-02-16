@@ -46,18 +46,27 @@ export async function createTransactionCallback(
     }
 
     call = await constructCall();
-    const gas: bigint = await estimateGas(wagmiConfig, call.config);
+
+    let gas: bigint;
+    try {
+      gas = await estimateGas(wagmiConfig, call.config);
+    } catch (e) {
+      console.error("Error estimating gas", e);
+      gas = BigInt(21000);
+    }
 
     let hash = await sendTransaction(wagmiConfig, {
       ...call.config,
       gas: calculateGasMargin(gas),
     });
+
     await waitForTransactionReceipt(wagmiConfig, {
       hash,
       onReplaced: (replace) => {
         hash = replace.transaction.hash;
       },
     });
+
     addTransaction(hash, txInfo, summary);
     addRecentTransaction({
       hash,
